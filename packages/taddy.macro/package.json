@@ -16,8 +16,10 @@
     },
     "dependencies": {
         "@taddy/babel-plugin": "^0.0.1",
-        "babel-plugin-macros": "2.8.0",
         "taddy": "^0.0.1"
+    },
+    "peerDependencies": {
+        "babel-plugin-macros": "^2.0.0"
     },
     "devDependencies": {
         "@types/babel-plugin-macros": "2.8.2",
