@@ -10,8 +10,7 @@
         "start": "tsdx watch",
         "build": "tsdx build --transpileOnly",
         "test": "tsdx test",
-        "lint": "tsdx lint",
-        "prepublishOnly": "tsdx build"
+        "lint": "tsdx lint"
     },
     "dependencies": {
         "@taddy/core": "0.0.0",

@@ -10,8 +10,7 @@
         "start": "tsdx watch",
         "build": "tsdx build",
         "test": "tsdx test",
-        "lint": "tsdx lint",
-        "prepublishOnly": "build"
+        "lint": "tsdx lint"
     },
     "dependencies": {
         "custom-hash": "0.9.0"

@@ -16,7 +16,7 @@
         "lint": "tsdx lint 'packages/**/*.ts'",
         "ts": "tsc --noEmit",
         "build": "lerna run build --parallel --no-private",
-        "prepublishOnly": "lerna run build"
+        "prepublishOnly": "yarn build"
     },
     "husky": {
         "hooks": {

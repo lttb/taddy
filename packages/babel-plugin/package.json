@@ -11,8 +11,7 @@
         "start": "tsc --watch",
         "build": "tsdx build --target node --transpileOnly",
         "test": "tsdx test",
-        "lint": "tsdx lint",
-        "prepublishOnly": "npm run build"
+        "lint": "tsdx lint"
     },
     "dependencies": {
         "@babel/helper-module-imports": "^7.10.1",

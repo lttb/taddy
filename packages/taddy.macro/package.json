@@ -9,8 +9,7 @@
         "start": "tsdx watch",
         "build": "tsdx build --target node --transpileOnly",
         "test": "tsdx test",
-        "lint": "tsdx lint",
-        "prepublishOnly": "build"
+        "lint": "tsdx lint"
     },
     "dependencies": {
         "@taddy/babel-plugin": "0.0.0",
