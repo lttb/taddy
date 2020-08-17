@@ -1,0 +1,19 @@
+{
+    "extends": "./tsconfig.build.json",
+    "include": ["packages/**/*", "types"],
+    "compilerOptions": {
+        "allowJs": false,
+        "noImplicitAny": false,
+
+        "typeRoots": ["node_modules/@types"],
+
+        "baseUrl": ".",
+
+        "paths": {
+            "@taddy/babel-plugin": ["./packages/babel-plugin/src"],
+            "@taddy/core": ["./packages/core/src"],
+            "taddy": ["./packages/taddy/src"],
+            "taddy.macro": ["./packages/taddy.macro/src"]
+        }
+    }
+}

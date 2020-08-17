@@ -1,0 +1,24 @@
+{
+    "name": "taddy.macro",
+    "version": "0.0.0",
+    "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "index.d.ts",
+    "scripts": {
+        "start": "tsdx watch",
+        "build": "tsdx build --target node --transpileOnly",
+        "test": "tsdx test",
+        "lint": "tsdx lint",
+        "prepublishOnly": "build"
+    },
+    "dependencies": {
+        "@taddy/babel-plugin": "0.0.0",
+        "babel-plugin-macros": "2.8.0",
+        "taddy": "0.0.0"
+    },
+    "devDependencies": {
+        "@types/babel-plugin-macros": "2.8.2",
+        "tslib": "^2.0.1"
+    }
+}

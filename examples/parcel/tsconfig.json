@@ -1,0 +1,15 @@
+{
+    "extends": "../../tsconfig.json",
+    "include": ["src", "../../types"],
+    "exclude": ["dist"],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "dist",
+        "noImplicitAny": false,
+        "moduleResolution": "classic",
+        "esModuleInterop": false,
+        "target": "ES2020",
+        "module": "ES2020",
+        "allowJs": false
+    }
+}
