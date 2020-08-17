@@ -1,5 +1,4 @@
 import * as t from '@babel/types';
-import assert from 'assert';
 
 import type {NodePath} from '@babel/traverse';
 
@@ -18,8 +17,6 @@ export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
         }
 
         const key = String(getObjectPropertyKey(propPath));
-
-        assert(key);
 
         const valuePath = (propPath as NodePath<t.ObjectProperty>).get('value');
 

@@ -63,9 +63,7 @@ export default function plugin(
         },
 
         visitor: {
-            // CallExpression(path, state) {
-            // TODO: support require
-            // },
+            // TODO: support require expression
 
             ImportDeclaration(path, state) {
                 if (isTaddyEvaluation(state)) {
