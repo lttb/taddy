@@ -102,11 +102,6 @@ const Title = ({children}) => (
 Mixins also could be used on the nested level:
 
 ```js
-const heading = css.mixin({
-    fontSize: '20px',
-    fontWeight: 'bold',
-});
-
 const halfTransparent = css.mixin({
     opacity: 0.5,
 });
@@ -116,9 +111,7 @@ const Title = ({children}) => (
         {...css({
             color: 'crimson',
 
-            ':hover': {
-                ...halfTransparent,
-            },
+            ':hover': halfTransparent,
         })}
     >
         {children}
