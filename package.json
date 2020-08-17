@@ -1,0 +1,45 @@
+{
+    "name": "root",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "license": "MIT",
+    "engines": {
+        "node": ">=10"
+    },
+    "scripts": {
+        "lerna": "lerna",
+        "start": "lerna run start --stream --parallel",
+        "test": "tsdx test",
+        "lint": "tsdx lint 'packages/**/*.ts'",
+        "ts": "tsc --noEmit",
+        "build": "lerna run build --parallel",
+        "prepublishOnly": "lerna run prepublish"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run lint"
+        }
+    },
+    "prettier": {
+        "printWidth": 80,
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "bracketSpacing": false
+    },
+    "resolutions": {
+        "@typescript-eslint/eslint-plugin": "3.9.0",
+        "prettier": "2.0.5"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "7.9.6",
+        "@babel/preset-typescript": "7.9.0",
+        "husky": "^4.2.5",
+        "lerna": "^3.22.1",
+        "tsdx": "^0.13.2",
+        "tslib": "^2.0.1",
+        "typescript": "3.9.7"
+    }
+}

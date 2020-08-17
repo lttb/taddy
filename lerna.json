@@ -1,0 +1,9 @@
+{
+    "publishConfig": {
+        "access": "public"
+    },
+    "packages": ["packages/*"],
+    "version": "independent",
+    "npmClient": "yarn",
+    "useWorkspaces": true
+}
