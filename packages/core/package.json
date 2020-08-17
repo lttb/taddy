@@ -6,6 +6,9 @@
     "main": "dist/index.js",
     "module": "dist/core.esm.js",
     "types": "dist/index.d.ts",
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "start": "tsdx watch",
         "build": "tsdx build",

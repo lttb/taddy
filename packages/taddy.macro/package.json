@@ -5,6 +5,9 @@
     "license": "MIT",
     "main": "dist/index.js",
     "types": "index.d.ts",
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "start": "tsdx watch",
         "build": "tsdx build --target node --transpileOnly",

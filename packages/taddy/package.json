@@ -6,6 +6,9 @@
     "main": "dist/index.js",
     "module": "dist/taddy.esm.js",
     "types": "dist/taddy/src/index.d.ts",
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "start": "tsdx watch",
         "build": "tsdx build --transpileOnly",
