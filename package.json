@@ -1,7 +1,8 @@
 {
-    "name": "root",
     "private": true,
+    "name": "root",
     "workspaces": [
+        "examples/*",
         "packages/*"
     ],
     "license": "MIT",
@@ -10,12 +11,12 @@
     },
     "scripts": {
         "lerna": "lerna",
-        "start": "lerna run start --stream --parallel",
+        "start": "lerna run start --stream --parallel --no-private",
         "test": "tsdx test",
         "lint": "tsdx lint 'packages/**/*.ts'",
         "ts": "tsc --noEmit",
-        "build": "lerna run build --parallel",
-        "prepublishOnly": "lerna run prepublish"
+        "build": "lerna run build --parallel --no-private",
+        "prepublishOnly": "lerna run build"
     },
     "husky": {
         "hooks": {

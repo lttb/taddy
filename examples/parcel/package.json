@@ -1,4 +1,5 @@
 {
+    "private": true,
     "name": "taddy-parcel-example",
     "version": "0.0.0",
     "main": "index.js",
