@@ -105,23 +105,25 @@ Mixins also could be used on the nested level:
 const heading = css.mixin({
     fontSize: '20px',
     fontWeight: 'bold',
-})
+});
 
 const halfTransparent = css.mixin({
     opacity: 0.5,
-})
+});
 
 const Title = ({children}) => (
-    <h1 {css({
-        color: 'crimson',
+    <h1
+        {...css({
+            color: 'crimson',
 
-        ':hover': {
-            ...halfTransparent,
-        }
-    })}>
+            ':hover': {
+                ...halfTransparent,
+            },
+        })}
+    >
         {children}
     </h1>
-)
+);
 ```
 
 #### composes
@@ -156,10 +158,15 @@ There is `composes` option for that:
 
 ```js
 const Title = ({children}) => (
-    <h1 {css({textDecoration: 'underline', composes: [colorStateful, opacityStateful]})}>
+    <h1
+        {...css({
+            textDecoration: 'underline',
+            composes: [colorStateful, opacityStateful],
+        })}
+    >
         {children}
     </h1>
-)
+);
 ```
 
 > `composes` could be used **only** on the top level of styles declaration
