@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.6](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.5...@taddy/babel-plugin@0.0.6) (2020-08-18)
+
+
+### Features
+
+* support config usage ([d8b457d](https://github.com/lttb/taddy/commit/d8b457de40f9d080ceb0df839df3c30151276b20))
+
+
+
+
+
 ## [0.0.5](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.4...@taddy/babel-plugin@0.0.5) (2020-08-18)
 
 

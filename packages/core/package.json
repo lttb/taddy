@@ -1,6 +1,6 @@
 {
     "name": "@taddy/core",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
     "main": "dist/index.js",

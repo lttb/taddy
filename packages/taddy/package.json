@@ -1,6 +1,6 @@
 {
     "name": "taddy",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
     "main": "dist/index.js",
@@ -17,7 +17,7 @@
         "prepublishOnly": "yarn build"
     },
     "dependencies": {
-        "@taddy/core": "^0.0.2",
+        "@taddy/core": "^0.0.3",
         "csstype": "^3.0.2"
     },
     "devDependencies": {
