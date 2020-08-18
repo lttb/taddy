@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.5](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.4...@taddy/babel-plugin@0.0.5) (2020-08-18)
+
+
+### Features
+
+* **babel-plugin:** expose unstable_CSSVariableFallback option ([2926c59](https://github.com/lttb/taddy/commit/2926c59858c759e35c1adc82af0b6ec4bba4ab7a))
+
+
+
+
+
 ## [0.0.4](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.3...@taddy/babel-plugin@0.0.4) (2020-08-18)
 
 
