@@ -56,4 +56,10 @@ export const getCachedModuleFilepath = (filename: string) => {
     return `.cache/${PACKAGE_NAME}/${filename}`;
 };
 
-mkdirp.sync(cacheDir);
+try {
+    mkdirp.sync(cacheDir);
+} catch (error) {
+    // TODO: handle this error
+
+    console.error('TADDY', 'can not create cache dir', error);
+}
