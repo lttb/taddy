@@ -25,6 +25,7 @@ type ObjectProperties = t.ObjectExpression['properties'];
 export type ProcessorConfig = {
     typescript?: boolean | TSProcessorOptions;
     evaluate?: boolean;
+    CSSVariableFallback?: boolean;
     code: string;
     filename: string;
 };
@@ -258,6 +259,8 @@ export class Processor {
         };
 
         const tryCSSVariableValue = (): boolean => {
+            if (!this.config.CSSVariableFallback) return false;
+
             // think about dynamic nested
             // in case of nested dynamic values in mixin we can't fallback them as custom properties
             if (
