@@ -2,7 +2,7 @@
 
 import type {Properties} from 'csstype';
 
-import {nameGenerator, MIXIN_KEY} from '@taddy/core';
+import {config, MIXIN_KEY} from '@taddy/core';
 import {ruleInjector, $css} from './$css';
 import type {TaddyRule} from './$css';
 
@@ -17,14 +17,14 @@ export type TaddyStyle = {style?: object; className: string};
 
 export * from './RuleInjector';
 
-export {$css, ruleInjector};
+export {$css, ruleInjector, config};
 
 const ID = Symbol('ID');
 const withId = (className: string) => {
     /**
      * For the reference between different styles
      */
-    const id = '__' + nameGenerator.getHash('id' + className);
+    const id = '__' + config.current.nameGenerator.getHash('id' + className);
     return {
         [ID]: id,
         [Symbol?.toPrimitive || 'toString']: () => id,
@@ -65,7 +65,7 @@ export const css = <T extends TaddyRule>(
 };
 
 css.mixin = mixin;
-css.h = (x) => nameGenerator.getHash(x);
+css.h = (x) => config.current.nameGenerator.getHash(x);
 
 export {mixin};
 

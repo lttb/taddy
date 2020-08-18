@@ -1,7 +1,7 @@
 import * as t from '@babel/types';
 import type {NodePath} from '@babel/traverse';
 
-import {VARS_KEY, nameGenerator} from '@taddy/core';
+import {VARS_KEY, config} from '@taddy/core';
 import {$css} from 'taddy';
 
 import {
@@ -41,6 +41,10 @@ type ObjectOptions = CommonOptions & {
 function getLiteralValue(path: NodePath<t.Literal>): any {
     // eslint-disable-next-line no-eval
     return eval(path.toString());
+}
+
+function getHashedName(key: string, {postfix}: CommonOptions): string {
+    return config.current.nameGenerator.getName(key, '', {postfix}).join('');
 }
 
 export class Processor {
@@ -244,7 +248,7 @@ export class Processor {
 
             if (!isCompilable) return false;
 
-            const propKey = nameGenerator.getName(key, '', {postfix}).join('');
+            const propKey = getHashedName(key, {postfix});
 
             properties.push(
                 t.objectProperty(
@@ -272,7 +276,8 @@ export class Processor {
                 return false;
             }
 
-            const value = nameGenerator.getName(key, '', {postfix}).join('');
+            const value = getHashedName(key, {postfix});
+
             const dynamicValue = `--${value}`;
 
             this.variables.push(

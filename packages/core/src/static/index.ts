@@ -1,7 +1,6 @@
-import {NameGenerator} from '../NameGenerator';
 import {VARS_KEY, MIXIN_KEY} from '../common';
 
-export const nameGenerator = new NameGenerator();
+import {config} from '../config';
 
 export const css = (
     rule: string | {className?: string; style?: object; [VARS_KEY]?: object},
@@ -20,6 +19,6 @@ export const css = (
     return result;
 };
 
-css.h = (x: string) => nameGenerator.getHash(x);
+css.h = (x) => config.current.nameGenerator.getHash(x);
 // eslint-disable-next-line no-sequences
 css.mixin = (x: object) => ((x[MIXIN_KEY] = x), x);
