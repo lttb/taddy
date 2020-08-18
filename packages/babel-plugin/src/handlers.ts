@@ -201,7 +201,7 @@ export function output({
     function getModulePath(jsFilepath: string): string {
         return relativeEntryPath
             ? getRelativeFilepath(filename, jsFilepath)
-            : getCachedModuleFilepath(nodePath.basename(jsFilepath));
+            : getCachedModuleFilepath(jsFilepath);
     }
 
     if (env === 'development') {

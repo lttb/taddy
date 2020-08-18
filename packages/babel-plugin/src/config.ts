@@ -48,9 +48,16 @@ export function loadConfig(filepath: string): object {
 //     },
 // }).search()?.config;
 
-export const cacheDir = findCacheDir({name: PACKAGE_NAME}) || __dirname;
+const DEFAULT_CACHE_DIR = __dirname;
+export const cacheDir = findCacheDir({name: PACKAGE_NAME}) || DEFAULT_CACHE_DIR;
 
-export const getCachedModuleFilepath = (filename: string) => {
+export const getCachedModuleFilepath = (filepath: string) => {
+    if (cacheDir === DEFAULT_CACHE_DIR) {
+        return filepath;
+    }
+
+    const filename = path.basename(filepath);
+
     return `.cache/${PACKAGE_NAME}/${filename}`;
 };
 
