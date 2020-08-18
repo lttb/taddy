@@ -8,7 +8,7 @@ import nodePath from 'path';
 
 import stringHash from 'string-hash';
 
-import {ruleInjector} from 'taddy';
+import {ruleInjector, config} from 'taddy';
 
 import {Processor} from './Processor';
 import type {ProcessorConfig} from './Processor';
@@ -49,6 +49,8 @@ export type OutputOptions = {
 
     relativeEntryPath: boolean;
     extractCSS: ExtractCSSType;
+
+    unstable__inline: boolean;
 };
 
 type EntryOptions = {
@@ -171,6 +173,8 @@ export function output({
         relativeEntryPath = false,
 
         extractCSS = false,
+
+        unstable__inline = false,
     } = {},
 }: {
     env: Env;
@@ -193,6 +197,17 @@ export function output({
 
     const program = state.file.path as NodePath<t.Program>;
     const {filename} = state;
+
+    if (unstable__inline) {
+        program.pushContainer(
+            'body',
+            t.identifier(
+                `require('taddy').getStyleNodeById('taddy').innerHTML = '${result}';`,
+            ),
+        );
+
+        return;
+    }
 
     function getModulePath(jsFilepath: string): string {
         return relativeEntryPath
