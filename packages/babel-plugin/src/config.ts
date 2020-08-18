@@ -51,12 +51,19 @@ export function loadConfig(filepath: string): object {
 const DEFAULT_CACHE_DIR = __dirname;
 export const cacheDir = findCacheDir({name: PACKAGE_NAME}) || DEFAULT_CACHE_DIR;
 
-export const getCachedModuleFilepath = (filepath: string) => {
+export function getRelativeFilepath(from: string, to: string): string {
+    return './' + path.relative(path.dirname(from), to);
+}
+
+export const getCachedModuleFilepath = (
+    filepath: string,
+    jsFilepath: string,
+) => {
     if (cacheDir === DEFAULT_CACHE_DIR) {
-        return filepath;
+        return getRelativeFilepath(filepath, jsFilepath);
     }
 
-    const filename = path.basename(filepath);
+    const filename = path.basename(jsFilepath);
 
     return `.cache/${PACKAGE_NAME}/${filename}`;
 };

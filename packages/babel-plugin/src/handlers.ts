@@ -13,7 +13,7 @@ import {ruleInjector} from 'taddy';
 import {Processor} from './Processor';
 import type {ProcessorConfig} from './Processor';
 import {optimizeBindings} from './helpers';
-import {cacheDir, getCachedModuleFilepath} from './config';
+import {cacheDir, getCachedModuleFilepath, getRelativeFilepath} from './config';
 
 let LAST_INDEX = 0;
 let STYLES: string[] = [];
@@ -32,10 +32,6 @@ function getStylesState() {
         added,
         total: STYLES,
     };
-}
-
-function getRelativeFilepath(from: string, to: string): string {
-    return './' + nodePath.relative(nodePath.dirname(from), to);
 }
 
 type FilenameGetter = (code?: string) => string;
@@ -201,7 +197,7 @@ export function output({
     function getModulePath(jsFilepath: string): string {
         return relativeEntryPath
             ? getRelativeFilepath(filename, jsFilepath)
-            : getCachedModuleFilepath(jsFilepath);
+            : getCachedModuleFilepath(filename, jsFilepath);
     }
 
     if (env === 'development') {
