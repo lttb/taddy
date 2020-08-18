@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.4](https://github.com/lttb/taddy/compare/taddy@0.0.3...taddy@0.0.4) (2020-08-18)
+
+
+### Features
+
+* support mapStyles ([ac3dbc8](https://github.com/lttb/taddy/commit/ac3dbc8ebc687130c9ac526ce68eb86bf281c29b))
+
+
+
+
+
 ## [0.0.3](https://github.com/lttb/taddy/compare/taddy@0.0.2...taddy@0.0.3) (2020-08-18)
 
 

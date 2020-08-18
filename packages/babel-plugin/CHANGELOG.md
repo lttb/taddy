@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.6...@taddy/babel-plugin@0.0.7) (2020-08-18)
+
+
+### Features
+
+* support mapStyles ([ac3dbc8](https://github.com/lttb/taddy/commit/ac3dbc8ebc687130c9ac526ce68eb86bf281c29b))
+
+
+
+
+
 ## [0.0.6](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.5...@taddy/babel-plugin@0.0.6) (2020-08-18)
 
 
