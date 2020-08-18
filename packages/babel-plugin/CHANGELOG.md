@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.9](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.8...@taddy/babel-plugin@0.0.9) (2020-08-18)
+
+
+### Bug Fixes
+
+* **babel-plugin:** handle cache dir error ([ac49555](https://github.com/lttb/taddy/commit/ac49555250d2789b70a442b05b38324b6dbf93fd))
+
+
+
+
+
 ## [0.0.8](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.7...@taddy/babel-plugin@0.0.8) (2020-08-18)
 
 
