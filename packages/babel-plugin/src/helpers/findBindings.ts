@@ -60,10 +60,7 @@ export function findBindings(currentPath: NodePath): BindingSet {
 
         bindingSet.add(binding);
 
-        if (
-            bindingPath.isImportSpecifier() ||
-            bindingPath.isVariableDeclarator()
-        ) {
+        if (bindingPath.isImportSpecifier()) {
             return;
         }
 

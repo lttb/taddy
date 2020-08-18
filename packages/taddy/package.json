@@ -1,20 +1,23 @@
 {
     "name": "taddy",
-    "version": "0.0.0",
+    "version": "0.0.4",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
     "main": "dist/index.js",
     "module": "dist/taddy.esm.js",
     "types": "dist/taddy/src/index.d.ts",
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "start": "tsdx watch",
         "build": "tsdx build --transpileOnly",
         "test": "tsdx test",
         "lint": "tsdx lint",
-        "prepublishOnly": "tsdx build"
+        "prepublishOnly": "yarn build"
     },
     "dependencies": {
-        "@taddy/core": "0.0.0",
+        "@taddy/core": "^0.0.4",
         "csstype": "^3.0.2"
     },
     "devDependencies": {

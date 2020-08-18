@@ -15,8 +15,7 @@
         "test": "tsdx test",
         "lint": "tsdx lint 'packages/**/*.ts'",
         "ts": "tsc --noEmit",
-        "build": "lerna run build --parallel --no-private",
-        "prepublishOnly": "lerna run build"
+        "build": "lerna run build --parallel --no-private"
     },
     "husky": {
         "hooks": {

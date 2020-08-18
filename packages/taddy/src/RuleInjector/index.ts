@@ -1,4 +1,4 @@
-import {nameGenerator} from '@taddy/core';
+import {config} from '@taddy/core';
 
 import {camelToKebab} from './common';
 
@@ -63,6 +63,8 @@ export class RuleInjector {
             return this.putNested(postfix + key, value, {inject});
         }
 
+        const {nameGenerator} = config;
+
         if (isStatic(key)) {
             /** Static value */
             if (value[0] === '_') {
@@ -70,7 +72,9 @@ export class RuleInjector {
             }
 
             /** Dynamic values (with precompiled values) */
-            return {[postfix + key]: nameGenerator.getValueHash(value)};
+            return {
+                [postfix + key]: nameGenerator.getValueHash(value),
+            };
         }
 
         if (isNested(value)) {
@@ -79,7 +83,9 @@ export class RuleInjector {
 
         const cssKey = camelToKebab(key);
 
-        const name = nameGenerator.getName(cssKey, value, {postfix});
+        const name = nameGenerator.getName(cssKey, value, {
+            postfix,
+        });
         const nameHash = name.join('');
 
         const result = Object.create(null);

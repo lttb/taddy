@@ -1,7 +1,7 @@
 import * as t from '@babel/types';
 import type {NodePath} from '@babel/traverse';
 
-import {VARS_KEY, nameGenerator} from '@taddy/core';
+import {VARS_KEY, config} from '@taddy/core';
 import {$css} from 'taddy';
 
 import {
@@ -25,6 +25,7 @@ type ObjectProperties = t.ObjectExpression['properties'];
 export type ProcessorConfig = {
     typescript?: boolean | TSProcessorOptions;
     evaluate?: boolean;
+    CSSVariableFallback?: boolean;
     code: string;
     filename: string;
 };
@@ -40,6 +41,10 @@ type ObjectOptions = CommonOptions & {
 function getLiteralValue(path: NodePath<t.Literal>): any {
     // eslint-disable-next-line no-eval
     return eval(path.toString());
+}
+
+function getHashedName(key: string, {postfix}: CommonOptions): string {
+    return config.nameGenerator.getName(key, '', {postfix}).join('');
 }
 
 export class Processor {
@@ -243,7 +248,7 @@ export class Processor {
 
             if (!isCompilable) return false;
 
-            const propKey = nameGenerator.getName(key, '', {postfix}).join('');
+            const propKey = getHashedName(key, {postfix});
 
             properties.push(
                 t.objectProperty(
@@ -258,6 +263,8 @@ export class Processor {
         };
 
         const tryCSSVariableValue = (): boolean => {
+            if (!this.config.CSSVariableFallback) return false;
+
             // think about dynamic nested
             // in case of nested dynamic values in mixin we can't fallback them as custom properties
             if (
@@ -269,7 +276,8 @@ export class Processor {
                 return false;
             }
 
-            const value = nameGenerator.getName(key, '', {postfix}).join('');
+            const value = getHashedName(key, {postfix});
+
             const dynamicValue = `--${value}`;
 
             this.variables.push(

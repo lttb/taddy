@@ -1,6 +1,12 @@
+import {NameGenerator} from './NameGenerator';
+
+const nameGenerator = new NameGenerator();
+
 export type TaddyConfig = {
     /** map "style" and "className" to the needed value */
-    mapStyles?: (value: {style: object; className: object}) => unknown;
+    unstable__mapStyles: (value: {className: string; style?: object}) => any;
+
+    nameGenerator: NameGenerator;
 
     properties?: {
         [key: string]:
@@ -17,20 +23,17 @@ type ValidatedShape<T, Shape> = T &
         [key in keyof T]: key extends keyof Shape ? T[key] : never;
     };
 
-declare function setConfig<T extends TaddyConfig>(
+declare function setConfig<T extends Partial<TaddyConfig>>(
     value: ValidatedShape<T, TaddyConfig>,
 ): T;
 
-export const config: typeof setConfig & {
-    current: TaddyConfig;
-} = Object.assign(
+export const config: typeof setConfig & TaddyConfig = Object.assign(
     (value) => {
-        Object.assign(config.current, value);
+        Object.assign(config, value);
         return value;
     },
     {
-        current: {
-            mapStyles: (x) => x,
-        },
+        nameGenerator,
+        unstable__mapStyles: (x) => x,
     },
 );

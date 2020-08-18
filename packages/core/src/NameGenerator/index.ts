@@ -16,7 +16,7 @@ type NameOptions = {
 export class NameGenerator {
     cache: {[name: string]: string} = {};
 
-    getHash(value?: string): string {
+    getHash = (value?: string): string => {
         if (!value) return '';
         if (value[0] === '_') return value;
 
@@ -27,25 +27,25 @@ export class NameGenerator {
         }
 
         return `_${this.cache[key]}`;
-    }
+    };
 
-    getPropHash(prop: string): string {
+    getPropHash = (prop: string): string => {
         return this.getHash(prop);
-    }
+    };
 
-    getPostfixHash(postfix?: string): string {
+    getPostfixHash = (postfix?: string): string => {
         return this.getHash(postfix);
-    }
+    };
 
-    getValueHash(value: string): string {
+    getValueHash = (value: string): string => {
         return this.getHash(value);
-    }
+    };
 
-    getName(
+    getName = (
         prop: string,
         value: string,
         {postfix = ''}: NameOptions = {},
-    ): string[] {
+    ): string[] => {
         return [this.getHash(postfix), this.getHash(prop), this.getHash(value)];
-    }
+    };
 }

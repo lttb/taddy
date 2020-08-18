@@ -96,4 +96,31 @@ describe('taddy.macro.evaluate', () => {
             ._a1f1_dd91 {font-size: smaller;}"
         `);
     });
+
+    test('evaluate function declared as variable', async () => {
+        expect(
+            await transform(
+                `
+                import { css } from "${PACKAGE_NAME}";
+
+                const box = () => css.mixin({
+                    border: "1px solid red",
+                });
+
+                const typo = css.mixin({
+                    fontSize: '14px',
+                })
+
+                const color = "red";
+
+                export default css({ color, ...typo, ...box() });
+        `,
+                options,
+            ),
+        ).toMatchInlineSnapshot(`
+            "import \\".cache/taddy/entry.js\\";
+            import { css } from \\"@taddy/core\\";
+            export default css(\\"_9bfd_4da4 _a1f1_1340 _ce9a_9fbe\\");"
+        `);
+    });
 });

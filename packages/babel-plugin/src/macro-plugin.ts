@@ -10,8 +10,28 @@ import {createProcessors, output} from './handlers';
 import type {ProcessorConfig} from './Processor';
 
 type CompileOptions = {
+    /**
+     * Use typescript language server
+     *
+     * By default, true for typescript files
+     * @default true
+     */
     typescript: ProcessorConfig['typescript'];
+
+    /**
+     * Apply static evaluation optimizations
+     *
+     * @default true
+     */
     evaluate: ProcessorConfig['evaluate'];
+
+    /**
+     * Use CSS Variables fallback
+     * If true, then even not optimized dynamic values would be optimized as possible
+     *
+     * @default true
+     */
+    unstable_CSSVariableFallback: ProcessorConfig['CSSVariableFallback'];
 };
 
 export type MacroConfig = Partial<{
@@ -25,6 +45,23 @@ export type MacroOptions = {
     config?: MacroConfig;
     references: Record<string, NodePath[]>;
 };
+
+function mapCompileOptions({
+    filename,
+    code,
+    evaluate = true,
+    typescript = /\.tsx?$/.test(filename),
+    unstable_CSSVariableFallback = true,
+}: Partial<CompileOptions> &
+    Pick<ProcessorConfig, 'code' | 'filename'>): ProcessorConfig {
+    return {
+        filename,
+        code,
+        evaluate,
+        typescript,
+        CSSVariableFallback: unstable_CSSVariableFallback,
+    };
+}
 
 export function macro({references, state, config: _config = {}}: MacroOptions) {
     const config: MacroConfig & {
@@ -42,13 +79,9 @@ export function macro({references, state, config: _config = {}}: MacroOptions) {
     const code = state.file.code;
     const {filename} = state;
 
-    const {handlers, finish} = createProcessors({
-        evaluate: true,
-        typescript: /\.tsx?$/.test(filename),
-        ...config.compileOptions,
-        filename,
-        code,
-    });
+    const {handlers, finish} = createProcessors(
+        mapCompileOptions({...config.compileOptions, filename, code}),
+    );
 
     for (const key in references) {
         if (!handlers[key]) continue;
