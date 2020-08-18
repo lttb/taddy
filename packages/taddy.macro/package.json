@@ -12,7 +12,8 @@
         "start": "tsdx watch",
         "build": "tsdx build --target node --transpileOnly",
         "test": "tsdx test",
-        "lint": "tsdx lint"
+        "lint": "tsdx lint",
+        "prepublishOnly": "yarn build"
     },
     "dependencies": {
         "@taddy/babel-plugin": "^0.0.1",

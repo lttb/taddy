@@ -14,7 +14,8 @@
         "start": "tsc --watch",
         "build": "tsdx build --target node --transpileOnly",
         "test": "tsdx test",
-        "lint": "tsdx lint"
+        "lint": "tsdx lint",
+        "prepublishOnly": "yarn build"
     },
     "dependencies": {
         "@babel/core": "^7.11.1",
