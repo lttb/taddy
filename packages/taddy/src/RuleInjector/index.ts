@@ -63,7 +63,7 @@ export class RuleInjector {
             return this.putNested(postfix + key, value, {inject});
         }
 
-        const {nameGenerator} = config.current;
+        const {nameGenerator} = config;
 
         if (isStatic(key)) {
             /** Static value */

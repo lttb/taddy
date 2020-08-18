@@ -44,7 +44,7 @@ function getLiteralValue(path: NodePath<t.Literal>): any {
 }
 
 function getHashedName(key: string, {postfix}: CommonOptions): string {
-    return config.current.nameGenerator.getName(key, '', {postfix}).join('');
+    return config.nameGenerator.getName(key, '', {postfix}).join('');
 }
 
 export class Processor {

@@ -2,10 +2,12 @@ import {VARS_KEY, MIXIN_KEY} from '../common';
 
 import {config} from '../config';
 
-export const css = (
+const _css = (
     rule: string | {className?: string; style?: object; [VARS_KEY]?: object},
-) => {
-    if (typeof rule === 'string') return {className: rule};
+): {className: string; style?: object} => {
+    if (typeof rule === 'string') {
+        return {className: rule};
+    }
 
     const result: any = {};
 
@@ -19,6 +21,10 @@ export const css = (
     return result;
 };
 
-css.h = (x) => config.current.nameGenerator.getHash(x);
+export const css = (
+    ...args: Parameters<typeof _css>
+): ReturnType<typeof _css> => config.unstable__mapStyles(_css(...args));
+
+css.h = (x) => config.nameGenerator.getHash(x);
 // eslint-disable-next-line no-sequences
 css.mixin = (x: object) => ((x[MIXIN_KEY] = x), x);
