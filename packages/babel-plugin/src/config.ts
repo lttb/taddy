@@ -48,7 +48,7 @@ export function loadConfig(filepath: string): object {
 //     },
 // }).search()?.config;
 
-const DEFAULT_CACHE_DIR = __dirname;
+const DEFAULT_CACHE_DIR = process.cwd();
 export const cacheDir = findCacheDir({name: PACKAGE_NAME}) || DEFAULT_CACHE_DIR;
 
 export function getRelativeFilepath(from: string, to: string): string {
