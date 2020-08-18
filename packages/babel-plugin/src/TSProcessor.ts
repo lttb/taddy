@@ -1,8 +1,8 @@
 import type {Node} from 'ts-morph';
 import path from 'path';
 
-import {Project} from 'ts-morph';
 import type {
+    Project as TSProject,
     Symbol as TSSymbol,
     Type as TSType,
     ProjectOptions,
@@ -186,9 +186,11 @@ export function parseObject(
 export type TSProcessorOptions = ProjectOptions;
 
 export default class TSProcessor {
-    project: Project;
+    project: TSProject;
 
     constructor(config: TSProcessorOptions) {
+        const {Project} = require('ts-morph');
+
         this.project = new Project({
             tsConfigFilePath: path.join(process.cwd(), 'tsconfig.json'),
             ...config,

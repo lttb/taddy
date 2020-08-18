@@ -1,10 +1,10 @@
 /* eslint-disable */
 
 import findCacheDir from 'find-cache-dir';
-import path from 'path'
+import path from 'path';
 import mkdirp from 'mkdirp';
 
-import {Project} from 'ts-morph'
+import type {Project as TSProject} from 'ts-morph';
 import {lilconfigSync} from 'lilconfig';
 
 import {getType, parseObject} from './TSProcessor';
@@ -12,10 +12,12 @@ import {getType, parseObject} from './TSProcessor';
 export const MACRO_NAME = 'taddy.macro';
 export const PACKAGE_NAME = 'taddy';
 
-// empty project to parse the config
-const project = new Project()
-
 export function loadConfig(filepath: string): object {
+    const {Project} = require('ts-morph');
+
+    // empty project to parse the config
+    const project: TSProject = new Project();
+
     const sourceFile = project.addSourceFileAtPath(filepath);
 
     const decl = sourceFile.getDefaultExportSymbol();
@@ -37,14 +39,18 @@ export function loadConfig(filepath: string): object {
     };
 }
 
-export const config = lilconfigSync(PACKAGE_NAME, {
-    searchPlaces: [`${PACKAGE_NAME}.config.ts`],
-    loaders: {
-        '.ts': loadConfig,
-    },
-}).search()?.config;
+// TODO: add config resolution
 
-export const cacheDir = findCacheDir({name: PACKAGE_NAME}) || path.join(require.resolve('taddy'), '.cache');
+// export const config = lilconfigSync(PACKAGE_NAME, {
+//     searchPlaces: [`${PACKAGE_NAME}.config.ts`],
+//     loaders: {
+//         '.ts': loadConfig,
+//     },
+// }).search()?.config;
+
+export const cacheDir =
+    findCacheDir({name: PACKAGE_NAME}) ||
+    path.join(require.resolve('taddy'), '.cache');
 
 export const getCachedModuleFilepath = (filename: string) => {
     return `.cache/${PACKAGE_NAME}/${filename}`;
