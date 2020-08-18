@@ -27,11 +27,11 @@ export function resetStyles() {
 export const getBabelOptions = (
     options: MacroConfig = {},
 ): TransformOptions => ({
-    filename: `${__filename}virtual.ts`,
+    filename: `${__filename}virtual.tsx`,
     babelrc: false,
     configFile: false,
     plugins: [
-        '@babel/plugin-syntax-typescript',
+        ['@babel/plugin-syntax-typescript', {isTSX: true}],
 
         createConfigItem((babel) =>
             taddyPlugin(babel, {
