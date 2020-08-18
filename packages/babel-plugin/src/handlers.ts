@@ -62,11 +62,8 @@ type EntryOptions = {
     extractCSS: ExtractCSSType;
 };
 
-function writeDevEntry({styles, jsFilepath, cssFilepath}: EntryOptions) {
-    const jsToCSS = getRelativeFilepath(jsFilepath, cssFilepath);
-
+function writeDevEntry({styles, jsFilepath}: EntryOptions) {
     const template = `
-require('${jsToCSS}');
 var getStyleNodeById = require('taddy').getStyleNodeById
 var STYLES = '${styles}'
 var state = {current: STYLES}
