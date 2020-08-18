@@ -48,9 +48,7 @@ export function loadConfig(filepath: string): object {
 //     },
 // }).search()?.config;
 
-export const cacheDir =
-    findCacheDir({name: PACKAGE_NAME}) ||
-    path.join(require.resolve('taddy'), '.cache');
+export const cacheDir = findCacheDir({name: PACKAGE_NAME}) || __dirname;
 
 export const getCachedModuleFilepath = (filename: string) => {
     return `.cache/${PACKAGE_NAME}/${filename}`;
