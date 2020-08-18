@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.4](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.3...@taddy/babel-plugin@0.0.4) (2020-08-18)
+
+
+### Bug Fixes
+
+* **babel-plugin:** fix variables evaluation ([7e2d90b](https://github.com/lttb/taddy/commit/7e2d90bddeba57b06ffc8921bd1c6ab7d211ec59))
+
+
+
+
+
 ## [0.0.3](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.2...@taddy/babel-plugin@0.0.3) (2020-08-18)
 
 
