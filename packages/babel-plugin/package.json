@@ -1,6 +1,6 @@
 {
     "name": "@taddy/babel-plugin",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
     "main": "dist/index.js",

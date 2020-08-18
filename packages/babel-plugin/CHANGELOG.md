@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.14](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.13...@taddy/babel-plugin@0.0.14) (2020-08-18)
+
+
+### Bug Fixes
+
+* **babel-plugin:** add an experimental workaround for virtual environments ([b6dcc6a](https://github.com/lttb/taddy/commit/b6dcc6a3f52b66c24035f594fb05283a7d38771b))
+
+
+
+
+
 ## [0.0.13](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.12...@taddy/babel-plugin@0.0.13) (2020-08-18)
 
 

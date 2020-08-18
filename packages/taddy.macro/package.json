@@ -1,6 +1,6 @@
 {
     "name": "taddy.macro",
-    "version": "0.0.14",
+    "version": "0.0.15",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
     "main": "dist/index.js",
@@ -16,7 +16,7 @@
         "prepublishOnly": "yarn build"
     },
     "dependencies": {
-        "@taddy/babel-plugin": "^0.0.13",
+        "@taddy/babel-plugin": "^0.0.14",
         "taddy": "^0.0.5"
     },
     "peerDependencies": {
