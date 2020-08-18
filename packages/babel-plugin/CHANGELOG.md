@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.13](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.12...@taddy/babel-plugin@0.0.13) (2020-08-18)
+
+
+### Bug Fixes
+
+* **babel-plugin:** try to use cwd as fallback ([1d1035e](https://github.com/lttb/taddy/commit/1d1035e6beacfb6901323cd91647b97a099051c8))
+
+
+
+
+
 ## [0.0.12](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.11...@taddy/babel-plugin@0.0.12) (2020-08-18)
 
 
