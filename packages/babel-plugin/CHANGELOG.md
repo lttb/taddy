@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.7...@taddy/babel-plugin@0.0.8) (2020-08-18)
+
+
+### Features
+
+* **babel-plugin:** lazy ts-morph load ([52efbd3](https://github.com/lttb/taddy/commit/52efbd3bdc7d2247f740b1f3259d9e770d46942d))
+
+
+
+
+
 ## [0.0.7](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.6...@taddy/babel-plugin@0.0.7) (2020-08-18)
 
 
