@@ -199,10 +199,16 @@ export function output({
     const {filename} = state;
 
     if (unstable__inline) {
+        const getStyleNode = addNamed(program, 'getStyleNodeById', 'taddy');
         program.pushContainer(
             'body',
-            t.identifier(
-                `require('taddy').getStyleNodeById('taddy').innerHTML = '${result}';`,
+            t.assignmentExpression(
+                '=',
+                t.memberExpression(
+                    t.callExpression(getStyleNode, [t.stringLiteral('taddy')]),
+                    t.identifier('innerHTML'),
+                ),
+                t.stringLiteral(result),
             ),
         );
 
