@@ -62,13 +62,17 @@ type EntryOptions = {
     extractCSS: ExtractCSSType;
 };
 
-function writeDevEntry({styles, jsFilepath}: EntryOptions) {
+function writeDevEntry({styles, jsFilepath, cssFilepath}: EntryOptions) {
+    const jsToCSS = getRelativeFilepath(jsFilepath, cssFilepath);
+
     const template = `
+require('${jsToCSS}');
 var getStyleNodeById = require('taddy').getStyleNodeById
-var STYLES = window.__TADDY_STYLES__ = window.__TADDY_STYLES__ || '${styles}'
+var STYLES = '${styles}'
 var state = {current: STYLES}
 var isBrowser = typeof window !== 'undefined'
 if (isBrowser && !getStyleNodeById('taddy').innerHTML) {
+    state.current = window.__TADDY_STYLES__ = window.__TADDY_STYLES__ || STYLES
     getStyleNodeById('taddy').innerHTML = state.current
 }
 module.exports.STYLES = STYLES;
