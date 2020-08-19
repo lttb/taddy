@@ -83,7 +83,7 @@ export default function plugin(
                     findReferences(path.get('specifiers')),
                 );
 
-                if (Object.keys(this.references as object).length === 0) {
+                if (!(this.references.css || this.references.mixin)) {
                     return;
                 }
 

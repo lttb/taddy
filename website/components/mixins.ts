@@ -1,4 +1,4 @@
-import {css, $} from 'taddy';
+import {$, css} from 'taddy';
 
 const size = (v: number) => `${v * 4}px`;
 

@@ -312,9 +312,9 @@ export const createProcessors = (config: ProcessorConfig) => {
 
             if (!path.isCallExpression()) return;
 
-            const argPath = (path.get('arguments') as NodePath<any>[])[0];
+            const args = path.get('arguments') as NodePath<any>[];
 
-            const result = processor.run(argPath, {
+            const result = processor.run(args, {
                 mixin,
             });
 
@@ -327,7 +327,7 @@ export const createProcessors = (config: ProcessorConfig) => {
                 optimizationPaths,
             });
 
-            path.node.arguments = [argPath.node];
+            // path.node.arguments = [argPath.node];
         },
 
         mixin: (path) => handlers.css(path, {mixin: true}),

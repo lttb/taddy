@@ -1,21 +1,32 @@
 import * as t from '@babel/types';
 import type {NodePath, Binding} from '@babel/traverse';
 
-type BindingSet = Set<Binding>;
+export type BindingMap = Map<Binding, Set<NodePath>>;
 
-const cache = new WeakMap<NodePath, BindingSet>();
+const cache = new WeakMap<NodePath, BindingMap>();
 
 export class BindingError extends Error {}
 
-export function findBindings(currentPath: NodePath): BindingSet {
+function addBinding(
+    bindingMap: BindingMap,
+    binding: Binding,
+    path: NodePath<any>,
+) {
+    bindingMap.set(binding, (bindingMap.get(binding) || new Set()).add(path));
+}
+
+export function findBindings(currentPath: NodePath): BindingMap {
     function visitIdentifier(
         referentPath: NodePath,
         path: NodePath<t.Identifier>,
-        bindingSet: BindingSet,
+        bindingMap: BindingMap,
     ) {
         if (path.parentPath.isMemberExpression()) {
-            // @ts-ignore
+            // @ts-expect-error
             path = path.parentPath.get('object');
+        } else if (path.parentPath.isObjectPattern()) {
+            // @ts-expect-error
+            path = path.parentPath.parentPath;
         }
 
         const {parentPath, node} = path;
@@ -47,59 +58,59 @@ export function findBindings(currentPath: NodePath): BindingSet {
 
         const {path: bindingPath} = binding;
 
-        if (bindingSet.has(binding)) {
+        if (bindingMap.has(binding)) {
+            addBinding(bindingMap, binding, path);
             return;
         }
 
-        if (
-            bindingPath.parentPath.isFunctionExpression() &&
-            bindingPath.listKey === 'params'
-        ) {
-            throw new BindingError('FUNCTION ARGUMENT');
+        if (!(bindingPath.listKey === 'params')) {
+            addBinding(bindingMap, binding, path);
         }
-
-        bindingSet.add(binding);
 
         if (bindingPath.isImportSpecifier()) {
             return;
         }
 
-        (traverse(bindingPath) || []).forEach((x) => bindingSet.add(x));
+        for (let [newBinding, paths] of traverse(bindingPath)) {
+            paths.forEach((x) => {
+                addBinding(bindingMap, newBinding, x);
+            });
+        }
     }
 
     const visited = new Set();
 
-    function traverse(referentPath: NodePath): BindingSet {
+    function traverse(referentPath: NodePath): BindingMap {
         if (referentPath.isObjectPattern()) {
-            throw new BindingError('OBJECT PATTERN');
+            // throw new BindingError('OBJECT PATTERN');
         }
 
         if (cache.has(referentPath)) {
             return cache.get(referentPath)!;
         }
 
-        const bindingSet = new Set<Binding>();
+        const bindings: BindingMap = new Map();
 
         // we should not revisit the paths, otherwise something went wrong
         if (visited.has(referentPath)) {
-            return bindingSet;
+            return bindings;
         }
 
         visited.add(referentPath);
 
         if (referentPath.isIdentifier()) {
-            visitIdentifier(referentPath, referentPath, bindingSet);
+            visitIdentifier(referentPath, referentPath, bindings);
         }
 
         referentPath.traverse({
             Identifier(path) {
-                visitIdentifier(referentPath, path, bindingSet);
+                visitIdentifier(referentPath, path, bindings);
             },
         });
 
-        cache.set(referentPath, bindingSet);
+        cache.set(referentPath, bindings);
 
-        return bindingSet;
+        return bindings;
     }
 
     return traverse(currentPath);

@@ -15,13 +15,9 @@ import {MACRO_NAME, PACKAGE_NAME} from '../config';
 
 import {buildCodeByPath} from './buildCodeByPath';
 
-import tsSyntax from '@babel/plugin-syntax-typescript';
-
 import tsPreset from '@babel/preset-typescript';
 import reactPreset from '@babel/preset-react';
 import envPreset from '@babel/preset-env';
-
-registerPlugin('@babel/plugin-syntax-typescript', tsSyntax);
 
 registerPreset('@babel/preset-typescript', tsPreset);
 registerPreset('@babel/preset-react', reactPreset);
@@ -114,7 +110,7 @@ export function evaluate(
 
         return {value};
     } catch (error) {
-        console.log('evaluate error', {error});
+        // console.log('evaluate error', {error});
 
         return {error};
     }

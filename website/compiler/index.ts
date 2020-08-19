@@ -1,17 +1,23 @@
-import {$css, RuleInjector, VirtualStyleSheet} from 'taddy';
+// import {$css, RuleInjector, VirtualStyleSheet} from 'taddy';
 
 import {registerPlugin, transform} from '@babel/standalone';
-
-import taddyPlugin from '@taddy/babel-plugin';
 
 import {Project} from 'ts-morph';
 
 import prettier from 'prettier/standalone';
 import parserTypescript from 'prettier/parser-typescript';
 
+import tsSyntax from '@babel/plugin-syntax-typescript';
+
+import taddyPlugin from '@taddy/babel-plugin';
+
+registerPlugin('@babel/plugin-syntax-typescript', tsSyntax);
+
 registerPlugin('@taddy/babel-plugin', taddyPlugin);
 
-const tsConfigFilePath = require.resolve('../tsconfig.json');
+const {$css, RuleInjector, VirtualStyleSheet} = require('taddy');
+
+// const tsConfigFilePath = require.resolve('../tsconfig.json');
 
 const project = new Project({
     useInMemoryFileSystem: true,

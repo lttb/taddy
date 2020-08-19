@@ -50,9 +50,9 @@ const DEFAULT_CACHE_DIR = __dirname;
 export function getCacheDir() {
     let cacheDir;
 
-    // if (typeof window !== 'undefined') {
-    //     return DEFAULT_CACHE_DIR;
-    // }
+    if (typeof window !== 'undefined') {
+        return DEFAULT_CACHE_DIR;
+    }
 
     try {
         const findCacheDir = require('find-cache-dir');
@@ -81,13 +81,13 @@ export const getCachedModuleFilepath = (
     return `.cache/${PACKAGE_NAME}/${filename}`;
 };
 
-// if (typeof window === 'undefined') {
-try {
-    const mkdirp = require('mkdirp');
-    mkdirp.sync(cacheDir);
-} catch (error) {
-    // TODO: handle this error
+if (typeof window === 'undefined') {
+    try {
+        const mkdirp = require('mkdirp');
+        mkdirp.sync(cacheDir);
+    } catch (error) {
+        // TODO: handle this error
 
-    console.error('TADDY', 'can not create cache dir', error);
+        console.error('TADDY', 'can not create cache dir', error);
+    }
 }
-// }
