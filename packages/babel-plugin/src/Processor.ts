@@ -477,7 +477,9 @@ export class Processor {
         }
     }
 
-    run(args: NodePath<any>[], {mixin = false} = {}) {
+    run(callPath: NodePath<t.CallExpression>, {mixin = false} = {}) {
+        const args = callPath.get('arguments') as NodePath<any>[];
+
         const argPath = args[0];
 
         const composes: t.Expression[] = [];
@@ -503,6 +505,8 @@ export class Processor {
                 ]),
             );
         }
+
+        callPath.node.arguments = [argPath.node];
 
         const path = argPath;
 

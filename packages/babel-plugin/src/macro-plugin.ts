@@ -80,6 +80,7 @@ export function macro({
 
     const {handlers, finish} = createProcessors(
         mapCompileOptions({...config.compileOptions, filename, code}),
+        {env},
     );
 
     for (const key in references) {

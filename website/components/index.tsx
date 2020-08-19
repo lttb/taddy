@@ -6,7 +6,7 @@ import {useAction, useAtom} from '@reatom/react';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-typescript';
 import 'ace-builds/src-noconflict/mode-css';
-// import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-textmate';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
 import Code, {code} from './Code';
@@ -128,6 +128,17 @@ const Options = () => {
     );
 };
 
+const _Editor = (props) => (
+    <AceEditor
+        mode="typescript"
+        theme="textmate"
+        showPrintMargin={false}
+        maxLines={Infinity}
+        width="100%"
+        {...props}
+    />
+);
+
 export const Editor = () => {
     const code = useAtom(playgroundAtom, (x) => x.code, ['code']);
     const handleCode = useAction((code) => updatePlayground({code}));
@@ -139,18 +150,20 @@ export const Editor = () => {
     }, []);
 
     return (
-        <AceEditor
-            mode="typescript"
-            // theme="github"
-            value={code}
-            onChange={handleCode}
-            name="TADDY_EDITOR"
-            editorProps={{$blockScrolling: true}}
-            setOptions={{
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-            }}
-        />
+        <div>
+            <h2>Source Code</h2>
+
+            <_Editor
+                value={code}
+                onChange={handleCode}
+                name="TADDY_EDITOR"
+                editorProps={{$blockScrolling: true}}
+                setOptions={{
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                }}
+            />
+        </div>
     );
 };
 
@@ -171,27 +184,23 @@ export const CompiledRender = () => {
                 if (data.status === 'done') {
                     const {result} = data;
                     return (
-                        <div>
-                            <AceEditor
-                                mode="typescript"
-                                // theme="github"
-                                value={data.result.code}
-                                readOnly
-                                style={{width: '100%'}}
-                            />
+                        <>
+                            <div>
+                                <h2>Compiled Module</h2>
+
+                                <_Editor value={data.result.code} readOnly />
+                            </div>
 
                             <div>
                                 <h2>Compiled CSS</h2>
 
-                                <AceEditor
+                                <_Editor
                                     mode="css"
-                                    // theme="github"
                                     value={data.result.css}
                                     readOnly
-                                    style={{width: '100%'}}
                                 />
                             </div>
-                        </div>
+                        </>
                     );
                 }
 
@@ -220,3 +229,5 @@ export const CodePanel = () => (
         </div>
     </context.Provider>
 );
+
+console.log('wtf');

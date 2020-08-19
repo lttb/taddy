@@ -15,6 +15,8 @@ import type {ProcessorConfig} from './Processor';
 import {optimizeBindings} from './helpers';
 import {cacheDir, getCachedModuleFilepath, getRelativeFilepath} from './config';
 
+import type {Env} from './types';
+
 let LAST_INDEX = 0;
 let STYLES: string[] = [];
 
@@ -36,8 +38,6 @@ function getStylesState() {
 
 type FilenameGetter = (code?: string) => string;
 type FilepathGetter = (filename: string) => string;
-
-export type Env = 'development' | 'production' | 'test';
 
 type ExtractCSSType = boolean | 'production' | 'development';
 
@@ -78,7 +78,7 @@ export function getEnv(babel: ConfigAPI): Env {
         DEFAULT_ENV) as Env;
 }
 
-function writeDevEntry({styles, jsFilepath}: EntryOptions) {
+function writeDevEntry({styles, jsFilepath, cssFilepath}: EntryOptions) {
     const template = `
 var getStyleNodeById = require('taddy').getStyleNodeById
 var STYLES = '${styles}'
@@ -287,7 +287,10 @@ function isPathRemoved(path: NodePath<any>) {
     return false;
 }
 
-export const createProcessors = (config: ProcessorConfig) => {
+export const createProcessors = (
+    config: ProcessorConfig,
+    options: {env: Env},
+) => {
     const mixinsQueue: NodePath<any>[] = [];
     const proceedPaths: {
         isStatic: boolean;
@@ -312,9 +315,7 @@ export const createProcessors = (config: ProcessorConfig) => {
 
             if (!path.isCallExpression()) return;
 
-            const args = path.get('arguments') as NodePath<any>[];
-
-            const result = processor.run(args, {
+            const result = processor.run(path, {
                 mixin,
             });
 
@@ -341,7 +342,7 @@ export const createProcessors = (config: ProcessorConfig) => {
             for (let x of proceedPaths) {
                 isStatic = isStatic && x.isStatic;
                 for (let path of x.optimizationPaths) {
-                    optimizeBindings(path);
+                    optimizeBindings(path, {env: options.env});
                 }
             }
 

@@ -3,6 +3,8 @@ import {types as t} from '@babel/core';
 
 import {findBindings} from './findBindings';
 
+import type {Env} from '../types';
+
 function isTaddy(binding: Binding) {
     const {path} = binding;
 
@@ -16,7 +18,10 @@ function isTaddy(binding: Binding) {
     );
 }
 
-export function optimizeBindings(referentPath: NodePath) {
+export function optimizeBindings(
+    referentPath: NodePath,
+    {env}: {env?: Env} = {},
+) {
     let bindings: ReturnType<typeof findBindings>;
 
     try {
@@ -53,12 +58,19 @@ export function optimizeBindings(referentPath: NodePath) {
 
         const {parentPath} = binding.path;
 
-        if (
+        const isImportToRemove =
             parentPath.isImportDeclaration() &&
-            parentPath.node.specifiers.length === 0
-        ) {
-            parentPath.remove();
-            continue;
+            parentPath.node.specifiers.length === 0;
+
+        if (!isImportToRemove) {
+            return;
         }
+
+        // keep imports for development build
+        if (env === 'development') {
+            return;
+        }
+
+        parentPath.remove();
     }
 }

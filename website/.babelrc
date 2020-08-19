@@ -1,4 +1,4 @@
 {
     "presets": ["next/babel"],
-    "plugins": ["@taddy"]
+    "plugins": [["@taddy", {"outputOptions": {"extractCSS": true}}]]
 }
