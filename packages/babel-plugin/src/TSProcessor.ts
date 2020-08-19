@@ -188,8 +188,13 @@ export type TSProcessorOptions = ProjectOptions;
 export default class TSProcessor {
     project: TSProject;
 
-    constructor(config: TSProcessorOptions) {
-        const {Project} = require('ts-morph');
+    constructor(config: TSProcessorOptions | TSProject) {
+        const {Project}: {Project: typeof TSProject} = require('ts-morph');
+
+        if (config instanceof Project) {
+            this.project = config;
+            return;
+        }
 
         this.project = new Project({
             tsConfigFilePath: path.join(process.cwd(), 'tsconfig.json'),

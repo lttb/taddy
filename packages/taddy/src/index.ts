@@ -39,13 +39,10 @@ type CSSResult<T = TaddyRule> = TaddyStyle &
         [TADDY]: T;
     };
 
-const _css = <T extends TaddyRule>(rule: T | TaddyRule): CSSResult<T> => {
-    if (typeof rule === 'string') {
-        // @ts-expect-error
-        return withId(rule);
-    }
-
-    const {className, style} = $css(rule);
+const _css = <T extends TaddyRule>(
+    ...composes: (T | TaddyRule)[]
+): CSSResult<T> => {
+    const {className, style} = $css({composes});
 
     delete className[MIXIN_KEY];
 

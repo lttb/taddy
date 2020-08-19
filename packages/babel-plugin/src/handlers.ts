@@ -1,7 +1,7 @@
 import * as t from '@babel/types';
 import {addNamed, addSideEffect} from '@babel/helper-module-imports';
 
-import type {NodePath, PluginPass} from '@babel/core';
+import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import fs from 'fs';
 import nodePath from 'path';
@@ -59,6 +59,24 @@ type EntryOptions = {
     styles: string;
     extractCSS: ExtractCSSType;
 };
+
+export function getEnv(babel: ConfigAPI): Env {
+    try {
+        return babel.env() as Env;
+    } catch (e) {
+        // console.log('error', e);
+    }
+
+    const DEFAULT_ENV = 'production';
+
+    if (!(typeof process && process.env)) {
+        return DEFAULT_ENV;
+    }
+
+    return (process.env.BABEL_ENV ||
+        process.env.NODE_ENV ||
+        DEFAULT_ENV) as Env;
+}
 
 function writeDevEntry({styles, jsFilepath}: EntryOptions) {
     const template = `
@@ -152,7 +170,11 @@ function writeCSSFileSync(filepath: string, content: string, append: string) {
         return;
     }
 
-    fs.appendFileSync(filepath, append);
+    fs.appendFile(filepath, append, (error) => {
+        if (error) {
+            console.error(error);
+        }
+    });
 }
 
 export function output({

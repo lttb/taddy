@@ -78,14 +78,14 @@ export function findBindings(currentPath: NodePath): BindingSet {
             return cache.get(referentPath)!;
         }
 
+        const bindingSet = new Set<Binding>();
+
         // we should not revisit the paths, otherwise something went wrong
         if (visited.has(referentPath)) {
-            throw new BindingError('INFINITE LOOP');
+            return bindingSet;
         }
 
         visited.add(referentPath);
-
-        const bindingSet = new Set<Binding>();
 
         if (referentPath.isIdentifier()) {
             visitIdentifier(referentPath, referentPath, bindingSet);

@@ -9,4 +9,12 @@ module.exports = {
             version: '999.999.999',
         },
     },
+    overrides: [
+        {
+            files: ['./website/**/*.tsx'],
+            rules: {
+                'react/react-in-jsx-scope': 'off',
+            },
+        },
+    ],
 };

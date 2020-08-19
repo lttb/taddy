@@ -16,7 +16,10 @@ export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
             throw new Error('Cant optimize this path');
         }
 
-        const key = String(getObjectPropertyKey(propPath));
+        const keyPath = (propPath as NodePath<t.ObjectProperty>).get('key');
+        const key = getObjectPropertyKey(keyPath);
+
+        if (!key) return;
 
         const valuePath = (propPath as NodePath<t.ObjectProperty>).get('value');
 

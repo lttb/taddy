@@ -169,6 +169,8 @@ export class Processor {
             const {value} = evaluate(valuePath);
             if (!value) return false;
 
+            // console.log('evaluate', {value});
+
             properties.push(...this.stylesToNode(key, value, {postfix}));
 
             this.optimizationPaths.add(path);
@@ -187,6 +189,8 @@ export class Processor {
             );
 
             if (!tsType) return;
+
+            // console.log('TYPE', tsType.getType().getText());
 
             return parseValue(tsType.getType());
         };
@@ -221,6 +225,8 @@ export class Processor {
 
             if (!tsValue) return false;
 
+            // console.log({tsValue});
+
             if (isStaticValue(tsValue)) {
                 properties.push(...this.stylesToNode(key, tsValue, {postfix}));
 
@@ -238,7 +244,7 @@ export class Processor {
 
             // pre-generate classes for variants
             variants.forEach((v: any) => {
-                if (v instanceof DynamicType) {
+                if (v instanceof DynamicType || !isStaticValue(v)) {
                     isCompilable = false;
                     return;
                 }
@@ -265,10 +271,10 @@ export class Processor {
         const tryCSSVariableValue = (): boolean => {
             if (!this.config.CSSVariableFallback) return false;
 
-            // think about dynamic nested
+            // think about dynamic nested for mixins
             // in case of nested dynamic values in mixin we can't fallback them as custom properties
             if (
-                (this.mixin && postfix !== '') ||
+                this.mixin ||
                 key === 'composes' ||
                 key[0] === ':' ||
                 /[\W]/.test(key)
@@ -308,9 +314,29 @@ export class Processor {
         path: NodePath<t.ObjectProperty>,
         {postfix = '', properties}: ObjectOptions,
     ) {
-        const key = String(getObjectPropertyKey(path));
+        const keyPath = path.get('key');
+        const key = getObjectPropertyKey(keyPath);
+
+        const tryEvaluateKey = (): boolean => {
+            if (!this.config.evaluate) return false;
+
+            const {value} = evaluate(keyPath);
+
+            if (!value) return false;
+
+            this.processPropertyValue(String(value), path, {
+                postfix,
+                properties,
+            });
+
+            return true;
+        };
 
         if (key === 'className' || key === 'style' || key === null) {
+            if (tryEvaluateKey()) {
+                return;
+            }
+
             properties.push(path.node);
             return;
         }
@@ -439,9 +465,18 @@ export class Processor {
             !this.mixin &&
             path.node.properties.every((x) => {
                 if (!t.isObjectProperty(x)) return false;
-                if ('name' in x.key && x.key.name === 'composes') {
+                if (!('name' in x.key)) return false;
+                if (
+                    !(
+                        x.key.name[0] === '_' ||
+                        x.key.name === 'className' ||
+                        x.key.name === 'style' ||
+                        x.key.name === VARS_KEY
+                    )
+                ) {
                     return false;
                 }
+
                 return true;
             });
 

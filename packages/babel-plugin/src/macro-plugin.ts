@@ -4,8 +4,8 @@ import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 import {isTaddyEvaluation} from './helpers';
 import {MACRO_NAME, PACKAGE_NAME} from './config';
 
-import type {OutputOptions, Env} from './handlers';
-import {createProcessors, output} from './handlers';
+import type {OutputOptions} from './handlers';
+import {createProcessors, output, getEnv} from './handlers';
 
 import type {ProcessorConfig} from './Processor';
 
@@ -62,14 +62,13 @@ function mapCompileOptions({
         CSSVariableFallback: unstable_CSSVariableFallback,
     };
 }
-
-export function macro({references, state, config: _config = {}}: MacroOptions) {
-    const config: MacroConfig & {
-        env: Env;
-    } = {
-        env: process.env.NODE_ENV as Env,
-        ..._config,
-    };
+export function macro({
+    references,
+    babel,
+    state,
+    config: _config = {},
+}: MacroOptions) {
+    const {env = getEnv(babel), ...config} = _config;
 
     if (isTaddyEvaluation(state)) {
         return;
@@ -118,7 +117,7 @@ export function macro({references, state, config: _config = {}}: MacroOptions) {
     }
 
     output({
-        env: config.env,
+        env,
         state,
         config: config.outputOptions,
     });

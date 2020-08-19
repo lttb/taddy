@@ -18,8 +18,6 @@ export function optimizeBindings(referentPath: NodePath) {
     try {
         bindings = findBindings(referentPath);
     } catch (error) {
-        console.log('ERROR', {error});
-
         return;
     }
 

@@ -1,0 +1,11 @@
+{
+    "version": 2,
+    "name": "taddy",
+    "alias": ["taddy.dev", "taddy"],
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@now/static-build"
+        }
+    ]
+}

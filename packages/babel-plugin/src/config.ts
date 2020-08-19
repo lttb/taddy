@@ -1,11 +1,8 @@
 /* eslint-disable */
 
-import findCacheDir from 'find-cache-dir';
 import path from 'path';
-import mkdirp from 'mkdirp';
 
 import type {Project as TSProject} from 'ts-morph';
-import {lilconfigSync} from 'lilconfig';
 
 import {getType, parseObject} from './TSProcessor';
 
@@ -49,7 +46,23 @@ export function loadConfig(filepath: string): object {
 // }).search()?.config;
 
 const DEFAULT_CACHE_DIR = __dirname;
-export const cacheDir = findCacheDir({name: PACKAGE_NAME}) || DEFAULT_CACHE_DIR;
+
+export function getCacheDir() {
+    let cacheDir;
+
+    // if (typeof window !== 'undefined') {
+    //     return DEFAULT_CACHE_DIR;
+    // }
+
+    try {
+        const findCacheDir = require('find-cache-dir');
+        cacheDir = findCacheDir({name: PACKAGE_NAME});
+    } catch (error) {}
+
+    return cacheDir || DEFAULT_CACHE_DIR;
+}
+
+export const cacheDir = getCacheDir();
 
 export function getRelativeFilepath(from: string, to: string): string {
     return './' + path.relative(path.dirname(from), to);
@@ -68,10 +81,13 @@ export const getCachedModuleFilepath = (
     return `.cache/${PACKAGE_NAME}/${filename}`;
 };
 
+// if (typeof window === 'undefined') {
 try {
+    const mkdirp = require('mkdirp');
     mkdirp.sync(cacheDir);
 } catch (error) {
     // TODO: handle this error
 
     console.error('TADDY', 'can not create cache dir', error);
 }
+// }
