@@ -51,8 +51,6 @@ interface TaddyPluginPass extends PluginPass {
     references: Record<string, NodePath[]>;
 }
 
-// export {MacroConfig};
-
 export default function plugin(
     babel: ConfigAPI,
     options: MacroConfig,

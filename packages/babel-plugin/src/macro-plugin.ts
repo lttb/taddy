@@ -37,6 +37,7 @@ type CompileOptions = {
 };
 
 export type MacroConfig = Partial<{
+    env?: ReturnType<typeof getEnv>;
     compileOptions: Partial<CompileOptions>;
     outputOptions: Partial<OutputOptions>;
 }>;

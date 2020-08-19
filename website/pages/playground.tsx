@@ -14,11 +14,7 @@ export default function Playground() {
                 ></script>
             </Head>
 
-            <div {...css({padding: '10px 20px'})}>
-                <h1 {...css({color: 'steelblue'})}>taddy</h1>
-
-                <CodePanel />
-            </div>
+            <CodePanel />
         </>
     );
 }

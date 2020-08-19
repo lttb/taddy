@@ -58,7 +58,10 @@ const updatePlayground = declareAction<Partial<Playground>>(
             })
             .catch((error) =>
                 store.dispatch(
-                    setTransformedCode({status: 'error', result: error}),
+                    setTransformedCode({
+                        status: 'error',
+                        error,
+                    }),
                 ),
             );
     },
@@ -84,18 +87,18 @@ const playgroundAtom = declareAtom<Playground>(
     ],
 );
 
-type CompiledData =
+type CompiledData = {result?: {code: string; css: string}} & (
     | {status: 'pending'}
-    | {
-          result: {code: string; css: string};
-          status: 'done';
-      }
-    | {result: Error; status: 'error'};
+    | {status: 'done'}
+    | {error: Error; status: 'error'}
+);
 
 const setTransformedCode = declareAction<CompiledData>();
 const transformAtom = declareAtom<CompiledData>(
     {status: 'done', result: {code: '', css: ''}},
-    (on) => [on(setTransformedCode, (state, payload) => payload)],
+    (on) => [
+        on(setTransformedCode, (state, payload) => ({...state, ...payload})),
+    ],
 );
 
 const Options = () => {
@@ -165,6 +168,7 @@ export const Editor = () => {
             <h2>Source Code</h2>
 
             <_Editor
+                debounceChangePeriod={50}
                 value={code}
                 onChange={handleCode}
                 name="TADDY_EDITOR"
@@ -188,38 +192,80 @@ const Compiled = ({
     return children(state);
 };
 
+const Layer = ({children}) => {
+    return (
+        <code
+            {...css({
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                whiteSpace: 'pre',
+                background: 'rgb(99 20 20 / 80%)',
+                zIndex: 5,
+                padding: '20px',
+                fontSize: '17px',
+                fontFamily: 'monospace',
+                color: 'white',
+                fontWeight: 'bold',
+            })}
+        >
+            {children}
+        </code>
+    );
+};
+
 export const CompiledRender = () => {
     return (
         <Compiled>
             {(data) => {
+                const content = (
+                    <div {...css(row({gap: 4}))}>
+                        <div>
+                            <h2>Compiled Module</h2>
+
+                            <_Editor
+                                highlightActiveLine={false}
+                                value={data.result?.code}
+                                readOnly
+                            />
+                        </div>
+
+                        <div>
+                            <h2>Compiled CSS</h2>
+
+                            <_Editor
+                                mode="css"
+                                highlightActiveLine={false}
+                                value={data.result?.css}
+                                readOnly
+                            />
+                        </div>
+                    </div>
+                );
+
                 if (data.status === 'done') {
-                    const {result} = data;
+                    return <div>{content}</div>;
+                }
+
+                if (data.status === 'error') {
                     return (
-                        <div {...css(row({gap: 4}))}>
-                            <div>
-                                <h2>Compiled Module</h2>
+                        <div>
+                            <Layer>{data.error.toString()}</Layer>
 
-                                <_Editor value={data.result.code} readOnly />
-                            </div>
-
-                            <div>
-                                <h2>Compiled CSS</h2>
-
-                                <_Editor
-                                    mode="css"
-                                    value={data.result.css}
-                                    readOnly
-                                />
-                            </div>
+                            {content}
                         </div>
                     );
                 }
 
-                if (data.status === 'error') {
-                    return <div>error: {data.result}</div>;
-                }
+                return (
+                    <div>
+                        <Layer>Compiling...</Layer>
 
-                return <div>compiling...</div>;
+                        {content}
+                    </div>
+                );
             }}
         </Compiled>
     );

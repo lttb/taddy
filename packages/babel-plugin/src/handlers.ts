@@ -8,12 +8,17 @@ import nodePath from 'path';
 
 import stringHash from 'string-hash';
 
-import {ruleInjector, config} from 'taddy';
+import {ruleInjector} from 'taddy';
 
 import {Processor} from './Processor';
 import type {ProcessorConfig} from './Processor';
 import {optimizeBindings} from './helpers';
-import {cacheDir, getCachedModuleFilepath, getRelativeFilepath} from './config';
+import {
+    cacheDir,
+    getRootDir,
+    getCachedModuleFilepath,
+    getRelativeFilepath,
+} from './config';
 
 import type {Env} from './types';
 
@@ -36,8 +41,20 @@ function getStylesState() {
     };
 }
 
-type FilenameGetter = (code?: string) => string;
-type FilepathGetter = (filename: string) => string;
+type FilenameGetter = string | ((code?: string) => string);
+type FilepathGetter = string | ((filename: string) => string);
+
+function resolveFilepath<T extends FilenameGetter | FilepathGetter>(
+    getter: T,
+    ...params: T extends (...args: any) => any ? Parameters<T> : []
+): string {
+    if (typeof getter !== 'string') {
+        // @ts-expect-error
+        return getter(...params);
+    }
+
+    return nodePath.join(getRootDir(), getter);
+}
 
 type ExtractCSSType = boolean | 'production' | 'development';
 
@@ -183,7 +200,7 @@ export function output({
     config: {
         // getCSSFilename = (content) => `atoms-${stringHash(content)}.css`,
         getCSSFilename = () => `atoms.css`,
-        getCSSFilepath = (filename: string) =>
+        getCSSFilepath = (filename: string = 'atoms.css') =>
             nodePath.join(cacheDir, filename),
 
         // getJSFilename = (content) => `entry-${stringHash(content)}.js`,
@@ -205,8 +222,8 @@ export function output({
 }) {
     const {added} = getStylesState();
 
-    const cssFilename = getCSSFilename();
-    const cssFilepath = getCSSFilepath(cssFilename);
+    const cssFilename = resolveFilepath(getCSSFilename);
+    const cssFilepath = resolveFilepath(getCSSFilepath, cssFilename);
 
     const stylesData = readFileSync(cssFilepath);
 

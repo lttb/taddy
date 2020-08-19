@@ -4,17 +4,44 @@ import history from './history';
 import {stripIndent} from 'common-tags';
 
 const initialCode = `
-    import {css} from 'taddy'
+import React from 'react'
+import {css} from 'taddy'
 
-    const COLORS = {
-        primary: 'red',
-        secondary: 'blue'
-    } as const
+const COLORS = {
+    primary: 'red',
+    secondary: 'blue',
+} as const
 
-    export default css({
-        color: COLORS.secondary,
-        backgroundColor: COLORS.primary,
+type Props = {children: string; variant: keyof typeof COLORS}
+
+export function Title({variant, children}: Props) {
+    return (
+        <h1 {...css({
+            /* declare your styles here */
+
+            color: COLORS[variant],
+
+            ...typo({size: 's'}),
+        })}>
+            {children}
+        </h1>
+    )
+}
+
+function typo({size = 's', weight = 'normal'}) {
+    return css.mixin({
+        weight,
+        lineHeight: 1.2,
+
+        ...size === 's' && {
+            fontSize: '14px',
+        },
+
+        ...size === 'm' && {
+            fontSize: '16px',
+        }
     })
+}
 `;
 
 const INITIAL_CODE = stripIndent(initialCode);

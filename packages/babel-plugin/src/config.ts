@@ -47,12 +47,16 @@ export function loadConfig(filepath: string): object {
 
 const DEFAULT_CACHE_DIR = __dirname;
 
+export function getRootDir() {
+    return process.cwd();
+}
+
 export function getCacheDir() {
     let cacheDir;
 
-    if (typeof window !== 'undefined') {
-        return DEFAULT_CACHE_DIR;
-    }
+    // if (typeof window !== 'undefined') {
+    //     return DEFAULT_CACHE_DIR;
+    // }
 
     try {
         const findCacheDir = require('find-cache-dir');

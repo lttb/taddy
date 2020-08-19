@@ -35,7 +35,7 @@ module.exports = {
         // });
 
         config.externals.push({
-            typescript: 'ts',
+            typescript: 'window.ts',
         });
 
         // console.log(config);

@@ -2,8 +2,6 @@
 
 import {registerPlugin, transform} from '@babel/standalone';
 
-import {Project} from 'ts-morph';
-
 import prettier from 'prettier/standalone';
 import parserTypescript from 'prettier/parser-typescript';
 
@@ -19,7 +17,7 @@ const {$css, RuleInjector, VirtualStyleSheet} = require('taddy');
 
 function waitForTypescrit() {
     function inner(resolve) {
-        if (typeof window === 'undefined' || window.ts) {
+        if (typeof window === 'undefined' || window.ts?.version) {
             resolve();
             return;
         }
@@ -34,6 +32,8 @@ function waitForTypescrit() {
 
 async function init() {
     await waitForTypescrit();
+
+    const {Project} = require('ts-morph');
 
     const project = new Project({
         useInMemoryFileSystem: true,
@@ -127,13 +127,5 @@ async function init() {
 const _transform = init();
 
 export async function transformCode(source, options) {
-    try {
-        const {code, css} = await (await _transform)(source, options);
-
-        return {code, css};
-    } catch (error) {
-        console.error('compile error', error);
-    }
-
-    return {code: source, css: ''};
+    return await (await _transform)(source, options);
 }
