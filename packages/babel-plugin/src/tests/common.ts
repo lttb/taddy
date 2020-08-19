@@ -6,7 +6,7 @@ import {stripIndent} from 'common-tags';
 import {ruleInjector, StyleSheet} from 'taddy';
 
 import taddyPlugin from '../plugin';
-import type {MacroConfig} from '../plugin';
+import type {MacroConfig} from '../macro-plugin';
 
 export {PACKAGE_NAME} from '../config';
 

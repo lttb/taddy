@@ -1,11 +1,13 @@
-import type {NodePath, Binding} from '@babel/traverse';
+import type {NodePath} from '@babel/traverse';
 
 import {findBindings} from './findBindings';
 
-function getPathsByBindings(bindings: Set<Binding>): Set<NodePath<any>> {
+function getPathsByBindings(
+    bindings: ReturnType<typeof findBindings>,
+): Set<NodePath<any>> {
     const paths = new Set<NodePath<any>>();
 
-    for (let x of bindings) {
+    for (let x of bindings.keys()) {
         if (x.path.isImportSpecifier() || x.path.isVariableDeclarator()) {
             paths.add(x.path.parentPath);
             continue;

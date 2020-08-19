@@ -1,8 +1,8 @@
 import * as t from '@babel/types';
 
-export function mergeObjectProperties(
-    properties: t.ObjectExpression['properties'],
-) {
+type Properties = t.ObjectExpression['properties'];
+
+export function mergeObjectProperties(properties: Properties) {
     const map = new Map();
 
     function move(key, value) {
@@ -34,4 +34,12 @@ export function mergeObjectProperties(
     // TODO: there was a problem with typescript compiler with the variant [...map.values()]
 
     return Array.from(map.values());
+}
+
+export function mergeObjects(objects: t.ObjectExpression[]) {
+    const properties: Properties = [];
+    objects.forEach((obj) => {
+        properties.push(...obj.properties);
+    });
+    return mergeObjectProperties(properties);
 }

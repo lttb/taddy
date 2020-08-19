@@ -2,7 +2,7 @@
 
 import type {Properties} from 'csstype';
 
-import {config, MIXIN_KEY} from '@taddy/core';
+import {$, config, MIXIN_KEY, ID_KEY} from '@taddy/core';
 import {ruleInjector, $css} from './$css';
 import type {TaddyRule} from './$css';
 
@@ -19,14 +19,13 @@ export * from './RuleInjector';
 
 export {$css, ruleInjector, config};
 
-const ID = Symbol('ID');
 const withId = (className: string) => {
     /**
      * For the reference between different styles
      */
     const id = '__' + config.nameGenerator.getHash('id' + className);
     return {
-        [ID]: id,
+        [ID_KEY]: id,
         [Symbol?.toPrimitive || 'toString']: () => id,
         className: className + (className ? ' ' : '') + id,
     };
@@ -35,17 +34,16 @@ const withId = (className: string) => {
 const TADDY: unique symbol = Symbol('TADDY');
 
 type CSSResult<T = TaddyRule> = TaddyStyle &
-    Record<typeof ID, string> & {
+    Record<typeof ID_KEY, string> & {
         [TADDY]: T;
     };
 
-const _css = <T extends TaddyRule>(rule: T | TaddyRule): CSSResult<T> => {
-    if (typeof rule === 'string') {
-        // @ts-expect-error
-        return withId(rule);
-    }
+const _css = <T extends TaddyRule>(rule: (T | TaddyRule)[]): CSSResult<T> => {
+    const {className, style} = $css(
+        rule.length <= 1 ? rule[0] : {composes: rule},
+    );
 
-    const {className, style} = $css(rule);
+    // console.log({rule, className, style});
 
     delete className[MIXIN_KEY];
 
@@ -65,22 +63,11 @@ const _css = <T extends TaddyRule>(rule: T | TaddyRule): CSSResult<T> => {
 };
 
 export const css = (
-    ...args: Parameters<typeof _css>
-): ReturnType<typeof _css> => config.unstable__mapStyles(_css(...args));
+    ...rule: Parameters<typeof _css>[0]
+): ReturnType<typeof _css> => config.unstable__mapStyles(_css(rule));
 
 css.mixin = mixin;
 
 css.h = (x) => config.nameGenerator.getHash(x);
 
-export {mixin};
-
-export function $(strs: TemplateStringsArray, ...values: CSSResult[]): string {
-    let selector = '';
-    strs.forEach((chunk, index) => {
-        selector += chunk;
-        if (values[index]) {
-            selector += '.' + values[index][ID];
-        }
-    });
-    return selector;
-}
+export {mixin, $};

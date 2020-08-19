@@ -140,12 +140,16 @@ export const $css = (
         for (const key in rule) {
             if (!rule[key]) continue;
 
+            if (key === MIXIN_KEY) continue;
+
             if (key === 'composes') {
                 rule[key].forEach((mixin) => {
                     if (mixin[MIXIN_KEY]) {
                         applyMixin(mixin[MIXIN_KEY]);
                         return;
                     }
+
+                    // console.log({mixin});
 
                     // support plain objects
                     process(mixin);

@@ -1,7 +1,7 @@
 import * as t from '@babel/types';
 import {addNamed, addSideEffect} from '@babel/helper-module-imports';
 
-import type {NodePath, PluginPass} from '@babel/core';
+import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import fs from 'fs';
 import nodePath from 'path';
@@ -14,6 +14,8 @@ import {Processor} from './Processor';
 import type {ProcessorConfig} from './Processor';
 import {optimizeBindings} from './helpers';
 import {cacheDir, getCachedModuleFilepath, getRelativeFilepath} from './config';
+
+import type {Env} from './types';
 
 let LAST_INDEX = 0;
 let STYLES: string[] = [];
@@ -37,8 +39,6 @@ function getStylesState() {
 type FilenameGetter = (code?: string) => string;
 type FilepathGetter = (filename: string) => string;
 
-export type Env = 'development' | 'production' | 'test';
-
 type ExtractCSSType = boolean | 'production' | 'development';
 
 export type OutputOptions = {
@@ -60,7 +60,25 @@ type EntryOptions = {
     extractCSS: ExtractCSSType;
 };
 
-function writeDevEntry({styles, jsFilepath}: EntryOptions) {
+export function getEnv(babel: ConfigAPI): Env {
+    try {
+        return babel.env() as Env;
+    } catch (e) {
+        // console.log('error', e);
+    }
+
+    const DEFAULT_ENV = 'production';
+
+    if (!(typeof process && process.env)) {
+        return DEFAULT_ENV;
+    }
+
+    return (process.env.BABEL_ENV ||
+        process.env.NODE_ENV ||
+        DEFAULT_ENV) as Env;
+}
+
+function writeDevEntry({styles, jsFilepath, cssFilepath}: EntryOptions) {
     const template = `
 var getStyleNodeById = require('taddy').getStyleNodeById
 var STYLES = '${styles}'
@@ -100,7 +118,7 @@ function writeProdEntry({
     } else {
         template = `
 var getStyleNodeById = require('taddy').getStyleNodeById
-var STYLES = '${styles}'
+var STYLES = \`${styles}\`;
 if (typeof window !== 'undefined') {
     getStyleNodeById('taddy').innerHTML = STYLES
 }
@@ -152,7 +170,11 @@ function writeCSSFileSync(filepath: string, content: string, append: string) {
         return;
     }
 
-    fs.appendFileSync(filepath, append);
+    fs.appendFile(filepath, append, (error) => {
+        if (error) {
+            console.error(error);
+        }
+    });
 }
 
 export function output({
@@ -197,6 +219,8 @@ export function output({
 
     const program = state.file.path as NodePath<t.Program>;
     const {filename} = state;
+
+    return;
 
     if (unstable__inline) {
         const getStyleNode = addNamed(program, 'getStyleNodeById', 'taddy');
@@ -265,7 +289,10 @@ function isPathRemoved(path: NodePath<any>) {
     return false;
 }
 
-export const createProcessors = (config: ProcessorConfig) => {
+export const createProcessors = (
+    config: ProcessorConfig,
+    options: {env: Env},
+) => {
     const mixinsQueue: NodePath<any>[] = [];
     const proceedPaths: {
         isStatic: boolean;
@@ -290,9 +317,7 @@ export const createProcessors = (config: ProcessorConfig) => {
 
             if (!path.isCallExpression()) return;
 
-            const argPath = (path.get('arguments') as NodePath<any>[])[0];
-
-            const result = processor.run(argPath, {
+            const result = processor.run(path, {
                 mixin,
             });
 
@@ -305,7 +330,7 @@ export const createProcessors = (config: ProcessorConfig) => {
                 optimizationPaths,
             });
 
-            path.node.arguments = [argPath.node];
+            // path.node.arguments = [argPath.node];
         },
 
         mixin: (path) => handlers.css(path, {mixin: true}),
@@ -313,21 +338,27 @@ export const createProcessors = (config: ProcessorConfig) => {
 
     return {
         handlers,
-        finish() {
-            let isStatic = true;
+        finish(): {isStatic: boolean} {
+            let isStatic = false;
 
-            for (let x of proceedPaths) {
-                isStatic = isStatic && x.isStatic;
-                for (let path of x.optimizationPaths) {
-                    optimizeBindings(path);
+            if (config.optimizeBindings) {
+                isStatic = true;
+
+                for (let x of proceedPaths) {
+                    isStatic = isStatic && x.isStatic;
+                    for (let path of x.optimizationPaths) {
+                        optimizeBindings(path, {env: options.env});
+                    }
                 }
             }
 
             for (let path of mixinsQueue) {
-                if (isPathRemoved(path)) {
+                if (config.optimizeBindings && isPathRemoved(path)) {
                     // the path binding should be already optimized
                     continue;
                 }
+
+                isStatic = false;
 
                 handlers.css(path, {mixin: true});
             }
