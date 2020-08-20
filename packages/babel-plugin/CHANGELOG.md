@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.18](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.17...@taddy/babel-plugin@0.0.18) (2020-08-20)
+
+
+### Features
+
+* **taddy:** fix zero values resolution ([e393724](https://github.com/lttb/taddy/commit/e3937248c2c81fa0a5156b57ffffde99dd653a45))
+
+
+
+
+
 ## [0.0.17](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.16...@taddy/babel-plugin@0.0.17) (2020-08-20)
 
 **Note:** Version bump only for package @taddy/babel-plugin
