@@ -28,14 +28,11 @@ const styles = {
             color: 'white',
         }),
     },
-    _animated: (visible: boolean) =>
-        css(
-            {
-                transitionProperty: 'opacity',
-                transitionDuration: '300ms',
-            },
-            visible ? {opacity: 1} : {opacity: 0},
-        ),
+    _animated: css({
+        transitionProperty: 'opacity',
+        transitionDuration: '300ms',
+    }),
+    _hidden: css({opacity: 0}),
 };
 
 export const EditorLayer = ({
@@ -49,8 +46,8 @@ export const EditorLayer = ({
         <code
             {...css(
                 styles.base,
-                variant && styles._variant[variant],
-                styles._animated(!!variant),
+                styles._animated,
+                variant ? styles._variant[variant] : styles._hidden,
             )}
         >
             {children}
