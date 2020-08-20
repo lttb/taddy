@@ -119,11 +119,14 @@ function appendFile(filepath: string, content: string, append: string) {
         return;
     }
 
-    fs.appendFile(filepath, append, (error) => {
-        if (error) {
-            console.error(error);
-        }
-    });
+    // TODO: think about asynchronous appending
+    if ('appendFileSync' in fs) {
+        fs.appendFileSync(filepath, append);
+    } else {
+        // workaround for some special FS cases like "filer"
+        // @ts-expect-error
+        fs.appendFile(filepath, append, () => {});
+    }
 }
 
 export function output({

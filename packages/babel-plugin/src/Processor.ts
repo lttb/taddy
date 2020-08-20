@@ -471,6 +471,14 @@ export class Processor {
         path.node.properties = mergeObjectProperties(properties);
     }
 
+    processConditionalExpression(
+        path: NodePath<t.ConditionalExpression>,
+        options: CommonOptions = {},
+    ) {
+        this.process(path.get('consequent'), options);
+        this.process(path.get('alternate'), options);
+    }
+
     process(path: NodePath<any>, options: CommonOptions = {}) {
         if (path.isLogicalExpression()) {
             this.processLogicalExpression(path, options);
@@ -479,6 +487,11 @@ export class Processor {
 
         if (path.isObjectExpression()) {
             this.processObjectExpression(path, options);
+            return;
+        }
+
+        if (path.isConditionalExpression()) {
+            this.processConditionalExpression(path, options);
             return;
         }
     }
