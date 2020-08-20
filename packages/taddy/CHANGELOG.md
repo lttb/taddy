@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.6](https://github.com/lttb/taddy/compare/taddy@0.0.5...taddy@0.0.6) (2020-08-20)
+
+
+### Features
+
+* **babel-plugin:** change caching strategy ([54730f3](https://github.com/lttb/taddy/commit/54730f3144e8cf90194667bbcefc414d3776dc78))
+* **babel-plugin:** fix website build ([2181ebd](https://github.com/lttb/taddy/commit/2181ebdf292fc7b5e662ad6148d629e904d62403))
+* **website:** create ([42f0255](https://github.com/lttb/taddy/commit/42f0255929860ae7527142cecbdb918da6935c0c))
+
+
+
+
+
 ## [0.0.5](https://github.com/lttb/taddy/compare/taddy@0.0.4...taddy@0.0.5) (2020-08-18)
 
 **Note:** Version bump only for package taddy

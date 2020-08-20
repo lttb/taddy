@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.17](https://github.com/lttb/taddy/compare/taddy.macro@0.0.16...taddy.macro@0.0.17) (2020-08-20)
+
+
+### Features
+
+* **babel-plugin:** change caching strategy ([54730f3](https://github.com/lttb/taddy/commit/54730f3144e8cf90194667bbcefc414d3776dc78))
+* **website:** create ([42f0255](https://github.com/lttb/taddy/commit/42f0255929860ae7527142cecbdb918da6935c0c))
+
+
+
+
+
 ## [0.0.16](https://github.com/lttb/taddy/compare/taddy.macro@0.0.15...taddy.macro@0.0.16) (2020-08-18)
 
 **Note:** Version bump only for package taddy.macro

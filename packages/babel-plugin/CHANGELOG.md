@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.16](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.15...@taddy/babel-plugin@0.0.16) (2020-08-20)
+
+
+### Features
+
+* **babel-plugin:** change caching strategy ([54730f3](https://github.com/lttb/taddy/commit/54730f3144e8cf90194667bbcefc414d3776dc78))
+* **babel-plugin:** fix website build ([2181ebd](https://github.com/lttb/taddy/commit/2181ebdf292fc7b5e662ad6148d629e904d62403))
+* **babel-plugin:** support tsx in tests ([6e0feb4](https://github.com/lttb/taddy/commit/6e0feb4fa97dea0d0e1c3f6afc4499612d767ca6))
+* **website:** create ([42f0255](https://github.com/lttb/taddy/commit/42f0255929860ae7527142cecbdb918da6935c0c))
+* **website:** update ([2272941](https://github.com/lttb/taddy/commit/22729411c4133d4fd4f053f20f094b2731782596))
+* **website:** update home page ([765cb51](https://github.com/lttb/taddy/commit/765cb5125417022cc8ddd26e7b1103323c6b37c1))
+
+
+
+
+
 ## [0.0.15](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.14...@taddy/babel-plugin@0.0.15) (2020-08-18)
 
 
