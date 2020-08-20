@@ -2,11 +2,17 @@
     "private": true,
     "name": "cra",
     "version": "0.1.0",
+    "babelMacros": {
+        "taddy": {
+            "outputOptions": {
+                "cssFilepath": "./src/taddy.css"
+            }
+        }
+    },
     "dependencies": {
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
-        "taddy.macro": "file:../../packages/taddy.macro",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-scripts": "3.4.3"

@@ -7,3 +7,6 @@ dist
 *.code-workspace
 .vscode
 .cache
+
+!packages/taddy/.cache
+taddy.css

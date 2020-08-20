@@ -1,18 +1,14 @@
 /* eslint-disable */
 
-import findCacheDir from 'find-cache-dir';
 import path from 'path';
-import mkdirp from 'mkdirp';
-
-import type {Project as TSProject} from 'ts-morph';
-import {lilconfigSync} from 'lilconfig';
-
-import {getType, parseObject} from './TSProcessor';
 
 export const MACRO_NAME = 'taddy.macro';
 export const PACKAGE_NAME = 'taddy';
 
-export function loadConfig(filepath: string): object {
+// TODO: add config resolution
+
+/*
+function loadConfig(filepath: string): object {
     const {Project} = require('ts-morph');
 
     // empty project to parse the config
@@ -39,39 +35,18 @@ export function loadConfig(filepath: string): object {
     };
 }
 
-// TODO: add config resolution
+export const config = lilconfigSync(PACKAGE_NAME, {
+    searchPlaces: [`${PACKAGE_NAME}.config.ts`],
+    loaders: {
+        '.ts': loadConfig,
+    },
+}).search()?.config;
+*/
 
-// export const config = lilconfigSync(PACKAGE_NAME, {
-//     searchPlaces: [`${PACKAGE_NAME}.config.ts`],
-//     loaders: {
-//         '.ts': loadConfig,
-//     },
-// }).search()?.config;
-
-const DEFAULT_CACHE_DIR = __dirname;
-export const cacheDir = findCacheDir({name: PACKAGE_NAME}) || DEFAULT_CACHE_DIR;
-
-export function getRelativeFilepath(from: string, to: string): string {
-    return './' + path.relative(path.dirname(from), to);
+export function getRootDir() {
+    return process.cwd();
 }
 
-export const getCachedModuleFilepath = (
-    filepath: string,
-    jsFilepath: string,
-) => {
-    if (cacheDir === DEFAULT_CACHE_DIR) {
-        return getRelativeFilepath(filepath, jsFilepath);
-    }
-
-    const filename = path.basename(jsFilepath);
-
-    return `.cache/${PACKAGE_NAME}/${filename}`;
-};
-
-try {
-    mkdirp.sync(cacheDir);
-} catch (error) {
-    // TODO: handle this error
-
-    console.error('TADDY', 'can not create cache dir', error);
+export function getCacheDir() {
+    return __dirname;
 }

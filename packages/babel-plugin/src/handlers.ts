@@ -1,19 +1,18 @@
 import * as t from '@babel/types';
-import {addNamed, addSideEffect} from '@babel/helper-module-imports';
 
-import type {NodePath, PluginPass} from '@babel/core';
+import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import fs from 'fs';
 import nodePath from 'path';
 
-import stringHash from 'string-hash';
-
-import {ruleInjector, config} from 'taddy';
+import {ruleInjector} from 'taddy';
 
 import {Processor} from './Processor';
 import type {ProcessorConfig} from './Processor';
 import {optimizeBindings} from './helpers';
-import {cacheDir, getCachedModuleFilepath, getRelativeFilepath} from './config';
+import {getCacheDir, getRootDir} from './config';
+
+import type {Env} from './types';
 
 let LAST_INDEX = 0;
 let STYLES: string[] = [];
@@ -34,18 +33,29 @@ function getStylesState() {
     };
 }
 
-type FilenameGetter = (code?: string) => string;
-type FilepathGetter = (filename: string) => string;
+type FilenameGetter = string | ((code?: string) => string);
+type FilepathGetter = string | ((filename: string) => string);
 
-export type Env = 'development' | 'production' | 'test';
+function resolveFilepath<T extends FilenameGetter | FilepathGetter>(
+    getter: T,
+    ...params: T extends (...args: any) => any ? Parameters<T> : []
+): string {
+    if (typeof getter !== 'string') {
+        // @ts-expect-error
+        return getter(...params);
+    }
+
+    return nodePath.join(getRootDir(), getter);
+}
 
 type ExtractCSSType = boolean | 'production' | 'development';
 
 export type OutputOptions = {
-    getCSSFilename: FilenameGetter;
-    getCSSFilepath: FilepathGetter;
-    getJSFilename: FilenameGetter;
-    getJSFilepath: FilepathGetter;
+    cssFilename: FilenameGetter;
+    cssFilepath: FilepathGetter;
+
+    jsFilename: FilenameGetter;
+    jsFilepath: FilepathGetter;
 
     relativeEntryPath: boolean;
     extractCSS: ExtractCSSType;
@@ -60,65 +70,22 @@ type EntryOptions = {
     extractCSS: ExtractCSSType;
 };
 
-function writeDevEntry({styles, jsFilepath}: EntryOptions) {
-    const template = `
-var getStyleNodeById = require('taddy').getStyleNodeById
-var STYLES = '${styles}'
-var state = {current: STYLES}
-var isBrowser = typeof window !== 'undefined'
-if (isBrowser && !getStyleNodeById('taddy').innerHTML) {
-    state.current = window.__TADDY_STYLES__ = window.__TADDY_STYLES__ || STYLES
-    getStyleNodeById('taddy').innerHTML = state.current
-}
-module.exports.STYLES = STYLES;
-module.exports.state = state;
-module.exports.taddy_invalidate = function (newStyles) {
-    if (!newStyles) return
-    state.current += newStyles
-    if (isBrowser) getStyleNodeById('taddy').innerHTML += newStyles
-}
-`;
-
-    fs.writeFile(jsFilepath, template, (error) => {
-        if (error) {
-            console.error('TADDY WRITEFILE ERROR', error);
-        }
-    });
-}
-
-function writeProdEntry({
-    styles,
-    jsFilepath,
-    cssFilepath,
-    extractCSS,
-}: EntryOptions) {
-    let template: string;
-
-    if (extractCSS) {
-        const jsToCSS = getRelativeFilepath(jsFilepath, cssFilepath);
-        template = `require('${jsToCSS}');`;
-    } else {
-        template = `
-var getStyleNodeById = require('taddy').getStyleNodeById
-var STYLES = '${styles}'
-if (typeof window !== 'undefined') {
-    getStyleNodeById('taddy').innerHTML = STYLES
-}
-module.exports.STYLES = STYLES
-`;
+export function getEnv(babel: ConfigAPI): Env {
+    try {
+        return babel.env() as Env;
+    } catch (e) {
+        // console.log('error', e);
     }
 
-    if (contentMap.has(template)) {
-        return;
+    const DEFAULT_ENV = 'production';
+
+    if (!(typeof process && process.env)) {
+        return DEFAULT_ENV;
     }
 
-    contentMap.set(template, true);
-
-    fs.writeFile(jsFilepath, template, (error) => {
-        if (error) {
-            console.error('TADDY WRITEFILE ERROR', error);
-        }
-    });
+    return (process.env.BABEL_ENV ||
+        process.env.NODE_ENV ||
+        DEFAULT_ENV) as Env;
 }
 
 function getMtime(filepath: string): number {
@@ -146,13 +113,17 @@ function readFileSync(filepath: string): string {
     return data;
 }
 
-function writeCSSFileSync(filepath: string, content: string, append: string) {
+function appendFile(filepath: string, content: string, append: string) {
     const code = content + append;
     if (contentMap.has(code)) {
         return;
     }
 
-    fs.appendFileSync(filepath, append);
+    fs.appendFile(filepath, append, (error) => {
+        if (error) {
+            console.error(error);
+        }
+    });
 }
 
 export function output({
@@ -160,21 +131,9 @@ export function output({
     state,
     config: {
         // getCSSFilename = (content) => `atoms-${stringHash(content)}.css`,
-        getCSSFilename = () => `atoms.css`,
-        getCSSFilepath = (filename: string) =>
-            nodePath.join(cacheDir, filename),
-
-        // getJSFilename = (content) => `entry-${stringHash(content)}.js`,
-        getJSFilename = (hash?: string) => {
-            return `entry` + (hash ? '.' + hash : '') + '.js';
-        },
-        getJSFilepath = (filename: string) => nodePath.join(cacheDir, filename),
-
-        relativeEntryPath = false,
-
-        extractCSS = false,
-
-        unstable__inline = false,
+        cssFilename = () => `taddy.css`,
+        cssFilepath = (filename: string = 'taddy.css') =>
+            nodePath.join(getCacheDir(), filename),
     } = {},
 }: {
     env: Env;
@@ -183,78 +142,15 @@ export function output({
 }) {
     const {added} = getStylesState();
 
-    const cssFilename = getCSSFilename();
-    const cssFilepath = getCSSFilepath(cssFilename);
+    const filename = resolveFilepath(cssFilename);
+    const filepath = resolveFilepath(cssFilepath, filename);
 
-    const stylesData = readFileSync(cssFilepath);
+    const stylesData = readFileSync(filepath);
 
     // TODO: improve filter performance
     const diffStyles = added.filter((x) => !stylesData.includes(x)).join('');
 
-    let result = stylesData + diffStyles;
-
-    writeCSSFileSync(cssFilepath, stylesData, diffStyles);
-
-    const program = state.file.path as NodePath<t.Program>;
-    const {filename} = state;
-
-    if (unstable__inline) {
-        const getStyleNode = addNamed(program, 'getStyleNodeById', 'taddy');
-        program.pushContainer(
-            'body',
-            t.assignmentExpression(
-                '=',
-                t.memberExpression(
-                    t.callExpression(getStyleNode, [t.stringLiteral('taddy')]),
-                    t.identifier('innerHTML'),
-                ),
-                t.stringLiteral(result),
-            ),
-        );
-
-        return;
-    }
-
-    function getModulePath(jsFilepath: string): string {
-        return relativeEntryPath
-            ? getRelativeFilepath(filename, jsFilepath)
-            : getCachedModuleFilepath(filename, jsFilepath);
-    }
-
-    if (env === 'development') {
-        const hash = String(stringHash(result));
-
-        const jsFilename = getJSFilename(hash);
-        const jsFilepath = getJSFilepath(jsFilename);
-
-        writeDevEntry({jsFilepath, cssFilepath, extractCSS, styles: result});
-
-        const modulePath = getModulePath(jsFilepath);
-
-        const updaterNameNode = addNamed(
-            program,
-            'taddy_invalidate',
-            modulePath,
-        );
-        program.pushContainer(
-            'body',
-            t.callExpression(updaterNameNode, [
-                t.stringLiteral(diffStyles),
-                t.stringLiteral(hash),
-            ]),
-        );
-
-        return;
-    }
-
-    const jsFilename = getJSFilename();
-    const jsFilepath = getJSFilepath(jsFilename);
-
-    writeProdEntry({jsFilepath, cssFilepath, extractCSS, styles: result});
-
-    const modulePath = getModulePath(jsFilepath);
-
-    addSideEffect(program, modulePath);
+    appendFile(filepath, stylesData, diffStyles);
 }
 
 function isPathRemoved(path: NodePath<any>) {
@@ -265,7 +161,10 @@ function isPathRemoved(path: NodePath<any>) {
     return false;
 }
 
-export const createProcessors = (config: ProcessorConfig) => {
+export const createProcessors = (
+    config: ProcessorConfig,
+    options: {env: Env},
+) => {
     const mixinsQueue: NodePath<any>[] = [];
     const proceedPaths: {
         isStatic: boolean;
@@ -290,9 +189,7 @@ export const createProcessors = (config: ProcessorConfig) => {
 
             if (!path.isCallExpression()) return;
 
-            const argPath = (path.get('arguments') as NodePath<any>[])[0];
-
-            const result = processor.run(argPath, {
+            const result = processor.run(path, {
                 mixin,
             });
 
@@ -305,7 +202,7 @@ export const createProcessors = (config: ProcessorConfig) => {
                 optimizationPaths,
             });
 
-            path.node.arguments = [argPath.node];
+            // path.node.arguments = [argPath.node];
         },
 
         mixin: (path) => handlers.css(path, {mixin: true}),
@@ -313,21 +210,27 @@ export const createProcessors = (config: ProcessorConfig) => {
 
     return {
         handlers,
-        finish() {
-            let isStatic = true;
+        finish(): {isStatic: boolean} {
+            let isStatic = false;
 
-            for (let x of proceedPaths) {
-                isStatic = isStatic && x.isStatic;
-                for (let path of x.optimizationPaths) {
-                    optimizeBindings(path);
+            if (config.optimizeBindings) {
+                isStatic = true;
+
+                for (let x of proceedPaths) {
+                    isStatic = isStatic && x.isStatic;
+                    for (let path of x.optimizationPaths) {
+                        optimizeBindings(path, {env: options.env});
+                    }
                 }
             }
 
             for (let path of mixinsQueue) {
-                if (isPathRemoved(path)) {
+                if (config.optimizeBindings && isPathRemoved(path)) {
                     // the path binding should be already optimized
                     continue;
                 }
+
+                isStatic = false;
 
                 handlers.css(path, {mixin: true});
             }

@@ -9,6 +9,7 @@ import {
     getObjectPropertyKey,
     optimizeStaticStyles,
     mergeObjectProperties,
+    mergeObjects,
 } from './helpers';
 
 import TSProcessor, {
@@ -22,12 +23,15 @@ import type {TSProcessorOptions} from './TSProcessor';
 
 type ObjectProperties = t.ObjectExpression['properties'];
 
+type ArrayElements = t.ArrayExpression['elements'];
+
 export type ProcessorConfig = {
     typescript?: boolean | TSProcessorOptions;
     evaluate?: boolean;
     CSSVariableFallback?: boolean;
     code: string;
     filename: string;
+    optimizeBindings?: boolean;
 };
 
 type CommonOptions = {
@@ -39,9 +43,15 @@ type ObjectOptions = CommonOptions & {
 };
 
 function getLiteralValue(path: NodePath<t.Literal>): any {
-    // eslint-disable-next-line no-eval
-    return eval(path.toString());
+    try {
+        // eslint-disable-next-line no-eval
+        return eval(path.toString());
+    } catch (error) {
+        return getLiteralValue.FAIL;
+    }
 }
+
+getLiteralValue.FAIL = Symbol('FAILED_VALUE');
 
 function getHashedName(key: string, {postfix}: CommonOptions): string {
     return config.nameGenerator.getName(key, '', {postfix}).join('');
@@ -119,6 +129,10 @@ export class Processor {
 
             const value = getLiteralValue(valuePath);
 
+            if (value === getLiteralValue.FAIL) {
+                return false;
+            }
+
             properties.push(...this.stylesToNode(key, value, {postfix}));
 
             return true;
@@ -163,11 +177,32 @@ export class Processor {
             return true;
         };
 
+        const tryComposesValue = (): boolean => {
+            if (!(key === 'composes' && valuePath.isArrayExpression())) {
+                return false;
+            }
+
+            if (postfix !== '') {
+                throw new Error(
+                    'TADDY: composes could be used only on top level',
+                );
+            }
+
+            for (const elemPath of valuePath.get('elements')) {
+                this.process(elemPath);
+            }
+
+            return false;
+        };
+
         const tryEvaluateValue = (): boolean => {
             if (!this.config.evaluate) return false;
 
             const {value} = evaluate(valuePath);
+
             if (!value) return false;
+
+            // console.log('evaluate', {value});
 
             properties.push(...this.stylesToNode(key, value, {postfix}));
 
@@ -187,6 +222,8 @@ export class Processor {
             );
 
             if (!tsType) return;
+
+            // console.log('TYPE', tsType.getType().getText());
 
             return parseValue(tsType.getType());
         };
@@ -221,6 +258,8 @@ export class Processor {
 
             if (!tsValue) return false;
 
+            // console.log({tsValue});
+
             if (isStaticValue(tsValue)) {
                 properties.push(...this.stylesToNode(key, tsValue, {postfix}));
 
@@ -238,7 +277,7 @@ export class Processor {
 
             // pre-generate classes for variants
             variants.forEach((v: any) => {
-                if (v instanceof DynamicType) {
+                if (v instanceof DynamicType || !isStaticValue(v)) {
                     isCompilable = false;
                     return;
                 }
@@ -265,10 +304,10 @@ export class Processor {
         const tryCSSVariableValue = (): boolean => {
             if (!this.config.CSSVariableFallback) return false;
 
-            // think about dynamic nested
+            // think about dynamic nested for mixins
             // in case of nested dynamic values in mixin we can't fallback them as custom properties
             if (
-                (this.mixin && postfix !== '') ||
+                this.mixin ||
                 key === 'composes' ||
                 key[0] === ':' ||
                 /[\W]/.test(key)
@@ -294,6 +333,7 @@ export class Processor {
         if (
             tryLiteralValue() ||
             tryObjectExpressionValue() ||
+            tryComposesValue() ||
             tryEvaluateValue() ||
             tryTypescriptValue() ||
             tryCSSVariableValue()
@@ -308,9 +348,31 @@ export class Processor {
         path: NodePath<t.ObjectProperty>,
         {postfix = '', properties}: ObjectOptions,
     ) {
-        const key = String(getObjectPropertyKey(path));
+        const keyPath = path.get('key');
+        const key = getObjectPropertyKey(keyPath);
+
+        const tryEvaluateKey = (): boolean => {
+            if (!this.config.evaluate) return false;
+
+            const {value} = evaluate(keyPath);
+
+            if (!(value && typeof value === 'string')) return false;
+
+            keyPath.replaceWith(t.stringLiteral(value));
+
+            this.processPropertyValue(value, path, {
+                postfix,
+                properties,
+            });
+
+            return true;
+        };
 
         if (key === 'className' || key === 'style' || key === null) {
+            if (tryEvaluateKey()) {
+                return;
+            }
+
             properties.push(path.node);
             return;
         }
@@ -416,7 +478,39 @@ export class Processor {
         }
     }
 
-    run(path: NodePath<t.ObjectExpression>, {mixin = false} = {}) {
+    run(callPath: NodePath<t.CallExpression>, {mixin = false} = {}) {
+        const args = callPath.get('arguments') as NodePath<any>[];
+
+        const argPath = args[0];
+
+        const composes: t.Expression[] = [];
+        let isObject = true;
+        for (let x of args) {
+            isObject = isObject && x.isObjectExpression();
+            composes.push(x.node);
+        }
+
+        if (isObject) {
+            argPath.replaceWith(
+                t.objectExpression(
+                    mergeObjects(composes as t.ObjectExpression[]),
+                ),
+            );
+        } else {
+            argPath.replaceWith(
+                t.objectExpression([
+                    t.objectProperty(
+                        t.identifier('composes'),
+                        t.arrayExpression(composes),
+                    ),
+                ]),
+            );
+        }
+
+        callPath.node.arguments = [argPath.node];
+
+        const path = argPath;
+
         // supports only object expressions at the moment
         if (!path.isObjectExpression()) {
             return null;
@@ -439,9 +533,18 @@ export class Processor {
             !this.mixin &&
             path.node.properties.every((x) => {
                 if (!t.isObjectProperty(x)) return false;
-                if ('name' in x.key && x.key.name === 'composes') {
+                if (!('name' in x.key)) return false;
+                if (
+                    !(
+                        x.key.name[0] === '_' ||
+                        x.key.name === 'className' ||
+                        x.key.name === 'style' ||
+                        x.key.name === VARS_KEY
+                    )
+                ) {
                     return false;
                 }
+
                 return true;
             });
 

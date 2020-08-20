@@ -12,6 +12,8 @@ import {macro} from './macro-plugin';
 import type {MacroConfig} from './macro-plugin';
 import {isTaddyEvaluation} from './helpers';
 
+import {getEnv} from './handlers';
+
 type ImportSpecifiers = NodePaths<t.ImportDeclaration['specifiers']>;
 
 function getImportNames(
@@ -49,12 +51,12 @@ interface TaddyPluginPass extends PluginPass {
     references: Record<string, NodePath[]>;
 }
 
-export {MacroConfig};
-
 export default function plugin(
     babel: ConfigAPI,
     options: MacroConfig,
 ): PluginObj<TaddyPluginPass> {
+    const env = getEnv(babel);
+
     return {
         name: 'taddy',
 
@@ -79,7 +81,7 @@ export default function plugin(
                     findReferences(path.get('specifiers')),
                 );
 
-                if (Object.keys(this.references as object).length === 0) {
+                if (!(this.references.css || this.references.mixin)) {
                     return;
                 }
 
@@ -87,7 +89,10 @@ export default function plugin(
                     references: this.references,
                     babel,
                     state,
-                    config: options,
+                    config: {
+                        env,
+                        ...options,
+                    },
                 });
             },
         },

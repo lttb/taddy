@@ -40,8 +40,7 @@ describe('taddy.macro.evaluate', () => {
                 options,
             ),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             export default css(\\"_15b0_2efe _37f5_b50d _bb63_616f _69bc_9bfd_4da4 _0c75_ce9a_9fbe\\");"
         `);
 
@@ -83,8 +82,8 @@ describe('taddy.macro.evaluate', () => {
                 options,
             ),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
+            import { box, typo } from './data/mixins';
             export default css(\\"_a1f1_dd91 _3e02_3da8 _8ef9_849b _69bc_9bfd_4da4 _9bfd_4da4 _15b0_2efe\\");"
         `);
 
@@ -118,8 +117,7 @@ describe('taddy.macro.evaluate', () => {
                 options,
             ),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             export default css(\\"_9bfd_4da4 _a1f1_1340 _ce9a_9fbe\\");"
         `);
     });

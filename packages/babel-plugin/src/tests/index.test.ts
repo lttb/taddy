@@ -25,8 +25,7 @@ describe('taddy.macro', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             let className = 'class';
             let style = {
               color: 'green'

@@ -1,4 +1,4 @@
-import {VARS_KEY, MIXIN_KEY} from '../common';
+import {VARS_KEY, MIXIN_KEY, ID_KEY} from '../common';
 
 import {config} from '../config';
 
@@ -27,4 +27,15 @@ export const css = (
 
 css.h = (x) => config.nameGenerator.getHash(x);
 // eslint-disable-next-line no-sequences
-css.mixin = (x: object) => ((x[MIXIN_KEY] = x), x);
+css.mixin = (x: object) => ((x[MIXIN_KEY] = _css(x)), x);
+
+export function $(strs: TemplateStringsArray, ...values: any[]): string {
+    let selector = '';
+    strs.forEach((chunk, index) => {
+        selector += chunk;
+        if (values[index]) {
+            selector += '.' + values[index][ID_KEY];
+        }
+    });
+    return selector;
+}
