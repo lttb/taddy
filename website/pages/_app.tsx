@@ -12,8 +12,8 @@ const store = createStore();
 function MyApp({Component, pageProps}) {
     return (
         <context.Provider value={store}>
-            <div {...css({padding: '10px 20px'})}>
-                <h1 {...css({color: 'steelblue'})}>
+            <div {...css({padding: '10px 20px', textAlign: 'center'})}>
+                <h1 {...css({color: '#3e68ba'})}>
                     <Link href="/">
                         <a>taddy</a>
                     </Link>

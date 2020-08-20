@@ -43,4 +43,8 @@ export const column = ({gap = 0, inline = false} = {}) =>
         }),
     });
 
-export const Row = (props) => <div {...props} />;
+export const Row = (props) => (
+    <div>
+        <div {...props} />
+    </div>
+);

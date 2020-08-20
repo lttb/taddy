@@ -12,8 +12,8 @@ const Layer = ({children}) => {
         <code
             {...css({
                 position: 'absolute',
-                left: 0,
-                top: 0,
+                left: '0',
+                top: '0',
                 width: '100%',
                 height: '100%',
                 whiteSpace: 'pre',
@@ -24,6 +24,7 @@ const Layer = ({children}) => {
                 fontFamily: 'monospace',
                 color: 'white',
                 fontWeight: 'bold',
+                textAlign: 'left',
             })}
         >
             {children}
@@ -35,7 +36,7 @@ export const CompiledCode = () => {
     const data = useAtom(transformAtom);
 
     const content = (
-        <Row {...css(row({gap: 4}))}>
+        <Row key="content" {...css(row({gap: 4}))}>
             <div>
                 <h2>Compiled Module</h2>
 
@@ -59,25 +60,13 @@ export const CompiledCode = () => {
         </Row>
     );
 
-    if (data.status === 'done') {
-        return <div>{content}</div>;
-    }
+    const children = [content];
 
     if (data.status === 'error') {
-        return (
-            <div>
-                <Layer>{data.error.toString()}</Layer>
-
-                {content}
-            </div>
-        );
+        children.push(<Layer key="error">{data.error.toString()}</Layer>);
+    } else if (data.status === 'pending') {
+        children.push(<Layer key="pending">Compiling...</Layer>);
     }
 
-    return (
-        <div>
-            <Layer>Compiling...</Layer>
-
-            {content}
-        </div>
-    );
+    return <div {...css({position: 'relative'})}>{children}</div>;
 };

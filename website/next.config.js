@@ -14,6 +14,7 @@ module.exports = {
         });
 
         config.plugins.push(
+            // @ts-expect-error
             new webpack.ContextReplacementPlugin(/\/filer\//, (data) => {
                 delete data.dependencies[0].critical;
                 return data;

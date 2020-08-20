@@ -79,7 +79,9 @@ class CodeHandler {
         if (!this.value) return;
 
         history.replace({
+            pathname: globalThis.location.pathname,
             query: {
+                ...history.location.query,
                 code: this.getHash(),
             },
         });

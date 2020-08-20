@@ -35,12 +35,13 @@ const macroRe = new RegExp(MACRO_NAME.replace('.', '\\.'), 'g');
 
 const EVAL_FILENAME_POSTFIX = '@__TADDY_EVALUATE__';
 
-// webpack critical dependency workaround
+// webpack "require" critical dependency issue workaround
 const nodeRequire = new Function(
+    'require',
     `return typeof require !== 'undefined'
         ? require
-        : (typeof globalThis !== 'undefined' ? globalThis : global).require `,
-)();
+        : (typeof globalThis !== 'undefined' ? globalThis : global).require; `,
+)(module.require);
 
 export function isTaddyEvaluation(state: PluginPass): boolean {
     return state.filename.includes(EVAL_FILENAME_POSTFIX);
