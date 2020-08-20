@@ -1,8 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const externalNodeModulesRegExp = /node_modules(?!\/@zeit(?!.*node_modules))/;
-
 module.exports = {
     webpack(config) {
         Object.assign(config.resolve.alias, {
@@ -22,32 +20,14 @@ module.exports = {
             }),
         );
 
-        // config.externals = config.externals.map((external) => {
-        //     if (typeof external !== 'function') return external;
-
-        //     return (ctx, req, cb) => {
-        //         if (/^typescript$/.test(req)) {
-        //             return cb(null, 'ts');
-        //         }
-
-        //         return external(ctx, req, cb);
-        //     };
-        // });
-
         config.externals.push({
             typescript: 'window.ts',
         });
-
-        // console.log(config);
 
         return config;
     },
 
     typescript: {
-        // !! WARN !!
-        // Dangerously allow production builds to successfully complete even if
-        // your project has type errors.
-        // !! WARN !!
         ignoreBuildErrors: true,
     },
 };

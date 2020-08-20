@@ -131,8 +131,8 @@ export function output({
     state,
     config: {
         // getCSSFilename = (content) => `atoms-${stringHash(content)}.css`,
-        cssFilename = () => `atoms.css`,
-        cssFilepath = (filename: string = 'atoms.css') =>
+        cssFilename = () => `taddy.css`,
+        cssFilepath = (filename: string = 'taddy.css') =>
             nodePath.join(getCacheDir(), filename),
     } = {},
 }: {

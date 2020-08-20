@@ -28,9 +28,9 @@ export function Title({variant, children}: Props) {
     )
 }
 
-function typo({size = 's', weight = 'normal'}) {
+function typo({size = 's', weight: fontWeight = 'normal'}) {
     return css.mixin({
-        weight,
+        fontWeight,
         lineHeight: 1.2,
 
         ...size === 's' && {
@@ -98,7 +98,7 @@ export const code = new CodeHandler(
     history.location.query.code || INITIAL_CODE,
 );
 
-const Code = ({children}) => {
+export const useCode = () => {
     React.useEffect(() => {
         window.addEventListener('blur', code.updateCodeLink);
 
@@ -106,8 +106,4 @@ const Code = ({children}) => {
             window.removeEventListener('blur', code.updateCodeLink);
         };
     }, []);
-
-    return null;
 };
-
-export default Code;

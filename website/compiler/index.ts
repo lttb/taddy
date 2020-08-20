@@ -17,7 +17,7 @@ const {$css, RuleInjector, VirtualStyleSheet} = require('taddy');
 
 function waitForTypescrit() {
     function inner(resolve) {
-        if (typeof window === 'undefined' || window.ts?.version) {
+        if (typeof window === 'undefined' || (window as any).ts?.version) {
             resolve();
             return;
         }

@@ -5,7 +5,7 @@
     "babelMacros": {
         "taddy": {
             "outputOptions": {
-                "cssFilepath": "./src/taddy.cache.css"
+                "cssFilepath": "./src/taddy.css"
             }
         }
     },

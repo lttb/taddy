@@ -1,20 +1,9 @@
-import Head from 'next/head';
+import {Playground} from '../components/playground';
 
-import {css} from 'taddy';
-
-import {CodePanel} from '../components';
-
-export default function Playground() {
+export default function PlaygroundPage() {
     return (
         <>
-            <Head>
-                <script
-                    async
-                    src="https://unpkg.com/typescript@latest/lib/typescriptServices.js"
-                ></script>
-            </Head>
-
-            <CodePanel />
+            <Playground />
         </>
     );
 }

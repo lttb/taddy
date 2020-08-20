@@ -9,4 +9,4 @@ dist
 .cache
 
 !packages/taddy/.cache
-taddy.cache.css
+taddy.css

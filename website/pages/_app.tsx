@@ -4,19 +4,26 @@ import '../styles/taddy.css';
 import {css} from 'taddy';
 import Link from 'next/link';
 
+import {createStore} from '@reatom/core';
+import {context} from '@reatom/react';
+
+const store = createStore();
+
 function MyApp({Component, pageProps}) {
     return (
-        <div {...css({padding: '10px 20px'})}>
-            <h1 {...css({color: 'steelblue'})}>
-                <Link href="/">
-                    <a>taddy</a>
-                </Link>
-            </h1>
+        <context.Provider value={store}>
+            <div {...css({padding: '10px 20px'})}>
+                <h1 {...css({color: 'steelblue'})}>
+                    <Link href="/">
+                        <a>taddy</a>
+                    </Link>
+                </h1>
 
-            <div>
-                <Component {...pageProps} />
+                <div>
+                    <Component {...pageProps} />
+                </div>
             </div>
-        </div>
+        </context.Provider>
     );
 }
 

@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
     presets: ['next/babel'],
 
@@ -16,11 +14,7 @@ module.exports = {
                         outputOptions: {
                             extractCSS: true,
 
-                            cssFilepath: path.join(
-                                __dirname,
-                                'styles',
-                                'taddy.css',
-                            ),
+                            cssFilepath: 'styles/taddy.css',
                         },
                     },
                 ],

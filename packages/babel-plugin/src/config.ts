@@ -48,5 +48,5 @@ export function getRootDir() {
 }
 
 export function getCacheDir() {
-    return path.join(require.resolve('taddy'), '.cache');
+    return __dirname;
 }
