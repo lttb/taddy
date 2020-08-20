@@ -42,14 +42,14 @@ export const EditorLayer = ({
     children,
     variant,
 }: {
-    children: React.ReactNode;
-    variant: keyof typeof styles._variant;
+    children?: React.ReactNode;
+    variant?: keyof typeof styles._variant;
 }) => {
     return (
         <code
             {...css(
                 styles.base,
-                styles._variant[variant],
+                variant && styles._variant[variant],
                 styles._animated(!!variant),
             )}
         >

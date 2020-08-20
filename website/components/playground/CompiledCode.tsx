@@ -43,21 +43,19 @@ export const CompiledCode = () => {
         </Row>
     );
 
-    const children = [content];
+    let layerProps: React.ComponentProps<typeof EditorLayer> = {};
 
     if (data.status === 'error') {
-        children.push(
-            <EditorLayer variant="error" key="error">
-                {data.error.toString()}
-            </EditorLayer>,
-        );
+        layerProps = {variant: 'error', children: data.error.toString()};
     } else if (data.status === 'pending') {
-        children.push(
-            <EditorLayer variant="compiling" key="pending">
-                Compiling...
-            </EditorLayer>,
-        );
+        layerProps = {variant: 'compiling', children: 'Compiling...'};
     }
 
-    return <div {...css({position: 'relative'})}>{children}</div>;
+    return (
+        <div {...css({position: 'relative'})}>
+            {content}
+
+            <EditorLayer {...layerProps} />
+        </div>
+    );
 };
