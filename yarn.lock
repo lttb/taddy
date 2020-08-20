@@ -76,6 +76,28 @@
     invariant "^2.2.4"
     semver "^5.5.0"
 
+"@babel/core@7.11.1", "@babel/core@^7.1.0", "@babel/core@^7.11.1", "@babel/core@^7.4.4", "@babel/core@^7.4.5":
+  version "7.11.1"
+  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.11.1.tgz#2c55b604e73a40dc21b0e52650b11c65cf276643"
+  integrity sha512-XqF7F6FWQdKGGWAzGELL+aCO1p+lRY5Tj5/tbT3St1G8NaH70jhhDIKknIZaDans0OQBG5wRAldROLHSt44BgQ==
+  dependencies:
+    "@babel/code-frame" "^7.10.4"
+    "@babel/generator" "^7.11.0"
+    "@babel/helper-module-transforms" "^7.11.0"
+    "@babel/helpers" "^7.10.4"
+    "@babel/parser" "^7.11.1"
+    "@babel/template" "^7.10.4"
+    "@babel/traverse" "^7.11.0"
+    "@babel/types" "^7.11.0"
+    convert-source-map "^1.7.0"
+    debug "^4.1.0"
+    gensync "^1.0.0-beta.1"
+    json5 "^2.1.2"
+    lodash "^4.17.19"
+    resolve "^1.3.2"
+    semver "^5.4.1"
+    source-map "^0.5.0"
+
 "@babel/core@7.7.7":
   version "7.7.7"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.7.7.tgz#ee155d2e12300bcc0cff6a8ad46f2af5063803e9"
@@ -114,28 +136,6 @@
     gensync "^1.0.0-beta.1"
     json5 "^2.1.2"
     lodash "^4.17.13"
-    resolve "^1.3.2"
-    semver "^5.4.1"
-    source-map "^0.5.0"
-
-"@babel/core@^7.1.0", "@babel/core@^7.11.1", "@babel/core@^7.4.4", "@babel/core@^7.4.5":
-  version "7.11.1"
-  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.11.1.tgz#2c55b604e73a40dc21b0e52650b11c65cf276643"
-  integrity sha512-XqF7F6FWQdKGGWAzGELL+aCO1p+lRY5Tj5/tbT3St1G8NaH70jhhDIKknIZaDans0OQBG5wRAldROLHSt44BgQ==
-  dependencies:
-    "@babel/code-frame" "^7.10.4"
-    "@babel/generator" "^7.11.0"
-    "@babel/helper-module-transforms" "^7.11.0"
-    "@babel/helpers" "^7.10.4"
-    "@babel/parser" "^7.11.1"
-    "@babel/template" "^7.10.4"
-    "@babel/traverse" "^7.11.0"
-    "@babel/types" "^7.11.0"
-    convert-source-map "^1.7.0"
-    debug "^4.1.0"
-    gensync "^1.0.0-beta.1"
-    json5 "^2.1.2"
-    lodash "^4.17.19"
     resolve "^1.3.2"
     semver "^5.4.1"
     source-map "^0.5.0"
@@ -2760,6 +2760,30 @@
     "@svgr/plugin-jsx" "^4.3.3"
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
+
+"@taddy/babel-plugin@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@taddy/babel-plugin/-/babel-plugin-0.0.16.tgz#b3e95e833f6daf2e0925d094190330062818d495"
+  integrity sha512-VgltVJvkSkKFC55v1l9Vz5fB0LuhcMwrMOT5b7JI7RPA8jAb2mICvGWFEqFYqrVj+nv+o0cMuAdFO3XgBJGHVg==
+  dependencies:
+    "@babel/core" "^7.11.1"
+    "@babel/helper-module-imports" "^7.10.1"
+    "@babel/preset-env" "^7.10.4"
+    "@babel/preset-react" "^7.10.4"
+    "@babel/preset-typescript" "^7.10.4"
+    "@babel/register" "^7.10.5"
+    "@babel/standalone" "^7.11.3"
+    "@babel/types" "^7.11.0"
+    "@taddy/core" "^0.0.6"
+    babel-helper-evaluate-path "0.5.0"
+    common-tags "1.8.0"
+    find-cache-dir "3.3.1"
+    lilconfig "0.0.3"
+    mkdirp "1.0.4"
+    resolve "1.17.0"
+    string-hash "1.1.3"
+    taddy "^0.0.6"
+    ts-morph "7.3.0"
 
 "@testing-library/dom@*":
   version "7.22.2"
@@ -14480,6 +14504,14 @@ table@^5.2.3:
     lodash "^4.17.14"
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
+
+taddy@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/taddy/-/taddy-0.0.6.tgz#4299bb6f13921934192ee61ac985eff644e57ec5"
+  integrity sha512-fK8NjbZQEPStZgLMlaiU18N1Vwl3RDxpy2vrKeMhmy15GDAEJ2G2l0Rh6398F1K6eXqmCBK0Omj7kGYnEr00rw==
+  dependencies:
+    "@taddy/core" "^0.0.6"
+    csstype "^3.0.2"
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"

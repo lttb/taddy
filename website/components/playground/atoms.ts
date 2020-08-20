@@ -1,6 +1,6 @@
 import {declareAction, declareAtom} from '@reatom/core';
-import {code} from '../../utils/code';
 
+import {code} from '../../utils/code';
 import {transformCode} from '../../compiler';
 
 type Playground = {

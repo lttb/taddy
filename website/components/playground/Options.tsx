@@ -2,9 +2,9 @@ import * as React from 'react';
 import {css} from 'taddy';
 import {useAtom, useAction} from '@reatom/react';
 
-import {playgroundAtom, updatePlayground} from './atoms';
-
 import {row, Row} from '../layout';
+
+import {playgroundAtom, updatePlayground} from './atoms';
 
 export const Options = () => {
     const options = useAtom(playgroundAtom, (x) => x.options, ['options']);
