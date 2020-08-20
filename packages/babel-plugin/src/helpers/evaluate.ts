@@ -2,7 +2,7 @@
 
 import type {PluginPass, NodePath} from '@babel/core';
 
-import {transform, registerPlugin, registerPreset} from '@babel/standalone';
+import {transform, registerPreset} from '@babel/standalone';
 
 import register, {revert} from '@babel/register';
 import evaluatePath from 'babel-helper-evaluate-path';
