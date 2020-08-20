@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/lttb/taddy/compare/taddy@0.0.6...taddy@0.0.7) (2020-08-20)
+
+
+### Bug Fixes
+
+* **taddy:** dont omit zero values ([d7744d5](https://github.com/lttb/taddy/commit/d7744d5dccb8c7f5a0632246150c79cda625c391))
+
+
+
+
+
 ## [0.0.6](https://github.com/lttb/taddy/compare/taddy@0.0.5...taddy@0.0.6) (2020-08-20)
 
 
