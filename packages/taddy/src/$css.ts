@@ -2,8 +2,8 @@
 
 import type {Properties, SimplePseudos} from 'csstype';
 
-import {VARS_KEY, MIXIN_KEY} from '@taddy/core';
-import {RuleInjector, isInvalidValue} from './RuleInjector';
+import {VARS_KEY, MIXIN_KEY, isInvalidValue} from '@taddy/core';
+import {RuleInjector} from './RuleInjector';
 
 export const ruleInjector = new RuleInjector();
 
@@ -144,6 +144,8 @@ export const $css = (
 
             if (key === 'composes') {
                 rule[key].forEach((mixin) => {
+                    if (!mixin) return;
+
                     if (mixin[MIXIN_KEY]) {
                         applyMixin(mixin[MIXIN_KEY]);
                         return;

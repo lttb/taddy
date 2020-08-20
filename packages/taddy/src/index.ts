@@ -31,14 +31,20 @@ const withId = (className: string) => {
     };
 };
 
+/*
+
+// TODO: at the moment, this kind of opaque type will not work for external modules
+// for example, const styles = {base: css({color: 'red'})}
+
 const TADDY: unique symbol = Symbol('TADDY');
 
-type CSSResult<T = TaddyRule> = TaddyStyle &
-    Record<typeof ID_KEY, string> & {
-        [TADDY]: T;
-    };
+*/
 
-const _css = <T extends TaddyRule>(rule: (T | TaddyRule)[]): CSSResult<T> => {
+type CSSResult<T = TaddyRule> = TaddyStyle & Record<typeof ID_KEY, string>;
+
+const _css = <T extends TaddyRule>(
+    rule: (T | TaddyRule | false | void | null)[],
+): CSSResult<T> => {
     const {className, style} = $css(
         rule.length <= 1 ? rule[0] : {composes: rule},
     );
@@ -58,7 +64,6 @@ const _css = <T extends TaddyRule>(rule: (T | TaddyRule)[]): CSSResult<T> => {
         }
     }
 
-    // @ts-expect-error
     return Object.assign(withId(classNameString), {style});
 };
 

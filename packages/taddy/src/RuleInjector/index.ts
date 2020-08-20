@@ -1,4 +1,4 @@
-import {config} from '@taddy/core';
+import {config, isInvalidValue} from '@taddy/core';
 
 import {camelToKebab} from './common';
 
@@ -20,11 +20,6 @@ function isPseudo(key): key is CSSPseudo {
 
 function isStatic(key): boolean {
     return key[0] === '_';
-}
-
-type InvalidValue = '' | false | null | void;
-export function isInvalidValue(value: any): value is InvalidValue {
-    return !(!!value || value === 0);
 }
 
 type CSSProp = string;

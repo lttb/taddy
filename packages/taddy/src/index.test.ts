@@ -37,15 +37,15 @@ describe('api', () => {
             }),
         ).toMatchInlineSnapshot(`
             Object {
-              "className": "_15b0_2efe ___6c00",
+              "className": "_1fdd_64da _15b0_2efe ___ff7e",
               "style": undefined,
-              Symbol(ID_KEY): "___6c00",
+              Symbol(ID_KEY): "___ff7e",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._1fdd {opacity: 0;}
+            "._1fdd_64da {opacity: 0;}
             ._15b0_2efe {display: flex;}"
         `);
     });

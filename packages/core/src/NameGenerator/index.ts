@@ -1,6 +1,8 @@
 // @ts-ignore
 import hash from 'custom-hash';
 
+import {isInvalidValue} from '../common';
+
 const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
 hash.configure({
@@ -17,7 +19,7 @@ export class NameGenerator {
     cache: {[name: string]: string} = {};
 
     getHash = (value?: string): string => {
-        if (!value) return '';
+        if (isInvalidValue(value)) return '';
         if (value[0] === '_') return value;
 
         const key = `_${value}`;

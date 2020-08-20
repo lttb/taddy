@@ -42,7 +42,11 @@ type ObjectOptions = CommonOptions & {
     properties: ObjectProperties;
 };
 
-function getLiteralValue(path: NodePath<t.Literal>): any {
+function isUndefined(path: NodePath<any>) {
+    return path.isIdentifier() && path.node.name === 'undefined';
+}
+
+function getLiteralValue(path: NodePath<any>): any {
     try {
         // eslint-disable-next-line no-eval
         return eval(path.toString());
@@ -125,7 +129,8 @@ export class Processor {
         const valuePath = path.get('value');
 
         const tryLiteralValue = (): boolean => {
-            if (!valuePath.isLiteral()) return false;
+            if (!(valuePath.isLiteral() || isUndefined(valuePath)))
+                return false;
 
             const value = getLiteralValue(valuePath);
 
@@ -198,9 +203,9 @@ export class Processor {
         const tryEvaluateValue = (): boolean => {
             if (!this.config.evaluate) return false;
 
-            const {value} = evaluate(valuePath);
+            const {value, error} = evaluate(valuePath);
 
-            if (!value) return false;
+            if (error) return false;
 
             // console.log('evaluate', {value});
 

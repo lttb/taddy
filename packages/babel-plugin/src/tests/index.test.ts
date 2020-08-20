@@ -45,4 +45,27 @@ describe('taddy.macro', () => {
             ._69bc_9bfd_0c8f:hover {color: blue;}"
         `);
     });
+
+    test('should omit invalid values', async () => {
+        expect(
+            await transform(`
+                import {css} from '${PACKAGE_NAME}'
+
+                export default css({
+                    opacity: 0,
+                    color: '',
+                    top: null,
+                    bottom: false,
+                    display: undefined,
+                })
+            `),
+        ).toMatchInlineSnapshot(`
+            "import { css } from \\"@taddy/core\\";
+            export default css(\\"_1fdd_64da\\");"
+        `);
+
+        expect(getStyles()).toMatchInlineSnapshot(
+            `"._1fdd_64da {opacity: 0;}"`,
+        );
+    });
 });
