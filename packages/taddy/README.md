@@ -10,6 +10,12 @@
     Compile-time Atomic CSS-in-JS
 </h3>
 
+<p align="center">
+    <img alt="taddy npm" src="https://img.shields.io/npm/v/taddy">
+    <img alt="@taddy/core npm bundle size" src="https://img.shields.io/bundlephobia/minzip/@taddy/core?label=%40taddy%2Fcore%20mingzip&logo=%40taddy%2Fcore">
+    <img alt="taddy npm bundle size" src="https://img.shields.io/bundlephobia/minzip/taddy?label=taddy%20mingzip&logo=%40taddy%2Fcore">
+</p>
+
 <!-- markdownlint-disable MD041 -->
 
 ## Quick Start
