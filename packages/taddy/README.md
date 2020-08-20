@@ -11,9 +11,16 @@
 </h3>
 
 <p align="center">
-    <img alt="taddy npm" src="https://img.shields.io/npm/v/taddy">
-    <img alt="@taddy/core npm bundle size" src="https://img.shields.io/bundlephobia/minzip/@taddy/core?label=%40taddy%2Fcore%20mingzip&logo=%40taddy%2Fcore">
-    <img alt="taddy npm bundle size" src="https://img.shields.io/bundlephobia/minzip/taddy?label=taddy%20mingzip&logo=%40taddy%2Fcore">
+    <a href="https://www.npmjs.com/package/taddy">
+        <img alt="taddy npm" src="https://img.shields.io/npm/v/taddy">
+    </a>
+    <a href="https://bundlephobia.com/result?p=@taddy/core">
+        <img alt="@taddy/core npm bundle size" src="https://img.shields.io/bundlephobia/minzip/@taddy/core?label=%40taddy%2Fcore%20mingzip&logo=%40taddy%2Fcore">
+    </a>
+    <a href="https://bundlephobia.com/result?p=taddy">
+        <img alt="taddy npm bundle size" src="https://img.shields.io/bundlephobia/minzip/taddy?label=taddy%20mingzip&logo=%40taddy%2Fcore">
+    </a>
+   
 </p>
 
 <!-- markdownlint-disable MD041 -->
