@@ -16,7 +16,11 @@
         "test": "tsdx test",
         "lint": "tsdx lint 'packages/**/*.ts'",
         "ts": "tsc --noEmit",
-        "build": "lerna run build --parallel --no-private"
+        "build": "lerna run build --parallel --no-private",
+        "prewebsite:build": "yarn build",
+        "website:build": "yarn lerna exec --scope @taddy/website next build",
+        "prewebsite:dev": "yarn build",
+        "website:dev": "yarn lerna exec --scope @taddy/website next dev"
     },
     "husky": {
         "hooks": {
