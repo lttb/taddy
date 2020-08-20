@@ -1,24 +1,16 @@
 import * as t from '@babel/types';
-import {addNamed, addSideEffect} from '@babel/helper-module-imports';
 
 import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import fs from 'fs';
 import nodePath from 'path';
 
-import stringHash from 'string-hash';
-
 import {ruleInjector} from 'taddy';
 
 import {Processor} from './Processor';
 import type {ProcessorConfig} from './Processor';
 import {optimizeBindings} from './helpers';
-import {
-    cacheDir,
-    getRootDir,
-    getCachedModuleFilepath,
-    getRelativeFilepath,
-} from './config';
+import {getCacheDir, getRootDir} from './config';
 
 import type {Env} from './types';
 
@@ -59,10 +51,11 @@ function resolveFilepath<T extends FilenameGetter | FilepathGetter>(
 type ExtractCSSType = boolean | 'production' | 'development';
 
 export type OutputOptions = {
-    getCSSFilename: FilenameGetter;
-    getCSSFilepath: FilepathGetter;
-    getJSFilename: FilenameGetter;
-    getJSFilepath: FilepathGetter;
+    cssFilename: FilenameGetter;
+    cssFilepath: FilepathGetter;
+
+    jsFilename: FilenameGetter;
+    jsFilepath: FilepathGetter;
 
     relativeEntryPath: boolean;
     extractCSS: ExtractCSSType;
@@ -95,67 +88,6 @@ export function getEnv(babel: ConfigAPI): Env {
         DEFAULT_ENV) as Env;
 }
 
-function writeDevEntry({styles, jsFilepath, cssFilepath}: EntryOptions) {
-    const template = `
-var getStyleNodeById = require('taddy').getStyleNodeById
-var STYLES = '${styles}'
-var state = {current: STYLES}
-var isBrowser = typeof window !== 'undefined'
-if (isBrowser && !getStyleNodeById('taddy').innerHTML) {
-    state.current = window.__TADDY_STYLES__ = window.__TADDY_STYLES__ || STYLES
-    getStyleNodeById('taddy').innerHTML = state.current
-}
-module.exports.STYLES = STYLES;
-module.exports.state = state;
-module.exports.taddy_invalidate = function (newStyles) {
-    if (!newStyles) return
-    state.current += newStyles
-    if (isBrowser) getStyleNodeById('taddy').innerHTML += newStyles
-}
-`;
-
-    fs.writeFile(jsFilepath, template, (error) => {
-        if (error) {
-            console.error('TADDY WRITEFILE ERROR', error);
-        }
-    });
-}
-
-function writeProdEntry({
-    styles,
-    jsFilepath,
-    cssFilepath,
-    extractCSS,
-}: EntryOptions) {
-    let template: string;
-
-    if (extractCSS) {
-        const jsToCSS = getRelativeFilepath(jsFilepath, cssFilepath);
-        template = `require('${jsToCSS}');`;
-    } else {
-        template = `
-var getStyleNodeById = require('taddy').getStyleNodeById
-var STYLES = \`${styles}\`;
-if (typeof window !== 'undefined') {
-    getStyleNodeById('taddy').innerHTML = STYLES
-}
-module.exports.STYLES = STYLES
-`;
-    }
-
-    if (contentMap.has(template)) {
-        return;
-    }
-
-    contentMap.set(template, true);
-
-    fs.writeFile(jsFilepath, template, (error) => {
-        if (error) {
-            console.error('TADDY WRITEFILE ERROR', error);
-        }
-    });
-}
-
 function getMtime(filepath: string): number {
     return Number(fs.statSync(filepath).mtime);
 }
@@ -181,7 +113,7 @@ function readFileSync(filepath: string): string {
     return data;
 }
 
-function writeCSSFileSync(filepath: string, content: string, append: string) {
+function appendFile(filepath: string, content: string, append: string) {
     const code = content + append;
     if (contentMap.has(code)) {
         return;
@@ -199,21 +131,9 @@ export function output({
     state,
     config: {
         // getCSSFilename = (content) => `atoms-${stringHash(content)}.css`,
-        getCSSFilename = () => `atoms.css`,
-        getCSSFilepath = (filename: string = 'atoms.css') =>
-            nodePath.join(cacheDir, filename),
-
-        // getJSFilename = (content) => `entry-${stringHash(content)}.js`,
-        getJSFilename = (hash?: string) => {
-            return `entry` + (hash ? '.' + hash : '') + '.js';
-        },
-        getJSFilepath = (filename: string) => nodePath.join(cacheDir, filename),
-
-        relativeEntryPath = false,
-
-        extractCSS = false,
-
-        unstable__inline = false,
+        cssFilename = () => `atoms.css`,
+        cssFilepath = (filename: string = 'atoms.css') =>
+            nodePath.join(getCacheDir(), filename),
     } = {},
 }: {
     env: Env;
@@ -222,80 +142,15 @@ export function output({
 }) {
     const {added} = getStylesState();
 
-    const cssFilename = resolveFilepath(getCSSFilename);
-    const cssFilepath = resolveFilepath(getCSSFilepath, cssFilename);
+    const filename = resolveFilepath(cssFilename);
+    const filepath = resolveFilepath(cssFilepath, filename);
 
-    const stylesData = readFileSync(cssFilepath);
+    const stylesData = readFileSync(filepath);
 
     // TODO: improve filter performance
     const diffStyles = added.filter((x) => !stylesData.includes(x)).join('');
 
-    let result = stylesData + diffStyles;
-
-    writeCSSFileSync(cssFilepath, stylesData, diffStyles);
-
-    const program = state.file.path as NodePath<t.Program>;
-    const {filename} = state;
-
-    return;
-
-    if (unstable__inline) {
-        const getStyleNode = addNamed(program, 'getStyleNodeById', 'taddy');
-        program.pushContainer(
-            'body',
-            t.assignmentExpression(
-                '=',
-                t.memberExpression(
-                    t.callExpression(getStyleNode, [t.stringLiteral('taddy')]),
-                    t.identifier('innerHTML'),
-                ),
-                t.stringLiteral(result),
-            ),
-        );
-
-        return;
-    }
-
-    function getModulePath(jsFilepath: string): string {
-        return relativeEntryPath
-            ? getRelativeFilepath(filename, jsFilepath)
-            : getCachedModuleFilepath(filename, jsFilepath);
-    }
-
-    if (env === 'development') {
-        const hash = String(stringHash(result));
-
-        const jsFilename = getJSFilename(hash);
-        const jsFilepath = getJSFilepath(jsFilename);
-
-        writeDevEntry({jsFilepath, cssFilepath, extractCSS, styles: result});
-
-        const modulePath = getModulePath(jsFilepath);
-
-        const updaterNameNode = addNamed(
-            program,
-            'taddy_invalidate',
-            modulePath,
-        );
-        program.pushContainer(
-            'body',
-            t.callExpression(updaterNameNode, [
-                t.stringLiteral(diffStyles),
-                t.stringLiteral(hash),
-            ]),
-        );
-
-        return;
-    }
-
-    const jsFilename = getJSFilename();
-    const jsFilepath = getJSFilepath(jsFilename);
-
-    writeProdEntry({jsFilepath, cssFilepath, extractCSS, styles: result});
-
-    const modulePath = getModulePath(jsFilepath);
-
-    addSideEffect(program, modulePath);
+    appendFile(filepath, stylesData, diffStyles);
 }
 
 function isPathRemoved(path: NodePath<any>) {

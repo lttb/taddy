@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import './taddy.cache.css';
+
 import App from './App';
 
 const render = () => {
@@ -13,9 +15,3 @@ const render = () => {
 };
 
 render();
-
-if ((module as any).hot) {
-    (module as any).hot.accept('./App', () => {
-        render();
-    });
-}

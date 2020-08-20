@@ -74,9 +74,9 @@ export function findBindings(currentPath: NodePath): BindingMap {
             return;
         }
 
-        // if (isFunctionArgument(bindingPath)) {
-        //     throw new BindingError('FUNCTION ARGUMENT');
-        // }
+        if (isFunctionArgument(bindingPath)) {
+            throw new BindingError('FUNCTION ARGUMENT');
+        }
 
         // addBinding(bindingMap, binding, path);
 

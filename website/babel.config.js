@@ -15,13 +15,12 @@ module.exports = {
                         },
                         outputOptions: {
                             extractCSS: true,
-                            getCSSFilepath: () => {
-                                return path.join(
-                                    __dirname,
-                                    'styles',
-                                    'taddy.css',
-                                );
-                            },
+
+                            cssFilepath: path.join(
+                                __dirname,
+                                'styles',
+                                'taddy.css',
+                            ),
                         },
                     },
                 ],

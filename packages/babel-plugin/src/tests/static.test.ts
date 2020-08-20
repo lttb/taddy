@@ -19,8 +19,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"taddy\\";
+            "import { css } from \\"taddy\\";
             let variant = 'normal';
             export default css({
               _9bfd: \\"_4da4\\",
@@ -50,8 +49,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"taddy\\";
             let variant = 'normal';
             export default css.mixin({
               _9bfd: \\"_4da4\\",
@@ -75,8 +73,7 @@ describe('taddy.macro.static', () => {
                 export default css({color: 'red'})
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             export default css(\\"_9bfd_4da4\\");"
         `);
 
@@ -98,8 +95,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             export default css(\\"_9bfd_4da4 _69bc_9bfd_0c8f\\");"
         `);
 
@@ -124,8 +120,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             let color = 'red';
             export default css({
               __VARS__: {
@@ -156,8 +151,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             export default css(\\"_9bfd_4da4 _69bc_9bfd_0c8f \\" + 'class');"
         `);
 
@@ -184,8 +178,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             let className = 'class';
             export default css(\\"_9bfd_4da4 _69bc_9bfd_0c8f \\" + className);"
         `);
@@ -215,8 +208,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             let className = 'class';
             let style = {
               color: 'green'
@@ -253,8 +245,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import \\".cache/taddy/entry.js\\";
-            import { css } from \\"@taddy/core\\";
+            "import { css } from \\"@taddy/core\\";
             let className = 'class';
             let style = {
               color: 'green'
