@@ -27,6 +27,29 @@ describe('api', () => {
         `);
     });
 
+    it('should omit only invalid values', () => {
+        expect(
+            css({
+                color: undefined,
+                opacity: 0,
+                background: '',
+                display: 'flex',
+            }),
+        ).toMatchInlineSnapshot(`
+            Object {
+              "className": "_15b0_2efe ___6c00",
+              "style": undefined,
+              Symbol(ID_KEY): "___6c00",
+              Symbol(Symbol.toPrimitive): [Function],
+            }
+        `);
+
+        expect(getStyles()).toMatchInlineSnapshot(`
+            "._1fdd {opacity: 0;}
+            ._15b0_2efe {display: flex;}"
+        `);
+    });
+
     it('should merge mixins', () => {
         const typo = mixin({fontWeight: 'bold', fontSize: 'medium'});
         const box = mixin({display: 'flex', flexDirection: 'column'});

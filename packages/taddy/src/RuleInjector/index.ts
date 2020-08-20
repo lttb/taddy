@@ -22,6 +22,11 @@ function isStatic(key): boolean {
     return key[0] === '_';
 }
 
+type InvalidValue = '' | false | null | void;
+export function isInvalidValue(value: any): value is InvalidValue {
+    return !(!!value || value === 0);
+}
+
 type CSSProp = string;
 
 type Options = {
@@ -52,7 +57,7 @@ export class RuleInjector {
     put(key: CSSProp, value: string | boolean, options?: Options): Atom | null;
 
     put(key, value, {postfix = '', inject = true} = {}): Atom | null {
-        if (!value) return null;
+        if (isInvalidValue(value)) return null;
 
         // {'a b c': !0}
         if (value === true) {

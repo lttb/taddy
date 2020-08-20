@@ -3,7 +3,7 @@
 import type {Properties, SimplePseudos} from 'csstype';
 
 import {VARS_KEY, MIXIN_KEY} from '@taddy/core';
-import {RuleInjector} from './RuleInjector';
+import {RuleInjector, isInvalidValue} from './RuleInjector';
 
 export const ruleInjector = new RuleInjector();
 
@@ -138,7 +138,7 @@ export const $css = (
 
     function process(rule) {
         for (const key in rule) {
-            if (!rule[key]) continue;
+            if (isInvalidValue(rule[key])) continue;
 
             if (key === MIXIN_KEY) continue;
 
