@@ -9,6 +9,10 @@
     "publishConfig": {
         "access": "public"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lttb/taddy.git"
+    },
     "scripts": {
         "start": "tsdx watch",
         "build": "tsdx build --transpileOnly",
