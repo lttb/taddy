@@ -33,7 +33,7 @@ function waitForTypescrit() {
 async function init() {
     await waitForTypescrit();
 
-    const {Project} = require('ts-morph');
+    const {Project} = await import('ts-morph');
 
     const project = new Project({
         useInMemoryFileSystem: true,

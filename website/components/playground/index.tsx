@@ -10,7 +10,7 @@ import {LiveEditor} from './LiveEditor';
 import {Options} from './Options';
 import {CompiledCode} from './CompiledCode';
 
-export const Playground = () => {
+export default function Playground() {
     return (
         <div>
             <Head>
@@ -23,7 +23,7 @@ export const Playground = () => {
             <div {...css(column({gap: 4}))}>
                 <Options />
 
-                <Row {...css(row({gap: 4}), {width: '100%'})}>
+                <Row {...css(row({gap: 4}), {flexWrap: 'wrap', width: '100%'})}>
                     <LiveEditor />
 
                     <CompiledCode />
@@ -31,4 +31,4 @@ export const Playground = () => {
             </div>
         </div>
     );
-};
+}

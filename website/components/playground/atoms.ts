@@ -20,8 +20,6 @@ export const updatePlayground = declareAction<Partial<Playground>>(
 
         transformCode(source, options)
             .then((result) => {
-                console.log({result});
-
                 store.dispatch(setTransformedCode({status: 'done', result}));
 
                 code.onChange(source);

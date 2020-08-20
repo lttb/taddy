@@ -32,6 +32,7 @@ const AceEditor = dynamic(
     },
     {
         ssr: false, // react-ace doesn't support server side rendering as it uses the window object.
+        loading: () => <p>Loading...</p>,
     },
 );
 
@@ -43,5 +44,9 @@ export const Editor = (props: ComponentProps<typeof AceEditor>) => (
         maxLines={Infinity}
         width="100%"
         {...props}
+        style={{
+            ...props.style,
+            minWidth: 350,
+        }}
     />
 );

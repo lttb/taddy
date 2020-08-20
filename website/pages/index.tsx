@@ -94,7 +94,7 @@ export default function Home() {
                         Github
                     </LinkButton>
 
-                    <LinkButton href="/playground">Try Playground</LinkButton>
+                    <LinkButton href="/playground">Playground</LinkButton>
                 </Row>
             </div>
         </div>
