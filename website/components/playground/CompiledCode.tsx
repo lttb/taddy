@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {css} from 'taddy';
+import {css, $} from 'taddy';
 
 import {useAtom} from '@reatom/react';
 
@@ -12,7 +12,14 @@ export const CompiledCode = () => {
     const data = useAtom(transformAtom);
 
     const content = (
-        <Row key="content" {...css(column({gap: 4}))}>
+        <Row
+            key="content"
+            {...css(column({gap: 4}), {
+                [$` h2`]: {
+                    color: 'darkgrey',
+                },
+            })}
+        >
             <div>
                 <h2>Compiled Module</h2>
 
