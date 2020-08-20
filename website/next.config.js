@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+    target: 'serverless',
+
     webpack(config) {
         Object.assign(config.resolve.alias, {
             fs: require.resolve('./compiler/stubs/fs'),
@@ -14,7 +16,6 @@ module.exports = {
         });
 
         config.plugins.push(
-            // @ts-expect-error
             new webpack.ContextReplacementPlugin(/\/filer\//, (data) => {
                 delete data.dependencies[0].critical;
                 return data;
