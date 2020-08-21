@@ -42,7 +42,7 @@ const TADDY: unique symbol = Symbol('TADDY');
 
 type CSSResult<T = TaddyRule> = TaddyStyle & Record<typeof ID_KEY, string>;
 
-const _css = <T extends TaddyRule>(
+const _css = <T extends TaddyRule | {[key: string]: TaddyRule}>(
     rule: (T | TaddyRule | false | void | null)[],
 ): CSSResult<T> => {
     const {className, style} = $css(
