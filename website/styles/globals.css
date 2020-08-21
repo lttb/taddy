@@ -14,3 +14,17 @@ a {
 * {
   box-sizing: border-box;
 }
+
+body {
+    background: #fafafa;
+    height: 100%;
+    color: #333;
+}
+
+use {
+    stroke: violet !important
+}
+
+svg * {
+    all: inherit;
+}

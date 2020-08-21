@@ -3,45 +3,70 @@ import * as React from 'react';
 import {$, css} from 'taddy';
 
 const size = (v: number) => `${v * 4}px`;
+const margin = (gapY: number, gapX: number) =>
+    `${size(gapY / 2)} ${size(gapX / 2)}`;
 
-export const row = ({gap = 0, gapY = gap, gapX = gap, inline = false} = {}) =>
-    css.mixin({
+function flex({inline}) {
+    return css.mixin({
         display: 'flex',
-        flexDirection: 'row',
-
-        margin: `${size(-gapY / 2)} ${size(-gapX / 2)}`,
-
-        [$`> *:not(:empty)`]: {
-            margin: `${size(gapY / 2)} ${size(gapX / 2)}`,
-        },
 
         ...(!inline && {
-            flex: '1',
-            width: `calc(100% + ${size(gapX)})`,
+            flexGrow: 1,
 
             [$`> *`]: {
-                flex: '1',
+                flexGrow: 1,
             },
         }),
     });
+}
 
-export const column = ({gap = 0, inline = false} = {}) =>
-    css.mixin({
-        display: 'flex',
+type Size = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+
+export function row({
+    gap = 0,
+    gapY = gap,
+    gapX = gap,
+    inline = false,
+    wrap = 'wrap',
+}: {
+    gap?: Size;
+    gapY?: Size;
+    gapX?: Size;
+    inline?: boolean;
+    wrap?: any;
+} = {}) {
+    return css.mixin({
+        ...flex({inline}),
+
+        flexDirection: 'row',
+        flexWrap: wrap,
+
+        margin: margin(-gapY, -gapX),
+
+        ...(!inline && {
+            width: `calc(100% + ${size(gapX)})`,
+        }),
+
+        '> *:not(:empty)': {
+            margin: margin(gapY, gapX),
+        },
+    });
+}
+
+export function column({
+    gap = 0,
+    inline = false,
+}: {gap?: Size; gapY?: Size; gapX?: Size; inline?: boolean} = {}) {
+    return css.mixin({
+        ...flex({inline}),
+
         flexDirection: 'column',
 
-        [$`> *:not(:empty) + *:not(:empty)`]: {
+        '> *:not(:empty) + *:not(:empty)': {
             marginTop: size(gap),
         },
-
-        ...(!inline && {
-            flex: '1',
-
-            [$`> *`]: {
-                flex: '1',
-            },
-        }),
     });
+}
 
 export const Row = (props) => (
     <div>

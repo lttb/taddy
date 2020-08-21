@@ -18,7 +18,7 @@ export const Options = () => {
     return (
         <div {...css({textAlign: 'left'})}>
             <Row {...css(row({gap: 4, inline: true}), {alignItems: 'center'})}>
-                <h4>Options:</h4>
+                <h4>Compile Options:</h4>
 
                 <label>
                     <input

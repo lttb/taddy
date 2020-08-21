@@ -2,26 +2,12 @@ import {css, $} from 'taddy';
 import Link from 'next/link';
 
 import {row, column, Row} from '../components/layout';
+import {LinkButton} from '../components/LinkButton';
 
-const LinkButton = ({href, children}) => (
-    <Link href={href}>
-        <a
-            {...css({
-                padding: '10px 20px',
-                borderRadius: '12px',
-                borderWidth: '2px',
-                borderStyle: 'solid',
-                color: 'violet',
-                fontWeight: 'bold',
-                fontSize: '20px',
-            })}
-        >
-            {children}
-        </a>
-    </Link>
-);
+const Logo1 = require('../public/logo/taddy1.png');
+const Logo11 = require('../public/logo/taddy11.png');
 
-const Logo = () => {
+const Logos = () => {
     const transition = css.mixin({
         transitionProperty: 'opacity',
         transitionDuration: '500ms',
@@ -43,30 +29,47 @@ const Logo = () => {
         ...transition,
 
         zIndex: 1,
-        ':hover': {
-            opacity: '0',
-            [$`+ ${second}`]: {
-                opacity: 1,
-            },
-        },
     });
 
     return (
         <Link href="/">
-            <a {...css({display: 'flex', position: 'relative'})}>
-                <img
-                    {...first}
-                    height="300"
-                    alt="taddy logo"
-                    src="https://github.com/lttb/taddy/raw/main/docs/logo/taddy1.png?raw=true"
-                />
+            <a
+                {...css({
+                    ':hover': {
+                        [$` ${first}`]: {
+                            opacity: 0,
+                        },
+                        // opacity: '0',
+                        [$` ${second}`]: {
+                            opacity: 1,
+                        },
+                    },
+                })}
+            >
+                <div
+                    {...css({
+                        display: 'flex',
+                        position: 'relative',
+                    })}
+                >
+                    <img {...first} height="300" alt="taddy logo" src={Logo1} />
 
-                <img
-                    {...second}
-                    height="300"
-                    alt="taddy logo"
-                    src="https://github.com/lttb/taddy/raw/main/docs/logo/taddy11.png?raw=true"
-                />
+                    <img
+                        {...second}
+                        height="300"
+                        alt="taddy logo"
+                        src={Logo11}
+                    />
+                </div>
+
+                <h1
+                    {...css({
+                        color: '#3e68ba',
+                        textAlign: 'center',
+                    })}
+                >
+                    <Link href="/">taddy</Link>
+                </h1>
             </a>
         </Link>
     );
@@ -76,26 +79,43 @@ export default function Home() {
     return (
         <div
             {...css({
-                ...column({gap: 10}),
+                ...column({gap: 5, inline: true}),
 
                 alignItems: 'center',
                 justifyContent: 'center',
+                alignContent: 'center',
+                minHeight: '80vh',
+                padding: '20px',
+                textAlign: 'center',
             })}
         >
-            <span>
-                <Logo />
-            </span>
+            <Logos />
 
-            <h2>Compile-time Atomic CSS-in-JS</h2>
+            <h2>Compile&#8209;time Atomic CSS&#8209;in&#8209;JS</h2>
 
             <div>
-                <Row {...css(row({gap: 4, inline: true}))}>
-                    <LinkButton href="https://github.com/lttb/taddy">
-                        Github
-                    </LinkButton>
+                <div {...css(column({gap: 4}))}>
+                    <Row
+                        {...css(row({gap: 4, inline: true}), {
+                            justifyContent: 'center',
+                        })}
+                    >
+                        <LinkButton
+                            {...css({fontSize: '24px'})}
+                            variant="action"
+                            href="https://github.com/lttb/taddy"
+                        >
+                            Get Started
+                        </LinkButton>
 
-                    <LinkButton href="/playground">Playground</LinkButton>
-                </Row>
+                        <LinkButton
+                            {...css({fontSize: '24px'})}
+                            href="/playground"
+                        >
+                            Playground
+                        </LinkButton>
+                    </Row>
+                </div>
             </div>
         </div>
     );

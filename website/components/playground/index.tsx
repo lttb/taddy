@@ -23,7 +23,7 @@ export default function Playground() {
             <div {...css(column({gap: 4}))}>
                 <Options />
 
-                <Row {...css(row({gap: 4}), {flexWrap: 'wrap', width: '100%'})}>
+                <Row {...css(row({gap: 4}))}>
                     <LiveEditor />
 
                     <CompiledCode />
