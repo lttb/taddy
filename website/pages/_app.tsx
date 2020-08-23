@@ -8,7 +8,8 @@ import {css} from 'taddy';
 import {createStore} from '@reatom/core';
 import {context} from '@reatom/react';
 
-import {Sidebar} from '../components/Sidebar';
+import {Sidebar} from '../components/Sidebar/index';
+import sidebarStyles from '../components/Sidebar/styles.module.css';
 
 const store = createStore();
 
@@ -21,6 +22,8 @@ function MyApp({Component, pageProps}) {
                         content="width=device-width,initial-scale=1.0"
                         name="viewport"
                     />
+
+                    <link rel="shortcut icon" href="/favicon.ico" />
                 </Head>
 
                 <div
@@ -39,7 +42,7 @@ function MyApp({Component, pageProps}) {
                             flexDirection: 'column',
                         })}
                     >
-                        <div>
+                        <div className={sidebarStyles.content}>
                             <Component {...pageProps} />
                         </div>
                     </div>

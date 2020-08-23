@@ -44,6 +44,7 @@ export const LiveEditor = ({
                     enableBasicAutocompletion: true,
                     enableLiveAutocompletion: true,
                 }}
+                showGutter={false}
                 {...css({
                     ' .ace_gutter': {
                         background: 'transparent',

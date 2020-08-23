@@ -12,9 +12,11 @@ function flex({inline}) {
 
         ...(!inline && {
             flex: 1,
+            maxWidth: '100%',
 
             [$`> *`]: {
                 flex: 1,
+                maxWidth: '100%',
             },
         }),
     });

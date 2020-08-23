@@ -19,6 +19,8 @@ body {
     background: #fafafa;
     height: 100%;
     color: #333;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 use {

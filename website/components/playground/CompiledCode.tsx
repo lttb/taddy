@@ -19,6 +19,7 @@ const Wrapper = ({children}) => (
             padding: '0 20px 20px',
             boxShadow: '0 0 13px -10px',
             borderRadius: '20px',
+            minWidth: '300px',
         })}
     >
         {children}

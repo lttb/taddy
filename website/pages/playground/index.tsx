@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
 import {css} from 'taddy';
@@ -12,22 +13,27 @@ const Playground = dynamic(() => import('../../components/playground'), {
 
 export default function PlaygroundPage() {
     return (
-        <Column gap={4}>
-            <div
-                {...css({
-                    background: 'white',
-                    padding: '20px',
-                    minHeight: '100vh',
-                    width: '100%',
-                })}
-            >
-                <Playground
-                    persistent
-                    showOptions
-                    showCompiledCode
-                    showRender
-                    showCompiledCSS
-                    initialCode={`
+        <>
+            <Head>
+                <title>taddy | Playground</title>
+            </Head>
+
+            <Column gap={4}>
+                <div
+                    {...css({
+                        background: 'white',
+                        padding: '20px',
+                        minHeight: '100vh',
+                        width: '100%',
+                    })}
+                >
+                    <Playground
+                        persistent
+                        showOptions
+                        showCompiledCode
+                        showRender
+                        showCompiledCSS
+                        initialCode={`
                         import React from 'react';
                         import {css} from 'taddy';
 
@@ -37,8 +43,9 @@ export default function PlaygroundPage() {
                             </h1>
                         )
                     `}
-                />
-            </div>
-        </Column>
+                    />
+                </div>
+            </Column>
+        </>
     );
 }

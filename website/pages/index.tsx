@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import {css, $} from 'taddy';
 
 import {Link} from '../components/Link';
@@ -63,7 +64,7 @@ const Logos = () => {
                     textAlign: 'center',
                 })}
             >
-                <Link href="/">taddy</Link>
+                taddy
             </h1>
         </Link>
     );
@@ -71,41 +72,47 @@ const Logos = () => {
 
 export default function Home() {
     return (
-        <Column
-            gap={5}
-            inline
-            {...css({
-                alignItems: 'center',
-                justifyContent: 'center',
-                alignContent: 'center',
-                minHeight: '80vh',
-                padding: '20px',
-                textAlign: 'center',
-            })}
-        >
-            <Logos />
+        <>
+            <Head>
+                <title>taddy | Compile-time Atomic CSS-in-JS library</title>
+            </Head>
 
-            <h2>Compile&#8209;time Atomic CSS&#8209;in&#8209;JS</h2>
-
-            <Row
-                gap={4}
+            <Column
+                gap={5}
                 inline
                 {...css({
+                    alignItems: 'center',
                     justifyContent: 'center',
+                    alignContent: 'center',
+                    minHeight: '80vh',
+                    padding: '20px',
+                    textAlign: 'center',
                 })}
             >
-                <LinkButton
-                    {...css({fontSize: '24px'})}
-                    variant="action"
-                    href="https://github.com/lttb/taddy"
-                >
-                    Get Started
-                </LinkButton>
+                <Logos />
 
-                <LinkButton {...css({fontSize: '24px'})} href="/playground">
-                    Playground
-                </LinkButton>
-            </Row>
-        </Column>
+                <h2>Compile&#8209;time Atomic CSS&#8209;in&#8209;JS</h2>
+
+                <Row
+                    gap={4}
+                    inline
+                    {...css({
+                        justifyContent: 'center',
+                    })}
+                >
+                    <LinkButton
+                        {...css({fontSize: '24px'})}
+                        variant="action"
+                        href="https://github.com/lttb/taddy"
+                    >
+                        Get Started
+                    </LinkButton>
+
+                    <LinkButton {...css({fontSize: '24px'})} href="/playground">
+                        Playground
+                    </LinkButton>
+                </Row>
+            </Column>
+        </>
     );
 }

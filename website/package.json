@@ -12,7 +12,6 @@
         "@babel/standalone": "7.11.3",
         "@reatom/core": "^1.1.5",
         "@reatom/react": "^1.1.4",
-        "@taddy/babel-plugin": "^0.0.20",
         "filer": "1.2.0",
         "history": "5.0.0",
         "lz-string": "1.4.4",
@@ -22,7 +21,6 @@
         "react": "16.13.1",
         "react-ace": "9.1.3",
         "react-dom": "16.13.1",
-        "taddy": "^0.0.10",
         "typescript": "^3.9.7"
     },
     "devDependencies": {
