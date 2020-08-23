@@ -2,7 +2,6 @@ import {declareAction, declareAtom} from '@reatom/core';
 
 import {stripIndent} from 'common-tags';
 
-import {code} from '../../utils/code';
 import {transformCode} from '../../compiler';
 
 type Playground = {
@@ -29,20 +28,12 @@ export const updatePlayground = declareAction<Partial<Playground>>(
                 }),
             );
 
-            code.onChange(source);
-
-            code.scheduleLinkUpdate();
-
             return;
         }
 
         transformCode(source, options)
             .then((result) => {
                 store.dispatch(setTransformedCode({status: 'done', result}));
-
-                code.onChange(source);
-
-                code.scheduleLinkUpdate();
             })
             .catch((error) =>
                 store.dispatch(
@@ -56,7 +47,7 @@ export const updatePlayground = declareAction<Partial<Playground>>(
 );
 export const playgroundAtom = declareAtom<Playground>(
     {
-        code: code.value,
+        code: '',
         options: {
             taddy: true,
             typescript: true,

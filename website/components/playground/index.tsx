@@ -4,37 +4,57 @@ import * as React from 'react';
 
 import {css} from 'taddy';
 
-import {row, column, Row} from '../layout';
+import {Column, Row} from '../layout';
 
 import {LiveEditor} from './LiveEditor';
 import {Options} from './Options';
 import {CompiledCode} from './CompiledCode';
 
+import {createStore} from '@reatom/core';
+import {context} from '@reatom/react';
+
 export default function Playground({
     initialCode,
     showOptions,
+    showCompiledCode,
+    showCompiledCSS,
+    showRender,
+    persistent,
 }: {
     initialCode?: string;
     showOptions?: boolean;
+    showCompiledCode?: boolean;
+    showCompiledCSS?: boolean;
+    showRender?: boolean;
+    persistent?: boolean;
 }) {
+    const store = createStore();
+
     return (
-        <div>
-            <Head>
-                <script
-                    async
-                    src="https://unpkg.com/typescript@latest/lib/typescriptServices.js"
-                ></script>
-            </Head>
+        <context.Provider value={store}>
+            <div>
+                <Head>
+                    <script
+                        async
+                        src="https://unpkg.com/typescript@latest/lib/typescriptServices.js"
+                    ></script>
+                </Head>
 
-            <div {...css(column({gap: 4}))}>
-                {showOptions && <Options />}
+                <Column gap={4} {...css({background: 'white'})}>
+                    {showOptions && <Options />}
 
-                <Row {...css(row({gap: 4}))}>
-                    <LiveEditor initialCode={initialCode} />
+                    <Row gap={4}>
+                        <LiveEditor
+                            persistent={persistent}
+                            initialCode={initialCode}
+                        />
 
-                    <CompiledCode />
-                </Row>
+                        <CompiledCode
+                            {...{showCompiledCode, showCompiledCSS, showRender}}
+                        />
+                    </Row>
+                </Column>
             </div>
-        </div>
+        </context.Provider>
     );
 }

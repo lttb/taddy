@@ -96,12 +96,12 @@ async function init() {
         ],
     });
 
+    const {ruleInjector: currentInjector} = $css;
+
     async function _transform(
         code,
         {format = true, plugins, presets, ...options}: any = {},
     ) {
-        const {ruleInjector: currentInjector} = $css;
-
         const compileInjector = new RuleInjector();
         compileInjector.styleSheet = new VirtualStyleSheet();
 
@@ -109,10 +109,7 @@ async function init() {
         let result;
         let error;
         try {
-            result = await transform(
-                code,
-                getOptions(options, {plugins, presets}),
-            );
+            result = transform(code, getOptions(options, {plugins, presets}));
         } catch (e) {
             error = e;
         }
@@ -124,7 +121,7 @@ async function init() {
         }
 
         compileInjector.styleSheet.rules.forEach((rule) => {
-            currentInjector.styleSheet.insertAtomicRule(
+            $css.ruleInjector.styleSheet.insertAtomicRule(
                 rule.$className,
                 rule.$key,
                 rule.$value,

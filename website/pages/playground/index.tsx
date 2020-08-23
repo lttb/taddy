@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import {css} from 'taddy';
 import {stripIndent} from 'common-tags';
 
-import {column} from '../../components/layout';
+import {Column} from '../../components/layout';
 
 const Playground = dynamic(() => import('../../components/playground'), {
     ssr: false,
@@ -12,7 +12,7 @@ const Playground = dynamic(() => import('../../components/playground'), {
 
 export default function PlaygroundPage() {
     return (
-        <div {...css(column({gap: 4}))}>
+        <Column gap={4}>
             <div
                 {...css({
                     background: 'white',
@@ -22,7 +22,11 @@ export default function PlaygroundPage() {
                 })}
             >
                 <Playground
+                    persistent
                     showOptions
+                    showCompiledCode
+                    showRender
+                    showCompiledCSS
                     initialCode={`
                         import React from 'react';
                         import {css} from 'taddy';
@@ -35,6 +39,6 @@ export default function PlaygroundPage() {
                     `}
                 />
             </div>
-        </div>
+        </Column>
     );
 }

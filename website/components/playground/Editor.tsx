@@ -59,6 +59,7 @@ export const Editor = (props: ComponentProps<typeof AceEditor>) => (
         style={{
             ...props.style,
             minWidth: 350,
+            overflowX: 'auto',
         }}
     />
 );

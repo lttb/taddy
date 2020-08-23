@@ -9,15 +9,23 @@ import {useCode} from '../../utils/code';
 import {playgroundAtom, updatePlayground} from './atoms';
 import {Editor} from './Editor';
 
-export const LiveEditor = ({initialCode}: {initialCode?: string}) => {
-    useCode();
-
+export const LiveEditor = ({
+    initialCode,
+    persistent,
+}: {
+    initialCode?: string;
+    persistent?: boolean;
+}) => {
     const code = useAtom(playgroundAtom, (x) => x.code, ['code']);
-    const handleCode = useAction((code) => updatePlayground({code}));
+    const storageCode = useCode(persistent ? code : null);
+
+    const handleCode = useAction((code) => {
+        return updatePlayground({code});
+    });
 
     React.useEffect(() => {
         setTimeout(() => {
-            handleCode(code || stripIndent(initialCode) + '\n');
+            handleCode(storageCode || stripIndent(initialCode) + '\n');
         }, 0);
     }, []);
 
@@ -37,8 +45,6 @@ export const LiveEditor = ({initialCode}: {initialCode?: string}) => {
                     enableLiveAutocompletion: true,
                 }}
                 {...css({
-                    minHeight: '300px',
-
                     ' .ace_gutter': {
                         background: 'transparent',
                     },
