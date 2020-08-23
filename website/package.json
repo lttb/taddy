@@ -33,6 +33,7 @@
         "imagemin-svgo": "^8.0.0",
         "next-compose-plugins": "2.2.0",
         "next-optimized-images": "2.6.2",
-        "svg-sprite-loader": "^5.0.0"
+        "svg-sprite-loader": "^5.0.0",
+        "webpack": "^4.0.0"
     }
 }

@@ -2,9 +2,9 @@ import dynamic from 'next/dynamic';
 
 import {css} from 'taddy';
 
-import {column} from '../components/layout';
+import {column} from '../../components/layout';
 
-const Playground = dynamic(() => import('../components/playground'), {
+const Playground = dynamic(() => import('../../components/playground'), {
     ssr: false,
     loading: () => <p {...css({textAlign: 'center'})}>loading ...</p>,
 });

@@ -8,13 +8,25 @@ const AceEditor = dynamic(
     async () => {
         const reactAce = await import('react-ace');
 
-        // prevent warning in console about misspelled props name.
-        await import('ace-builds/src-min-noconflict/ext-language_tools');
+        await Promise.all([
+            // prevent warning in console about misspelled props name.
+            import('ace-builds/src-min-noconflict/ext-language_tools'),
+            import('ace-builds/src-min-noconflict/ext-beautify'),
 
-        // import your theme/mode here. <AceEditor mode="javascript" theme="solarized_dark" />
-        await import('ace-builds/src-min-noconflict/mode-typescript');
-        await import('ace-builds/src-min-noconflict/mode-css');
-        await import('ace-builds/src-min-noconflict/theme-textmate');
+            import('ace-builds/src-min-noconflict/mode-typescript'),
+            import('ace-builds/src-min-noconflict/mode-tsx'),
+            import('ace-builds/src-min-noconflict/mode-css'),
+
+            import('ace-builds/src-min-noconflict/theme-textmate'),
+        ]);
+
+        // await import('ace-builds/src-min-noconflict/ext-language_tools');
+        // await import('ace-builds/src-min-noconflict/ext-beautify');
+
+        // // import your theme/mode here. <AceEditor mode="javascript" theme="solarized_dark" />
+        // await import('ace-builds/src-min-noconflict/mode-typescript');
+        // await import('ace-builds/src-min-noconflict/mode-css');
+        // await import('ace-builds/src-min-noconflict/theme-textmate');
 
         // as @Holgrabus commented you can paste these file into your /public folder.
         // You will have to set basePath and setModuleUrl accordingly.
@@ -38,7 +50,7 @@ const AceEditor = dynamic(
 
 export const Editor = (props: ComponentProps<typeof AceEditor>) => (
     <AceEditor
-        mode="typescript"
+        mode="tsx"
         theme="textmate"
         showPrintMargin={false}
         maxLines={Infinity}

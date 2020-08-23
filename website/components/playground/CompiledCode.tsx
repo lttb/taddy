@@ -7,6 +7,7 @@ import {column, Row} from '../layout';
 import {transformAtom} from './atoms';
 import {Editor} from './Editor';
 import {EditorLayer} from './EditorLayer';
+import {ReactRender} from './ReactRender';
 
 const Title = ({children}) => <h2>{children}</h2>;
 
@@ -45,6 +46,8 @@ export const CompiledCode = () => {
                 },
             })}
         >
+            <ReactRender code={data.result.code} />
+
             <Wrapper>
                 <Title>Compiled Module</Title>
 

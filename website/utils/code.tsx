@@ -14,7 +14,7 @@ const COLORS = {
 
 type Props = {children: string; variant: keyof typeof COLORS}
 
-export function Title({variant, children}: Props) {
+export default function Title({variant, children}: Props) {
     return (
         <h1 {...css({
             /* declare your styles here */

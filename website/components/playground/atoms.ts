@@ -5,6 +5,7 @@ import {transformCode} from '../../compiler';
 
 type Playground = {
     options: {
+        taddy: true;
         typescript: boolean;
         evaluate: boolean;
         unstable_CSSVariableFallback: boolean;
@@ -17,6 +18,21 @@ export const updatePlayground = declareAction<Partial<Playground>>(
         const {code: source, options} = store.getState(playgroundAtom);
 
         store.dispatch(setTransformedCode({status: 'pending'}));
+
+        if (!options.taddy) {
+            store.dispatch(
+                setTransformedCode({
+                    status: 'done',
+                    result: {code: source, css: ''},
+                }),
+            );
+
+            code.onChange(source);
+
+            code.scheduleLinkUpdate();
+
+            return;
+        }
 
         transformCode(source, options)
             .then((result) => {
@@ -40,6 +56,7 @@ export const playgroundAtom = declareAtom<Playground>(
     {
         code: code.value,
         options: {
+            taddy: true,
             typescript: true,
             evaluate: true,
             unstable_CSSVariableFallback: true,

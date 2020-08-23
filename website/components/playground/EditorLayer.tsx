@@ -32,7 +32,7 @@ const styles = {
         transitionProperty: 'opacity',
         transitionDuration: '150ms',
     }),
-    _hidden: css({opacity: 0}),
+    _hidden: css({opacity: 0, zIndex: -1}),
 };
 
 export const EditorLayer = ({
