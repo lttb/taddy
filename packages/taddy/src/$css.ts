@@ -7,6 +7,7 @@ import {
     MIXIN_KEY,
     isInvalidValue,
     mergeClassNames,
+    mapStaticClassName,
     CLASSNAME,
 } from '@taddy/core';
 import {RuleInjector} from './RuleInjector';
@@ -130,7 +131,15 @@ export const $css = (
         if (!x) return;
         style = style || {};
         Object.assign(style, x);
-        mergeClassNames(className, x);
+
+        // if (CLASSNAME in x) {
+        //     if (rule.className) {
+        //         Object.assign(className, mapStaticClassName(rule.className));
+        //     }
+
+        //     mergeClassNames(className, rule.style);
+        // }
+        // mergeClassNames(className, x);
     }
 
     function applyMixin(currentRule) {
@@ -178,7 +187,14 @@ export const $css = (
             }
 
             if (key === 'className') {
-                Object.assign(className, {[rule[key]]: true});
+                // if (!rule[key]) continue;
+
+                Object.assign(className, mapStaticClassName(rule[key]));
+
+                // if (!(rule.style && CLASSNAME in rule.style)) {
+                // Object.assign(className, {[rule[key]]: true});
+                // }
+
                 continue;
             }
 
@@ -198,7 +214,7 @@ export const $css = (
     const result: InternalTaddyStyle = {className};
 
     result.style = style;
-    result.style[CLASSNAME] = result.className;
+    // result.style[CLASSNAME] = result.className;
 
     return result;
 };

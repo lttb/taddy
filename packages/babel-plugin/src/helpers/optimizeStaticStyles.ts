@@ -6,41 +6,43 @@ import {VARS_KEY} from '@taddy/core';
 
 import {getObjectPropertyKey} from './getObjectPropertyKey';
 
-export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
-    // const quasis: string[] = [];
-    const expressions: any[] = [];
-    const props: t.ObjectProperty[] = [];
-
-    let quasis: any[] = [];
-
-    function apply(q) {
-        let expr;
-        let curr = '';
-        for (let v of q) {
-            if (typeof v === 'string') {
-                curr += (curr ? ' ' : '') + v;
-                continue;
-            }
-            if (expr && curr) {
-                expr = t.binaryExpression(
-                    '+',
-                    expr,
-                    t.stringLiteral(' ' + curr + ' '),
-                );
-                expr = t.binaryExpression('+', expr, v);
-            } else if (curr) {
-                expr = t.binaryExpression('+', t.stringLiteral(curr + ' '), v);
-            } else {
-                expr = v;
-            }
-
-            curr = '';
+function apply(
+    quasis: (string | t.BinaryExpression)[],
+): t.BinaryExpression | t.StringLiteral {
+    let expr;
+    let curr = '';
+    for (let v of quasis) {
+        if (typeof v === 'string') {
+            curr += (curr ? ' ' : '') + v;
+            continue;
         }
         if (expr && curr) {
-            expr = t.binaryExpression('+', expr, t.stringLiteral(' ' + curr));
+            expr = t.binaryExpression(
+                '+',
+                expr,
+                t.stringLiteral(' ' + curr + ' '),
+            );
+            expr = t.binaryExpression('+', expr, v);
+        } else if (curr) {
+            expr = t.binaryExpression('+', t.stringLiteral(curr + ' '), v);
+        } else {
+            expr = v;
         }
-        return expr || t.stringLiteral(curr);
+
+        curr = '';
     }
+    if (expr && curr) {
+        expr = t.binaryExpression('+', expr, t.stringLiteral(' ' + curr));
+    }
+    return expr || t.stringLiteral(curr);
+}
+
+export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
+    // const quasis: string[] = [];
+    // const expressions: any[] = [];
+    const props: t.ObjectProperty[] = [];
+
+    let quasis: (string | t.BinaryExpression)[] = [];
 
     for (const propPath of path.get('properties')) {
         if (!propPath.isObjectProperty()) {

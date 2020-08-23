@@ -46,7 +46,7 @@ const getId = (rule: any[]): string | void => {
 };
 
 const _css = <T extends TaddyRule | {[key: string]: TaddyRule}>(
-    rule: (T | TaddyRule | false | void | null)[],
+    rule: (T | TaddyRule | false | void | null | string)[],
 ): CSSResult => {
     let id = getId(rule);
 
