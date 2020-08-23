@@ -2,7 +2,6 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
 import {css} from 'taddy';
-import {stripIndent} from 'common-tags';
 
 import {Column} from '../../components/layout';
 

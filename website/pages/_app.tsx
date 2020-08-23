@@ -11,6 +11,8 @@ import {context} from '@reatom/react';
 import {Sidebar} from '../components/Sidebar/index';
 import sidebarStyles from '../components/Sidebar/styles.module.css';
 
+const ico = require('../public/favicon.ico');
+
 const store = createStore();
 
 function MyApp({Component, pageProps}) {
@@ -23,7 +25,7 @@ function MyApp({Component, pageProps}) {
                         name="viewport"
                     />
 
-                    <link rel="shortcut icon" href="/favicon.ico" />
+                    <link rel="shortcut icon" href={ico} />
                 </Head>
 
                 <div
