@@ -177,10 +177,7 @@ export const $css = (
                 continue;
             }
 
-            if (
-                key === 'className' &&
-                !(rule.style && CLASSNAME in rule.style)
-            ) {
+            if (key === 'className') {
                 Object.assign(className, {[rule[key]]: true});
                 continue;
             }

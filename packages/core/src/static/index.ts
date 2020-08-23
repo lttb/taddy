@@ -76,7 +76,7 @@ const _css = (
     let className;
 
     for (let key in rule) {
-        if (key === 'className' && !(rule.style && CLASSNAME in rule.style)) {
+        if (key === 'className') {
             result.className += (result.className ? ' ' : '') + rule[key];
             continue;
         }
