@@ -54,6 +54,8 @@ export function optimizeBindings(
             continue;
         }
 
+        binding.path.remove();
+
         const {parentPath} = binding.path;
 
         const isImportToRemove =
@@ -64,8 +66,6 @@ export function optimizeBindings(
         // if (env === 'development') {
         //     return;
         // }
-
-        binding.path.remove();
 
         if (!isImportToRemove) {
             continue;

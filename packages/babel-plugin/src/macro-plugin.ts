@@ -1,6 +1,8 @@
 import * as t from '@babel/types';
 import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
+import assert from 'assert';
+
 import {isTaddyEvaluation} from './helpers';
 import {MACRO_NAME, PACKAGE_NAME} from './config';
 
@@ -51,22 +53,19 @@ export type MacroOptions = {
 
 function mapCompileOptions({
     filename,
-    code,
     evaluate = true,
     typescript = /\.tsx?$/.test(filename),
     unstable_CSSVariableFallback = true,
     unstable_optimizeBindings = true,
-}: Partial<CompileOptions> &
-    Pick<ProcessorConfig, 'code' | 'filename'>): ProcessorConfig {
+}: Partial<CompileOptions> & {filename: string}): ProcessorConfig {
     return {
-        filename,
-        code,
         evaluate,
         typescript,
         CSSVariableFallback: unstable_CSSVariableFallback,
         optimizeBindings: unstable_optimizeBindings,
     };
 }
+
 export function macro({
     references,
     babel,
@@ -83,18 +82,7 @@ export function macro({
     const code = state.file.code;
     const {filename} = state;
 
-    const {handlers, finish} = createProcessors(
-        mapCompileOptions({...config.compileOptions, filename, code}),
-        {env},
-    );
-
-    for (const key in references) {
-        if (!handlers[key]) continue;
-
-        references[key].forEach((path) => handlers[key](path.parentPath));
-    }
-
-    let importPath;
+    let importPath: NodePath<t.ImportDeclaration> | null = null;
 
     program.traverse({
         ImportDeclaration(p) {
@@ -116,10 +104,47 @@ export function macro({
         },
     });
 
+    const importCache = new Map<string, t.ImportSpecifier>();
+
+    const {handlers, finish} = createProcessors(
+        {
+            ...mapCompileOptions({
+                filename,
+                ...config.compileOptions,
+            }),
+        },
+        {
+            env,
+            filename,
+            code,
+            addImport(name: string): t.ImportSpecifier['local'] {
+                if (!importCache.has(name)) {
+                    const specifier = t.importSpecifier(
+                        t.identifier(`_${name}_`),
+                        t.identifier(name),
+                    );
+                    importCache.set(name, specifier);
+
+                    assert(importPath, 'There is no taddy imports');
+
+                    importPath.node.specifiers.push(specifier);
+                }
+
+                return importCache.get(name)!.local;
+            },
+        },
+    );
+
+    for (const key in references) {
+        if (!handlers[key]) continue;
+
+        references[key].forEach((path) => handlers[key](path.parentPath));
+    }
+
     const {isStatic} = finish();
 
-    if (isStatic && importPath) {
-        importPath.node.source = t.stringLiteral('@taddy/core');
+    if (isStatic && importPath !== null) {
+        importPath!.node.source = t.stringLiteral('@taddy/core');
     }
 
     output({

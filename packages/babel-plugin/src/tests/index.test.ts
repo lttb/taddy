@@ -32,12 +32,13 @@ describe('taddy.macro', () => {
             };
             let color = 'red';
             export default css({
+              className,
               style,
+              \\"_9bfd_5daa _69bc_9bfd_0c8f\\": true,
               __VARS__: {
                 \\"--_9bfd\\": color
-              },
-              className: \\"_9bfd_5daa _69bc_9bfd_0c8f \\" + className
-            });"
+              }
+            }, \\"__2lpj959\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -61,7 +62,7 @@ describe('taddy.macro', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from \\"@taddy/core\\";
-            export default css(\\"_1fdd_64da\\");"
+            export default css(\\"_1fdd_64da\\", \\"__2lpj959\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(

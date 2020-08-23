@@ -12,7 +12,7 @@
         "lib": ["dom", "esnext"],
         "moduleResolution": "node",
         "noFallthroughCasesInSwitch": false,
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "noImplicitReturns": true,
         "noImplicitThis": true,
         "noUnusedLocals": false,

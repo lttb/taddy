@@ -12,3 +12,5 @@ dist
 taddy.css
 
 .vercel
+
+*.tsbuildinfo

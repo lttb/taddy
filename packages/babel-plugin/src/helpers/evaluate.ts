@@ -25,8 +25,15 @@ registerPreset('@babel/preset-env', envPreset);
 
 const DEFAULT_PRESETS = [
     ['@babel/preset-typescript', {allExtensions: true, isTSX: true}],
-    '@babel/preset-react',
-    ['@babel/preset-env', {targets: {node: 'current'}}],
+    // '@babel/preset-react',
+    [
+        '@babel/preset-env',
+        {
+            targets: {node: '12'},
+            useBuiltIns: false,
+            ignoreBrowserslistConfig: true,
+        },
+    ],
 ];
 
 const EXTENSIONS = ['.es6', '.es', '.tsx', '.ts', '.jsx', '.js', '.mjs'];
@@ -72,14 +79,15 @@ export function evaluate(
         const ext = path.extname(opts.filename);
         const basename = path.basename(opts.filename, ext);
         const dirname = path.dirname(opts.filename);
+        const filename = path.join(
+            dirname,
+            basename + EVAL_FILENAME_POSTFIX + ext,
+        );
 
         const options = {
             babelrc: false,
             configFile: false,
-            filename: path.join(
-                dirname,
-                basename + EVAL_FILENAME_POSTFIX + ext,
-            ),
+            filename,
             plugins: [
                 /*...opts.plugins*/
             ],
@@ -87,8 +95,6 @@ export function evaluate(
         };
 
         ({code} = transform(content, options) || {});
-
-        // console.log('evaluate', {code});
 
         if (!code) return {};
 

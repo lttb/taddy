@@ -48,5 +48,5 @@ export function getRootDir() {
 }
 
 export function getCacheDir() {
-    return __dirname;
+    return path.join(__dirname, '..');
 }

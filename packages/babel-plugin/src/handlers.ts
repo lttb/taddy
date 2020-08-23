@@ -4,11 +4,12 @@ import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import fs from 'fs';
 import nodePath from 'path';
+import stringHash from 'string-hash';
 
 import {ruleInjector} from 'taddy';
 
 import {Processor} from './Processor';
-import type {ProcessorConfig} from './Processor';
+import type {ProcessorConfig, ProcessOptions} from './Processor';
 import {optimizeBindings} from './helpers';
 import {getCacheDir, getRootDir} from './config';
 
@@ -59,8 +60,6 @@ export type OutputOptions = {
 
     relativeEntryPath: boolean;
     extractCSS: ExtractCSSType;
-
-    unstable__inline: boolean;
 };
 
 type EntryOptions = {
@@ -166,15 +165,26 @@ function isPathRemoved(path: NodePath<any>) {
 
 export const createProcessors = (
     config: ProcessorConfig,
-    options: {env: Env},
+    options: Omit<ProcessOptions, 'mixin'>,
 ) => {
     const mixinsQueue: NodePath<any>[] = [];
     const proceedPaths: {
+        path: NodePath<t.CallExpression>;
         isStatic: boolean;
         optimizationPaths: Set<NodePath<any>>;
     }[] = [];
 
     const processor = new Processor({config});
+
+    let counter = 0;
+    const addHashId = (path: NodePath<t.CallExpression>) => {
+        path.node.arguments.push(
+            t.stringLiteral(
+                '__' +
+                    stringHash(options.filename + ':' + ++counter).toString(32),
+            ),
+        );
+    };
 
     const handlers = {
         css: (
@@ -193,6 +203,7 @@ export const createProcessors = (
             if (!path.isCallExpression()) return;
 
             const result = processor.run(path, {
+                ...options,
                 mixin,
             });
 
@@ -201,14 +212,19 @@ export const createProcessors = (
             const {isStatic, optimizationPaths} = result;
 
             proceedPaths.push({
+                path,
                 isStatic,
                 optimizationPaths,
             });
 
-            // path.node.arguments = [argPath.node];
+            if (!mixin) {
+                addHashId(path);
+            }
         },
 
-        mixin: (path) => handlers.css(path, {mixin: true}),
+        mixin: (path) => {
+            mixinsQueue.push(path);
+        },
     };
 
     return {
@@ -236,6 +252,23 @@ export const createProcessors = (
                 isStatic = false;
 
                 handlers.css(path, {mixin: true});
+            }
+
+            if (!isStatic) {
+                for (let x of proceedPaths) {
+                    if (!x.isStatic) continue;
+                    const {path} = x;
+
+                    path.replaceWith(
+                        t.callExpression(
+                            t.memberExpression(
+                                path.node.callee as t.Identifier,
+                                t.identifier('static'),
+                            ),
+                            path.node.arguments,
+                        ),
+                    );
+                }
             }
 
             return {isStatic};

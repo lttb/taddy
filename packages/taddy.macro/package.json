@@ -13,7 +13,7 @@
         "url": "git+https://github.com/lttb/taddy.git"
     },
     "scripts": {
-        "start": "tsdx watch",
+        "start": "tsc --watch",
         "build": "tsdx build --target node --transpileOnly",
         "test": "tsdx test",
         "lint": "tsdx lint",
