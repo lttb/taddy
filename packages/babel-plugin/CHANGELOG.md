@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.21](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.20...@taddy/babel-plugin@0.0.21) (2020-08-23)
+
+
+### Features
+
+* **taddy:** support css declaration merge ([3fe95bc](https://github.com/lttb/taddy/commit/3fe95bc9eda13175697086271f6e534eb8af3b14))
+
+
+
+
+
 ## [0.0.20](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.19...@taddy/babel-plugin@0.0.20) (2020-08-23)
 
 

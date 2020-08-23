@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.10](https://github.com/lttb/taddy/compare/@taddy/core@0.0.9...@taddy/core@0.0.10) (2020-08-23)
+
+
+### Features
+
+* **taddy:** fix className handling ([aa11d78](https://github.com/lttb/taddy/commit/aa11d788a9bd2ce7c482bd9fa1a8e3e3f8eb5b6f))
+* **taddy:** support css declaration merge ([3fe95bc](https://github.com/lttb/taddy/commit/3fe95bc9eda13175697086271f6e534eb8af3b14))
+
+
+
+
+
 ## [0.0.9](https://github.com/lttb/taddy/compare/@taddy/core@0.0.8...@taddy/core@0.0.9) (2020-08-23)
 
 
