@@ -160,19 +160,16 @@ In terms of merge, the result of `css({...colorStateful, ...opacityStateful})` w
 
 But what if we want to apply both mixins together?
 
-There is `composes` option for that:
+There is `composes` interface for that (mixins and styles as `css` arguments):
 
 ```js
 const Title = ({children}) => (
     <h1
-        {...css({
+        {...css(colorStateful, opacityStateful, {
             textDecoration: 'underline',
-            composes: [colorStateful, opacityStateful],
         })}
     >
         {children}
     </h1>
 );
 ```
-
-> `composes` could be used **only** on the top level of styles declaration
