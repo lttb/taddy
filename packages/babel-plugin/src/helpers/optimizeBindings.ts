@@ -30,8 +30,6 @@ export function optimizeBindings(
         return;
     }
 
-    // console.log(bindings);
-
     for (let [binding] of bindings) {
         if (isTaddy(binding)) continue;
 

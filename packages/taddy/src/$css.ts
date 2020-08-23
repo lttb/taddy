@@ -1,14 +1,12 @@
 /* eslint-disable */
 
-import type {Properties, SimplePseudos} from 'csstype';
+import type {Properties} from 'csstype';
 
 import {
     VARS_KEY,
     MIXIN_KEY,
     isInvalidValue,
-    mergeClassNames,
     mapStaticClassName,
-    CLASSNAME,
 } from '@taddy/core';
 import {RuleInjector} from './RuleInjector';
 
@@ -125,21 +123,11 @@ export const $css = (
     }
 
     const className = Object.create(null);
-    let style = {};
+    let style;
 
     function assignStyle(x: object) {
         if (!x) return;
-        style = style || {};
-        Object.assign(style, x);
-
-        // if (CLASSNAME in x) {
-        //     if (rule.className) {
-        //         Object.assign(className, mapStaticClassName(rule.className));
-        //     }
-
-        //     mergeClassNames(className, rule.style);
-        // }
-        // mergeClassNames(className, x);
+        Object.assign((style = style || {}), x);
     }
 
     function applyMixin(currentRule) {
@@ -172,8 +160,6 @@ export const $css = (
                         return;
                     }
 
-                    // console.log({mixin});
-
                     // support plain objects
                     process(mixin);
                 });
@@ -187,18 +173,10 @@ export const $css = (
             }
 
             if (key === 'className') {
-                // if (!rule[key]) continue;
-
                 Object.assign(className, mapStaticClassName(rule[key]));
-
-                // if (!(rule.style && CLASSNAME in rule.style)) {
-                // Object.assign(className, {[rule[key]]: true});
-                // }
 
                 continue;
             }
-
-            // console.log(key, rule[key], JSON.stringify(className));
 
             const name = $css.ruleInjector.put(key, rule[key], {
                 inject,
@@ -213,8 +191,9 @@ export const $css = (
 
     const result: InternalTaddyStyle = {className};
 
-    result.style = style;
-    // result.style[CLASSNAME] = result.className;
+    if (style) {
+        result.style = style;
+    }
 
     return result;
 };

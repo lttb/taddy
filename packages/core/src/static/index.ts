@@ -2,13 +2,10 @@ import {VARS_KEY, MIXIN_KEY, ID_KEY} from '../common';
 
 import {config} from '../config';
 
-export const ORIGINAL_CLASSNAME = Symbol('ORIGINAL_CLASSNAME');
-export const CLASSNAME = Symbol('RULE_KEY');
-
 const VALUE_HASH_LENGTH = 5;
 
 export const staticCache = {};
-export const mapStaticClassName = (className: string): object => {
+export const mapStaticClassName = (className?: string): object => {
     if (!className) return {};
     let v = staticCache[className];
     if (v) return v;
@@ -37,17 +34,6 @@ export const joinClassName = (className: object): string => {
     return classNameString;
 };
 
-export const mergeClassNames = (className1, className2) => {
-    if (!(className2 && className2[CLASSNAME])) return className1;
-    if (typeof className2[CLASSNAME] === 'string') {
-        Object.assign(className1, mapStaticClassName(className2[CLASSNAME]));
-    } else {
-        Object.assign(className1, className2[CLASSNAME]);
-    }
-
-    return className1;
-};
-
 export const withId = (result, id?: string | void) => {
     /**
      * For the reference between different styles
@@ -58,10 +44,6 @@ export const withId = (result, id?: string | void) => {
     result[ID_KEY] = value;
     result[Symbol?.toPrimitive || 'toString'] = () => '.' + value;
     result.className += (result.className ? ' ' : '') + value;
-
-    if (result.style) {
-        result.style[ID_KEY] = value;
-    }
 
     return result;
 };
@@ -80,35 +62,30 @@ const _css = (
     if (!rule) return {className: ''};
 
     if (typeof rule === 'string') {
-        return withId({className: rule, style: {[CLASSNAME]: rule}}, id);
+        return withId({className: rule}, id);
     }
 
     const result: any = {className: ''};
 
-    let style = {};
+    let style;
 
     let className = {};
 
     for (let key in rule) {
+        if (!rule[key]) continue;
+
         if (rule[key] === true) {
             Object.assign(className, mapStaticClassName(key));
 
             continue;
         }
         if (key === 'className') {
-            if (!rule.className) continue;
-
-            Object.assign(className, mapStaticClassName(rule.className));
+            Object.assign(className, mapStaticClassName(rule[key]));
 
             continue;
         }
-        if (key === 'style') {
-            Object.assign(style, rule.style);
-
-            continue;
-        }
-        if (key === VARS_KEY) {
-            Object.assign(style, rule[VARS_KEY]);
+        if (key === 'style' || key === VARS_KEY) {
+            Object.assign((style = style || {}), rule[key]);
 
             continue;
         }
@@ -116,19 +93,9 @@ const _css = (
 
     result.className = joinClassName(className);
 
-    result.style = style;
-
-    // try {
-    //     // result.style[CLASSNAME] = result.className;
-    // } catch (er) {
-    //     console.log(
-    //         'css static',
-    //         er,
-    //         result.style,
-    //         rule.style,
-    //         result.className,
-    //     );
-    // }
+    if (style) {
+        result.style = style;
+    }
 
     return withId(result, id);
 };

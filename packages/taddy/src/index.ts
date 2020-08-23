@@ -50,15 +50,14 @@ const _css = <T extends TaddyRule | {[key: string]: TaddyRule}>(
 ): CSSResult => {
     let id = getId(rule);
 
-    const {className, style} = $css(
-        rule.length <= 1 ? rule[0] : {composes: rule},
-    );
+    const result = $css(rule.length <= 1 ? rule[0] : {composes: rule});
 
-    delete className[MIXIN_KEY];
+    delete result.className[MIXIN_KEY];
 
-    let classNameString = joinClassName(className);
+    // @ts-expect-error
+    result.className = joinClassName(result.className);
 
-    return withId({className: classNameString, style}, id);
+    return withId(result, id);
 };
 
 export const css = (

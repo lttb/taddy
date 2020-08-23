@@ -278,8 +278,6 @@ export class Processor {
 
             if (tsValue === STOP) return false;
 
-            // console.log({tsValue});
-
             if (isStaticValue(tsValue)) {
                 properties.push(...this.stylesToNode(key, tsValue, {postfix}));
 
