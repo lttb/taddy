@@ -7,14 +7,14 @@ const margin = (gapY: number, gapX: number) =>
     `${size(gapY / 2)} ${size(gapX / 2)}`;
 
 function flex({inline}) {
-    return css.mixin({
+    return css({
         display: 'flex',
 
         ...(!inline && {
-            flexGrow: 1,
+            flex: 1,
 
             [$`> *`]: {
-                flexGrow: 1,
+                flex: 1,
             },
         }),
     });
@@ -35,7 +35,7 @@ export function row({
     inline?: boolean;
     wrap?: any;
 } = {}) {
-    return css.mixin({
+    return css({
         ...flex({inline}),
 
         flexDirection: 'row',
@@ -57,7 +57,7 @@ export function column({
     gap = 0,
     inline = false,
 }: {gap?: Size; gapY?: Size; gapX?: Size; inline?: boolean} = {}) {
-    return css.mixin({
+    return css({
         ...flex({inline}),
 
         flexDirection: 'column',
@@ -68,8 +68,47 @@ export function column({
     });
 }
 
-export const Row = (props) => (
+export const Column = ({
+    as: Tag = 'div',
+    gap,
+    inline,
+    style,
+    className,
+    ...props
+}: Partial<{
+    as: keyof JSX.IntrinsicElements;
+    gap: Size;
+    inline: boolean;
+    className?: string;
+    style?: object;
+    children: React.ReactNode;
+}>) => <Tag {...props} {...css(column({gap, inline}), {style, className})} />;
+
+export const Row = ({
+    as: Tag = 'div',
+    gap = 0,
+    gapY = gap,
+    gapX = gap,
+    inline = false,
+    wrap = 'wrap',
+    style,
+    className,
+    ...props
+}: Partial<{
+    as: keyof JSX.IntrinsicElements;
+    gap: Size;
+    gapY: Size;
+    gapX: Size;
+    inline: boolean;
+    className?: string;
+    style?: object;
+    children: React.ReactNode;
+    wrap?: string;
+}>) => (
     <div>
-        <div {...props} />
+        <Tag
+            {...props}
+            {...css(row({gapX, gapY, inline, wrap}), {style, className})}
+        />
     </div>
 );

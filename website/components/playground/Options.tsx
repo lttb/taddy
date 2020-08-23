@@ -2,7 +2,7 @@ import * as React from 'react';
 import {css} from 'taddy';
 import {useAtom, useAction} from '@reatom/react';
 
-import {row, column, Row} from '../layout';
+import {Column, Row} from '../layout';
 
 import {playgroundAtom, updatePlayground} from './atoms';
 
@@ -15,8 +15,10 @@ export const Options = () => {
         });
     });
 
+    const compileOptionsDisabled = !options.taddy;
+
     return (
-        <div {...css(column({gap: 1}), {textAlign: 'left'})}>
+        <Column gap={1} {...css({textAlign: 'left'})}>
             <label>
                 <input
                     type="checkbox"
@@ -27,13 +29,16 @@ export const Options = () => {
                 use compiler
             </label>
 
-            <Row {...css(row({gap: 4, inline: true}), {alignItems: 'center'})}>
-                <h4>Compile Options:</h4>
+            <Row inline gap={4} {...css({alignItems: 'center'})}>
+                <h4 {...css(compileOptionsDisabled && {color: 'darkgray'})}>
+                    Compile Options:
+                </h4>
 
                 <label>
                     <input
                         type="checkbox"
                         name="typescript"
+                        disabled={compileOptionsDisabled}
                         checked={options.typescript}
                         onChange={handleOption}
                     />
@@ -44,6 +49,7 @@ export const Options = () => {
                     <input
                         type="checkbox"
                         name="evaluate"
+                        disabled={compileOptionsDisabled}
                         checked={options.evaluate}
                         onChange={handleOption}
                     />
@@ -54,12 +60,13 @@ export const Options = () => {
                     <input
                         type="checkbox"
                         name="unstable_CSSVariableFallback"
+                        disabled={compileOptionsDisabled}
                         checked={options.unstable_CSSVariableFallback}
                         onChange={handleOption}
                     />
                     unstable_CSSVariableFallback
                 </label>
             </Row>
-        </div>
+        </Column>
     );
 };

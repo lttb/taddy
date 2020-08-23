@@ -1,9 +1,6 @@
 import React from 'react';
 import LZString from 'lz-string';
 import history from './history';
-import {stripIndent} from 'common-tags';
-
-const initialCode = ``;
 
 const NEWLINE = '❤';
 
@@ -56,12 +53,27 @@ class CodeHandler {
 
 export const code = new CodeHandler(history.location.query.code);
 
-export const useCode = () => {
+export const useCode = (value?: string | null): string => {
     React.useEffect(() => {
+        if (value === null) return;
+
+        code.onChange(value);
+
+        code.scheduleLinkUpdate();
+    }, [value]);
+
+    /**
+     * Code will subscribe only if there is an initial code
+     */
+    React.useEffect(() => {
+        if (value === null) return;
+
         window.addEventListener('blur', code.updateCodeLink);
 
         return () => {
             window.removeEventListener('blur', code.updateCodeLink);
         };
     }, []);
+
+    return code.value;
 };

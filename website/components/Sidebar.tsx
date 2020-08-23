@@ -2,19 +2,17 @@ import React from 'react';
 
 import {css} from 'taddy';
 
-import {column} from './layout';
+import {Column} from './layout';
 import {Link} from './Link';
 
 const bearWhite = require('../public/logo/taddy2.png');
 
 export const Sidebar = () => {
     return (
-        <div
+        <Column
+            gap={10}
+            inline
             {...css(
-                column({
-                    gap: 10,
-                    inline: true,
-                }),
                 {
                     // background: 'rgb(38 78 156)',
                     background: '#1f39a4',
@@ -46,26 +44,14 @@ export const Sidebar = () => {
                 })}
                 href="/"
             >
-                <img
-                    alt="taddy sidebar logo"
-                    src={bearWhite}
-                    width={100}
-                    height={100}
-                />
+                <img alt="taddy sidebar logo" src={bearWhite} height={100} />
 
                 <p {...css({margin: 0, fontWeight: 'bold', fontSize: '30px'})}>
                     taddy
                 </p>
             </Link>
 
-            <ul
-                {...css(
-                    column({
-                        gap: 5,
-                        inline: true,
-                    }),
-                )}
-            >
+            <Column as="ul" gap={5} inline>
                 <li>
                     <Link href="https://github.com/lttb/taddy">github</Link>
                 </li>
@@ -91,7 +77,7 @@ export const Sidebar = () => {
                 <li>
                     <Link href="/docs">documentation</Link>
                 </li> */}
-            </ul>
-        </div>
+            </Column>
+        </Column>
     );
 };

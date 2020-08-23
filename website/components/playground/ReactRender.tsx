@@ -1,11 +1,10 @@
 import * as React from 'react';
-import * as taddy from 'taddy';
 import * as taddyCore from '@taddy/core';
 import {css} from 'taddy';
 
 import {useAtom} from '@reatom/react';
 
-import {column, Row} from '../layout';
+import {Column} from '../layout';
 import {transformAtom} from './atoms';
 import {Editor} from './Editor';
 import {EditorLayer} from './EditorLayer';
@@ -61,6 +60,16 @@ class ErrorBoundary extends React.Component {
     }
 }
 
+const react = require('react');
+const deps = {
+    react: {
+        ...react,
+        default: react,
+    },
+    taddy: require('taddy'),
+    '@taddy/core': require('@taddy/core'),
+};
+
 export const ReactRender = ({code: sourceCode}) => {
     const [renderComponent, setRenderComponent] = React.useState(null);
     const [runtimeError, setRuntimeError] = React.useState(null);
@@ -91,14 +100,7 @@ export const ReactRender = ({code: sourceCode}) => {
 
                 const fn = new Function('require', 'exports', code);
                 const moduleExports = {};
-                const deps = {
-                    react: {
-                        ...React,
-                        default: React,
-                    },
-                    taddy,
-                    '@taddy/core': taddyCore,
-                };
+
                 fn((name) => deps[name], moduleExports);
 
                 if (React.isValidElement(moduleExports.default)) {
@@ -121,42 +123,16 @@ export const ReactRender = ({code: sourceCode}) => {
     }
 
     const content = (
-        <Row
-            key="content"
-            {...css(column({gap: 4}), {
-                ' .ace_placeholder': {
-                    fontSize: '20px',
-                    color: 'black',
-                },
-            })}
-        >
-            <Wrapper>
-                <Title>Render</Title>
-
-                <ErrorBoundary key={sourceCode}>
-                    {renderComponent || <p>There is nothing to render</p>}
-                </ErrorBoundary>
-
-                {/* <Editor
-                    highlightActiveLine={false}
-                    value={data.result?.code}
-                    readOnly
-                    showGutter={false}
-                    placeholder="There should be compiled module code"
-                /> */}
-            </Wrapper>
-        </Row>
+        <ErrorBoundary key={sourceCode + (runtimeError || '').toString()}>
+            {renderComponent || <p>There is nothing to render</p>}
+        </ErrorBoundary>
     );
 
     return (
-        <div
-            {...css({
-                position: 'relative',
-            })}
-        >
+        <>
             {content}
 
             <EditorLayer {...css({borderRadius: '20px'})} {...layerProps} />
-        </div>
+        </>
     );
 };

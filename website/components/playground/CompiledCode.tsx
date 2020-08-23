@@ -3,7 +3,7 @@ import {css} from 'taddy';
 
 import {useAtom} from '@reatom/react';
 
-import {column, Row} from '../layout';
+import {Column, Row} from '../layout';
 import {transformAtom} from './atoms';
 import {Editor} from './Editor';
 import {EditorLayer} from './EditorLayer';
@@ -25,7 +25,15 @@ const Wrapper = ({children}) => (
     </div>
 );
 
-export const CompiledCode = () => {
+export const CompiledCode = ({
+    showCompiledCode,
+    showCompiledCSS,
+    showRender,
+}: {
+    showCompiledCode?: boolean;
+    showCompiledCSS?: boolean;
+    showRender?: boolean;
+}) => {
     const data = useAtom(transformAtom);
 
     let layerProps: React.ComponentProps<typeof EditorLayer> = {};
@@ -37,42 +45,53 @@ export const CompiledCode = () => {
     }
 
     const content = (
-        <Row
+        <Column
+            gap={4}
             key="content"
-            {...css(column({gap: 4}), {
+            {...css({
                 ' .ace_placeholder': {
                     fontSize: '20px',
                     color: 'black',
                 },
             })}
         >
-            <ReactRender code={data.result.code} />
+            {showRender && (
+                <Wrapper>
+                    <Title>Render</Title>
 
-            <Wrapper>
-                <Title>Compiled Module</Title>
+                    <ReactRender code={data.result.code} />
+                </Wrapper>
+            )}
 
-                <Editor
-                    highlightActiveLine={false}
-                    value={data.result?.code}
-                    readOnly
-                    showGutter={false}
-                    placeholder="There should be compiled module code"
-                />
-            </Wrapper>
+            {showCompiledCode && (
+                <Wrapper>
+                    <Title>Compiled Module</Title>
 
-            <Wrapper>
-                <Title>Compiled CSS</Title>
+                    <Editor
+                        highlightActiveLine={false}
+                        value={data.result?.code}
+                        readOnly
+                        showGutter={false}
+                        placeholder="There should be compiled module code"
+                    />
+                </Wrapper>
+            )}
 
-                <Editor
-                    mode="css"
-                    highlightActiveLine={false}
-                    value={data.result?.css}
-                    readOnly
-                    showGutter={false}
-                    placeholder="There should be compiled css code"
-                />
-            </Wrapper>
-        </Row>
+            {showCompiledCSS && (
+                <Wrapper>
+                    <Title>Compiled CSS</Title>
+
+                    <Editor
+                        mode="css"
+                        highlightActiveLine={false}
+                        value={data.result?.css}
+                        readOnly
+                        showGutter={false}
+                        placeholder="There should be compiled css code"
+                    />
+                </Wrapper>
+            )}
+        </Column>
     );
 
     return (
