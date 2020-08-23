@@ -10,7 +10,13 @@ import {LiveEditor} from './LiveEditor';
 import {Options} from './Options';
 import {CompiledCode} from './CompiledCode';
 
-export default function Playground() {
+export default function Playground({
+    initialCode,
+    showOptions,
+}: {
+    initialCode?: string;
+    showOptions?: boolean;
+}) {
     return (
         <div>
             <Head>
@@ -21,10 +27,10 @@ export default function Playground() {
             </Head>
 
             <div {...css(column({gap: 4}))}>
-                <Options />
+                {showOptions && <Options />}
 
                 <Row {...css(row({gap: 4}))}>
-                    <LiveEditor />
+                    <LiveEditor initialCode={initialCode} />
 
                     <CompiledCode />
                 </Row>

@@ -5,7 +5,7 @@ import {css} from 'taddy';
 import {column} from './layout';
 import {Link} from './Link';
 
-const BearWhite = require('../public/logo/taddy2.svg?sprite');
+const bearWhite = require('../public/logo/taddy2.png');
 
 export const Sidebar = () => {
     return (
@@ -46,7 +46,12 @@ export const Sidebar = () => {
                 })}
                 href="/"
             >
-                <BearWhite width={100} height={100} />
+                <img
+                    alt="taddy sidebar logo"
+                    src={bearWhite}
+                    width={100}
+                    height={100}
+                />
 
                 <p {...css({margin: 0, fontWeight: 'bold', fontSize: '30px'})}>
                     taddy

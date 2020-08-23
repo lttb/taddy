@@ -3,11 +3,13 @@ import {useAction, useAtom} from '@reatom/react';
 
 import {css, $} from 'taddy';
 
+import {stripIndent} from 'common-tags';
+
 import {useCode} from '../../utils/code';
 import {playgroundAtom, updatePlayground} from './atoms';
 import {Editor} from './Editor';
 
-export const LiveEditor = () => {
+export const LiveEditor = ({initialCode}: {initialCode?: string}) => {
     useCode();
 
     const code = useAtom(playgroundAtom, (x) => x.code, ['code']);
@@ -15,7 +17,7 @@ export const LiveEditor = () => {
 
     React.useEffect(() => {
         setTimeout(() => {
-            handleCode(code);
+            handleCode(code || stripIndent(initialCode) + '\n');
         }, 0);
     }, []);
 
@@ -38,7 +40,7 @@ export const LiveEditor = () => {
                     minHeight: '300px',
 
                     ' .ace_gutter': {
-                        background: 'none',
+                        background: 'transparent',
                     },
 
                     ' .ace_gutter-cell': {

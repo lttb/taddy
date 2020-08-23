@@ -1,5 +1,7 @@
 import {declareAction, declareAtom} from '@reatom/core';
 
+import {stripIndent} from 'common-tags';
+
 import {code} from '../../utils/code';
 import {transformCode} from '../../compiler';
 
@@ -15,7 +17,7 @@ type Playground = {
 
 export const updatePlayground = declareAction<Partial<Playground>>(
     async (payload, store) => {
-        const {code: source, options} = store.getState(playgroundAtom);
+        let {code: source, options} = store.getState(playgroundAtom);
 
         store.dispatch(setTransformedCode({status: 'pending'}));
 

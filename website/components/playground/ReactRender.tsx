@@ -134,7 +134,7 @@ export const ReactRender = ({code: sourceCode}) => {
                 <Title>Render</Title>
 
                 <ErrorBoundary key={sourceCode}>
-                    {renderComponent}
+                    {renderComponent || <p>There is nothing to render</p>}
                 </ErrorBoundary>
 
                 {/* <Editor

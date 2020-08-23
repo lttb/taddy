@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import {css} from 'taddy';
+import {stripIndent} from 'common-tags';
 
 import {column} from '../../components/layout';
 
@@ -20,7 +21,19 @@ export default function PlaygroundPage() {
                     width: '100%',
                 })}
             >
-                <Playground />
+                <Playground
+                    showOptions
+                    initialCode={`
+                        import React from 'react';
+                        import {css} from 'taddy';
+
+                        export default (
+                            <h1 {...css({color: 'violet', margin: 0})}>
+                                Hello, world!
+                            </h1>
+                        )
+                    `}
+                />
             </div>
         </div>
     );
