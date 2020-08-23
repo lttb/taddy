@@ -38,7 +38,7 @@ describe('taddy.macro', () => {
               __VARS__: {
                 \\"--_9bfd\\": color
               }
-            }, \\"__2lpj959\\");"
+            }, \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -62,7 +62,7 @@ describe('taddy.macro', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from \\"@taddy/core\\";
-            export default css(\\"_1fdd_64da\\", \\"__2lpj959\\");"
+            export default css(\\"_1fdd_64da\\", \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(

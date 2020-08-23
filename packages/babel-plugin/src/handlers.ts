@@ -22,15 +22,16 @@ function getStylesState() {
     const {rules} = ruleInjector.styleSheet;
     const newRules = rules.slice(LAST_INDEX);
 
-    LAST_INDEX = rules.length;
+    // there is also "appending" rules, that don't change the index, but change the rule
+    // TODO: think how to handle that
+    // LAST_INDEX = rules.length;
 
     const added = [...newRules].map((rule) => rule.cssText || '');
 
-    STYLES.push(...added);
+    // STYLES.push(...added);
 
     return {
         added,
-        total: STYLES,
     };
 }
 
@@ -181,7 +182,11 @@ export const createProcessors = (
         path.node.arguments.push(
             t.stringLiteral(
                 '__' +
-                    stringHash(options.filename + ':' + ++counter).toString(32),
+                    stringHash(
+                        nodePath.relative(getRootDir(), options.filename) +
+                            ':' +
+                            ++counter,
+                    ).toString(32),
             ),
         );
     };

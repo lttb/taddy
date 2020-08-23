@@ -26,7 +26,7 @@ describe('taddy.macro.static', () => {
               ...(variant === 'normal' && {
                 _9bfd: \\"_ac89\\"
               })
-            }, \\"__2lpj959\\");"
+            }, \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -74,7 +74,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from \\"@taddy/core\\";
-            export default css(\\"_9bfd_4da4\\", \\"__2lpj959\\");"
+            export default css(\\"_9bfd_4da4\\", \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
@@ -96,7 +96,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from \\"@taddy/core\\";
-            export default css(\\"_9bfd_4da4 _69bc_9bfd_0c8f\\", \\"__2lpj959\\");"
+            export default css(\\"_9bfd_4da4 _69bc_9bfd_0c8f\\", \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -127,7 +127,7 @@ describe('taddy.macro.static', () => {
               __VARS__: {
                 \\"--_9bfd\\": color
               }
-            }, \\"__2lpj959\\");"
+            }, \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -155,7 +155,7 @@ describe('taddy.macro.static', () => {
             export default css({
               className: 'class',
               \\"_9bfd_4da4 _69bc_9bfd_0c8f\\": true
-            }, \\"__2lpj959\\");"
+            }, \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -186,7 +186,7 @@ describe('taddy.macro.static', () => {
             export default css({
               className,
               \\"_9bfd_4da4 _69bc_9bfd_0c8f\\": true
-            }, \\"__2lpj959\\");"
+            }, \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -223,7 +223,7 @@ describe('taddy.macro.static', () => {
               className,
               style,
               \\"_9bfd_4da4 _69bc_9bfd_0c8f\\": true
-            }, \\"__2lpj959\\");"
+            }, \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -265,7 +265,7 @@ describe('taddy.macro.static', () => {
               __VARS__: {
                 \\"--_9bfd\\": color
               }
-            }, \\"__2lpj959\\");"
+            }, \\"__376slgo\\");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
