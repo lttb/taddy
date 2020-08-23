@@ -16,7 +16,17 @@ export const Options = () => {
     });
 
     return (
-        <div {...css({textAlign: 'left'})}>
+        <div {...css(column({gap: 1}), {textAlign: 'left'})}>
+            <label>
+                <input
+                    type="checkbox"
+                    name="taddy"
+                    checked={options.taddy}
+                    onChange={handleOption}
+                />
+                use compiler
+            </label>
+
             <Row {...css(row({gap: 4, inline: true}), {alignItems: 'center'})}>
                 <h4>Compile Options:</h4>
 

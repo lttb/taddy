@@ -46,6 +46,8 @@ export function findBindings(currentPath: NodePath): BindingMap {
             !(
                 parentPath.isExpression() ||
                 parentPath.isSpreadElement() ||
+                (parentPath.isVariableDeclarator() &&
+                    parentPath.node.init === node) ||
                 (parentPath.isObjectProperty() &&
                     (parentPath.node.value === node ||
                         parentPath.node.computed))
@@ -78,11 +80,11 @@ export function findBindings(currentPath: NodePath): BindingMap {
             throw new BindingError('FUNCTION ARGUMENT');
         }
 
-        // addBinding(bindingMap, binding, path);
+        addBinding(bindingMap, binding, path);
 
-        if (!(bindingPath.listKey === 'params')) {
-            addBinding(bindingMap, binding, path);
-        }
+        // if (!(bindingPath.listKey === 'params')) {
+        //     addBinding(bindingMap, binding, path);
+        // }
 
         if (bindingPath.isImportSpecifier()) {
             return;

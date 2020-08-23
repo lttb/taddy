@@ -13,6 +13,8 @@ export class StyleSheet implements Sheet {
 
     initialStyle: CSSStyleDeclaration;
 
+    cache: {[key: string]: true};
+
     static TADDY_ID = 'taddy';
 
     constructor() {
@@ -39,6 +41,8 @@ export class StyleSheet implements Sheet {
         this.initialNode.style.all = 'initial';
 
         this.initialStyle = window.getComputedStyle(this.initialNode);
+
+        this.cache = {};
     }
 
     get rules() {
@@ -50,11 +54,14 @@ export class StyleSheet implements Sheet {
     }
 
     isRuleExists(className: string, key: string): boolean {
+        if (this.cache[className]) return true;
+
         this.classNameNode.className = className;
         const value: string | void = window.getComputedStyle(
             this.classNameNode,
         )[key];
         this.classNameNode.className = '';
+
         return value !== this.initialStyle[key];
     }
 
@@ -65,6 +72,8 @@ export class StyleSheet implements Sheet {
 
         const selectorText = `.${className}`;
         const cssText = buildAtomicRule(selectorText, key, value);
+
+        this.cache[className] = true;
 
         return this.sheet.insertRule(cssText, this.cssRules.length);
     }

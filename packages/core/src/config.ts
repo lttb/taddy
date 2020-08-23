@@ -4,7 +4,7 @@ const nameGenerator = new NameGenerator();
 
 export type TaddyConfig = {
     /** map "style" and "className" to the needed value */
-    unstable__mapStyles: (value: {className: string; style?: object}) => any;
+    unstable_mapStyles: (value: {className: string; style?: object}) => any;
 
     nameGenerator: NameGenerator;
 
@@ -34,6 +34,6 @@ export const config: typeof setConfig & TaddyConfig = Object.assign(
     },
     {
         nameGenerator,
-        unstable__mapStyles: (x) => x,
+        unstable_mapStyles: (x) => x,
     },
 );

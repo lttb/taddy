@@ -8,6 +8,7 @@ import parserTypescript from 'prettier/parser-typescript';
 import tsSyntax from '@babel/plugin-syntax-typescript';
 
 import taddyPlugin from '@taddy/babel-plugin';
+import {format} from 'path';
 
 registerPlugin('@babel/plugin-syntax-typescript', tsSyntax);
 
@@ -75,11 +76,13 @@ async function init() {
     `,
     );
 
-    const getOptions = (options) => ({
+    const getOptions = (options, babelOptions: any = {}) => ({
         envName: 'production',
         root: __dirname,
         filename: __filename + '.virtual.tsx',
+        presets: [...(babelOptions.presets || [])],
         plugins: [
+            ...(babelOptions.plugins || []),
             ['@babel/plugin-syntax-typescript', {isTSX: true}],
             [
                 '@taddy/babel-plugin',
@@ -93,21 +96,51 @@ async function init() {
         ],
     });
 
-    async function _transform(code, options) {
+    async function _transform(
+        code,
+        {format = true, plugins, presets, ...options}: any = {},
+    ) {
         const {ruleInjector: currentInjector} = $css;
 
         const compileInjector = new RuleInjector();
         compileInjector.styleSheet = new VirtualStyleSheet();
 
         $css.ruleInjector = compileInjector;
-        const result = await transform(code, getOptions(options));
+        let result;
+        let error;
+        try {
+            result = await transform(
+                code,
+                getOptions(options, {plugins, presets}),
+            );
+        } catch (e) {
+            error = e;
+        }
+
         $css.ruleInjector = currentInjector;
 
-        return {
-            code: prettier.format(result.code, {
+        if (error) {
+            throw error;
+        }
+
+        compileInjector.styleSheet.rules.forEach((rule) => {
+            currentInjector.styleSheet.insertAtomicRule(
+                rule.$className,
+                rule.$key,
+                rule.$value,
+            );
+        });
+
+        let compiledCode = result.code;
+        if (format) {
+            compiledCode = prettier.format(compiledCode, {
                 parser: 'typescript',
                 plugins: [parserTypescript],
-            }),
+            });
+        }
+
+        return {
+            code: compiledCode,
             css: [...compileInjector.styleSheet.rules]
                 .map((x) => x.cssText)
                 .join('\n'),

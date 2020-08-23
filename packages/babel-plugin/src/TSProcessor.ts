@@ -1,12 +1,12 @@
-import type {Node} from 'ts-morph';
-import path from 'path';
-
 import type {
+    Node,
     Project as TSProject,
     Symbol as TSSymbol,
     Type as TSType,
     ProjectOptions,
 } from 'ts-morph';
+
+import path from 'path';
 
 export function getType(symbol?: TSSymbol): TSType {
     return symbol?.getTypeAtLocation(symbol.getDeclarations()[0]) as TSType;

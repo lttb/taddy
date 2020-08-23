@@ -7,9 +7,40 @@ import {VARS_KEY} from '@taddy/core';
 import {getObjectPropertyKey} from './getObjectPropertyKey';
 
 export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
-    const quasis: string[] = [];
+    // const quasis: string[] = [];
     const expressions: any[] = [];
     const props: t.ObjectProperty[] = [];
+
+    let quasis: any[] = [];
+
+    function apply(q) {
+        let expr;
+        let curr = '';
+        for (let v of q) {
+            if (typeof v === 'string') {
+                curr += (curr ? ' ' : '') + v;
+                continue;
+            }
+            if (expr && curr) {
+                expr = t.binaryExpression(
+                    '+',
+                    expr,
+                    t.stringLiteral(' ' + curr + ' '),
+                );
+                expr = t.binaryExpression('+', expr, v);
+            } else if (curr) {
+                expr = t.binaryExpression('+', t.stringLiteral(curr + ' '), v);
+            } else {
+                expr = v;
+            }
+
+            curr = '';
+        }
+        if (expr && curr) {
+            expr = t.binaryExpression('+', expr, t.stringLiteral(' ' + curr));
+        }
+        return expr || t.stringLiteral(curr);
+    }
 
     for (const propPath of path.get('properties')) {
         if (!propPath.isObjectProperty()) {
@@ -23,15 +54,22 @@ export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
 
         const valuePath = (propPath as NodePath<t.ObjectProperty>).get('value');
 
-        if (key === 'className') {
-            expressions.push(valuePath.node);
+        if (key === 'className' || key === 'style' || key === VARS_KEY) {
+            if (quasis.length) {
+                props.push(
+                    t.objectProperty(apply(quasis), t.booleanLiteral(true)),
+                );
+            }
+
+            props.push(propPath.node);
+            quasis = [];
             continue;
         }
 
-        if (key === 'style' || key === VARS_KEY) {
-            props.push(propPath.node);
-            continue;
-        }
+        // if (key === 'className') {
+        //     quasis.push(valuePath.node);
+        //     continue;
+        // }
 
         if (valuePath.isStringLiteral()) {
             quasis.push(key + valuePath.node.value);
@@ -43,45 +81,32 @@ export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
             continue;
         }
 
-        expressions.push(
+        quasis.push(
             t.binaryExpression(
                 '+',
                 t.stringLiteral(key),
                 valuePath.node as t.Expression,
             ),
         );
-    }
 
-    let classes: t.StringLiteral | t.BinaryExpression = t.stringLiteral(
-        quasis.join(' '),
-    );
-
-    if (expressions.length !== 0) {
-        classes.value += classes.value ? ' ' : '';
-
-        const left = classes;
-        const right =
-            expressions.length === 1
-                ? expressions[0]
-                : t.templateLiteral(
-                      [t.templateElement({raw: ''})]
-                          .concat(
-                              [...Array(expressions.length - 1)].fill(
-                                  t.templateElement({raw: ' '}),
-                              ),
-                          )
-                          .concat(t.templateElement({raw: ''})),
-                      expressions,
-                  );
-        classes = t.binaryExpression('+', left, right);
+        // expressions.push(
+        //     t.binaryExpression(
+        //         '+',
+        //         t.stringLiteral(key),
+        //         valuePath.node as t.Expression,
+        //     ),
+        // );
     }
 
     if (props.length === 0) {
-        path.replaceWith(classes);
+        path.replaceWith(apply(quasis));
+
         return;
     }
 
-    path.node.properties = props.concat(
-        t.objectProperty(t.identifier('className'), classes),
-    );
+    if (quasis.length) {
+        props.push(t.objectProperty(apply(quasis), t.booleanLiteral(true)));
+    }
+
+    path.node.properties = props;
 }

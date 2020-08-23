@@ -1,6 +1,6 @@
 import {css, $} from 'taddy';
-import Link from 'next/link';
 
+import {Link} from '../components/Link';
 import {row, column, Row} from '../components/layout';
 import {LinkButton} from '../components/LinkButton';
 

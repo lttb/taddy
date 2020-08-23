@@ -1,8 +1,10 @@
 import * as t from '@babel/types';
 import type {NodePath} from '@babel/traverse';
 
-import {VARS_KEY, config} from '@taddy/core';
+import {VARS_KEY, config, joinClassName} from '@taddy/core';
 import {$css} from 'taddy';
+
+import type {Env} from './types';
 
 import {
     evaluate,
@@ -29,9 +31,15 @@ export type ProcessorConfig = {
     typescript?: boolean | TSProcessorOptions;
     evaluate?: boolean;
     CSSVariableFallback?: boolean;
-    code: string;
-    filename: string;
     optimizeBindings?: boolean;
+};
+
+export type ProcessOptions = {
+    env: Env;
+    mixin: boolean;
+    filename: string;
+    code: string;
+    addImport(name: string): t.ImportSpecifier['local'];
 };
 
 type CommonOptions = {
@@ -61,18 +69,20 @@ function getHashedName(key: string, {postfix}: CommonOptions): string {
     return config.nameGenerator.getName(key, '', {postfix}).join('');
 }
 
+// TODO: bottom up and split the initialization
+let cachedTSProject;
+
 export class Processor {
     config: ProcessorConfig;
-    tsProject?: TSProcessor;
 
-    mixin!: boolean;
+    options!: ProcessOptions;
     isStatic!: boolean;
     classNameNodes!: WeakSet<t.ObjectProperty>;
     optimizationPaths!: Set<NodePath<any>>;
     variables!: t.ObjectProperty[];
 
-    private prepare({mixin}: {mixin: boolean}) {
-        this.mixin = mixin;
+    private prepare(options: ProcessOptions) {
+        this.options = options;
         this.isStatic = false;
         this.variables = [];
         this.classNameNodes = new WeakSet();
@@ -81,12 +91,21 @@ export class Processor {
 
     constructor({config}: {config: ProcessorConfig}) {
         this.config = config;
+    }
 
-        if (config.typescript) {
-            this.tsProject = new TSProcessor(
-                config.typescript === true ? {} : config.typescript,
+    get tsProject(): TSProcessor {
+        if (!this.config.typescript) {
+            throw new Error(
+                'TADDY: cant use typescript without enabled option',
             );
         }
+
+        return (
+            cachedTSProject ||
+            (cachedTSProject = new TSProcessor(
+                this.config.typescript === true ? {} : this.config.typescript,
+            ))
+        );
     }
 
     isClassNameNode(node) {
@@ -207,8 +226,6 @@ export class Processor {
 
             if (error) return false;
 
-            // console.log('evaluate', {value});
-
             properties.push(...this.stylesToNode(key, value, {postfix}));
 
             this.optimizationPaths.add(path);
@@ -220,15 +237,13 @@ export class Processor {
 
         const getTSValue = (tsValuePath: NodePath<any>) => {
             const tsType = this.tsProject?.getTypeAtPos(
-                this.config.filename,
-                this.config.code,
+                this.options.filename,
+                this.options.code,
                 tsValuePath.node.start || 0,
                 tsValuePath.node.end || 0,
             );
 
-            if (!tsType) return;
-
-            // console.log('TYPE', tsType.getType().getText());
+            if (!tsType) return STOP;
 
             return parseValue(tsType.getType());
         };
@@ -261,7 +276,7 @@ export class Processor {
                 tsValue = getTSValue(valuePath);
             }
 
-            if (!tsValue) return false;
+            if (tsValue === STOP) return false;
 
             // console.log({tsValue});
 
@@ -294,10 +309,12 @@ export class Processor {
 
             const propKey = getHashedName(key, {postfix});
 
+            const hashFunctionNode = this.options.addImport('h');
+
             properties.push(
                 t.objectProperty(
                     t.identifier(propKey),
-                    t.callExpression(t.identifier('css.h'), [
+                    t.callExpression(hashFunctionNode, [
                         valuePath.node as t.Expression,
                     ]),
                 ),
@@ -312,7 +329,7 @@ export class Processor {
             // think about dynamic nested for mixins
             // in case of nested dynamic values in mixin we can't fallback them as custom properties
             if (
-                this.mixin ||
+                this.options.mixin ||
                 key === 'composes' ||
                 key[0] === ':' ||
                 /[\W]/.test(key)
@@ -359,9 +376,9 @@ export class Processor {
         const tryEvaluateKey = (): boolean => {
             if (!this.config.evaluate) return false;
 
-            const {value} = evaluate(keyPath);
+            const {value, error} = evaluate(keyPath);
 
-            if (!(value && typeof value === 'string')) return false;
+            if (error) return false;
 
             keyPath.replaceWith(t.stringLiteral(value));
 
@@ -410,8 +427,8 @@ export class Processor {
             const {argument} = path.node;
 
             const tsType = this.tsProject?.getTypeAtPos(
-                this.config.filename,
-                this.config.code,
+                this.options.filename,
+                this.options.code,
                 argument.start || 0,
                 argument.end || 0,
             );
@@ -482,21 +499,14 @@ export class Processor {
     process(path: NodePath<any>, options: CommonOptions = {}) {
         if (path.isLogicalExpression()) {
             this.processLogicalExpression(path, options);
-            return;
-        }
-
-        if (path.isObjectExpression()) {
+        } else if (path.isObjectExpression()) {
             this.processObjectExpression(path, options);
-            return;
-        }
-
-        if (path.isConditionalExpression()) {
+        } else if (path.isConditionalExpression()) {
             this.processConditionalExpression(path, options);
-            return;
         }
     }
 
-    run(callPath: NodePath<t.CallExpression>, {mixin = false} = {}) {
+    run(callPath: NodePath<t.CallExpression>, options: ProcessOptions) {
         const args = callPath.get('arguments') as NodePath<any>[];
 
         const argPath = args[0];
@@ -534,7 +544,37 @@ export class Processor {
             return null;
         }
 
-        this.prepare({mixin});
+        this.prepare(options);
+
+        const tryEvaluate = (): boolean => {
+            if (!this.config.evaluate) return false;
+
+            const properties: any[] = [];
+
+            const {value, error} = evaluate(path);
+            if (error) return false;
+
+            const {className} = $css(value);
+
+            if (options.mixin) {
+                properties.push(...this.classNamesToNode(className));
+
+                path.node.properties = mergeObjectProperties(properties);
+            } else {
+                path.replaceWith(t.stringLiteral(joinClassName(className)));
+            }
+
+            this.optimizationPaths.add(path);
+
+            return true;
+        };
+
+        if (tryEvaluate()) {
+            return {
+                isStatic: true,
+                optimizationPaths: this.optimizationPaths,
+            };
+        }
 
         this.process(path);
 
@@ -547,26 +587,24 @@ export class Processor {
             );
         }
 
-        const isStatic =
-            !this.mixin &&
-            path.node.properties.every((x) => {
-                if (!t.isObjectProperty(x)) return false;
-                if (!('name' in x.key)) return false;
-                if (
-                    !(
-                        x.key.name[0] === '_' ||
-                        x.key.name === 'className' ||
-                        x.key.name === 'style' ||
-                        x.key.name === VARS_KEY
-                    )
-                ) {
-                    return false;
-                }
+        const isStatic = path.node.properties.every((x) => {
+            if (!t.isObjectProperty(x)) return false;
+            if (!('name' in x.key)) return false;
+            if (
+                !(
+                    x.key.name[0] === '_' ||
+                    x.key.name === 'className' ||
+                    x.key.name === 'style' ||
+                    x.key.name === VARS_KEY
+                )
+            ) {
+                return false;
+            }
 
-                return true;
-            });
+            return true;
+        });
 
-        if (isStatic) {
+        if (!this.options.mixin && isStatic) {
             optimizeStaticStyles(path);
         }
 

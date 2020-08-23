@@ -63,6 +63,11 @@ export class RuleInjector {
             return this.putNested(postfix + key, value, {inject});
         }
 
+        // check if that's id
+        if (key[0] === '_' && key[1] === '_') {
+            return {[key]: value};
+        }
+
         const {nameGenerator} = config;
 
         if (isStatic(key)) {

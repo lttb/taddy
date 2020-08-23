@@ -3,48 +3,8 @@ import LZString from 'lz-string';
 import history from './history';
 import {stripIndent} from 'common-tags';
 
-const initialCode = `
-import React from 'react'
-import {css} from 'taddy'
+const initialCode = ``;
 
-const COLORS = {
-    primary: 'red',
-    secondary: 'blue',
-} as const
-
-type Props = {children: string; variant: keyof typeof COLORS}
-
-export function Title({variant, children}: Props) {
-    return (
-        <h1 {...css({
-            /* declare your styles here */
-
-            color: COLORS[variant],
-
-            ...typo({size: 's'}),
-        })}>
-            {children}
-        </h1>
-    )
-}
-
-function typo({size = 's', weight: fontWeight = 'normal'}) {
-    return css.mixin({
-        fontWeight,
-        lineHeight: 1.2,
-
-        ...size === 's' && {
-            fontSize: '14px',
-        },
-
-        ...size === 'm' && {
-            fontSize: '16px',
-        }
-    })
-}
-`;
-
-const INITIAL_CODE = stripIndent(initialCode);
 const NEWLINE = '❤';
 
 export const encode = (value) =>
@@ -52,12 +12,10 @@ export const encode = (value) =>
         value.replace(/\n/g, NEWLINE).replace(/\s/g, ' '),
     );
 export const decode = (value) =>
-    value !== INITIAL_CODE
-        ? LZString.decompressFromEncodedURIComponent(value).replace(
-              new RegExp(NEWLINE, 'g'),
-              '\n',
-          )
-        : INITIAL_CODE;
+    LZString.decompressFromEncodedURIComponent(value).replace(
+        new RegExp(NEWLINE, 'g'),
+        '\n',
+    );
 
 class CodeHandler {
     value: string;
@@ -96,9 +54,7 @@ class CodeHandler {
     }
 }
 
-export const code = new CodeHandler(
-    history.location.query.code || INITIAL_CODE,
-);
+export const code = new CodeHandler(history.location.query.code);
 
 export const useCode = () => {
     React.useEffect(() => {

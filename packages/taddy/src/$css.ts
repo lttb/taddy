@@ -2,7 +2,13 @@
 
 import type {Properties, SimplePseudos} from 'csstype';
 
-import {VARS_KEY, MIXIN_KEY, isInvalidValue} from '@taddy/core';
+import {
+    VARS_KEY,
+    MIXIN_KEY,
+    isInvalidValue,
+    mergeClassNames,
+    CLASSNAME,
+} from '@taddy/core';
 import {RuleInjector} from './RuleInjector';
 
 export const ruleInjector = new RuleInjector();
@@ -113,17 +119,18 @@ export const $css = (
     rule,
     {inject = true, postfix = ''} = {},
 ): InternalTaddyStyle => {
-    if (typeof rule === 'string') {
-        return {className: {[rule]: true}};
+    if (!rule) {
+        return {className: {}};
     }
 
     const className = Object.create(null);
-    let style;
+    let style = {};
 
     function assignStyle(x: object) {
         if (!x) return;
         style = style || {};
         Object.assign(style, x);
+        mergeClassNames(className, x);
     }
 
     function applyMixin(currentRule) {
@@ -137,6 +144,11 @@ export const $css = (
     }
 
     function process(rule) {
+        if (typeof rule === 'string') {
+            Object.assign(className, {[rule]: true});
+            return;
+        }
+
         for (const key in rule) {
             if (isInvalidValue(rule[key])) continue;
 
@@ -165,10 +177,15 @@ export const $css = (
                 continue;
             }
 
-            if (key === 'className') {
+            if (
+                key === 'className' &&
+                !(rule.style && CLASSNAME in rule.style)
+            ) {
                 Object.assign(className, {[rule[key]]: true});
                 continue;
             }
+
+            // console.log(key, rule[key], JSON.stringify(className));
 
             const name = $css.ruleInjector.put(key, rule[key], {
                 inject,
@@ -183,9 +200,8 @@ export const $css = (
 
     const result: InternalTaddyStyle = {className};
 
-    if (style) {
-        result.style = style;
-    }
+    result.style = style;
+    result.style[CLASSNAME] = result.className;
 
     return result;
 };
