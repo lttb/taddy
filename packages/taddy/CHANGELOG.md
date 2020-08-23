@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.10](https://github.com/lttb/taddy/compare/taddy@0.0.9...taddy@0.0.10) (2020-08-23)
+
+
+### Features
+
+* support styles merge ([ddd07cc](https://github.com/lttb/taddy/commit/ddd07cc7180b666729bafb00f3fd30ff0c418b44))
+* **taddy:** fix css type ([bb5dfe6](https://github.com/lttb/taddy/commit/bb5dfe6316f92437d7c757989a8a921dcb73c855))
+
+
+
+
+
 ## [0.0.9](https://github.com/lttb/taddy/compare/taddy@0.0.8...taddy@0.0.9) (2020-08-20)
 
 **Note:** Version bump only for package taddy

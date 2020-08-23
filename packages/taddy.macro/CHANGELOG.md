@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.21](https://github.com/lttb/taddy/compare/taddy.macro@0.0.20...taddy.macro@0.0.21) (2020-08-23)
+
+
+### Features
+
+* support styles merge ([ddd07cc](https://github.com/lttb/taddy/commit/ddd07cc7180b666729bafb00f3fd30ff0c418b44))
+
+
+
+
+
 ## [0.0.20](https://github.com/lttb/taddy/compare/taddy.macro@0.0.19...taddy.macro@0.0.20) (2020-08-20)
 
 **Note:** Version bump only for package taddy.macro

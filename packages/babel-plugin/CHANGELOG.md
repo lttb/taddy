@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.20](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.19...@taddy/babel-plugin@0.0.20) (2020-08-23)
+
+
+### Bug Fixes
+
+* **babel-plugin:** fix caching and hash calculation ([b672c86](https://github.com/lttb/taddy/commit/b672c8626ad623f92530fbc692e9e9814c515526))
+
+
+### Features
+
+* support styles merge ([ddd07cc](https://github.com/lttb/taddy/commit/ddd07cc7180b666729bafb00f3fd30ff0c418b44))
+* **babel-plugin:** handle ConditionalExpression ([9c1ac61](https://github.com/lttb/taddy/commit/9c1ac61761831daf133b690cb5e917165113b026))
+
+
+
+
+
 ## [0.0.19](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.18...@taddy/babel-plugin@0.0.19) (2020-08-20)
 
 **Note:** Version bump only for package @taddy/babel-plugin
