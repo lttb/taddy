@@ -482,6 +482,11 @@ export class Processor {
             properties.push(propPath.node);
         }
 
+        /**
+         * TODO: think about static optimizations for mixins
+         */
+        if (this.options.mixin) return;
+
         path.node.properties = mergeObjectProperties(properties);
     }
 
@@ -516,6 +521,11 @@ export class Processor {
 
             const {className} = $css(value);
 
+            /**
+             * TODO: think about static optimizations for mixins
+             */
+            if (this.options.mixin) return true;
+
             const properties = this.classNamesToNode(className);
 
             path.replaceWith(
@@ -545,57 +555,55 @@ export class Processor {
         const nodes = args.map((x) => x.node);
         const argPath = args[0];
 
-        if (isObjectable) {
-            argPath.replaceWith(
-                t.objectExpression(mergeObjects(nodes as t.ObjectExpression[])),
-            );
-        } else {
-            argPath.replaceWith(
+        if (this.variables.length > 0) {
+            nodes.push(
                 t.objectExpression([
                     t.objectProperty(
-                        t.identifier('composes'),
-                        t.arrayExpression(nodes),
+                        t.identifier(VARS_KEY),
+                        t.objectExpression(this.variables),
                     ),
                 ]),
             );
         }
 
-        callPath.node.arguments = [argPath.node];
-
-        const path = argPath;
-
-        if (this.variables.length > 0) {
-            path.node.properties.push(
-                t.objectProperty(
-                    t.identifier(VARS_KEY),
-                    t.objectExpression(this.variables),
-                ),
+        if (isObjectable) {
+            argPath.replaceWith(
+                t.objectExpression(mergeObjects(nodes as t.ObjectExpression[])),
             );
-        }
 
-        const isStatic = path.node.properties.every((x) => {
-            if (!t.isObjectProperty(x)) return false;
-            if (!('name' in x.key)) return false;
-            if (
-                !(
-                    x.key.name[0] === '_' ||
-                    x.key.name === 'className' ||
-                    x.key.name === 'style' ||
-                    x.key.name === VARS_KEY
-                )
-            ) {
-                return false;
+            callPath.node.arguments = [argPath.node];
+
+            const path = argPath;
+
+            const isStatic = path.node.properties.every((x) => {
+                if (!t.isObjectProperty(x)) return false;
+                if (!('name' in x.key)) return false;
+                if (
+                    !(
+                        x.key.name[0] === '_' ||
+                        x.key.name === 'className' ||
+                        x.key.name === 'style' ||
+                        x.key.name === VARS_KEY
+                    )
+                ) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            if (!this.options.mixin && isStatic) {
+                optimizeStaticStyles(path);
             }
 
-            return true;
-        });
-
-        if (!this.options.mixin && isStatic) {
-            optimizeStaticStyles(path);
+            return {
+                isStatic,
+                optimizationPaths: this.optimizationPaths,
+            };
         }
 
         return {
-            isStatic,
+            isStatic: false,
             optimizationPaths: this.optimizationPaths,
         };
     }

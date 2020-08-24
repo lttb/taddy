@@ -52,9 +52,9 @@ describe('taddy.macro.static', () => {
             "import { css } from \\"taddy\\";
             let variant = 'normal';
             export default css.mixin({
-              _9bfd: \\"_4da4\\",
+              color: 'red',
               ...(variant === 'normal' && {
-                _9bfd: \\"_ac89\\"
+                color: 'black'
               })
             });"
         `);
