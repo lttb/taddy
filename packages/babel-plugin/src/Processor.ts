@@ -83,7 +83,6 @@ export class Processor {
 
     private prepare(options: ProcessOptions) {
         this.options = options;
-        this.isStatic = false;
         this.variables = [];
         this.classNameNodes = new WeakSet();
         this.optimizationPaths = new Set();
@@ -495,6 +494,29 @@ export class Processor {
     }
 
     process(path: NodePath<any>, options: CommonOptions = {}) {
+        const tryEvaluate = (): boolean => {
+            if (!this.config.evaluate) return false;
+
+            const {value, error} = evaluate(path);
+            if (error) return false;
+
+            const {className} = $css(value);
+
+            const properties = this.classNamesToNode(className);
+
+            path.replaceWith(
+                t.objectExpression(mergeObjectProperties(properties)),
+            );
+
+            this.optimizationPaths.add(path);
+
+            return true;
+        };
+
+        if (tryEvaluate()) {
+            return;
+        }
+
         if (path.isLogicalExpression()) {
             this.processLogicalExpression(path, options);
         } else if (path.isObjectExpression()) {
@@ -507,27 +529,32 @@ export class Processor {
     run(callPath: NodePath<t.CallExpression>, options: ProcessOptions) {
         const args = callPath.get('arguments') as NodePath<any>[];
 
-        const argPath = args[0];
+        this.prepare(options);
 
-        const composes: t.Expression[] = [];
-        let isObject = true;
-        for (let x of args) {
-            isObject = isObject && x.isObjectExpression();
-            composes.push(x.node);
+        let isObjectable = true;
+
+        for (let arg of args) {
+            this.process(arg);
+
+            if (!arg.isObjectExpression()) {
+                isObjectable = false;
+                continue;
+            }
         }
 
-        if (isObject) {
+        const nodes = args.map((x) => x.node);
+        const argPath = args[0];
+
+        if (isObjectable) {
             argPath.replaceWith(
-                t.objectExpression(
-                    mergeObjects(composes as t.ObjectExpression[]),
-                ),
+                t.objectExpression(mergeObjects(nodes as t.ObjectExpression[])),
             );
         } else {
             argPath.replaceWith(
                 t.objectExpression([
                     t.objectProperty(
                         t.identifier('composes'),
-                        t.arrayExpression(composes),
+                        t.arrayExpression(nodes),
                     ),
                 ]),
             );
@@ -536,45 +563,6 @@ export class Processor {
         callPath.node.arguments = [argPath.node];
 
         const path = argPath;
-
-        // supports only object expressions at the moment
-        if (!path.isObjectExpression()) {
-            return null;
-        }
-
-        this.prepare(options);
-
-        const tryEvaluate = (): boolean => {
-            if (!this.config.evaluate) return false;
-
-            const properties: any[] = [];
-
-            const {value, error} = evaluate(path);
-            if (error) return false;
-
-            const {className} = $css(value);
-
-            if (options.mixin) {
-                properties.push(...this.classNamesToNode(className));
-
-                path.node.properties = mergeObjectProperties(properties);
-            } else {
-                path.replaceWith(t.stringLiteral(joinClassName(className)));
-            }
-
-            this.optimizationPaths.add(path);
-
-            return true;
-        };
-
-        if (tryEvaluate()) {
-            return {
-                isStatic: true,
-                optimizationPaths: this.optimizationPaths,
-            };
-        }
-
-        this.process(path);
 
         if (this.variables.length > 0) {
             path.node.properties.push(
