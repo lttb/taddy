@@ -10,7 +10,7 @@ import {ruleInjector} from 'taddy';
 
 import {Processor} from './Processor';
 import type {ProcessorConfig, ProcessOptions} from './Processor';
-import {optimizeBindings} from './helpers';
+import {BindingOptimizer} from './helpers';
 import {getCacheDir, getRootDir} from './config';
 
 import type {Env} from './types';
@@ -176,6 +176,7 @@ export const createProcessors = (
     }[] = [];
 
     const processor = new Processor({config});
+    const optimizer = new BindingOptimizer();
 
     let counter = 0;
     const addHashId = (path: NodePath<t.CallExpression>) => {
@@ -243,7 +244,7 @@ export const createProcessors = (
                 for (let x of proceedPaths) {
                     isStatic = isStatic && x.isStatic;
                     for (let path of x.optimizationPaths) {
-                        optimizeBindings(path, {env: options.env});
+                        optimizer.process(path);
                     }
                 }
             }

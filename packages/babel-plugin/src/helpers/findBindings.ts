@@ -7,11 +7,21 @@ const cache = new WeakMap<NodePath, BindingMap>();
 
 export class BindingError extends Error {}
 
-function addBinding(
+function isIterable<T>(value: unknown): value is Iterable<T> {
+    return Symbol.iterator in Object(value);
+}
+
+export function addBinding(
     bindingMap: BindingMap,
     binding: Binding,
-    path: NodePath<any>,
+    path: NodePath<any> | Iterable<NodePath<any>>,
 ) {
+    if (isIterable(path)) {
+        for (let x of path) {
+            addBinding(bindingMap, binding, x);
+        }
+        return;
+    }
     bindingMap.set(binding, (bindingMap.get(binding) || new Set()).add(path));
 }
 
@@ -26,7 +36,10 @@ function isFunctionArgument(path: NodePath<any>) {
     return false;
 }
 
-export function findBindings(currentPath: NodePath): BindingMap {
+export function findBindings(
+    currentPath: NodePath,
+    {throwError = false}: {throwError?: boolean} = {},
+): BindingMap {
     function visitIdentifier(
         referentPath: NodePath,
         path: NodePath<t.Identifier>,
@@ -77,7 +90,11 @@ export function findBindings(currentPath: NodePath): BindingMap {
         }
 
         if (isFunctionArgument(bindingPath)) {
-            throw new BindingError('FUNCTION ARGUMENT');
+            if (throwError) {
+                throw new BindingError('FUNCTION ARGUMENT');
+            }
+
+            return;
         }
 
         addBinding(bindingMap, binding, path);
@@ -91,9 +108,7 @@ export function findBindings(currentPath: NodePath): BindingMap {
         }
 
         for (let [newBinding, paths] of traverse(bindingPath)) {
-            paths.forEach((x) => {
-                addBinding(bindingMap, newBinding, x);
-            });
+            addBinding(bindingMap, newBinding, paths);
         }
     }
 

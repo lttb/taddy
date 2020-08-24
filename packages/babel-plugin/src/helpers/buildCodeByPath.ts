@@ -20,7 +20,9 @@ function getPathsByBindings(
 }
 
 export function buildCodeByPath(path: NodePath): string {
-    return Array.from(getPathsByBindings(findBindings(path)))
+    return Array.from(
+        getPathsByBindings(findBindings(path, {throwError: true})),
+    )
         .sort((a, b) => a.node.start - b.node.start)
         .map((x) => x.toString())
         .join('\n');
