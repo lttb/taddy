@@ -120,12 +120,10 @@ async function init() {
             throw error;
         }
 
-        compileInjector.styleSheet.rules.forEach((rule) => {
-            $css.ruleInjector.styleSheet.insertAtomicRule(
-                rule.$className,
-                rule.$key,
-                rule.$value,
-            );
+        compileInjector.styleSheet.cache.forEach(({key, value, postfix}) => {
+            $css.ruleInjector.styleSheet.insert(key, value, {
+                postfix,
+            });
         });
 
         let compiledCode = result.code;
