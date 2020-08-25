@@ -1,6 +1,6 @@
 import {buildAtomicRule, getStyleNodeById, Sheet} from './common';
 
-export class StyleSheet implements Sheet {
+export class StyleSheet extends Sheet {
     node: HTMLStyleElement;
 
     sheet: CSSStyleSheet;
@@ -13,11 +13,11 @@ export class StyleSheet implements Sheet {
 
     initialStyle: CSSStyleDeclaration;
 
-    cache: {[key: string]: true};
-
     static TADDY_ID = 'taddy';
 
     constructor() {
+        super();
+
         const node = getStyleNodeById(StyleSheet.TADDY_ID);
 
         this.node = node;
@@ -41,8 +41,6 @@ export class StyleSheet implements Sheet {
         this.initialNode.style.all = 'initial';
 
         this.initialStyle = window.getComputedStyle(this.initialNode);
-
-        this.cache = {};
     }
 
     get rules() {
@@ -54,8 +52,6 @@ export class StyleSheet implements Sheet {
     }
 
     isRuleExists(className: string, key: string): boolean {
-        if (this.cache[className]) return true;
-
         this.classNameNode.className = className;
         const value: string | void = window.getComputedStyle(
             this.classNameNode,
@@ -72,8 +68,6 @@ export class StyleSheet implements Sheet {
 
         const selectorText = `.${className}`;
         const cssText = buildAtomicRule(selectorText, key, value);
-
-        this.cache[className] = true;
 
         return this.sheet.insertRule(cssText, this.cssRules.length);
     }

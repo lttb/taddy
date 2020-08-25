@@ -4,38 +4,40 @@ interface VirtualCSSStyleRule extends Partial<CSSStyleRule> {
     $className: string;
     $key: string;
     $value: string;
+    $postfix: string;
 }
 
-export class VirtualStyleSheet implements Sheet {
+export class VirtualStyleSheet extends Sheet {
     cssRules: VirtualCSSStyleRule[];
 
     sheet: {cssRules: VirtualStyleSheet['cssRules']};
 
-    cache: {[key: string]: true};
-
     constructor() {
+        super();
+
         this.sheet = {
             cssRules: [],
         };
         this.cssRules = this.sheet.cssRules;
-
-        this.cache = {};
     }
 
     get rules() {
         return this.cssRules;
     }
 
-    isRuleExists(className: string, key: string): boolean {
-        return !!this.cache[className];
-    }
+    // isRuleExists(className: string, key: string): boolean {
+    //     return !!this.cache[className];
+    // }
 
-    insertAtomicRule(className: string, key: string, value: string): number {
-        if (this.isRuleExists(className, key)) {
-            return -1;
-        }
-
-        this.cache[className] = true;
+    insertAtomicRule(
+        className: string,
+        key: string,
+        value: string,
+        {postfix = ''},
+    ): number {
+        // if (this.isRuleExists(className, key)) {
+        //     return -1;
+        // }
 
         const selectorText = `.${className}`;
         const index = this.sheet.cssRules.length;
@@ -46,6 +48,7 @@ export class VirtualStyleSheet implements Sheet {
             $className: className,
             $key: key,
             $value: value,
+            $postfix: postfix,
         });
         return index;
     }

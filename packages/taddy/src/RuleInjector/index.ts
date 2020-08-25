@@ -34,10 +34,6 @@ export {getStyleNodeById} from './common';
 export {VirtualStyleSheet, StyleSheet};
 
 export class RuleInjector {
-    cache = new Map();
-
-    rulesCache = new Map();
-
     styleSheet =
         typeof document === 'undefined'
             ? new VirtualStyleSheet()
@@ -86,49 +82,7 @@ export class RuleInjector {
             return this.putNested(postfix + key, value, {inject});
         }
 
-        const cssKey = camelToKebab(key);
-
-        const name = nameGenerator.getName(cssKey, value, {
-            postfix,
-        });
-        const nameHash = name.join('');
-
-        const result = Object.create(null);
-
-        // result[propHash + postfixHash] = value
-        result[name[0] + name[1]] = name[2];
-
-        if (this.cache.has(nameHash)) {
-            return result;
-        }
-
-        const originalName = nameGenerator.getName(cssKey, value);
-        const originalHash = originalName.join('');
-
-        let ruleIndex;
-
-        const className = `${nameHash}${postfix}`;
-
-        if (this.rulesCache.has(originalHash)) {
-            ruleIndex = this.rulesCache.get(originalHash);
-            this.styleSheet.appendSelector(ruleIndex, `.${className}`);
-        }
-
-        if (ruleIndex === undefined && inject) {
-            ruleIndex = this.styleSheet.insertAtomicRule(
-                className,
-                cssKey,
-                value,
-            );
-        }
-
-        this.cache.set(nameHash, {name, ruleIndex});
-
-        if (ruleIndex !== undefined && ruleIndex >= 0) {
-            this.rulesCache.set(originalHash, ruleIndex);
-        }
-
-        return result;
+        return this.styleSheet.insert(key, value, {postfix, inject});
     }
 
     putNested(selector: string, rule: Atom, {inject = true} = {}): Atom | null {
