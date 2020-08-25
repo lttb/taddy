@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.13](https://github.com/lttb/taddy/compare/taddy@0.0.12...taddy@0.0.13) (2020-08-25)
+
+
+### Features
+
+* **taddy:** refactor StyleSheet ([757e19a](https://github.com/lttb/taddy/commit/757e19abae1a313402af8ca7951df07faf028ba1))
+
+
+
+
+
 ## [0.0.12](https://github.com/lttb/taddy/compare/taddy@0.0.11...taddy@0.0.12) (2020-08-23)
 
 **Note:** Version bump only for package taddy

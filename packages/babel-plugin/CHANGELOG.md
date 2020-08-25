@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.23](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.22...@taddy/babel-plugin@0.0.23) (2020-08-25)
+
+
+### Features
+
+* **babel-plugin:** deoptimize mixins in case of predictable runtime ([8c6e54e](https://github.com/lttb/taddy/commit/8c6e54e34541c1c29b3098846d6695bc6cf0e0dd))
+* **babel-plugin:** disable "useTaggedTemplateLiterals" by default ([24cea00](https://github.com/lttb/taddy/commit/24cea005d82730d5d5af5e12925455ee075167ba))
+* **babel-plugin:** fix bindings optimization ([71b79b1](https://github.com/lttb/taddy/commit/71b79b1d7b24cde894205dd3d8611ba9e781ffc0))
+* **babel-plugin:** improve composes handling ([cd999f7](https://github.com/lttb/taddy/commit/cd999f701425e158c5d57245af32c007ecc8af99))
+* **babel-plugin:** support experimental tagged template literals ([64f0e2f](https://github.com/lttb/taddy/commit/64f0e2f033e4ae012df599f0b4eca32e8d3fa048))
+
+
+
+
+
 ## [0.0.22](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.21...@taddy/babel-plugin@0.0.22) (2020-08-23)
 
 **Note:** Version bump only for package @taddy/babel-plugin
