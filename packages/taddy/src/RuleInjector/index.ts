@@ -1,7 +1,5 @@
 import {config, isInvalidValue} from '@taddy/core';
 
-import {camelToKebab} from './common';
-
 import {VirtualStyleSheet} from './VirtualStyleSheet';
 import {StyleSheet} from './StyleSheet';
 

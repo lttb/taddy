@@ -1,4 +1,4 @@
-import {config, isInvalidValue} from '@taddy/core';
+import {config} from '@taddy/core';
 
 export function buildAtomicRule(
     selector: string,

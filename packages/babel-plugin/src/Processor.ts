@@ -1,7 +1,7 @@
 import * as t from '@babel/types';
 import type {NodePath} from '@babel/traverse';
 
-import {VARS_KEY, config, joinClassName} from '@taddy/core';
+import {VARS_KEY, config} from '@taddy/core';
 import {$css} from 'taddy';
 
 import type {Env} from './types';
