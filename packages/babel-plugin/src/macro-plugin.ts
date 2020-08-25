@@ -48,9 +48,9 @@ type CompileOptions = {
      *
      * That's an experimental option that might be deprecated.
      *
-     * @default true;
+     * @default false;
      */
-    unstable_taggedTemplateLiterals: boolean;
+    unstable_useTaggedTemplateLiterals: boolean;
 };
 
 export type MacroConfig = Partial<{
@@ -72,9 +72,9 @@ function mapCompileOptions({
     typescript = /\.tsx?$/.test(filename),
     unstable_CSSVariableFallback = true,
     unstable_optimizeBindings = true,
-    unstable_taggedTemplateLiterals = true,
+    unstable_useTaggedTemplateLiterals = false,
 }: Partial<CompileOptions> & {filename: string}): ProcessorConfig & {
-    taggedTemplateLiterals: boolean;
+    useTaggedTemplateLiterals: boolean;
 } {
     return {
         evaluate,
@@ -82,7 +82,7 @@ function mapCompileOptions({
         CSSVariableFallback: unstable_CSSVariableFallback,
         optimizeBindings: unstable_optimizeBindings,
 
-        taggedTemplateLiterals: unstable_taggedTemplateLiterals,
+        useTaggedTemplateLiterals: unstable_useTaggedTemplateLiterals,
     };
 }
 
@@ -126,7 +126,7 @@ export function macro({
 
     const importCache = new Map<string, t.ImportSpecifier>();
 
-    const {taggedTemplateLiterals, ...compileOptions} = mapCompileOptions({
+    const {useTaggedTemplateLiterals, ...compileOptions} = mapCompileOptions({
         filename,
         ...config.compileOptions,
     });
@@ -159,7 +159,7 @@ export function macro({
             const {parentPath} = path;
 
             if (
-                taggedTemplateLiterals &&
+                useTaggedTemplateLiterals &&
                 (key === 'css' || key === 'mixin') &&
                 parentPath.isTaggedTemplateExpression()
             ) {

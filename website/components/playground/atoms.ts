@@ -10,6 +10,7 @@ type Playground = {
         typescript: boolean;
         evaluate: boolean;
         unstable_CSSVariableFallback: boolean;
+        unstable_useTaggedTemplateLiterals: boolean;
     };
     code: string;
 };
@@ -53,6 +54,7 @@ export const playgroundAtom = declareAtom<Playground>(
             typescript: true,
             evaluate: true,
             unstable_CSSVariableFallback: true,
+            unstable_useTaggedTemplateLiterals: true,
         },
     },
     (on) => [
