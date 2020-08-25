@@ -4,6 +4,7 @@ import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 import assert from 'assert';
 
 import {isTaddyEvaluation} from './helpers';
+import {taggedTemplateToObject} from './helpers/taggedTemplateToObject';
 import {MACRO_NAME, PACKAGE_NAME} from './config';
 
 import type {OutputOptions} from './handlers';
@@ -35,7 +36,21 @@ type CompileOptions = {
      */
     unstable_CSSVariableFallback: ProcessorConfig['CSSVariableFallback'];
 
+    /**
+     * Based on static analysis remove unused bindings after compilation
+     *
+     * @default true
+     */
     unstable_optimizeBindings: ProcessorConfig['optimizeBindings'];
+
+    /**
+     * Support tagged template literals.
+     *
+     * That's an experimental option that might be deprecated.
+     *
+     * @default true;
+     */
+    unstable_taggedTemplateLiterals: boolean;
 };
 
 export type MacroConfig = Partial<{
@@ -57,12 +72,17 @@ function mapCompileOptions({
     typescript = /\.tsx?$/.test(filename),
     unstable_CSSVariableFallback = true,
     unstable_optimizeBindings = true,
-}: Partial<CompileOptions> & {filename: string}): ProcessorConfig {
+    unstable_taggedTemplateLiterals = true,
+}: Partial<CompileOptions> & {filename: string}): ProcessorConfig & {
+    taggedTemplateLiterals: boolean;
+} {
     return {
         evaluate,
         typescript,
         CSSVariableFallback: unstable_CSSVariableFallback,
         optimizeBindings: unstable_optimizeBindings,
+
+        taggedTemplateLiterals: unstable_taggedTemplateLiterals,
     };
 }
 
@@ -106,39 +126,51 @@ export function macro({
 
     const importCache = new Map<string, t.ImportSpecifier>();
 
-    const {handlers, finish} = createProcessors(
-        {
-            ...mapCompileOptions({
-                filename,
-                ...config.compileOptions,
-            }),
+    const {taggedTemplateLiterals, ...compileOptions} = mapCompileOptions({
+        filename,
+        ...config.compileOptions,
+    });
+
+    const {handlers, finish} = createProcessors(compileOptions, {
+        env,
+        filename,
+        code,
+        addImport(name: string): t.ImportSpecifier['local'] {
+            if (!importCache.has(name)) {
+                const specifier = t.importSpecifier(
+                    t.identifier(`_${name}_`),
+                    t.identifier(name),
+                );
+                importCache.set(name, specifier);
+
+                assert(importPath, 'There is no taddy imports');
+
+                importPath.node.specifiers.push(specifier);
+            }
+
+            return importCache.get(name)!.local;
         },
-        {
-            env,
-            filename,
-            code,
-            addImport(name: string): t.ImportSpecifier['local'] {
-                if (!importCache.has(name)) {
-                    const specifier = t.importSpecifier(
-                        t.identifier(`_${name}_`),
-                        t.identifier(name),
-                    );
-                    importCache.set(name, specifier);
-
-                    assert(importPath, 'There is no taddy imports');
-
-                    importPath.node.specifiers.push(specifier);
-                }
-
-                return importCache.get(name)!.local;
-            },
-        },
-    );
+    });
 
     for (const key in references) {
         if (!handlers[key]) continue;
 
-        references[key].forEach((path) => handlers[key](path.parentPath));
+        for (let path of references[key]) {
+            const {parentPath} = path;
+
+            if (
+                taggedTemplateLiterals &&
+                (key === 'css' || key === 'mixin') &&
+                parentPath.isTaggedTemplateExpression()
+            ) {
+                const obj = taggedTemplateToObject(parentPath);
+                parentPath.replaceWith(
+                    t.callExpression(parentPath.node.tag, [obj]),
+                );
+            }
+
+            handlers[key](parentPath);
+        }
     }
 
     const {isStatic} = finish();

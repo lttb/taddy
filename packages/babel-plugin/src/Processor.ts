@@ -118,10 +118,17 @@ export class Processor {
             const classValue = classNames[key];
 
             const propName = t.identifier(key);
-            const propValue =
-                typeof classNames[key] === 'boolean'
-                    ? t.booleanLiteral(classValue)
-                    : t.stringLiteral(String(classValue));
+
+            let propValue;
+            if (typeof classNames[key] === 'object') {
+                propValue = t.objectExpression(
+                    this.classNamesToNode(classNames[key]),
+                );
+            } else if (typeof classNames[key] === 'boolean') {
+                propValue = t.booleanLiteral(classValue);
+            } else {
+                propValue = t.stringLiteral(String(classValue));
+            }
 
             const node = t.objectProperty(propName, propValue);
 
@@ -509,7 +516,7 @@ export class Processor {
     }
 
     run(callPath: NodePath<t.CallExpression>, options: ProcessOptions) {
-        const args = callPath.get('arguments') as NodePath<any>[];
+        const args = ([] as NodePath<any>[]).concat(callPath.get('arguments'));
 
         this.prepare(options);
 

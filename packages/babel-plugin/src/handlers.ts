@@ -175,6 +175,8 @@ export const createProcessors = (
         optimizationPaths: Set<NodePath<any>>;
     }[] = [];
 
+    const cssQueue: {path: NodePath<t.CallExpression>; mixin: boolean}[] = [];
+
     const processor = new Processor({config});
     const optimizer = new BindingOptimizer();
 
@@ -206,25 +208,10 @@ export const createProcessors = (
                 return;
             }
 
-            if (!path.isCallExpression()) return;
+            if (path.isCallExpression()) {
+                cssQueue.push({path, mixin});
 
-            const result = processor.run(path, {
-                ...options,
-                mixin,
-            });
-
-            if (!result) return;
-
-            const {isStatic, optimizationPaths} = result;
-
-            proceedPaths.push({
-                path,
-                isStatic,
-                optimizationPaths,
-            });
-
-            if (!mixin) {
-                addHashId(path);
+                return;
             }
         },
 
@@ -233,9 +220,38 @@ export const createProcessors = (
         },
     };
 
+    function processCSS({
+        path,
+        mixin,
+    }: {
+        path: NodePath<t.CallExpression>;
+        mixin: boolean;
+    }) {
+        const result = processor.run(path, {
+            ...options,
+            mixin,
+        });
+
+        if (!result) return;
+
+        const {isStatic, optimizationPaths} = result;
+
+        proceedPaths.push({
+            path,
+            isStatic,
+            optimizationPaths,
+        });
+
+        if (!mixin) {
+            addHashId(path);
+        }
+    }
+
     return {
         handlers,
         finish(): {isStatic: boolean} {
+            cssQueue.forEach(processCSS);
+
             let isStatic = false;
 
             if (config.optimizeBindings) {
@@ -257,7 +273,7 @@ export const createProcessors = (
 
                 isStatic = false;
 
-                handlers.css(path, {mixin: true});
+                processCSS({path, mixin: true});
             }
 
             if (!isStatic) {
