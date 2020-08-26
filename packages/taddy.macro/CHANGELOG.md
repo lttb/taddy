@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.25](https://github.com/lttb/taddy/compare/taddy.macro@0.0.24...taddy.macro@0.0.25) (2020-08-26)
+
+**Note:** Version bump only for package taddy.macro
+
+
+
+
+
 ## [0.0.24](https://github.com/lttb/taddy/compare/taddy.macro@0.0.23...taddy.macro@0.0.24) (2020-08-25)
 
 **Note:** Version bump only for package taddy.macro
