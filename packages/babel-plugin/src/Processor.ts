@@ -518,8 +518,6 @@ export class Processor {
     }
 
     run(callPath: NodePath<t.CallExpression>, options: ProcessOptions) {
-        const args = ([] as NodePath<any>[]).concat(callPath.get('arguments'));
-
         this.prepare(options);
 
         const tryEvaluate = (path): boolean => {
@@ -545,6 +543,8 @@ export class Processor {
 
             return true;
         };
+
+        let args = ([] as NodePath<any>[]).concat(callPath.get('arguments'));
 
         let isObjectable = true;
 

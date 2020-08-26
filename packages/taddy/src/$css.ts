@@ -149,6 +149,7 @@ export const $css = (
         for (const key in rule) {
             if (isInvalidValue(rule[key])) continue;
 
+            // @ts-expect-error
             if (key === MIXIN_KEY) continue;
 
             if (key === 'composes') {

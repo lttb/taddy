@@ -153,23 +153,34 @@ export function macro({
     });
 
     for (const key in references) {
-        if (!handlers[key]) continue;
+        if (!(key in handlers)) continue;
 
-        for (let path of references[key]) {
-            const {parentPath} = path;
+        for (let ref of references[key]) {
+            let currentPath = ref.parentPath;
+            let currentKey = key;
+
+            if (
+                key === 'css' &&
+                currentPath.isMemberExpression() &&
+                'name' in currentPath.node.property &&
+                currentPath.node.property.name === 'mixin'
+            ) {
+                currentPath = currentPath.parentPath;
+                currentKey = 'mixin';
+            }
 
             if (
                 useTaggedTemplateLiterals &&
-                (key === 'css' || key === 'mixin') &&
-                parentPath.isTaggedTemplateExpression()
+                (currentKey === 'css' || currentKey === 'mixin') &&
+                currentPath.isTaggedTemplateExpression()
             ) {
-                const obj = taggedTemplateToObject(parentPath);
-                parentPath.replaceWith(
-                    t.callExpression(parentPath.node.tag, [obj]),
+                const obj = taggedTemplateToObject(currentPath);
+                currentPath.replaceWith(
+                    t.callExpression(currentPath.node.tag, [obj]),
                 );
             }
 
-            handlers[key](parentPath);
+            handlers[currentKey](currentPath);
         }
     }
 
