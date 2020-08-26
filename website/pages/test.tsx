@@ -27,6 +27,7 @@ export default function Test({c = Math.random()}) {
                 export default <div {...css({color: 'red'})}>hello!</div>
             `}
             />
+            <Install />
         </div>
     );
 }

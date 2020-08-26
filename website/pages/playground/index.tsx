@@ -33,15 +33,17 @@ export default function PlaygroundPage() {
                         showRender
                         showCompiledCSS
                         initialCode={`
-                        import React from 'react';
-                        import {css} from 'taddy';
+                            import React from 'react'
+                            import {css} from 'taddy'
 
-                        export default (
-                            <h1 {...css({color: 'violet', margin: 0})}>
-                                Hello, world!
-                            </h1>
-                        )
-                    `}
+                            const color = 'violet'
+
+                            export default (
+                                <h1 {...css({color, margin: 0})}>
+                                    Hello, world!
+                                </h1>
+                            )
+                        `}
                     />
                 </div>
             </Column>

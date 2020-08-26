@@ -1,0 +1,24 @@
+# Install
+
+The easiest way to start using `taddy` is install it as [taddy package](https://www.npmjs.com/package/taddy)
+
+```sh
+npm install --save taddy
+```
+
+or if you're using `yarn`:
+
+```sh
+yarn add taddy
+```
+
+First Component
+
+```jsx
+import React from 'react';
+import {css} from 'taddy';
+
+export default function Title({children}) {
+    return <h1 {...css({color: 'violet'})}>{children}</h1>;
+}
+```

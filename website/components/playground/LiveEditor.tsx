@@ -12,9 +12,11 @@ import {Editor} from './Editor';
 export const LiveEditor = ({
     initialCode,
     persistent,
+    focus,
 }: {
     initialCode?: string;
     persistent?: boolean;
+    focus?: boolean;
 }) => {
     const code = useAtom(playgroundAtom, (x) => x.code, ['code']);
     const storageCode = useCode(persistent ? code : null);
@@ -35,11 +37,11 @@ export const LiveEditor = ({
 
             <Editor
                 debounceChangePeriod={50}
-                value={code}
+                value={code || initialCode}
                 onChange={handleCode}
                 name="TADDY_EDITOR"
                 editorProps={{$blockScrolling: true}}
-                focus={true}
+                focus={focus}
                 setOptions={{
                     enableBasicAutocompletion: true,
                     enableLiveAutocompletion: true,
