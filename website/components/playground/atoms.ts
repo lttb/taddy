@@ -36,14 +36,16 @@ export const updatePlayground = declareAction<Partial<Playground>>(
             .then((result) => {
                 store.dispatch(setTransformedCode({status: 'done', result}));
             })
-            .catch((error) =>
+            .catch((error) => {
+                console.error(error);
+
                 store.dispatch(
                     setTransformedCode({
                         status: 'error',
                         error,
                     }),
-                ),
-            );
+                );
+            });
     },
 );
 export const playgroundAtom = declareAtom<Playground>(

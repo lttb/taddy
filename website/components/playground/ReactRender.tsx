@@ -46,6 +46,7 @@ class ErrorBoundary extends React.Component {
     }
 
     componentDidCatch(error, errorInfo) {
+        console.error(error, errorInfo);
         // You can also log the error to an error reporting service
         //   logErrorToMyService(error, errorInfo);
     }
@@ -109,6 +110,8 @@ export const ReactRender = ({code: sourceCode}) => {
                     setRenderComponent(null);
                 }
             } catch (e) {
+                console.error('render error', e);
+
                 setRuntimeError(e);
             }
         }
