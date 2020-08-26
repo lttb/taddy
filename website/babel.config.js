@@ -6,7 +6,6 @@ module.exports = {
             '@taddy',
             {
                 compileOptions: {
-                    typescript: false,
                     evaluate: true,
                 },
                 outputOptions: {

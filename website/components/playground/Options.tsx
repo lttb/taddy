@@ -37,23 +37,23 @@ export const Options = () => {
                 <label>
                     <input
                         type="checkbox"
-                        name="typescript"
-                        disabled={compileOptionsDisabled}
-                        checked={options.typescript}
-                        onChange={handleOption}
-                    />
-                    typescript
-                </label>
-
-                <label>
-                    <input
-                        type="checkbox"
                         name="evaluate"
                         disabled={compileOptionsDisabled}
                         checked={options.evaluate}
                         onChange={handleOption}
                     />
                     evaluate
+                </label>
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="unstable_typescript"
+                        disabled={compileOptionsDisabled}
+                        checked={options.unstable_typescript}
+                        onChange={handleOption}
+                    />
+                    unstable_typescript
                 </label>
 
                 <label>

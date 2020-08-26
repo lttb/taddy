@@ -7,8 +7,8 @@ import {transformCode} from '../../compiler';
 type Playground = {
     options: {
         taddy: true;
-        typescript: boolean;
         evaluate: boolean;
+        unstable_typescript: boolean;
         unstable_CSSVariableFallback: boolean;
         unstable_useTaggedTemplateLiterals: boolean;
     };
@@ -53,7 +53,7 @@ export const playgroundAtom = declareAtom<Playground>(
         code: '',
         options: {
             taddy: true,
-            typescript: true,
+            unstable_typescript: true,
             evaluate: true,
             unstable_CSSVariableFallback: true,
             unstable_useTaggedTemplateLiterals: true,

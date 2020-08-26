@@ -14,19 +14,19 @@ import type {ProcessorConfig} from './Processor';
 
 type CompileOptions = {
     /**
-     * Use typescript language server
-     *
-     * By default, true for typescript files
-     * @default true
-     */
-    typescript: ProcessorConfig['typescript'];
-
-    /**
      * Apply static evaluation optimizations
      *
      * @default true
      */
     evaluate: ProcessorConfig['evaluate'];
+
+    /**
+     * Use typescript language server
+     *
+     * By default, true for typescript files
+     * @default false
+     */
+    unstable_typescript: ProcessorConfig['typescript'];
 
     /**
      * Use CSS Variables fallback
@@ -67,9 +67,8 @@ export type MacroOptions = {
 };
 
 function mapCompileOptions({
-    filename,
     evaluate = true,
-    typescript = /\.tsx?$/.test(filename),
+    unstable_typescript = false,
     unstable_CSSVariableFallback = true,
     unstable_optimizeBindings = true,
     unstable_useTaggedTemplateLiterals = false,
@@ -78,7 +77,7 @@ function mapCompileOptions({
 } {
     return {
         evaluate,
-        typescript,
+        typescript: unstable_typescript,
         CSSVariableFallback: unstable_CSSVariableFallback,
         optimizeBindings: unstable_optimizeBindings,
 

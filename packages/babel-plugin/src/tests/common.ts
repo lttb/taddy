@@ -37,7 +37,7 @@ export const getBabelOptions = (
             taddyPlugin(babel, {
                 compileOptions: {
                     evaluate: false,
-                    typescript: false,
+                    unstable_typescript: false,
                     ...options.compileOptions,
                 },
                 outputOptions: {

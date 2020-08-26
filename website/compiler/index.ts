@@ -89,7 +89,9 @@ async function init() {
                 {
                     compileOptions: {
                         ...options,
-                        typescript: options.typescript ? project : false,
+                        unstable_typescript: options.unstable_typescript
+                            ? project
+                            : false,
                     },
                 },
             ],
@@ -145,7 +147,7 @@ async function init() {
         // first init for better update performance later
         _transform(`import {css} from 'taddy'; css({color: 'initial'})`, {
             evaluate: true,
-            typescript: true,
+            unstable_typescript: true,
         });
     });
 

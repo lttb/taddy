@@ -1,7 +1,7 @@
 import {PACKAGE_NAME, transform, getStyles, resetStyles} from './common';
 
 const options = {
-    compileOptions: {typescript: true},
+    compileOptions: {unstable_typescript: true},
 };
 
 describe('taddy.macro.typescript', () => {
