@@ -1,14 +1,7 @@
 {
     "private": true,
-    "name": "cra",
+    "name": "@taddy-example/cra",
     "version": "0.1.0",
-    "babelMacros": {
-        "taddy": {
-            "outputOptions": {
-                "cssFilepath": "./src/taddy.css"
-            }
-        }
-    },
     "dependencies": {
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",

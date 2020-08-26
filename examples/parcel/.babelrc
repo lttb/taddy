@@ -1,4 +1,4 @@
 {
     "presets": ["@babel/react"],
-    "plugins": [["@taddy", {"outputOptions": {"cssFilepath": "taddy.css"}}]]
+    "plugins": [["@taddy"]]
 }

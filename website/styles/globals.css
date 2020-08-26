@@ -15,7 +15,7 @@ a {
   box-sizing: border-box;
 }
 
-body {
+html, body {
     background: #fafafa;
     height: 100%;
     color: #333;
