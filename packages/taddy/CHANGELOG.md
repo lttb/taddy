@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.16](https://github.com/lttb/taddy/compare/taddy@0.0.15...taddy@0.0.16) (2020-08-26)
+
+
+### Features
+
+* **taddy:** fix tagged template literals type ([c2ca150](https://github.com/lttb/taddy/commit/c2ca15097c1c621337babd5493478a30d119f819))
+
+
+
+
+
 ## [0.0.15](https://github.com/lttb/taddy/compare/taddy@0.0.14...taddy@0.0.15) (2020-08-26)
 
 
