@@ -1,0 +1,16 @@
+*.log
+.DS_Store
+
+node_modules
+
+dist
+*.code-workspace
+.vscode
+.cache
+
+!packages/taddy/.cache
+taddy.css
+
+.vercel
+
+*.tsbuildinfo
