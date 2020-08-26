@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.13](https://github.com/lttb/taddy/compare/@taddy/core@0.0.12...@taddy/core@0.0.13) (2020-08-26)
+
+
+### Features
+
+* **babel-plugin, taddy:** fix dynamic css variables, static className, deps ([346dfa1](https://github.com/lttb/taddy/commit/346dfa1bdf13175d310729bfe4910829cba4502c))
+
+
+
+
+
 ## [0.0.12](https://github.com/lttb/taddy/compare/@taddy/core@0.0.11...@taddy/core@0.0.12) (2020-08-25)
 
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.15](https://github.com/lttb/taddy/compare/taddy@0.0.14...taddy@0.0.15) (2020-08-26)
+
+
+### Features
+
+* **babel-plugin:** fix template literal mixin handling ([55d4f58](https://github.com/lttb/taddy/commit/55d4f58647bb8526e96ebd03007c77ef6c03c951))
+* **babel-plugin, taddy:** fix dynamic css variables, static className, deps ([346dfa1](https://github.com/lttb/taddy/commit/346dfa1bdf13175d310729bfe4910829cba4502c))
+
+
+
+
+
 ## [0.0.14](https://github.com/lttb/taddy/compare/taddy@0.0.13...taddy@0.0.14) (2020-08-26)
 
 **Note:** Version bump only for package taddy
