@@ -13,6 +13,8 @@ export class StyleSheet extends Sheet {
 
     initialStyle: CSSStyleDeclaration;
 
+    headStyle: CSSStyleDeclaration;
+
     static TADDY_ID = 'taddy';
 
     constructor() {
@@ -41,6 +43,8 @@ export class StyleSheet extends Sheet {
         this.initialNode.style.all = 'initial';
 
         this.initialStyle = window.getComputedStyle(this.initialNode);
+
+        this.headStyle = window.getComputedStyle(document.head);
     }
 
     get rules() {
@@ -51,6 +55,12 @@ export class StyleSheet extends Sheet {
         return rules;
     }
 
+    /**
+     * There are different approaches to detect the existing classname with different tradeoffs.
+     * At the moment, this one looks reasonable.
+     * But there is still a potential conflict with the same
+     * style on html node and element
+     */
     isRuleExists(className: string, key: string): boolean {
         this.classNameNode.className = className;
         const value: string | void = window.getComputedStyle(
@@ -58,7 +68,9 @@ export class StyleSheet extends Sheet {
         )[key];
         this.classNameNode.className = '';
 
-        return value !== this.initialStyle[key];
+        return (
+            value !== this.initialStyle[key] && value !== this.headStyle[key]
+        );
     }
 
     insertAtomicRule(className: string, key: string, value: string): number {
