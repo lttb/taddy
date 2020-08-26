@@ -36,6 +36,8 @@
         "find-cache-dir": "3.3.1",
         "lilconfig": "0.0.3",
         "mkdirp": "1.0.4",
+        "postcss": "7.0.32",
+        "postcss-js": "2.0.3",
         "resolve": "1.17.0",
         "string-hash": "1.1.3",
         "taddy": "^0.0.14",

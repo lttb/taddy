@@ -1,4 +1,5 @@
-import {buildAtomicRule, Sheet} from './common';
+import {buildAtomicRule} from './common';
+import Sheet from './Sheet';
 
 interface VirtualCSSStyleRule extends Partial<CSSStyleRule> {
     $className: string;

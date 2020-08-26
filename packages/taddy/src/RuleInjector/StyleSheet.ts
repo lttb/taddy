@@ -1,4 +1,5 @@
-import {buildAtomicRule, getStyleNodeById, Sheet} from './common';
+import {buildAtomicRule, getStyleNodeById} from './common';
+import Sheet from './Sheet';
 
 export class StyleSheet extends Sheet {
     node: HTMLStyleElement;

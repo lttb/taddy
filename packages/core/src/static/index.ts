@@ -9,16 +9,11 @@ export const mapStaticClassName = (className?: string): object => {
     if (!className) return {};
     let v = staticCache[className];
     if (v) return v;
-    return (staticCache[className] = className
-        .split(' ')
-        .reduce(
-            (acc, v) => (
-                (acc[v.slice(0, -VALUE_HASH_LENGTH)] =
-                    v.slice(-VALUE_HASH_LENGTH) || true),
-                acc
-            ),
-            {},
-        ));
+    return (staticCache[className] = className.split(' ').reduce((acc, v) => {
+        if (v.length < VALUE_HASH_LENGTH) acc[v] = true;
+        else acc[v.slice(0, -VALUE_HASH_LENGTH)] = v.slice(-VALUE_HASH_LENGTH);
+        return acc;
+    }, {}));
 };
 
 export const joinClassName = (className: object): string => {

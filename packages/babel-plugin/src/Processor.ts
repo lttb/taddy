@@ -62,12 +62,15 @@ function getLiteralValue(path: NodePath<any>): any {
         return getLiteralValue.FAIL;
     }
 }
-
 getLiteralValue.FAIL = Symbol('FAILED_VALUE');
 
 function getHashedName(key: string, {postfix}: CommonOptions): string {
     return config.nameGenerator.getName(key, '', {postfix}).join('');
 }
+
+const isCSSProperty = (key) => {
+    return key.slice(0, 2) === '--' || /[\w-]/.test(key);
+};
 
 // TODO: bottom up and split the initialization
 let cachedTSProject;
@@ -335,8 +338,7 @@ export class Processor {
             if (
                 this.options.mixin ||
                 key === 'composes' ||
-                key[0] === ':' ||
-                /[\W]/.test(key)
+                !isCSSProperty(key)
             ) {
                 return false;
             }
@@ -590,7 +592,8 @@ export class Processor {
                         x.key.name[0] === '_' ||
                         x.key.name === 'className' ||
                         x.key.name === 'style' ||
-                        x.key.name === VARS_KEY
+                        x.key.name === VARS_KEY ||
+                        t.isBooleanLiteral(x.value)
                     )
                 ) {
                     return false;
