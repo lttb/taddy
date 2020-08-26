@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.28](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.27...@taddy/babel-plugin@0.0.28) (2020-08-26)
+
+
+### Features
+
+* make typescript as unstable option, disabled by default ([580f539](https://github.com/lttb/taddy/commit/580f5390b74198f9da0f1e2816f2d0f4becb7c7c))
+
+
+
+
+
 ## [0.0.27](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.26...@taddy/babel-plugin@0.0.27) (2020-08-26)
 
 **Note:** Version bump only for package @taddy/babel-plugin
