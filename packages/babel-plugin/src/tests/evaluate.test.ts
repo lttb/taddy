@@ -9,6 +9,32 @@ describe('taddy.macro.evaluate', () => {
         resetStyles();
     });
 
+    test('variables', async () => {
+        expect(
+            await transform(
+                `
+                import {css} from '${PACKAGE_NAME}'
+
+                const color = 'red'
+
+                export default css({
+                    color,
+                    margin: 0,
+                })
+            `,
+                options,
+            ),
+        ).toMatchInlineSnapshot(`
+            "import { css } from \\"@taddy/core\\";
+            export default css(\\"_9bfd_4da4 _f67b_64da\\", \\"__376slgo\\");"
+        `);
+
+        expect(getStyles()).toMatchInlineSnapshot(`
+            "._9bfd_4da4 {color: red;}
+            ._f67b_64da {margin: 0;}"
+        `);
+    });
+
     test('evaluate mixins', async () => {
         expect(
             await transform(

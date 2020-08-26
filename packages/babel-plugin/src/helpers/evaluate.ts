@@ -13,6 +13,7 @@ import * as taddy from 'taddy';
 
 import {MACRO_NAME, PACKAGE_NAME} from '../config';
 
+import {findBindings} from './findBindings';
 import {buildCodeByPath} from './buildCodeByPath';
 
 import tsPreset from '@babel/preset-typescript';
@@ -60,6 +61,8 @@ export function evaluate(
     const result = evaluatePath(currentPath);
 
     if (result.confident) {
+        findBindings(currentPath);
+
         return {value: result.value};
     }
 
