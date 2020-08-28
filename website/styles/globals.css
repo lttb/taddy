@@ -16,7 +16,7 @@ a {
 }
 
 html, body {
-    background: #fafafa;
+    /* background: #fafafa; */
     height: 100%;
     color: #333;
     width: 100vw;
@@ -29,4 +29,8 @@ use {
 
 svg * {
     all: inherit;
+}
+
+li + li, li > ul {
+    margin-top: 10px;
 }

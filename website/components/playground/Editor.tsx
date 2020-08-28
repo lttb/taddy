@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic';
 import * as React from 'react';
 import type {ComponentProps} from 'react';
 
+import {css} from 'taddy';
+
 // @see https://github.com/securingsincity/react-ace/issues/725
 const AceEditor = dynamic(
     async () => {
@@ -48,7 +50,11 @@ const AceEditor = dynamic(
     },
 );
 
-export const Editor = (props: ComponentProps<typeof AceEditor>) => (
+export const Editor = ({
+    className,
+    style,
+    ...props
+}: ComponentProps<typeof AceEditor>) => (
     <AceEditor
         mode="tsx"
         theme="textmate"
@@ -56,10 +62,19 @@ export const Editor = (props: ComponentProps<typeof AceEditor>) => (
         maxLines={Infinity}
         width="100%"
         {...props}
-        style={{
-            ...props.style,
-            minWidth: 350,
-            overflowX: 'auto',
-        }}
+        {...css({
+            '.ace-tm .ace_storage': {
+                color: '#3e68bb',
+            },
+            '.ace-tm .ace_keyword': {
+                color: '#3e68bb',
+            },
+            style: {
+                ...style,
+                minWidth: 350,
+                overflowX: 'auto',
+            },
+            className,
+        })}
     />
 );

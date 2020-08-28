@@ -36,7 +36,7 @@
 
 @media screen and (max-width: 900px) {
     .content {
-        margin-top: 50px;
+        margin-top: 10px;
     }
 
     .burger {
@@ -52,7 +52,7 @@
     }
 
     .input:checked ~ .burger {
-        color: white;
+        color: black;
         justify-content: flex-end;
     }
 
@@ -74,7 +74,7 @@
         width: 100%;
         height: 100%;
         z-index: 2;
-        background: rgba(32 57 164 / 90%);
+        background: rgba(243 240 243 / 95%);
         font-size: 30px;
         z-index: 10;
         padding-top: 60px;

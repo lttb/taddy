@@ -1,14 +1,32 @@
-import React from 'react';
+import * as React from 'react';
+import {css} from 'taddy';
 
-import NextLink from 'next/link';
-import {useRouter} from 'next/router';
+import {Link as BaseLink} from './BaseLink';
 
-export const Link = ({href, ...props}) => {
-    const router = useRouter();
-    const currentPage = router.pathname === href;
+export const Link = ({
+    href,
+    className,
+    style,
+    children,
+}: {
+    href: string;
+    style?: object;
+    className?: string;
+    children: React.ReactNode;
+}) => {
     return (
-        <NextLink href={href}>
-            <a aria-current={currentPage ? 'page' : false} {...props} />
-        </NextLink>
+        <BaseLink
+            href={href}
+            {...css({
+                color: '#4169e1',
+                ':hover': {
+                    color: 'violet',
+                },
+                className,
+                style,
+            })}
+        >
+            {children}
+        </BaseLink>
     );
 };
