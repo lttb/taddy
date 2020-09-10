@@ -8,11 +8,11 @@ Please fill free to share any your idea and [add your proposal](https://github.c
 
 -   [ ] Support `styled` function for components, by `@taddy/styled` (?)
 -   [ ] Provide tools and adaptors for easier `taddy` adoption
+-   [ ] support `keyframes` and `media`
+-   [ ] support global styles (?)
 
 ## Runtime
 
--   [ ] support `keyframes` and `media`
--   [ ] support global styles (?)
 -   [ ] support runtime vendor prefixes
 -   [ ] optimize `class` atomic merge (?)
 -   [ ] improve the detection of styles that were already declared
@@ -30,8 +30,8 @@ Please fill free to share any your idea and [add your proposal](https://github.c
     -   [ ] improve types usage for the complex pre-evaluation (e.g. calculate all the combinations of the calculation based on dynamic typed values)
     -   [ ] make it stable
 -   [ ] Optional bindings optimization (?) (at the moment that's always enabled)
--   [ ] Support `tagged template literals` by default (at the moments, it's under the unstable flag)
--   [ ] Optionable Auto-import `taddy/css`
+-   [ ] Support `tagged template literals` by default (at the moment, it's under the unstable flag)
+-   [ ] Optional `taddy/css` auto-import
 -   [ ] Support custom paths in `taddy/css`
 
 ## Developer Experience

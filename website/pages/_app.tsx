@@ -22,11 +22,26 @@ const store = createStore();
 const components = {
     a: (props) => <Link {...props} />,
     pre: (props) => <pre {...props} />,
-    code: (props) => <code {...props} />,
+    code: ({...props}) => <code {...props} />,
+    inlineCode: ({className, ...props}) => (
+        <code
+            {...props}
+            {...css({
+                padding: '4px',
+                borderRadius: '4px',
+                display: 'inline-flex',
+                lineHeight: '1.2',
+                background: '#f3f0f3',
+                color: 'black',
+                className,
+            })}
+        />
+    ),
 };
 
 function MyApp({Component, pageProps, router}) {
-    const title = router.pathname.slice(1);
+    const name = router.pathname.slice(1);
+    const title = 'taddy' + (name ? ' | ' + name : '');
 
     return (
         <MDXProvider components={components}>
@@ -40,7 +55,7 @@ function MyApp({Component, pageProps, router}) {
 
                         <link rel="shortcut icon" href={ico} />
 
-                        <title>taddy | {title}</title>
+                        <title>{title}</title>
                     </Head>
 
                     <div
