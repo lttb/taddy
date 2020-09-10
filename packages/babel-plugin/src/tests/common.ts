@@ -3,7 +3,7 @@ import type {TransformOptions} from '@babel/core';
 
 import {stripIndent} from 'common-tags';
 
-import {ruleInjector, StyleSheet} from 'taddy';
+import {$css, StyleSheet} from 'taddy';
 
 import taddyPlugin from '../plugin';
 import type {MacroConfig} from '../macro-plugin';
@@ -11,17 +11,17 @@ import type {MacroConfig} from '../macro-plugin';
 export {PACKAGE_NAME} from '../config';
 
 export function getStyles(): string {
-    return [...ruleInjector.styleSheet.rules]
+    return [...$css.ruleInjector.styleSheet.rules]
         .map((rule) => rule.cssText)
         .join('\n');
 }
 
 export function resetStyles() {
-    if (ruleInjector.styleSheet instanceof StyleSheet) {
-        ruleInjector.styleSheet.node.remove();
+    if ($css.ruleInjector.styleSheet instanceof StyleSheet) {
+        $css.ruleInjector.styleSheet.node.remove();
     }
 
-    ruleInjector.reset();
+    $css.ruleInjector.reset();
 }
 
 export const getBabelOptions = (

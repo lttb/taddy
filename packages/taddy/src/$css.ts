@@ -10,8 +10,6 @@ import {
 } from '@taddy/core';
 import {RuleInjector} from './RuleInjector';
 
-export const ruleInjector = new RuleInjector();
-
 export type InternalTaddyStyle = {style?: object; className: object};
 
 export type TaddyRule = Properties & {
@@ -114,10 +112,7 @@ export type TaddyRule = Properties & {
     ':visited'?: TaddyRule;
 };
 
-export const $css = (
-    rule,
-    {inject = true, postfix = ''} = {},
-): InternalTaddyStyle => {
+export const $css = (rule, {postfix = ''} = {}): InternalTaddyStyle => {
     if (!rule) {
         return {className: {}};
     }
@@ -180,7 +175,6 @@ export const $css = (
             }
 
             const name = $css.ruleInjector.put(key, rule[key], {
-                inject,
                 postfix,
             });
 
@@ -199,4 +193,4 @@ export const $css = (
     return result;
 };
 
-$css.ruleInjector = ruleInjector;
+$css.ruleInjector = new RuleInjector();

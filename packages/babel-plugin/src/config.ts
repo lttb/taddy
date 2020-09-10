@@ -2,8 +2,30 @@
 
 import path from 'path';
 
+import type {ConfigAPI} from '@babel/core';
+
+import type {Env} from './types';
+
 export const MACRO_NAME = 'taddy.macro';
 export const PACKAGE_NAME = 'taddy';
+
+export function getEnv(babel: ConfigAPI): Env {
+    try {
+        return babel.env() as Env;
+    } catch (e) {
+        // console.log('error', e);
+    }
+
+    const DEFAULT_ENV = 'production';
+
+    if (!(typeof process && process.env)) {
+        return DEFAULT_ENV;
+    }
+
+    return (process.env.BABEL_ENV ||
+        process.env.NODE_ENV ||
+        DEFAULT_ENV) as Env;
+}
 
 // TODO: add config resolution
 
@@ -47,6 +69,8 @@ export function getRootDir() {
     return process.cwd();
 }
 
+const DEFAULT_CACHE_DIR = path.dirname(path.join(__dirname, '../cache'));
+
 export function getCacheDir() {
-    return path.join(__dirname, '..');
+    return DEFAULT_CACHE_DIR;
 }

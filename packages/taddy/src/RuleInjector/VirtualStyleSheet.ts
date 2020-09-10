@@ -1,5 +1,7 @@
 import {buildAtomicRule} from './common';
+
 import Sheet from './Sheet';
+import type {SheetOptions} from './Sheet';
 
 interface VirtualCSSStyleRule extends Partial<CSSStyleRule> {
     $className: string;
@@ -13,8 +15,8 @@ export class VirtualStyleSheet extends Sheet {
 
     sheet: {cssRules: VirtualStyleSheet['cssRules']};
 
-    constructor() {
-        super();
+    constructor(options?: SheetOptions) {
+        super(options);
 
         this.sheet = {
             cssRules: [],
@@ -26,20 +28,12 @@ export class VirtualStyleSheet extends Sheet {
         return this.cssRules;
     }
 
-    // isRuleExists(className: string, key: string): boolean {
-    //     return !!this.cache[className];
-    // }
-
     insertAtomicRule(
         className: string,
         key: string,
         value: string,
         {postfix = ''},
     ): number {
-        // if (this.isRuleExists(className, key)) {
-        //     return -1;
-        // }
-
         const selectorText = `.${className}`;
         const index = this.sheet.cssRules.length;
         const cssText = buildAtomicRule(selectorText, key, value);

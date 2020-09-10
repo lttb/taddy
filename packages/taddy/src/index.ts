@@ -11,7 +11,7 @@ import {
     ID_KEY,
     joinClassName,
 } from '@taddy/core';
-import {ruleInjector, $css} from './$css';
+import {$css} from './$css';
 import type {TaddyRule} from './$css';
 
 import {mixin} from './mixin';
@@ -25,7 +25,7 @@ export type TaddyStyle = {style?: object; className: string};
 
 export * from './RuleInjector';
 
-export {$css, ruleInjector, config};
+export {$css, config};
 
 /*
 

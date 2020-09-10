@@ -5,10 +5,12 @@ import assert from 'assert';
 
 import {isTaddyEvaluation} from './helpers';
 import {taggedTemplateToObject} from './helpers/taggedTemplateToObject';
-import {MACRO_NAME, PACKAGE_NAME} from './config';
+import {MACRO_NAME, PACKAGE_NAME, getEnv} from './config';
 
-import type {OutputOptions} from './handlers';
-import {createProcessors, output, getEnv} from './handlers';
+import {createHandlers} from './handlers';
+
+import type {OutputOptions} from './Output';
+import Output from './Output';
 
 import type {ProcessorConfig} from './Processor';
 
@@ -85,6 +87,8 @@ function mapCompileOptions({
     };
 }
 
+let output: Output;
+
 export function macro({
     references,
     babel,
@@ -130,7 +134,7 @@ export function macro({
         ...config.compileOptions,
     });
 
-    const {handlers, finish} = createProcessors(compileOptions, {
+    const {handlers, finish} = createHandlers(compileOptions, {
         env,
         filename,
         code,
@@ -189,11 +193,9 @@ export function macro({
         importPath!.node.source = t.stringLiteral('@taddy/core');
     }
 
-    output({
-        env,
-        state,
-        config: config.outputOptions,
-    });
+    output = output || new Output({env, config: config.outputOptions});
+
+    output.save();
 
     return {
         keepImports: true,

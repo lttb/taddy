@@ -2,7 +2,12 @@ import {config} from '@taddy/core';
 
 import {camelToKebab} from './common';
 
+export type SheetOptions = {
+    mergeDeclarations?: boolean;
+};
+
 abstract class Sheet {
+    options: SheetOptions;
     cache: Map<string, any>;
     rulesCache: Map<string, any>;
 
@@ -15,17 +20,14 @@ abstract class Sheet {
 
     abstract appendSelector(ruleIndex: number, selector: string): void;
 
-    constructor() {
-        this.cache = new Map();
+    constructor(options: SheetOptions = {}) {
+        this.options = Object.assign({mergeDeclarations: true}, options);
 
+        this.cache = new Map();
         this.rulesCache = new Map();
     }
 
-    insert(
-        key: string,
-        value: any,
-        {postfix = '', inject = true}: {postfix?: string; inject?: boolean},
-    ) {
+    insert(key: string, value: any, {postfix = ''}: {postfix?: string}) {
         const {nameGenerator} = config;
 
         const cssKey = camelToKebab(key);
@@ -56,7 +58,7 @@ abstract class Sheet {
             this.appendSelector(ruleIndex, `.${className}`);
         }
 
-        if (ruleIndex === undefined && inject) {
+        if (ruleIndex === undefined) {
             ruleIndex = this.insertAtomicRule(className, cssKey, value, {
                 postfix,
             });
@@ -64,7 +66,11 @@ abstract class Sheet {
 
         this.cache.set(nameHash, {name, key, value, postfix, ruleIndex});
 
-        if (ruleIndex !== undefined && ruleIndex >= 0) {
+        if (
+            this.options.mergeDeclarations &&
+            ruleIndex !== undefined &&
+            ruleIndex >= 0
+        ) {
             this.rulesCache.set(originalHash, ruleIndex);
         }
 

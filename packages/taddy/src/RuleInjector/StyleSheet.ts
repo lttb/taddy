@@ -1,5 +1,7 @@
 import {buildAtomicRule, getStyleNodeById} from './common';
+
 import Sheet from './Sheet';
+import type {SheetOptions} from './Sheet';
 
 export class StyleSheet extends Sheet {
     node: HTMLStyleElement;
@@ -18,8 +20,8 @@ export class StyleSheet extends Sheet {
 
     static TADDY_ID = 'taddy';
 
-    constructor() {
-        super();
+    constructor(options?: SheetOptions) {
+        super(options);
 
         const node = getStyleNodeById(StyleSheet.TADDY_ID);
 
@@ -62,7 +64,7 @@ export class StyleSheet extends Sheet {
      * But there is still a potential conflict with the same
      * style on html node and element
      */
-    isRuleExists(className: string, key: string): boolean {
+    private isRuleExists(className: string, key: string): boolean {
         this.classNameNode.className = className;
         const value: string | void = window.getComputedStyle(
             this.classNameNode,

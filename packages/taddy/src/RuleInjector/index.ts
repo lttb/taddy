@@ -1,5 +1,6 @@
 import {config, isInvalidValue} from '@taddy/core';
 
+import type {SheetOptions} from './Sheet';
 import {VirtualStyleSheet} from './VirtualStyleSheet';
 import {StyleSheet} from './StyleSheet';
 
@@ -24,7 +25,6 @@ type CSSProp = string;
 
 type Options = {
     postfix?: string;
-    inject?: boolean;
 };
 
 export {getStyleNodeById} from './common';
@@ -32,20 +32,27 @@ export {getStyleNodeById} from './common';
 export {VirtualStyleSheet, StyleSheet};
 
 export class RuleInjector {
-    styleSheet =
-        typeof document === 'undefined'
-            ? new VirtualStyleSheet()
-            : new StyleSheet();
+    options?: SheetOptions;
+    styleSheet: VirtualStyleSheet | StyleSheet;
+
+    constructor(options?: SheetOptions) {
+        this.options = options;
+
+        this.styleSheet =
+            typeof document === 'undefined'
+                ? new VirtualStyleSheet(options)
+                : new StyleSheet(options);
+    }
 
     reset() {
-        Object.assign(this, new RuleInjector());
+        Object.assign(this, new RuleInjector(this.options));
     }
 
     put(key: CSSPseudo, value: Atom, options?: Options): Atom | null;
 
     put(key: CSSProp, value: string | boolean, options?: Options): Atom | null;
 
-    put(key, value, {postfix = '', inject = true} = {}): Atom | null {
+    put(key, value, {postfix = ''}: Options = {}): Atom | null {
         if (isInvalidValue(value)) return null;
 
         // {'a b c': !0}
@@ -54,7 +61,7 @@ export class RuleInjector {
         }
 
         if (isPseudo(key)) {
-            return this.putNested(postfix + key, value, {inject});
+            return this.putNested(postfix + key, value);
         }
 
         // check if that's id
@@ -77,13 +84,13 @@ export class RuleInjector {
         }
 
         if (isNested(value)) {
-            return this.putNested(postfix + key, value, {inject});
+            return this.putNested(postfix + key, value);
         }
 
-        return this.styleSheet.insert(key, value, {postfix, inject});
+        return this.styleSheet.insert(key, value, {postfix});
     }
 
-    putNested(selector: string, rule: Atom, {inject = true} = {}): Atom | null {
+    private putNested(selector: string, rule: Atom): Atom | null {
         if (!rule) return null;
 
         const classNames = Object.create(null);
@@ -91,7 +98,6 @@ export class RuleInjector {
         for (const key in rule) {
             const className = this.put(key, rule[key], {
                 postfix: selector,
-                inject,
             });
 
             Object.assign(classNames, className);
