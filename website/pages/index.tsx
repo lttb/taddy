@@ -13,6 +13,7 @@ export default function Home() {
             gap={5}
             inline
             {...css({
+                width: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
                 alignContent: 'center',

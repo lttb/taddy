@@ -18,7 +18,7 @@ export const Options = () => {
     const compileOptionsDisabled = !options.taddy;
 
     return (
-        <Column gap={1} {...css({textAlign: 'left'})}>
+        <Column gap={1}>
             <label>
                 <input
                     type="checkbox"

@@ -29,7 +29,6 @@ export function row({
     gapY = gap,
     gapX = gap,
     inline = false,
-    wrap = 'wrap',
 }: {
     gap?: Size;
     gapY?: Size;
@@ -41,7 +40,6 @@ export function row({
         ...flex({inline}),
 
         flexDirection: 'row',
-        flexWrap: wrap,
 
         margin: margin(-gapY, -gapX),
 
@@ -50,6 +48,7 @@ export function row({
         }),
 
         '> *:not(:empty)': {
+            display: 'flex',
             margin: margin(gapY, gapX),
         },
     });
@@ -65,6 +64,7 @@ export function column({
         flexDirection: 'column',
 
         '> *:not(:empty) + *:not(:empty)': {
+            display: 'flex',
             marginTop: size(gap),
         },
     });
@@ -107,7 +107,6 @@ export const Row = ({
     gapY = gap,
     gapX = gap,
     inline = false,
-    wrap = 'wrap',
     style,
     className,
     children,
@@ -123,8 +122,26 @@ export const Row = ({
     children: React.ReactNode;
     wrap?: string;
 }>) => (
-    <div {...css(flex({inline}), {style, className})}>
-        <Tag {...props} {...css(row({gapX, gapY, inline, wrap}))}>
+    <div
+        {...css(flex({inline}), {
+            flexWrap: 'wrap',
+            justifyContent: 'initial',
+            alignItems: 'initial',
+            alignContent: 'initial',
+
+            style,
+            className,
+        })}
+    >
+        <Tag
+            {...props}
+            {...css(row({gapX, gapY, inline}), {
+                flexWrap: 'inherit',
+                justifyContent: 'inherit',
+                alignItems: 'inherit',
+                alignContent: 'inherit',
+            })}
+        >
             {wrapChildren(children)}
         </Tag>
     </div>

@@ -20,6 +20,7 @@ const Wrapper = ({children}) => (
             boxShadow: '0 0 13px -10px',
             borderRadius: '20px',
             minWidth: '300px',
+            width: '100%',
         })}
     >
         {children}
@@ -98,6 +99,7 @@ export const CompiledCode = ({
     return (
         <div
             {...css({
+                width: '100%',
                 position: 'relative',
             })}
         >
