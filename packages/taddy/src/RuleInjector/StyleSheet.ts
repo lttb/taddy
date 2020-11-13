@@ -48,6 +48,8 @@ export class StyleSheet extends Sheet {
         this.initialStyle = window.getComputedStyle(this.initialNode);
 
         this.headStyle = window.getComputedStyle(document.head);
+
+        this.devNode = getStyleNodeById(`${StyleSheet.TADDY_ID}-dev`);
     }
 
     get rules() {
@@ -74,6 +76,10 @@ export class StyleSheet extends Sheet {
         return (
             value !== this.initialStyle[key] && value !== this.headStyle[key]
         );
+    }
+
+    insertDevRule(rule) {
+        this.devNode.appendChild(document.createTextNode(rule));
     }
 
     insertAtomicRule(

@@ -40,6 +40,7 @@ export type ProcessOptions = {
     filename: string;
     code: string;
     addImport(name: string): t.ImportSpecifier['local'];
+    sourceMap?: string;
 };
 
 type CommonOptions = {
@@ -110,6 +111,11 @@ export class Processor {
         );
     }
 
+    $css(rule, options?: any) {
+        // console.log('sm', this.options.sourceMap)
+        return $css(rule, {...options});
+    }
+
     isClassNameNode(node) {
         return this.classNameNodes.has(node);
     }
@@ -144,7 +150,7 @@ export class Processor {
     }
 
     stylesToNode(key: string, value: unknown, {postfix = ''} = {}) {
-        const {className} = $css({[key]: value}, {postfix});
+        const {className} = this.$css({[key]: value}, {postfix});
         return this.classNamesToNode(className);
     }
 
@@ -309,7 +315,7 @@ export class Processor {
                     return;
                 }
 
-                $css({[key]: v}, {postfix});
+                this.$css({[key]: v}, {postfix});
             });
 
             if (!isCompilable) return false;
@@ -418,7 +424,7 @@ export class Processor {
             const {value} = evaluate(path.get('argument'));
             if (!value) return false;
 
-            const {className} = $css(value, {postfix});
+            const {className} = this.$css(value, {postfix});
 
             properties.push(...this.classNamesToNode(className));
 
@@ -444,7 +450,7 @@ export class Processor {
 
             if (!isStaticValue(styles)) return false;
 
-            const {className} = $css(styles, {postfix});
+            const {className} = this.$css(styles, {postfix});
             properties.push(...this.classNamesToNode(className));
 
             this.optimizationPaths.add(path);
@@ -526,7 +532,7 @@ export class Processor {
             const {value, error} = evaluate(path);
             if (error) return false;
 
-            const {className} = $css(value);
+            const {className} = this.$css(value);
 
             /**
              * TODO: think about static optimizations for mixins

@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import {
+    config,
     VARS_KEY,
     MIXIN_KEY,
     isInvalidValue,
@@ -10,7 +11,12 @@ import {RuleInjector} from './RuleInjector';
 
 export type InternalTaddyStyle = {style?: object; className: object};
 
-export const $css = (rule, {postfix = ''} = {}): InternalTaddyStyle => {
+const isDev = __DEV__;
+
+export const $css = (
+    rule,
+    {postfix = '', sourceMap = ''} = {},
+): InternalTaddyStyle => {
     if (!rule) {
         return {className: {}};
     }
@@ -81,6 +87,26 @@ export const $css = (rule, {postfix = ''} = {}): InternalTaddyStyle => {
     }
 
     process(rule);
+
+    if (isDev) {
+        const cssesc = require('cssesc');
+        const v = JSON.stringify(
+            rule,
+            (key, value) => {
+                if (value && value['@media']) {
+                    return value.rule;
+                }
+                return value;
+            },
+            2,
+        );
+        const hash = config.nameGenerator.getName('--taddy-dev', v).join('');
+        $css.ruleInjector.styleSheet.insertDevRule(
+            `.${hash}{--taddy-dev: /*${v}*/0;${sourceMap}}`,
+        );
+
+        Object.assign(className, {[hash]: true});
+    }
 
     const result: InternalTaddyStyle = {className};
 

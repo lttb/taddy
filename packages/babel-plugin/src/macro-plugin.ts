@@ -3,6 +3,8 @@ import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import assert from 'assert';
 
+import {$css, config} from 'taddy';
+
 import {isTaddyEvaluation} from './helpers';
 import {taggedTemplateToObject} from './helpers/taggedTemplateToObject';
 import {MACRO_NAME, PACKAGE_NAME, getEnv} from './config';
@@ -13,6 +15,9 @@ import type {OutputOptions} from './Output';
 import Output from './Output';
 
 import type {ProcessorConfig} from './Processor';
+
+import {makeSourceMapGenerator, convertGeneratorToComment} from './source-maps';
+
 
 type CompileOptions = {
     /**
@@ -88,6 +93,7 @@ function mapCompileOptions({
 }
 
 let output: Output;
+// let sourceMapGenerator;
 
 export function macro({
     references,
@@ -106,6 +112,13 @@ export function macro({
     const {filename} = state;
 
     let importPath: NodePath<t.ImportDeclaration> | null = null;
+
+    //@ts-ignore
+    const sourceMapGenerator = makeSourceMapGenerator(state.file);
+
+    // sourceMapGenerator.setSourceContent(filename, code);
+
+    $css.ruleInjector.reset()
 
     program.traverse({
         ImportDeclaration(p) {
@@ -135,6 +148,9 @@ export function macro({
     });
 
     const {handlers, finish} = createHandlers(compileOptions, {
+        //@ts-ignore
+        state,
+        sourceMapGenerator,
         env,
         filename,
         code,
@@ -195,7 +211,9 @@ export function macro({
 
     output = output || new Output({env, config: config.outputOptions});
 
-    output.save();
+    const sourceMap = convertGeneratorToComment(sourceMapGenerator);
+
+    output.save({sourceMap, filename});
 
     return {
         keepImports: true,

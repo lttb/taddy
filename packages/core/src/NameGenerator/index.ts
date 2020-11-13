@@ -16,6 +16,15 @@ type NameOptions = {
     media?: string;
 };
 
+function generateHash(value: string) {
+    // if (__DEV__) {
+    //     const cssesc = require('cssesc');
+    //     return cssesc(value, {isIdentifier: true}).replace(/\s/g, '-');
+    // }
+
+    return hash.digest(String(value));
+}
+
 export class NameGenerator {
     cache: {[name: string]: string} = {};
 
@@ -26,7 +35,7 @@ export class NameGenerator {
         const key = `_${value}`;
 
         if (!(key in this.cache)) {
-            this.cache[key] = hash.digest(String(value));
+            this.cache[key] = generateHash(value);
         }
 
         return `_${this.cache[key]}`;

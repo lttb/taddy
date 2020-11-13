@@ -1,43 +1,37 @@
 import React from 'react';
 
-import {css, media} from 'taddy';
+import {css} from 'taddy.macro';
+
+const Kek = () => <div {...css({color: 'purple'})}>kek</div>
 
 function App() {
     return (
         <h1
             {...css(
                 {
-                    color: 'green',
+                    color: 'orange',
 
-                    ...media('all and (min-width: 200px)', {
-                        color: 'orange',
-                    }),
-                    ...media('all and (min-width: 1000px)', {
-                        textDecoration: 'underline',
-                    }),
+                    // ...media('(min-width: 200px)', {
+                    //     color: 'orange',
+                    // }),
+                    // ...media('(min-width: 1000px)', {
+                    //     textDecoration: 'underline',
+                    // }),
 
                     ':hover': {
-                        color: 'green',
+                        color: 'orange',
                     },
                 },
-                media('all and (min-width: 1000px)', {
-                    color: 'red',
-                    ':hover': {
-                        textDecoration: 'underline',
-                    },
-                }),
+                // media('(min-width: 1000px)', {
+                //     color: 'red',
+                //     ':hover': {
+                //         textDecoration: 'underline',
+                //     },
+                // }),
             )}
         >
-            Hello{' '}
-            <span
-                {...css(
-                    media('all and (min-width: 1000px)', {
-                        color: 'green',
-                    }),
-                )}
-            >
-                world
-            </span>
+            Hello <span>world</span>
+            <Kek />
         </h1>
     );
 }

@@ -5,6 +5,8 @@ import type {NodePath} from '@babel/core';
 import nodePath from 'path';
 import stringHash from 'string-hash';
 
+import {$css, config} from 'taddy';
+
 import {Processor} from './Processor';
 import type {ProcessorConfig, ProcessOptions} from './Processor';
 import {BindingOptimizer} from './helpers';
@@ -89,6 +91,19 @@ export const createHandlers = (
         if (!result) return;
 
         const {isStatic, optimizationPaths} = result;
+
+        const cssLength = $css.ruleInjector.styleSheet.rules.join('').length;
+
+        console.log(options.state.file.opts.generatorOpts.sourceFileName);
+
+        options.sourceMapGenerator.addMapping({
+            generated: {
+                line: 1,
+                column: cssLength,
+            },
+            source: options.state.file.opts.generatorOpts.sourceFileName,
+            original: path.node.loc?.start,
+        });
 
         proceedPaths.push({
             path,

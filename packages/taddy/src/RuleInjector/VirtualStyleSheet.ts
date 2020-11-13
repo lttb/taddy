@@ -32,6 +32,12 @@ export class VirtualStyleSheet extends Sheet {
         return this.cssRules;
     }
 
+    insertDevRule(rule) {
+        this.cssRules.push({
+            cssText: rule,
+        });
+    }
+
     insertAtomicRule(
         className: string,
         key: string,

@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 import {$css, config} from 'taddy';
+import stringHash from 'string-hash';
 
 import {getCacheDir, getRootDir} from './config';
 
@@ -18,7 +19,7 @@ function getStylesState() {
 
     // there is also "appending" rules, that don't change the index, but change the rule
     // TODO: think how to handle that
-    LAST_INDEX = rules.length;
+    // LAST_INDEX = rules.length;
 
     const added = [...newRules].map((rule) => rule.cssText || '');
 
@@ -80,7 +81,7 @@ function appendFile(filepath: string, append: string) {
     //     return;
     // }
 
-    fs.appendFile(filepath, append, () => {});
+    fs.appendFileSync(filepath, append);
 
     // // TODO: think about asynchronous appending
     // if ('appendFileSync' in fs) {
@@ -115,21 +116,27 @@ export default class Output {
         const filename = resolveFilepath(this.config.cssFilename);
         this.filepath = resolveFilepath(this.config.cssFilepath, filename);
 
+        console.log('filepath', this.filepath);
+
         /* clean cache */
-        // fs.writeFile(this.filepath, '', (error) => {
-        //     if (error) console.error(error);
-        // });
+        // fs.writeFileSync(this.filepath, '');
     }
 
-    save() {
+    save({sourceMap, filename} = {}) {
         // const stylesData = readFileSync(this.filepath);
         const {added} = getStylesState();
+
+        console.log({added});
 
         // TODO: improve filter performance
         // const diffStyles = added
         //     .filter((x) => !stylesData.includes(x))
         //     .join('');
 
-        appendFile(this.filepath, added.join(''));
+        fs.writeFileSync(path.join(getCacheDir(), stringHash(filename) + '.css'), added.join('').replace(/}$/, sourceMap + '}'))
+
+        // appendFile(this.filepath, diffStyles);
+
+        // appendFile(this.filepath, sourceMap);
     }
 }
