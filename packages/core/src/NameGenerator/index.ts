@@ -13,6 +13,7 @@ hash.configure({
 
 type NameOptions = {
     postfix?: string;
+    media?: string;
 };
 
 export class NameGenerator {
@@ -31,23 +32,16 @@ export class NameGenerator {
         return `_${this.cache[key]}`;
     };
 
-    getPropHash = (prop: string): string => {
-        return this.getHash(prop);
-    };
-
-    getPostfixHash = (postfix?: string): string => {
-        return this.getHash(postfix);
-    };
-
-    getValueHash = (value: string): string => {
-        return this.getHash(value);
-    };
-
     getName = (
         prop: string,
         value: string,
-        {postfix = ''}: NameOptions = {},
+        {postfix = '', media = ''}: NameOptions = {},
     ): string[] => {
-        return [this.getHash(postfix), this.getHash(prop), this.getHash(value)];
+        return [
+            this.getHash(media),
+            this.getHash(postfix),
+            this.getHash(prop),
+            this.getHash(value),
+        ];
     };
 }

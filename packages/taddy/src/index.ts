@@ -12,9 +12,10 @@ import {
     joinClassName,
 } from '@taddy/core';
 import {$css} from './$css';
-import type {TaddyRule} from './$css';
+import type {TaddyRule} from './types';
 
 import {mixin} from './mixin';
+import {media} from './media';
 
 export type ExactProp<T extends keyof Properties> = Exclude<
     Properties[T],
@@ -73,6 +74,7 @@ export function css(...rule) {
 }
 
 css.mixin = mixin;
+css.media = media;
 
 export const h = (x) => config.nameGenerator.getHash(x);
 
@@ -82,4 +84,4 @@ css.static = (...args: any[]) => staticCSS(...args);
 // @ts-expect-error
 css.mixin.static = staticCSS.mixin;
 
-export {mixin, $};
+export {mixin, media, $};

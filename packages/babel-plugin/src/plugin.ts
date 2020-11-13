@@ -22,9 +22,11 @@ function getImportNames(
     const localName = path.node.local.name;
 
     if (path.isImportSpecifier()) {
+        const imported = path.node.imported as t.Identifier;
+
         return {
             localName,
-            importedName: path.node.imported.name,
+            importedName: imported.name,
         };
     }
 

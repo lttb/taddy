@@ -11,14 +11,20 @@ abstract class Sheet {
     cache: Map<string, any>;
     rulesCache: Map<string, any>;
 
+    abstract insertMedia(media: string): number;
+
     abstract insertAtomicRule(
         className: string,
         key: string,
         value: string,
-        options: {postfix?: string},
+        options: {postfix?: string; mediaIndex?: number},
     ): number;
 
-    abstract appendSelector(ruleIndex: number, selector: string): void;
+    abstract appendSelector(
+        ruleIndex: number,
+        selector: string,
+        options?: {mediaIndex?: number},
+    ): void;
 
     constructor(options: SheetOptions = {}) {
         this.options = Object.assign({mergeDeclarations: true}, options);
@@ -27,18 +33,23 @@ abstract class Sheet {
         this.rulesCache = new Map();
     }
 
-    insert(key: string, value: any, {postfix = ''}: {postfix?: string}) {
+    insert(
+        key: string,
+        value: any,
+        {postfix = '', media = ''}: {postfix?: string; media?: string},
+    ) {
         const {nameGenerator} = config;
 
         const cssKey = camelToKebab(key);
 
         const name = nameGenerator.getName(cssKey, value, {
             postfix,
+            media,
         });
 
         const result = Object.create(null);
         // result[propHash + postfixHash] = value
-        result[name[0] + name[1]] = name[2];
+        result[name[0] + name[1] + name[2]] = name[3];
 
         const nameHash = name.join('');
 
@@ -46,7 +57,14 @@ abstract class Sheet {
             return result;
         }
 
-        const originalName = nameGenerator.getName(cssKey, value);
+        let mediaIndex = this.rulesCache.get(media);
+
+        if (media && mediaIndex === undefined) {
+            mediaIndex = this.insertMedia(media);
+            this.rulesCache.set(media, mediaIndex);
+        }
+
+        const originalName = nameGenerator.getName(cssKey, value, {media});
         const originalHash = originalName.join('');
 
         let ruleIndex;
@@ -55,16 +73,18 @@ abstract class Sheet {
 
         if (this.rulesCache.has(originalHash)) {
             ruleIndex = this.rulesCache.get(originalHash);
-            this.appendSelector(ruleIndex, `.${className}`);
+
+            this.appendSelector(ruleIndex, `.${className}`, {mediaIndex});
         }
 
         if (ruleIndex === undefined) {
             ruleIndex = this.insertAtomicRule(className, cssKey, value, {
                 postfix,
+                mediaIndex,
             });
         }
 
-        this.cache.set(nameHash, {name, key, value, postfix, ruleIndex});
+        this.cache.set(nameHash, {name, key, value, postfix, media, ruleIndex});
 
         if (
             this.options.mergeDeclarations &&

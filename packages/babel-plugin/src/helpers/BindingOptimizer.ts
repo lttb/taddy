@@ -9,11 +9,14 @@ function isTaddy(binding: Binding) {
 
     if (!path.isImportSpecifier()) return false;
 
+    const {imported} = path.node;
+
     return (
-        ((path.parentPath as NodePath<t.ImportDeclaration>).node.source
+        t.isIdentifier(imported) &&
+        (((path.parentPath as NodePath<t.ImportDeclaration>).node.source
             .value === 'taddy' &&
-            path.node.imported.name === 'css') ||
-        path.node.imported.name === 'mixin'
+            imported.name === 'css') ||
+            imported.name === 'mixin')
     );
 }
 

@@ -8,7 +8,9 @@ export function taggedTemplateToObject(
     const postcssJS = require('postcss-js');
     const {quasis, expressions} = path.node.quasi;
 
-    const cache: {[placeholder: string]: t.Expression} = {};
+    type Expression = typeof expressions[number];
+
+    const cache: {[placeholder: string]: Expression} = {};
 
     // this tricky placeholder has special syntax to avoid any conflicts with css parsing
     const re = /@\^var__\w+__/;
@@ -28,7 +30,7 @@ export function taggedTemplateToObject(
     const CSSObject = postcssJS.objectify(root);
 
     function parseString(str) {
-        const expr: t.Expression[] = [];
+        const expr: Expression[] = [];
         str.replace(new RegExp(re, 'g'), (match) => {
             expr.push(cache[match]);
         });
@@ -50,7 +52,7 @@ export function taggedTemplateToObject(
             const value = obj[key];
 
             if (value === true) {
-                props.push(t.spreadElement(cache[key]));
+                props.push(t.spreadElement(cache[key] as t.Expression));
 
                 continue;
             }

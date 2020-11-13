@@ -154,7 +154,7 @@ export class Processor {
         {postfix, properties}: ObjectOptions,
     ) {
         const keyPath = path.get('key');
-        const valuePath = path.get('value');
+        const valuePath = path.get('value') as NodePath<any>;
 
         const tryLiteralValue = (): boolean => {
             if (!(valuePath.isLiteral() || isUndefined(valuePath)))

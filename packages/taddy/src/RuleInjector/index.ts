@@ -6,8 +6,14 @@ import {StyleSheet} from './StyleSheet';
 
 export const NESTED = Symbol('__NESTED__');
 
-function isNested(value: object | unknown): boolean {
+function isNested(value: object | unknown): value is Atom {
     return value && typeof value === 'object';
+}
+
+function isMedia(
+    value: object | unknown,
+): value is {'@media': string; rule: Atom} {
+    return isNested(value) && !!value['@media'];
 }
 
 type Atom = {[key: string]: string | boolean};
@@ -25,6 +31,7 @@ type CSSProp = string;
 
 type Options = {
     postfix?: string;
+    media?: string;
 };
 
 export {getStyleNodeById} from './common';
@@ -52,7 +59,7 @@ export class RuleInjector {
 
     put(key: CSSProp, value: string | boolean, options?: Options): Atom | null;
 
-    put(key, value, {postfix = ''}: Options = {}): Atom | null {
+    put(key, value, {postfix = '', media = ''}: Options = {}): Atom | null {
         if (isInvalidValue(value)) return null;
 
         // {'a b c': !0}
@@ -61,7 +68,7 @@ export class RuleInjector {
         }
 
         if (isPseudo(key)) {
-            return this.putNested(postfix + key, value);
+            return this.putNested(value, {postfix: postfix + key, media});
         }
 
         // check if that's id
@@ -79,25 +86,36 @@ export class RuleInjector {
 
             /** Dynamic values (with precompiled values) */
             return {
-                [postfix + key]: nameGenerator.getValueHash(value),
+                [postfix + key]: nameGenerator.getHash(value),
             };
         }
 
-        if (isNested(value)) {
-            return this.putNested(postfix + key, value);
+        if (isMedia(value)) {
+            return this.putNested(value.rule, {
+                postfix,
+                media: value['@media'],
+            });
         }
 
-        return this.styleSheet.insert(key, value, {postfix});
+        if (isNested(value)) {
+            return this.putNested(value, {postfix: postfix + key, media});
+        }
+
+        return this.styleSheet.insert(key, value, {postfix, media});
     }
 
-    private putNested(selector: string, rule: Atom): Atom | null {
+    private putNested(
+        rule: Atom,
+        {postfix, media}: {postfix: string; media?: string},
+    ): Atom | null {
         if (!rule) return null;
 
         const classNames = Object.create(null);
 
         for (const key in rule) {
             const className = this.put(key, rule[key], {
-                postfix: selector,
+                media,
+                postfix,
             });
 
             Object.assign(classNames, className);
