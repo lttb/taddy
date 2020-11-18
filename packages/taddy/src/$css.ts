@@ -11,11 +11,11 @@ import {RuleInjector} from './RuleInjector';
 
 export type InternalTaddyStyle = {style?: object; className: object};
 
-const isDev = __DEV__;
+const isDev = false;
 
 export const $css = (
     rule,
-    {postfix = '', sourceMap = ''} = {},
+    {postfix = '', sourceMap = '', hash = ''} = {},
 ): InternalTaddyStyle => {
     if (!rule) {
         return {className: {}};
@@ -79,6 +79,7 @@ export const $css = (
             }
 
             const name = $css.ruleInjector.put(key, rule[key], {
+                hash,
                 postfix,
             });
 
@@ -89,7 +90,7 @@ export const $css = (
     process(rule);
 
     if (isDev) {
-        const cssesc = require('cssesc');
+        // const cssesc = require('cssesc');
         const v = JSON.stringify(
             rule,
             (key, value) => {

@@ -3,6 +3,7 @@ import type {NodePath} from '@babel/traverse';
 
 import {VARS_KEY, config} from '@taddy/core';
 import {$css} from 'taddy';
+import stringHash from 'string-hash';
 
 import type {Env} from './types';
 
@@ -113,7 +114,10 @@ export class Processor {
 
     $css(rule, options?: any) {
         // console.log('sm', this.options.sourceMap)
-        return $css(rule, {...options});
+        return $css(rule, {
+            ...options,
+            // hash: stringHash(this.options.filename),
+        });
     }
 
     isClassNameNode(node) {

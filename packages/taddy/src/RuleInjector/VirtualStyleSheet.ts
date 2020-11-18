@@ -54,9 +54,11 @@ export class VirtualStyleSheet extends Sheet {
 
         if (mediaIndex !== undefined) {
             // cast media rule type
-            insertSheet = (this.cssRules[
+            insertSheet = (this.sheet.cssRules[
                 mediaIndex
             ] as any) as typeof insertSheet;
+
+            console.log({insertSheet});
         }
 
         const index = insertSheet.cssRules.length;
@@ -74,12 +76,19 @@ export class VirtualStyleSheet extends Sheet {
 
     insertMedia(conditionText: string): number {
         const cssText = `@media ${conditionText} {}`;
-        return this.sheet.cssRules.push({
-            cssText,
+        const index = this.sheet.cssRules.length;
+        const cssRules = [] as any;
+        this.sheet.cssRules.push({
+            get cssText() {
+                return `@media ${conditionText} {${this.cssRules
+                    .map((x) => x.cssText || '')
+                    .join('')}}`;
+            },
             conditionText,
-            cssRules: [] as any,
+            cssRules,
             type: MEDIA_RULE_TYPE,
         });
+        return index;
     }
 
     appendSelector(

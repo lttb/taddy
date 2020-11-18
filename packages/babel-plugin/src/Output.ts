@@ -19,7 +19,7 @@ function getStylesState() {
 
     // there is also "appending" rules, that don't change the index, but change the rule
     // TODO: think how to handle that
-    // LAST_INDEX = rules.length;
+    LAST_INDEX = rules.length;
 
     const added = [...newRules].map((rule) => rule.cssText || '');
 
@@ -123,19 +123,19 @@ export default class Output {
     }
 
     save({sourceMap, filename} = {}) {
-        // const stylesData = readFileSync(this.filepath);
+        const stylesData = readFileSync(this.filepath);
         const {added} = getStylesState();
 
-        console.log({added});
+        // console.log({added});
 
         // TODO: improve filter performance
-        // const diffStyles = added
-        //     .filter((x) => !stylesData.includes(x))
-        //     .join('');
+        const diffStyles = added
+            .filter((x) => !stylesData.includes(x))
+            .join('');
 
-        fs.writeFileSync(path.join(getCacheDir(), stringHash(filename) + '.css'), added.join('').replace(/}$/, sourceMap + '}'))
+        // fs.writeFileSync(path.join(getCacheDir(), stringHash(filename) + '.css'), added.join('').replace(/}$/, sourceMap + '}'))
 
-        // appendFile(this.filepath, diffStyles);
+        appendFile(this.filepath, diffStyles);
 
         // appendFile(this.filepath, sourceMap);
     }

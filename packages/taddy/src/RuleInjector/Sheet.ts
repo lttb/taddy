@@ -36,8 +36,13 @@ abstract class Sheet {
     insert(
         key: string,
         value: any,
-        {postfix = '', media = ''}: {postfix?: string; media?: string},
+        {
+            postfix = '',
+            media = '',
+            hash = '',
+        }: {postfix?: string; media?: string},
     ) {
+        hash = hash ? '-' + hash : '';
         const {nameGenerator} = config;
 
         const cssKey = camelToKebab(key);
@@ -48,8 +53,8 @@ abstract class Sheet {
         });
 
         const result = Object.create(null);
-        // result[propHash + postfixHash] = value
-        result[name[0] + name[1] + name[2]] = name[3];
+        // result[propHash + postfixHash] = value + hash
+        result[name[0] + name[1] + name[2]] = name[3] + hash;
 
         const nameHash = name.join('');
 
@@ -69,7 +74,7 @@ abstract class Sheet {
 
         let ruleIndex;
 
-        const className = `${nameHash}${postfix}`;
+        const className = `${nameHash}${hash}${postfix}`;
 
         if (this.rulesCache.has(originalHash)) {
             ruleIndex = this.rulesCache.get(originalHash);
