@@ -81,16 +81,16 @@ function appendFile(filepath: string, append: string) {
     //     return;
     // }
 
-    fs.appendFileSync(filepath, append);
+    // fs.appendFile(filepath, append, () => {});
 
     // // TODO: think about asynchronous appending
-    // if ('appendFileSync' in fs) {
-    //     fs.appendFileSync(filepath, append);
-    // } else {
-    //     // workaround for some special FS cases like "filer"
-    //     // @ts-expect-error
-    //     fs.appendFile(filepath, append, () => {});
-    // }
+    if ('appendFileSync' in fs) {
+        fs.appendFileSync(filepath, append);
+    } else {
+        // workaround for some special FS cases like "filer"
+        // @ts-expect-error
+        fs.appendFile(filepath, append, () => {});
+    }
 }
 
 /** don't merge declarations in plugin, currently considering only dev mode */

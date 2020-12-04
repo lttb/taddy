@@ -14,7 +14,7 @@ registerPlugin('@babel/plugin-syntax-typescript', tsSyntax);
 
 registerPlugin('@taddy/babel-plugin', taddyPlugin);
 
-const {$css, RuleInjector, VirtualStyleSheet} = require('taddy');
+const {$css, media, RuleInjector, VirtualStyleSheet} = require('taddy');
 
 function waitForTypescrit() {
     function inner(resolve) {
