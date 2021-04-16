@@ -10,10 +10,10 @@
         "outDir": "dist",
 
         "paths": {
-            "taddy": ["packages/taddy/src"],
-            "taddy.macro": ["packages/taddy.macro/src"],
-            "@taddy/core": ["packages/core/src"],
-            "@taddy/babel-plugin": ["packages/babel-plugin/src"]
+            "taddy": ["../packages/taddy/src"],
+            "taddy.macro": ["../packages/taddy.macro/src"],
+            "@taddy/core": ["../packages/core/src"],
+            "@taddy/babel-plugin": ["../packages/babel-plugin/src"]
         }
     }
 }

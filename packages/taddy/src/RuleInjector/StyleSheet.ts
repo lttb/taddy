@@ -14,6 +14,8 @@ export class StyleSheet extends Sheet {
 
     classNameNode: HTMLStyleElement;
 
+    devNode?: HTMLStyleElement;
+
     initialStyle: CSSStyleDeclaration;
 
     headStyle: CSSStyleDeclaration;
@@ -49,7 +51,9 @@ export class StyleSheet extends Sheet {
 
         this.headStyle = window.getComputedStyle(document.head);
 
-        this.devNode = getStyleNodeById(`${StyleSheet.TADDY_ID}-dev`);
+        if (__DEV__) {
+            this.devNode = getStyleNodeById(`${StyleSheet.TADDY_ID}-dev`);
+        }
     }
 
     get rules() {
@@ -79,7 +83,7 @@ export class StyleSheet extends Sheet {
     }
 
     insertDevRule(rule) {
-        this.devNode.appendChild(document.createTextNode(rule));
+        this.devNode?.appendChild(document.createTextNode(rule));
     }
 
     insertAtomicRule(

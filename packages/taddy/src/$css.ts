@@ -103,7 +103,7 @@ export const $css = (
         );
         const hash = config.nameGenerator.getName('--taddy-dev', v).join('');
         $css.ruleInjector.styleSheet.insertDevRule(
-            `.${hash}{--taddy-dev: /*${v}*/0;${sourceMap}}`,
+            `.${hash}{--taddy-dev: ${v};${sourceMap}}`,
         );
 
         Object.assign(className, {[hash]: true});

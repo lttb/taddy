@@ -40,7 +40,7 @@ abstract class Sheet {
             postfix = '',
             media = '',
             hash = '',
-        }: {postfix?: string; media?: string},
+        }: {postfix?: string; media?: string; hash?: string},
     ) {
         hash = hash ? '-' + hash : '';
         const {nameGenerator} = config;

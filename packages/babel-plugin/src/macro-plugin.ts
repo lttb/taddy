@@ -18,7 +18,6 @@ import type {ProcessorConfig} from './Processor';
 
 import {makeSourceMapGenerator, convertGeneratorToComment} from './source-maps';
 
-
 type CompileOptions = {
     /**
      * Apply static evaluation optimizations
@@ -58,6 +57,13 @@ type CompileOptions = {
      * @default false;
      */
     unstable_useTaggedTemplateLiterals: boolean;
+
+    /**
+     * Use sourcemaps
+     *
+     * @default true for development;
+     */
+    unstable_sourcemaps: boolean;
 };
 
 export type MacroConfig = Partial<{
@@ -118,7 +124,7 @@ export function macro({
 
     // sourceMapGenerator.setSourceContent(filename, code);
 
-    $css.ruleInjector.reset()
+    $css.ruleInjector.reset();
 
     program.traverse({
         ImportDeclaration(p) {

@@ -75,7 +75,6 @@ export class VirtualStyleSheet extends Sheet {
     }
 
     insertMedia(conditionText: string): number {
-        const cssText = `@media ${conditionText} {}`;
         const index = this.sheet.cssRules.length;
         const cssRules = [] as any;
         this.sheet.cssRules.push({
