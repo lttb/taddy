@@ -5,9 +5,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
         webpack(config, options) {
             config.module.rules.push({
                 test: /@taddy\/babel-plugin.*\.css/,
-                use: [
-
-                ],
+                use: [],
             });
 
             if (typeof nextConfig.webpack === 'function') {

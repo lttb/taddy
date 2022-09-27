@@ -3,9 +3,8 @@ import Head from 'next/head';
 import '@/styles/globals.css';
 import '@/styles/taddy.css';
 
-import '@taddy/babel-plugin/.cache';
-import '@taddy/babel-plugin/.cache/index.css';
-
+// import '@taddy/babel-plugin/.cache';
+// import '@taddy/babel-plugin/.cache/index.css';
 
 import {css} from 'taddy';
 
