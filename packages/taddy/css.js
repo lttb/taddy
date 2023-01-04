@@ -1,2 +1,1 @@
-// @ts-expect-error
-require('@taddy/babel-plugin/taddy.css');
+require('@taddy/babel-plugin/cache');

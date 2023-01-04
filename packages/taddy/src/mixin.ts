@@ -1,6 +1,7 @@
 import {MIXIN_KEY} from '@taddy/core';
 
-import {$css, TaddyRule} from './$css';
+import {$css} from './$css';
+import type {TaddyRule} from './types';
 
 type TaddyMixin<T> = T;
 

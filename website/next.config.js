@@ -2,17 +2,15 @@ const path = require('path');
 const webpack = require('webpack');
 
 const withPlugins = require('next-compose-plugins');
-const withMDX = require('@next/mdx')();
+const withMDX = require('@next/mdx');
 const optimizedImages = require('next-optimized-images');
+const withTM = require('next-transpile-modules')(['@taddy/babel-plugin']);
 
 module.exports = withPlugins(
     [
-        [
-            withMDX,
-            {
-                extension: /\.mdx?$/,
-            },
-        ],
+        withMDX({
+            extension: /\.mdx?$/,
+        }),
         [
             optimizedImages,
             {

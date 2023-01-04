@@ -1,12 +1,19 @@
 import {config, isInvalidValue} from '@taddy/core';
 
+import type {SheetOptions} from './Sheet';
 import {VirtualStyleSheet} from './VirtualStyleSheet';
 import {StyleSheet} from './StyleSheet';
 
 export const NESTED = Symbol('__NESTED__');
 
-function isNested(value: object | unknown): boolean {
-    return value && typeof value === 'object';
+function isNested(value: object | unknown): value is Atom {
+    return !!value && typeof value === 'object';
+}
+
+function isMedia(
+    value: object | unknown,
+): value is {'@media': string; rule: Atom} {
+    return isNested(value) && !!value['@media'];
 }
 
 type Atom = {[key: string]: string | boolean};
@@ -24,7 +31,8 @@ type CSSProp = string;
 
 type Options = {
     postfix?: string;
-    inject?: boolean;
+    media?: string;
+    hash?: string;
 };
 
 export {getStyleNodeById} from './common';
@@ -32,20 +40,31 @@ export {getStyleNodeById} from './common';
 export {VirtualStyleSheet, StyleSheet};
 
 export class RuleInjector {
-    styleSheet =
-        typeof document === 'undefined'
-            ? new VirtualStyleSheet()
-            : new StyleSheet();
+    options?: SheetOptions;
+    styleSheet: VirtualStyleSheet | StyleSheet;
+
+    constructor(options?: SheetOptions) {
+        this.options = options;
+
+        this.styleSheet =
+            typeof document === 'undefined'
+                ? new VirtualStyleSheet(options)
+                : new StyleSheet(options);
+    }
 
     reset() {
-        Object.assign(this, new RuleInjector());
+        Object.assign(this, new RuleInjector(this.options));
     }
 
     put(key: CSSPseudo, value: Atom, options?: Options): Atom | null;
 
     put(key: CSSProp, value: string | boolean, options?: Options): Atom | null;
 
-    put(key, value, {postfix = '', inject = true} = {}): Atom | null {
+    put(
+        key,
+        value,
+        {postfix = '', media = '', hash = ''}: Options = {},
+    ): Atom | null {
         if (isInvalidValue(value)) return null;
 
         // {'a b c': !0}
@@ -54,7 +73,10 @@ export class RuleInjector {
         }
 
         if (isPseudo(key)) {
-            return this.putNested(postfix + key, value, {inject});
+            return this.putNested(value, {
+                postfix: postfix + key,
+                media,
+            });
         }
 
         // check if that's id
@@ -72,26 +94,43 @@ export class RuleInjector {
 
             /** Dynamic values (with precompiled values) */
             return {
-                [postfix + key]: nameGenerator.getValueHash(value),
+                [postfix + key]: nameGenerator.getHash(value),
             };
         }
 
-        if (isNested(value)) {
-            return this.putNested(postfix + key, value, {inject});
+        if (isMedia(value)) {
+            return this.putNested(value.rule, {
+                postfix,
+                media: value['@media'],
+            });
         }
 
-        return this.styleSheet.insert(key, value, {postfix, inject});
+        if (isNested(value)) {
+            return this.putNested(value, {
+                postfix: postfix + key,
+                media,
+            });
+        }
+
+        return this.styleSheet.insert(key, value, {
+            postfix,
+            media,
+            hash,
+        });
     }
 
-    putNested(selector: string, rule: Atom, {inject = true} = {}): Atom | null {
+    private putNested(
+        rule: Atom,
+        {postfix, media}: {postfix: string; media?: string},
+    ): Atom | null {
         if (!rule) return null;
 
         const classNames = Object.create(null);
 
         for (const key in rule) {
             const className = this.put(key, rule[key], {
-                postfix: selector,
-                inject,
+                media,
+                postfix,
             });
 
             Object.assign(classNames, className);

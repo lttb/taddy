@@ -1,7 +1,24 @@
 import * as React from 'react';
 import {css} from 'taddy';
 
-import {Link} from './Link';
+import {Link} from './BaseLink';
+
+const styles = {
+    _variant: {
+        normal: css({
+            color: 'violet',
+            background: 'none',
+        }),
+        action: css({
+            color: 'white',
+            background: 'violet',
+        }),
+        pseudo: css({
+            color: 'violet',
+            borderColor: 'transparent',
+        }),
+    },
+};
 
 export const LinkButton = ({
     href,
@@ -16,23 +33,6 @@ export const LinkButton = ({
     className?: string;
     children: React.ReactNode;
 }) => {
-    const styles = {
-        _variant: {
-            normal: css({
-                color: 'violet',
-                background: 'none',
-            }),
-            action: css({
-                color: 'white',
-                background: 'violet',
-            }),
-            pseudo: css({
-                color: 'violet',
-                borderColor: 'transparent',
-            }),
-        },
-    };
-
     return (
         <Link
             href={href}

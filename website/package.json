@@ -21,7 +21,7 @@
         "react": "16.13.1",
         "react-ace": "9.1.3",
         "react-dom": "16.13.1",
-        "typescript": "^3.9.7",
+        "typescript": "^4.1.2",
         "postcss-js": "2.0.3"
     },
     "devDependencies": {
@@ -32,6 +32,7 @@
         "imagemin-svgo": "^8.0.0",
         "next-compose-plugins": "2.2.0",
         "next-optimized-images": "2.6.2",
+        "next-transpile-modules": "4.1.0",
         "svg-sprite-loader": "^5.0.0",
         "webpack": "^4.0.0"
     }

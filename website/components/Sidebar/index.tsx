@@ -2,12 +2,14 @@ import React from 'react';
 
 import {css} from 'taddy';
 
+import {COLORS} from '@/styles';
+
 import {Column} from '../layout';
-import {Link} from '../Link';
+import {Link} from '../BaseLink';
 
 import styles from './styles.module.css';
 
-const bearWhite = require('../../public/logo/taddy2.png');
+const bear = require('@/public/logo/taddy9.png');
 
 const Burger = () => (
     <div className={styles.burger}>
@@ -30,10 +32,11 @@ export const Sidebar = () => {
                 {...css({
                     className: styles.menu,
                     // background: 'rgb(38 78 156)',
-                    background: '#1f39a4',
+                    // background: COLORS.base1,
+                    background: '#f3f0f3',
                     padding: '20px',
                     width: '300px',
-                    color: 'white',
+                    color: 'black',
                     fontSize: '20px',
                     position: 'sticky',
                     top: 0,
@@ -59,8 +62,12 @@ export const Sidebar = () => {
                 >
                     <img
                         alt="taddy sidebar logo"
-                        src={bearWhite}
+                        src={bear}
                         height={100}
+                        {...css({
+                            filter:
+                                'invert(37%) sepia(40%) saturate(1401%) hue-rotate(188deg) brightness(89%) contrast(82%)',
+                        })}
                     />
 
                     <p
@@ -68,6 +75,7 @@ export const Sidebar = () => {
                             margin: 0,
                             fontWeight: 'bold',
                             fontSize: '30px',
+                            color: '#3e68ba',
                         })}
                     >
                         taddy
@@ -80,6 +88,10 @@ export const Sidebar = () => {
                     </li>
                     <li>
                         <Link href="/playground">playground</Link>
+                    </li>
+
+                    <li>
+                        <Link href="/roadmap">roadmap</Link>
                     </li>
 
                     {/* <li>

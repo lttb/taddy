@@ -1,5 +1,7 @@
-import {buildAtomicRule, getStyleNodeById} from './common';
+import {buildAtomicRule, getStyleNodeById, IS_DEV} from './common';
+
 import Sheet from './Sheet';
+import type {SheetOptions} from './Sheet';
 
 export class StyleSheet extends Sheet {
     node: HTMLStyleElement;
@@ -12,14 +14,16 @@ export class StyleSheet extends Sheet {
 
     classNameNode: HTMLStyleElement;
 
+    devNode?: HTMLStyleElement;
+
     initialStyle: CSSStyleDeclaration;
 
     headStyle: CSSStyleDeclaration;
 
     static TADDY_ID = 'taddy';
 
-    constructor() {
-        super();
+    constructor(options?: SheetOptions) {
+        super(options);
 
         const node = getStyleNodeById(StyleSheet.TADDY_ID);
 
@@ -46,6 +50,10 @@ export class StyleSheet extends Sheet {
         this.initialStyle = window.getComputedStyle(this.initialNode);
 
         this.headStyle = window.getComputedStyle(document.head);
+
+        if (IS_DEV) {
+            this.devNode = getStyleNodeById(`${StyleSheet.TADDY_ID}-dev`);
+        }
     }
 
     get rules() {
@@ -62,7 +70,7 @@ export class StyleSheet extends Sheet {
      * But there is still a potential conflict with the same
      * style on html node and element
      */
-    isRuleExists(className: string, key: string): boolean {
+    private isRuleExists(className: string, key: string): boolean {
         this.classNameNode.className = className;
         const value: string | void = window.getComputedStyle(
             this.classNameNode,
@@ -74,7 +82,18 @@ export class StyleSheet extends Sheet {
         );
     }
 
-    insertAtomicRule(className: string, key: string, value: string): number {
+    insertDevRule(rule) {
+        if (!this.devNode) return;
+
+        this.devNode.appendChild(document.createTextNode(rule));
+    }
+
+    insertAtomicRule(
+        className: string,
+        key: string,
+        value: string,
+        {mediaIndex}: {mediaIndex?: number} = {},
+    ): number {
         if (this.isRuleExists(className, key)) {
             return -1;
         }
@@ -82,12 +101,39 @@ export class StyleSheet extends Sheet {
         const selectorText = `.${className}`;
         const cssText = buildAtomicRule(selectorText, key, value);
 
-        return this.sheet.insertRule(cssText, this.cssRules.length);
+        let insertSheet = this.sheet;
+
+        if (mediaIndex !== undefined) {
+            // cast media rule type
+            insertSheet = (this.cssRules[
+                mediaIndex
+            ] as any) as typeof insertSheet;
+        }
+
+        return insertSheet.insertRule(cssText, insertSheet.cssRules.length);
     }
 
-    appendSelector(ruleIndex: number, selector: string): void {
-        (this.cssRules[
-            ruleIndex
-        ] as CSSStyleRule).selectorText += `,${selector}`;
+    insertMedia(media: string) {
+        return this.sheet.insertRule(
+            `@media ${media} {}`,
+            this.cssRules.length,
+        );
+    }
+
+    appendSelector(
+        ruleIndex: number,
+        selector: string,
+        {mediaIndex}: {mediaIndex?: number} = {},
+    ): void {
+        let sheet = this.sheet;
+
+        if (mediaIndex !== undefined) {
+            // cast media rule type
+            sheet = (this.cssRules[mediaIndex] as any) as typeof sheet;
+        }
+
+        let rule = sheet.cssRules[ruleIndex] as CSSStyleRule;
+
+        rule.selectorText += `,${selector}`;
     }
 }

@@ -14,12 +14,13 @@ const Title = ({children}) => <h2>{children}</h2>;
 const Wrapper = ({children}) => (
     <div
         {...css({
-            overflow: 'hidden',
+            overflowX: 'auto',
             position: 'relative',
             padding: '0 20px 20px',
             boxShadow: '0 0 13px -10px',
             borderRadius: '20px',
             minWidth: '300px',
+            width: '100%',
         })}
     >
         {children}
@@ -98,6 +99,7 @@ export const CompiledCode = ({
     return (
         <div
             {...css({
+                width: '100%',
                 position: 'relative',
             })}
         >

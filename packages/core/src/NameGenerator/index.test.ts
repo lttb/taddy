@@ -8,6 +8,7 @@ describe('api', () => {
             .toMatchInlineSnapshot(`
             Array [
               "",
+              "",
               "_15b0",
               "_3278",
             ]
@@ -17,6 +18,7 @@ describe('api', () => {
             .toMatchInlineSnapshot(`
             Array [
               "",
+              "",
               "_15b0",
               "_ffcd",
             ]
@@ -24,6 +26,7 @@ describe('api', () => {
 
         expect(nameGenerator.getName('color', 'red')).toMatchInlineSnapshot(`
             Array [
+              "",
               "",
               "_9bfd",
               "_4da4",

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {$, css} from 'taddy';
+import {css} from 'taddy';
 
 const size = (v: number) => `${v * 4}px`;
 const margin = (gapY: number, gapX: number) =>
@@ -8,13 +8,13 @@ const margin = (gapY: number, gapX: number) =>
 
 function flex({inline}) {
     return css({
-        display: 'flex',
+        display: inline ? 'inline-flex' : 'flex',
 
         ...(!inline && {
             flex: 1,
             maxWidth: '100%',
 
-            [$`> *`]: {
+            '> *': {
                 flex: 1,
                 maxWidth: '100%',
             },
@@ -29,7 +29,6 @@ export function row({
     gapY = gap,
     gapX = gap,
     inline = false,
-    wrap = 'wrap',
 }: {
     gap?: Size;
     gapY?: Size;
@@ -41,7 +40,6 @@ export function row({
         ...flex({inline}),
 
         flexDirection: 'row',
-        flexWrap: wrap,
 
         margin: margin(-gapY, -gapX),
 
@@ -50,6 +48,7 @@ export function row({
         }),
 
         '> *:not(:empty)': {
+            display: 'flex',
             margin: margin(gapY, gapX),
         },
     });
@@ -65,9 +64,20 @@ export function column({
         flexDirection: 'column',
 
         '> *:not(:empty) + *:not(:empty)': {
+            display: 'flex',
             marginTop: size(gap),
         },
     });
+}
+
+function shouldWrap(child) {
+    return !(child == undefined || !!child.type.__unit__);
+}
+
+function wrapChildren(children) {
+    return React.Children.map(children, (child) =>
+        shouldWrap(child) ? <div>{child}</div> : child,
+    );
 }
 
 export const Column = ({
@@ -76,6 +86,7 @@ export const Column = ({
     inline,
     style,
     className,
+    children,
     ...props
 }: Partial<{
     as: keyof JSX.IntrinsicElements;
@@ -84,7 +95,11 @@ export const Column = ({
     className?: string;
     style?: object;
     children: React.ReactNode;
-}>) => <Tag {...props} {...css(column({gap, inline}), {style, className})} />;
+}>) => (
+    <Tag {...props} {...css(column({gap, inline}), {style, className})}>
+        {wrapChildren(children)}
+    </Tag>
+);
 
 export const Row = ({
     as: Tag = 'div',
@@ -92,9 +107,9 @@ export const Row = ({
     gapY = gap,
     gapX = gap,
     inline = false,
-    wrap = 'wrap',
     style,
     className,
+    children,
     ...props
 }: Partial<{
     as: keyof JSX.IntrinsicElements;
@@ -107,10 +122,27 @@ export const Row = ({
     children: React.ReactNode;
     wrap?: string;
 }>) => (
-    <div>
+    <div
+        {...css(flex({inline}), {
+            flexWrap: 'wrap',
+            justifyContent: 'initial',
+            alignItems: 'initial',
+            alignContent: 'initial',
+
+            style,
+            className,
+        })}
+    >
         <Tag
             {...props}
-            {...css(row({gapX, gapY, inline, wrap}), {style, className})}
-        />
+            {...css(row({gapX, gapY, inline}), {
+                flexWrap: 'inherit',
+                justifyContent: 'inherit',
+                alignItems: 'inherit',
+                alignContent: 'inherit',
+            })}
+        >
+            {wrapChildren(children)}
+        </Tag>
     </div>
 );

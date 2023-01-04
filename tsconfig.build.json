@@ -9,7 +9,7 @@
         "experimentalDecorators": false,
         "importHelpers": true,
         "jsx": "react",
-        "lib": ["dom", "esnext"],
+        "lib": ["dom", "dom.iterable", "esnext"],
         "moduleResolution": "node",
         "noFallthroughCasesInSwitch": false,
         "noImplicitAny": false,
@@ -24,7 +24,7 @@
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
         "stripInternal": true,
-        "target": "es5",
+        "target": "ES2022",
         "downlevelIteration": true
     }
 }

@@ -77,7 +77,8 @@ export function evaluate(
             .replace(macroRe, PACKAGE_NAME)
             .concat(`\n\n;${callbackName}(${currentPath.toString()})`);
 
-        const {opts} = currentPath.hub.file;
+        // TODO: improve Hub type
+        const {opts} = (currentPath.hub as any).file;
 
         const ext = path.extname(opts.filename);
         const basename = path.basename(opts.filename, ext);
@@ -129,7 +130,7 @@ export function evaluate(
         revert();
 
         return {value};
-    } catch (error) {
+    } catch (error: any) {
         // console.log('evaluate error', {content, code, error});
 
         return {error};

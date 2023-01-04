@@ -12,7 +12,7 @@ import {macro} from './macro-plugin';
 import type {MacroConfig} from './macro-plugin';
 import {isTaddyEvaluation} from './helpers';
 
-import {getEnv} from './handlers';
+import {getEnv} from './config';
 
 type ImportSpecifiers = NodePaths<t.ImportDeclaration['specifiers']>;
 
@@ -22,9 +22,11 @@ function getImportNames(
     const localName = path.node.local.name;
 
     if (path.isImportSpecifier()) {
+        const imported = path.node.imported as t.Identifier;
+
         return {
             localName,
-            importedName: path.node.imported.name,
+            importedName: imported.name,
         };
     }
 

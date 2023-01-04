@@ -20,11 +20,11 @@ const styles = {
     }),
     _variant: {
         compiling: css({
-            background: 'rgb(255 255 255 / 95%)',
+            background: 'rgba(255 255 255 / 95%)',
             color: 'black',
         }),
         error: css({
-            background: 'rgb(2 10 10 / 80%)',
+            background: 'rgba(2 10 10 / 80%)',
             color: 'white',
         }),
     },

@@ -13,7 +13,17 @@ hash.configure({
 
 type NameOptions = {
     postfix?: string;
+    media?: string;
 };
+
+function generateHash(value: string) {
+    // if (__DEV__) {
+    //     const cssesc = require('cssesc');
+    //     return cssesc(value, {isIdentifier: true}).replace(/\s/g, '-');
+    // }
+
+    return hash.digest(String(value));
+}
 
 export class NameGenerator {
     cache: {[name: string]: string} = {};
@@ -25,29 +35,22 @@ export class NameGenerator {
         const key = `_${value}`;
 
         if (!(key in this.cache)) {
-            this.cache[key] = hash.digest(String(value));
+            this.cache[key] = generateHash(value);
         }
 
         return `_${this.cache[key]}`;
     };
 
-    getPropHash = (prop: string): string => {
-        return this.getHash(prop);
-    };
-
-    getPostfixHash = (postfix?: string): string => {
-        return this.getHash(postfix);
-    };
-
-    getValueHash = (value: string): string => {
-        return this.getHash(value);
-    };
-
     getName = (
         prop: string,
         value: string,
-        {postfix = ''}: NameOptions = {},
+        {postfix = '', media = ''}: NameOptions = {},
     ): string[] => {
-        return [this.getHash(postfix), this.getHash(prop), this.getHash(value)];
+        return [
+            this.getHash(media),
+            this.getHash(postfix),
+            this.getHash(prop),
+            this.getHash(value),
+        ];
     };
 }
