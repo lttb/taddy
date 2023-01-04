@@ -1,4 +1,4 @@
-import {buildAtomicRule, getStyleNodeById} from './common';
+import {buildAtomicRule, getStyleNodeById, IS_DEV} from './common';
 
 import Sheet from './Sheet';
 import type {SheetOptions} from './Sheet';
@@ -51,7 +51,7 @@ export class StyleSheet extends Sheet {
 
         this.headStyle = window.getComputedStyle(document.head);
 
-        if (__DEV__) {
+        if (IS_DEV) {
             this.devNode = getStyleNodeById(`${StyleSheet.TADDY_ID}-dev`);
         }
     }
@@ -83,7 +83,9 @@ export class StyleSheet extends Sheet {
     }
 
     insertDevRule(rule) {
-        this.devNode?.appendChild(document.createTextNode(rule));
+        if (!this.devNode) return;
+
+        this.devNode.appendChild(document.createTextNode(rule));
     }
 
     insertAtomicRule(

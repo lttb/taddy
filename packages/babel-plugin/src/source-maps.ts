@@ -20,7 +20,7 @@ export function makeSourceMapGenerator(file) {
         sourceRoot: generatorOpts.sourceRoot,
     });
 
-    console.log('root', generatorOpts.sourceRoot)
+    console.log('root', generatorOpts.sourceRoot);
 
     generator.setSourceContent(filename, file.code);
     return generator;

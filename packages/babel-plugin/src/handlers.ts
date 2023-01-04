@@ -5,7 +5,7 @@ import type {NodePath} from '@babel/core';
 import nodePath from 'path';
 import stringHash from 'string-hash';
 
-import {$css, config} from 'taddy';
+import {$css} from 'taddy';
 
 import {Processor} from './Processor';
 import type {ProcessorConfig, ProcessOptions} from './Processor';

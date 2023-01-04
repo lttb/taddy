@@ -130,7 +130,7 @@ export function evaluate(
         revert();
 
         return {value};
-    } catch (error) {
+    } catch (error: any) {
         // console.log('evaluate error', {content, code, error});
 
         return {error};
