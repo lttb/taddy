@@ -26,7 +26,7 @@ export function addBinding(
 }
 
 function isFunctionArgument(path: NodePath<any>) {
-    return path.listKey === 'params' && path.parentPath.isFunction();
+    return path.listKey === 'params' && path.parentPath?.isFunction();
 }
 
 export function findBindings(

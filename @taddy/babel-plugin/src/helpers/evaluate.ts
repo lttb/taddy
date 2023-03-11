@@ -52,7 +52,7 @@ const nodeRequire = new Function(
 )(module.require);
 
 export function isTaddyEvaluation(state: PluginPass): boolean {
-    return state.filename.includes(EVAL_FILENAME_POSTFIX);
+    return !!state.filename?.includes(EVAL_FILENAME_POSTFIX);
 }
 
 export function evaluate(currentPath: NodePath<any>): {

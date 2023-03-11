@@ -1,5 +1,6 @@
 import * as t from '@babel/types';
 import type {NodePath} from '@babel/traverse';
+import {SourceMapGenerator} from 'source-map';
 
 import {VARS_KEY, config} from '@taddy/core';
 import {$css} from 'taddy';
@@ -23,6 +24,7 @@ import TSProcessor, {
 } from './TSProcessor';
 
 import type {TSProcessorOptions} from './TSProcessor';
+import {PluginPass} from '@babel/core';
 
 type ObjectProperties = t.ObjectExpression['properties'];
 
@@ -42,6 +44,8 @@ export type ProcessOptions = {
     code: string;
     addImport(name: string): t.ImportSpecifier['local'];
     sourceMap?: string;
+    state?: PluginPass;
+    sourceMapGenerator?: SourceMapGenerator;
 };
 
 type CommonOptions = {

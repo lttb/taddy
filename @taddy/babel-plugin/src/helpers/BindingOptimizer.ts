@@ -50,7 +50,7 @@ export class BindingOptimizer {
             const {parentPath} = binding.path;
 
             const isImportToRemove =
-                parentPath.isImportDeclaration() &&
+                parentPath?.isImportDeclaration() &&
                 parentPath.node.specifiers.length === 0;
 
             // // keep imports for development build

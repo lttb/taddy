@@ -117,6 +117,11 @@ export function macro({
     const code = state.file.code;
     const {filename} = state;
 
+    if (!filename) {
+        // TODO: consider a fallback
+        throw new Error('No filename provided');
+    }
+
     let importPath: NodePath<t.ImportDeclaration> | null = null;
 
     //@ts-ignore
@@ -186,7 +191,7 @@ export function macro({
 
             if (
                 key === 'css' &&
-                currentPath.isMemberExpression() &&
+                currentPath?.isMemberExpression() &&
                 'name' in currentPath.node.property &&
                 currentPath.node.property.name === 'mixin'
             ) {
@@ -197,7 +202,7 @@ export function macro({
             if (
                 useTaggedTemplateLiterals &&
                 (currentKey === 'css' || currentKey === 'mixin') &&
-                currentPath.isTaggedTemplateExpression()
+                currentPath?.isTaggedTemplateExpression()
             ) {
                 const obj = taggedTemplateToObject(currentPath);
                 currentPath.replaceWith(
@@ -212,14 +217,15 @@ export function macro({
     const {isStatic} = finish();
 
     if (isStatic && importPath !== null) {
-        importPath!.node.source = t.stringLiteral('@taddy/core');
+        (importPath as NodePath<t.ImportDeclaration>).node.source =
+            t.stringLiteral('@taddy/core');
     }
 
     output = output || new Output({env, config: config.outputOptions});
 
     const sourceMap = convertGeneratorToComment(sourceMapGenerator);
 
-    output.save({sourceMap, filename});
+    output.save(/*{sourceMap, filename}*/);
 
     return {
         keepImports: true,

@@ -12,10 +12,10 @@ import type {ProcessorConfig, ProcessOptions} from './Processor';
 import {BindingOptimizer} from './helpers';
 import {getRootDir} from './config';
 
-function isPathRemoved(path: NodePath<any>) {
+function isPathRemoved(path: NodePath<any> | null | undefined) {
     do {
-        if (path.removed) return true;
-    } while ((path = path.parentPath));
+        if (path?.removed) return true;
+    } while ((path = path?.parentPath));
 
     return false;
 }
@@ -94,16 +94,21 @@ export const createHandlers = (
 
         const cssLength = $css.ruleInjector.styleSheet.rules.join('').length;
 
-        console.log(options.state.file.opts.generatorOpts.sourceFileName);
+        // console.log(options.state.file.opts.generatorOpts.sourceFileName);
 
-        options.sourceMapGenerator.addMapping({
-            generated: {
-                line: 1,
-                column: cssLength,
-            },
-            source: options.state.file.opts.generatorOpts.sourceFileName,
-            original: path.node.loc?.start,
-        });
+        const source = options.state?.file.opts.generatorOpts?.sourceFileName;
+        const locStart = path.node.loc?.start;
+
+        if (source && locStart) {
+            options.sourceMapGenerator?.addMapping({
+                generated: {
+                    line: 1,
+                    column: cssLength,
+                },
+                source,
+                original: locStart,
+            });
+        }
 
         proceedPaths.push({
             path,

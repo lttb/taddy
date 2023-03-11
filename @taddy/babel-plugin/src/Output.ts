@@ -122,7 +122,8 @@ export default class Output {
         // fs.writeFileSync(this.filepath, '');
     }
 
-    save({sourceMap, filename} = {}) {
+    save() /* {sourceMap, filename} = {} */
+    {
         const stylesData = readFileSync(this.filepath);
         const {added} = getStylesState();
 
