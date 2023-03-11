@@ -12,9 +12,8 @@
     },
     "scripts": {
         "start": "tsc --watch",
-        "build": "tsdx build",
-        "test": "tsdx test",
-        "lint": "tsdx lint",
+        "test": "jest",
+        "lint": "eslint .",
         "prepublishOnly": "yarn build"
     },
     "dependencies": {

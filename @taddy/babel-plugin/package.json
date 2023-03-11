@@ -16,9 +16,8 @@
         "clean": "rm -rf dist",
         "prestart": "npm run clean",
         "start": "tsc --watch",
-        "build": "tsdx build --target node --transpileOnly",
-        "test": "tsdx test",
-        "lint": "tsdx lint",
+        "test": "jest",
+        "lint": "eslint .",
         "prepublishOnly": "yarn build"
     },
     "dependencies": {
