@@ -55,9 +55,10 @@ export function isTaddyEvaluation(state: PluginPass): boolean {
     return state.filename.includes(EVAL_FILENAME_POSTFIX);
 }
 
-export function evaluate(
-    currentPath: NodePath<any>,
-): {value?: any; error?: Error} {
+export function evaluate(currentPath: NodePath<any>): {
+    value?: any;
+    error?: Error;
+} {
     const result = evaluatePath(currentPath);
 
     if (result.confident) {
