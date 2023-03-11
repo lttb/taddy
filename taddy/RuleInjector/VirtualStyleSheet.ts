@@ -12,7 +12,7 @@ interface VirtualCSSStyleRule extends Partial<CSSStyleRule> {
     $postfix: string;
 }
 
-type VirtualCSSMediaRule = Partial<CSSMediaRule>
+type VirtualCSSMediaRule = Partial<CSSMediaRule>;
 
 export class VirtualStyleSheet extends Sheet {
     cssRules: (VirtualCSSStyleRule | VirtualCSSMediaRule)[];
@@ -54,9 +54,9 @@ export class VirtualStyleSheet extends Sheet {
 
         if (mediaIndex !== undefined) {
             // cast media rule type
-            insertSheet = (this.sheet.cssRules[
+            insertSheet = this.sheet.cssRules[
                 mediaIndex
-            ] as any) as typeof insertSheet;
+            ] as any as typeof insertSheet;
 
             console.log({insertSheet});
         }
@@ -99,7 +99,7 @@ export class VirtualStyleSheet extends Sheet {
 
         if (mediaIndex !== undefined) {
             // cast media rule type
-            sheet = (this.cssRules[mediaIndex] as any) as typeof sheet;
+            sheet = this.cssRules[mediaIndex] as any as typeof sheet;
         }
 
         const rule = sheet.cssRules[ruleIndex] as VirtualCSSStyleRule;

@@ -105,9 +105,9 @@ export class StyleSheet extends Sheet {
 
         if (mediaIndex !== undefined) {
             // cast media rule type
-            insertSheet = (this.cssRules[
+            insertSheet = this.cssRules[
                 mediaIndex
-            ] as any) as typeof insertSheet;
+            ] as any as typeof insertSheet;
         }
 
         return insertSheet.insertRule(cssText, insertSheet.cssRules.length);
@@ -129,7 +129,7 @@ export class StyleSheet extends Sheet {
 
         if (mediaIndex !== undefined) {
             // cast media rule type
-            sheet = (this.cssRules[mediaIndex] as any) as typeof sheet;
+            sheet = this.cssRules[mediaIndex] as any as typeof sheet;
         }
 
         const rule = sheet.cssRules[ruleIndex] as CSSStyleRule;

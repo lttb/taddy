@@ -8,7 +8,7 @@ export function taggedTemplateToObject(
     const postcssJS = require('postcss-js');
     const {quasis, expressions} = path.node.quasi;
 
-    type Expression = typeof expressions[number];
+    type Expression = (typeof expressions)[number];
 
     const cache: {[placeholder: string]: Expression} = {};
 

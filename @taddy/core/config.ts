@@ -18,10 +18,9 @@ export type TaddyConfig = {
     };
 };
 
-type ValidatedShape<T, Shape> = T &
-    {
-        [key in keyof T]: key extends keyof Shape ? T[key] : never;
-    };
+type ValidatedShape<T, Shape> = T & {
+    [key in keyof T]: key extends keyof Shape ? T[key] : never;
+};
 
 declare function setConfig<T extends Partial<TaddyConfig>>(
     value: ValidatedShape<T, TaddyConfig>,

@@ -1,21 +1,22 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     /* background: #fafafa; */
     height: 100%;
     color: #333;
@@ -24,13 +25,14 @@ html, body {
 }
 
 use {
-    stroke: violet !important
+    stroke: violet !important;
 }
 
 svg * {
     all: inherit;
 }
 
-li + li, li > ul {
+li + li,
+li > ul {
     margin-top: 10px;
 }

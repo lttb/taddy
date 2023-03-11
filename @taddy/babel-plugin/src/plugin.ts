@@ -7,17 +7,17 @@ import type {
 } from '@babel/core';
 import type {NodePaths} from '@babel/traverse';
 
-import {PACKAGE_NAME,getEnv} from './config';
+import {PACKAGE_NAME, getEnv} from './config';
 import {macro} from './macro-plugin';
 import type {MacroConfig} from './macro-plugin';
 import {isTaddyEvaluation} from './helpers';
 
-
 type ImportSpecifiers = NodePaths<t.ImportDeclaration['specifiers']>;
 
-function getImportNames(
-    path: ImportSpecifiers[number],
-): {localName: string; importedName: string} {
+function getImportNames(path: ImportSpecifiers[number]): {
+    localName: string;
+    importedName: string;
+} {
     const localName = path.node.local.name;
 
     if (path.isImportSpecifier()) {
