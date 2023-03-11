@@ -11,7 +11,7 @@ function apply(
 ): t.BinaryExpression | t.StringLiteral {
     let expr;
     let curr = '';
-    for (let v of quasis) {
+    for (const v of quasis) {
         if (typeof v === 'string') {
             curr += (curr ? ' ' : '') + v;
             continue;

@@ -128,17 +128,17 @@ export const createHandlers = (
 
             let isStatic = true;
 
-            for (let x of proceedPaths) {
+            for (const x of proceedPaths) {
                 isStatic = isStatic && x.isStatic;
 
                 if (!config.optimizeBindings) continue;
 
-                for (let path of x.optimizationPaths) {
+                for (const path of x.optimizationPaths) {
                     optimizer.process(path);
                 }
             }
 
-            for (let path of mixinsQueue) {
+            for (const path of mixinsQueue) {
                 if (config.optimizeBindings && isPathRemoved(path)) {
                     // the path binding should be already optimized
                     continue;
@@ -153,7 +153,7 @@ export const createHandlers = (
              * If it's not a static file, map only static usages
              */
             if (!isStatic) {
-                for (let x of proceedPaths) {
+                for (const x of proceedPaths) {
                     if (!x.isStatic) continue;
                     const {path} = x;
 

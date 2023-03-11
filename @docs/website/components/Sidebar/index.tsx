@@ -9,7 +9,8 @@ import {Link} from '../BaseLink';
 
 import styles from './styles.module.css';
 
-const bear = require('@/public/logo/taddy9.png');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const bear = require('@docs/website/public/logo/taddy9.png');
 
 const Burger = () => (
     <div className={styles.burger}>

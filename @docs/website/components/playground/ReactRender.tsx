@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import * as React from 'react';
 import * as taddyCore from '@taddy/core';
 import {css} from 'taddy';
@@ -18,9 +20,9 @@ registerPlugin(
     require('@babel/plugin-transform-modules-commonjs'),
 );
 
-const Title = ({children}) => <h2>{children}</h2>;
+const Title = ({children}: React.PropsWithChildren) => <h2>{children}</h2>;
 
-const Wrapper = ({children}) => (
+const Wrapper = ({children}: React.PropsWithChildren) => (
     <div
         {...css({
             overflow: 'hidden',
@@ -34,7 +36,10 @@ const Wrapper = ({children}) => (
     </div>
 );
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.Component<
+    React.PropsWithChildren,
+    {hasError: boolean}
+> {
     constructor(props) {
         super(props);
         this.state = {hasError: false};
@@ -71,9 +76,10 @@ const deps = {
     '@taddy/core': require('@taddy/core'),
 };
 
-export const ReactRender = ({code: sourceCode}) => {
-    const [renderComponent, setRenderComponent] = React.useState(null);
-    const [runtimeError, setRuntimeError] = React.useState(null);
+export const ReactRender = ({code: sourceCode}: {code?: string}) => {
+    const [renderComponent, setRenderComponent] =
+        React.useState<React.ReactElement | null>(null);
+    const [runtimeError, setRuntimeError] = React.useState<Error | null>(null);
     React.useEffect(() => {
         async function main() {
             try {
@@ -100,7 +106,7 @@ export const ReactRender = ({code: sourceCode}) => {
                 });
 
                 const fn = new Function('require', 'exports', code);
-                const moduleExports = {};
+                const moduleExports: {default?: React.ReactElement} = {};
 
                 fn((name) => deps[name], moduleExports);
 

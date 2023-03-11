@@ -1,9 +1,8 @@
-import * as React from 'react';
 import {css} from 'taddy';
 
 import Playground from '../components/playground';
 
-export default function Test({c = Math.random()}) {
+export default function Test() {
     return (
         <div {...css({padding: '30px'})}>
             <h3>Example 1</h3>

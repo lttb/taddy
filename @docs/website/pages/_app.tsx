@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
-import '@/styles/globals.css';
-import '@/styles/taddy.css';
+import '@docs/website/styles/globals.css';
+import '@docs/website/styles/taddy.css';
 
 // import '@taddy/babel-plugin/.cache';
 // import '@taddy/babel-plugin/.cache/index.css';
@@ -13,12 +13,14 @@ import {MDXProvider} from '@mdx-js/react';
 import {createStore} from '@reatom/core';
 import {context} from '@reatom/react';
 
-import {Sidebar} from '@/components/Sidebar/index';
-import sidebarStyles from '@/components/Sidebar/styles.module.css';
+import {Sidebar} from '@docs/website/components/Sidebar/index';
+import sidebarStyles from '@docs/website/components/Sidebar/styles.module.css';
 
-import {Link} from '@/components/Link';
+import {Link} from '@docs/website/components/Link';
+import {AppProps} from 'next/app';
 
-const ico = require('@/public/favicon.ico');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ico = require('@docs/website/public/favicon.ico');
 
 const store = createStore();
 
@@ -42,7 +44,7 @@ const components = {
     ),
 };
 
-function MyApp({Component, pageProps, router}) {
+function MyApp({Component, pageProps, router}: AppProps) {
     const name = router.pathname.slice(1);
     const title = 'taddy' + (name ? ' | ' + name : '');
 

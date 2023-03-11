@@ -67,8 +67,8 @@ export function evaluate(currentPath: NodePath<any>): {
         return {value: result.value};
     }
 
-    let content: string = '';
-    let code: string = '';
+    let content = '';
+    let code = '';
 
     try {
         const callbackName = '__taddy__';

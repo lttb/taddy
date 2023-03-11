@@ -32,7 +32,8 @@ const AceEditor = dynamic(
 
         // as @Holgrabus commented you can paste these file into your /public folder.
         // You will have to set basePath and setModuleUrl accordingly.
-        let ace = require('ace-builds/src-min-noconflict/ace');
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const ace = require('ace-builds/src-min-noconflict/ace');
         ace.config.set(
             'basePath',
             'https://cdn.jsdelivr.net/npm/ace-builds@1.4.8/src-noconflict/',

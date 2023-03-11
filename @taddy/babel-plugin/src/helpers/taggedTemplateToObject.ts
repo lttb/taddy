@@ -48,7 +48,7 @@ export function taggedTemplateToObject(
     function traverse(obj: object): t.ObjectExpression {
         const props: t.ObjectExpression['properties'] = [];
 
-        for (let key in obj) {
+        for (const key in obj) {
             const value = obj[key];
 
             if (value === true) {

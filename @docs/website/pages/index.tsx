@@ -1,11 +1,13 @@
 import {css} from 'taddy';
 
-import {Link} from '@/components/BaseLink';
-import {Row, Column} from '@/components/layout';
-import {LinkButton} from '@/components/LinkButton';
+import {Link} from '@docs/website/components/BaseLink';
+import {Row, Column} from '@docs/website/components/layout';
+import {LinkButton} from '@docs/website/components/LinkButton';
 
-const Logo1 = require('@/public/logo/taddy1.png');
-const Logo11 = require('@/public/logo/taddy11.png');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Logo1 = require('@docs/website/public/logo/taddy1.png');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Logo11 = require('@docs/website/public/logo/taddy11.png');
 
 export default function Home() {
     return (

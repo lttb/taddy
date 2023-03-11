@@ -7,12 +7,11 @@ import type {
 } from '@babel/core';
 import type {NodePaths} from '@babel/traverse';
 
-import {PACKAGE_NAME} from './config';
+import {PACKAGE_NAME,getEnv} from './config';
 import {macro} from './macro-plugin';
 import type {MacroConfig} from './macro-plugin';
 import {isTaddyEvaluation} from './helpers';
 
-import {getEnv} from './config';
 
 type ImportSpecifiers = NodePaths<t.ImportDeclaration['specifiers']>;
 
@@ -39,7 +38,7 @@ function getImportNames(
 
 function findReferences(paths: ImportSpecifiers) {
     const references = {};
-    for (let path of paths) {
+    for (const path of paths) {
         const {localName, importedName} = getImportNames(path);
         const binding = path.scope.getBinding(localName);
         if (binding?.referencePaths) {

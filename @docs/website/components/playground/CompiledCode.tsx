@@ -1,7 +1,7 @@
-import * as React from 'react';
 import {css} from 'taddy';
 
 import {useAtom} from '@reatom/react';
+import type {PropsWithChildren} from 'react';
 
 import {Column, Row} from '../layout';
 import {transformAtom} from './atoms';
@@ -9,9 +9,9 @@ import {Editor} from './Editor';
 import {EditorLayer} from './EditorLayer';
 import {ReactRender} from './ReactRender';
 
-const Title = ({children}) => <h2>{children}</h2>;
+const Title = ({children}: PropsWithChildren) => <h2>{children}</h2>;
 
-const Wrapper = ({children}) => (
+const Wrapper = ({children}: PropsWithChildren) => (
     <div
         {...css({
             overflowX: 'auto',
@@ -61,7 +61,7 @@ export const CompiledCode = ({
                 <Wrapper>
                     <Title>Render</Title>
 
-                    <ReactRender code={data.result.code} />
+                    <ReactRender code={data.result?.code} />
                 </Wrapper>
             )}
 

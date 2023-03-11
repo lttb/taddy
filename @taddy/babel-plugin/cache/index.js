@@ -1,4 +1,3 @@
-// @ts-expect-error
 // require('./taddy.css');
 
 // console.log(require.context(__dirname, true, /.*\.css/));

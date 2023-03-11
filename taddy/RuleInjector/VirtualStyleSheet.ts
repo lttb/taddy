@@ -12,7 +12,7 @@ interface VirtualCSSStyleRule extends Partial<CSSStyleRule> {
     $postfix: string;
 }
 
-interface VirtualCSSMediaRule extends Partial<CSSMediaRule> {}
+type VirtualCSSMediaRule = Partial<CSSMediaRule>
 
 export class VirtualStyleSheet extends Sheet {
     cssRules: (VirtualCSSStyleRule | VirtualCSSMediaRule)[];
@@ -102,7 +102,7 @@ export class VirtualStyleSheet extends Sheet {
             sheet = (this.cssRules[mediaIndex] as any) as typeof sheet;
         }
 
-        let rule = sheet.cssRules[ruleIndex] as VirtualCSSStyleRule;
+        const rule = sheet.cssRules[ruleIndex] as VirtualCSSStyleRule;
 
         const selectorText = `${rule.selectorText},${selector}`;
         rule.selectorText = selectorText;

@@ -1,4 +1,3 @@
-// @ts-ignore
 import hash from 'custom-hash';
 
 import {isInvalidValue} from '../common';

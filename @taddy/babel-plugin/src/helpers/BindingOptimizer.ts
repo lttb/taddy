@@ -32,7 +32,7 @@ export class BindingOptimizer {
             return;
         }
 
-        for (let [binding, paths] of bindings) {
+        for (const [binding, paths] of bindings) {
             if (isTaddy(binding)) continue;
 
             if (binding.path.removed) continue;

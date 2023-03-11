@@ -7,7 +7,7 @@ function getPathsByBindings(
 ): Set<NodePath<any>> {
     const paths = new Set<NodePath<any>>();
 
-    for (let x of bindings.keys()) {
+    for (const x of bindings.keys()) {
         if (x.path.isImportSpecifier() || x.path.isVariableDeclarator()) {
             paths.add(x.path.parentPath);
             continue;

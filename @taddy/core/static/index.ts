@@ -7,7 +7,7 @@ const VALUE_HASH_LENGTH = 5;
 export const staticCache = {};
 export const mapStaticClassName = (className?: string): object => {
     if (!className) return {};
-    let v = staticCache[className];
+    const v = staticCache[className];
     if (v) return v;
     return (staticCache[className] = className.split(' ').reduce((acc, v) => {
         if (v.length < VALUE_HASH_LENGTH) acc[v] = true;
@@ -18,7 +18,7 @@ export const mapStaticClassName = (className?: string): object => {
 
 export const joinClassName = (className: object): string => {
     let classNameString = '';
-    for (let key in className) {
+    for (const key in className) {
         if (!className[key]) continue;
 
         classNameString += (classNameString ? ' ' : '') + key;
@@ -64,9 +64,9 @@ const _css = (
 
     let style;
 
-    let className = {};
+    const className = {};
 
-    for (let key in rule) {
+    for (const key in rule) {
         if (!rule[key]) continue;
 
         if (rule[key] === true) {
@@ -104,7 +104,7 @@ css.h = (x) => config.nameGenerator.getHash(x);
 css.mixin = (x: object) => ((x[MIXIN_KEY] = _css(x)), x);
 
 css.static = css;
-// @ts-expect-error
+// @ts-expect-error TODO: fix
 css.mixin.static = css.mixin;
 
 export function $(strs: TemplateStringsArray, ...values: any[]): string {

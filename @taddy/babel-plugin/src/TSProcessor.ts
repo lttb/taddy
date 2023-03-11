@@ -149,16 +149,16 @@ function parseArray(type: TSType) {
 
     const elementType = type.getArrayElementTypeOrThrow();
 
-    for (let element of elementType.getUnionTypes() || [elementType]) {
+    for (const element of elementType.getUnionTypes() || [elementType]) {
         applyElement(element);
     }
 
     return elements;
 }
 
-export function parseObject(
-    type?: TSType,
-): {[key: string]: Set<ReturnType<typeof parseValue>>} {
+export function parseObject(type?: TSType): {
+    [key: string]: Set<ReturnType<typeof parseValue>>;
+} {
     const props = {};
     let isStaticObject = true;
 
@@ -189,6 +189,7 @@ export default class TSProcessor {
     project: TSProject;
 
     constructor(config: TSProcessorOptions | TSProject) {
+        // lazy require for ts-morph
         const {Project}: {Project: typeof TSProject} = require('ts-morph');
 
         if (config instanceof Project) {

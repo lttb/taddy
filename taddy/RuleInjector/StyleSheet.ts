@@ -132,7 +132,7 @@ export class StyleSheet extends Sheet {
             sheet = (this.cssRules[mediaIndex] as any) as typeof sheet;
         }
 
-        let rule = sheet.cssRules[ruleIndex] as CSSStyleRule;
+        const rule = sheet.cssRules[ruleIndex] as CSSStyleRule;
 
         rule.selectorText += `,${selector}`;
     }

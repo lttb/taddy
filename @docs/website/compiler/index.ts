@@ -14,6 +14,7 @@ registerPlugin('@babel/plugin-syntax-typescript', tsSyntax);
 
 registerPlugin('@taddy/babel-plugin', taddyPlugin);
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const {$css, media, RuleInjector, VirtualStyleSheet} = require('taddy');
 
 function waitForTypescrit() {
@@ -157,5 +158,7 @@ async function init() {
 const _transform = init();
 
 export async function transformCode(source, options) {
-    return await (await _transform)(source, options);
+    return await (
+        await _transform
+    )(source, options);
 }

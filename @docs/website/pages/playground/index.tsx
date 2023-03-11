@@ -2,12 +2,15 @@ import dynamic from 'next/dynamic';
 
 import {css} from 'taddy';
 
-import {Column} from '@/components/layout';
+import {Column} from '@docs/website/components/layout';
 
-const Playground = dynamic(() => import('@/components/playground'), {
-    ssr: false,
-    loading: () => <p {...css({textAlign: 'center'})}>loading ...</p>,
-});
+const Playground = dynamic(
+    () => import('@docs/website/components/playground'),
+    {
+        ssr: false,
+        loading: () => <p {...css({textAlign: 'center'})}>loading ...</p>,
+    },
+);
 
 export default function PlaygroundPage() {
     return (

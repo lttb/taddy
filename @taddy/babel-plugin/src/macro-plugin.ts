@@ -124,7 +124,6 @@ export function macro({
 
     let importPath: NodePath<t.ImportDeclaration> | null = null;
 
-    //@ts-ignore
     const sourceMapGenerator = makeSourceMapGenerator(state.file);
 
     // sourceMapGenerator.setSourceContent(filename, code);
@@ -159,7 +158,6 @@ export function macro({
     });
 
     const {handlers, finish} = createHandlers(compileOptions, {
-        //@ts-ignore
         state,
         sourceMapGenerator,
         env,
@@ -185,7 +183,7 @@ export function macro({
     for (const key in references) {
         if (!(key in handlers)) continue;
 
-        for (let ref of references[key]) {
+        for (const ref of references[key]) {
             let currentPath = ref.parentPath;
             let currentKey = key;
 

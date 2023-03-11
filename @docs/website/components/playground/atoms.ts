@@ -17,7 +17,7 @@ type Playground = {
 
 export const updatePlayground = declareAction<Partial<Playground>>(
     async (payload, store) => {
-        let {code: source, options} = store.getState(playgroundAtom);
+        const {code: source, options} = store.getState(playgroundAtom);
 
         store.dispatch(setTransformedCode({status: 'pending'}));
 

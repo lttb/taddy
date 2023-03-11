@@ -11,7 +11,7 @@ import {getCacheDir, getRootDir} from './config';
 import type {Env} from './types';
 
 let LAST_INDEX = 0;
-let STYLES: string[] = [];
+const STYLES: string[] = [];
 
 function getStylesState() {
     const {rules} = $css.ruleInjector.styleSheet;
@@ -38,7 +38,7 @@ function resolveFilepath<T extends FilenameGetter | FilepathGetter>(
     ...params: T extends (...args: any) => any ? Parameters<T> : []
 ): string {
     if (typeof getter !== 'string') {
-        // @ts-expect-error
+        // @ts-expect-error TODO: fix getter params
         return getter(...params);
     }
 
@@ -70,7 +70,9 @@ function readFileSync(filepath: string): string {
 
         filesMap.set(mtime, data);
         contentMap.set(data, mtime);
-    } catch (e) {}
+    } catch (e) {
+        console.error('error', e);
+    }
 
     return data;
 }
@@ -88,8 +90,8 @@ function appendFile(filepath: string, append: string) {
         fs.appendFileSync(filepath, append);
     } else {
         // workaround for some special FS cases like "filer"
-        // @ts-expect-error
-        fs.appendFile(filepath, append, () => {});
+        // @ts-expect-error doesn't exit for some reason
+        fs.appendFile(filepath, append, () => void 0);
     }
 }
 
@@ -122,8 +124,7 @@ export default class Output {
         // fs.writeFileSync(this.filepath, '');
     }
 
-    save() /* {sourceMap, filename} = {} */
-    {
+    save /* {sourceMap, filename} = {} */() {
         const stylesData = readFileSync(this.filepath);
         const {added} = getStylesState();
 

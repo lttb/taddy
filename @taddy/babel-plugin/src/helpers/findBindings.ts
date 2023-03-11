@@ -17,7 +17,7 @@ export function addBinding(
     path: NodePath<any> | Iterable<NodePath<any>>,
 ) {
     if (isIterable(path)) {
-        for (let x of path) {
+        for (const x of path) {
             addBinding(bindingMap, binding, x);
         }
         return;
@@ -39,10 +39,10 @@ export function findBindings(
         bindingMap: BindingMap,
     ) {
         if (path.parentPath.isMemberExpression()) {
-            // @ts-expect-error
+            // @ts-expect-error TODO: fix
             path = path.parentPath.get('object');
         } else if (path.parentPath.isObjectPattern()) {
-            // @ts-expect-error
+            // @ts-expect-error TODO: fix
             path = path.parentPath.parentPath;
         }
 
@@ -100,7 +100,7 @@ export function findBindings(
             return;
         }
 
-        for (let [newBinding, paths] of traverse(bindingPath)) {
+        for (const [newBinding, paths] of traverse(bindingPath)) {
             addBinding(bindingMap, newBinding, paths);
         }
     }

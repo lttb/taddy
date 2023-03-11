@@ -274,7 +274,7 @@ export class Processor {
         const getComposesTSValue = (path: NodePath<t.ArrayExpression>) => {
             const elements: any[] = [];
             elements[STATIC_KEY] = true;
-            for (let elementPath of path.get('elements')) {
+            for (const elementPath of path.get('elements')) {
                 if (!elementPath) return;
                 const value = getTSValue(elementPath);
 
@@ -558,11 +558,11 @@ export class Processor {
             return true;
         };
 
-        let args = ([] as NodePath<any>[]).concat(callPath.get('arguments'));
+        const args = ([] as NodePath<any>[]).concat(callPath.get('arguments'));
 
         let isObjectable = true;
 
-        for (let arg of args) {
+        for (const arg of args) {
             if (tryEvaluate(arg)) {
                 continue;
             }

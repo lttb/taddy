@@ -10,7 +10,7 @@ export const Options = () => {
     const options = useAtom(playgroundAtom, (x) => x.options, ['options']);
     const handleOption = useAction((e) => {
         return updatePlayground({
-            // @ts-expect-error
+            // @ts-expect-error expected partial options
             options: {[e.target.name]: !!e.target.checked},
         });
     });
