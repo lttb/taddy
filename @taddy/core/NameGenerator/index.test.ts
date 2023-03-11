@@ -8,26 +8,26 @@ describe('api', () => {
 
         expect(nameGenerator.getName('display', 'block'))
             .toMatchInlineSnapshot(`
-            Array [
-              "",
-              "",
-              "_15b0",
-              "_3278",
-            ]
-        `);
+                [
+                  "",
+                  "",
+                  "_15b0",
+                  "_3278",
+                ]
+            `);
 
         expect(nameGenerator.getName('display', 'inline-block'))
             .toMatchInlineSnapshot(`
-            Array [
-              "",
-              "",
-              "_15b0",
-              "_ffcd",
-            ]
-        `);
+                [
+                  "",
+                  "",
+                  "_15b0",
+                  "_ffcd",
+                ]
+            `);
 
         expect(nameGenerator.getName('color', 'red')).toMatchInlineSnapshot(`
-            Array [
+            [
               "",
               "",
               "_9bfd",

@@ -19,14 +19,14 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"taddy\\";
+            "import { css } from "taddy";
             let variant = 'normal';
             export default css({
-              _9bfd: \\"_4da4\\",
+              _9bfd: "_4da4",
               ...(variant === 'normal' && {
-                _9bfd: \\"_ac89\\"
+                _9bfd: "_ac89"
               })
-            }, \\"__376slgo\\");"
+            }, "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -49,7 +49,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"taddy\\";
+            "import { css } from "taddy";
             let variant = 'normal';
             export default css.mixin({
               color: 'red',
@@ -73,8 +73,8 @@ describe('taddy.macro.static', () => {
                 export default css({color: 'red'})
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"@taddy/core\\";
-            export default css(\\"_9bfd_4da4\\", \\"__376slgo\\");"
+            "import { css } from "@taddy/core";
+            export default css("_9bfd_4da4", "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
@@ -95,8 +95,8 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"@taddy/core\\";
-            export default css(\\"_9bfd_4da4 _69bc_9bfd_0c8f\\", \\"__376slgo\\");"
+            "import { css } from "@taddy/core";
+            export default css("_9bfd_4da4 _69bc_9bfd_0c8f", "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -120,14 +120,14 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"@taddy/core\\";
+            "import { css } from "@taddy/core";
             let color = 'red';
             export default css({
-              \\"_9bfd_5daa _69bc_9bfd_0c8f\\": true,
+              "_9bfd_5daa _69bc_9bfd_0c8f": true,
               __VARS__: {
-                \\"--_9bfd\\": color
+                "--_9bfd": color
               }
-            }, \\"__376slgo\\");"
+            }, "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -151,11 +151,11 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"@taddy/core\\";
+            "import { css } from "@taddy/core";
             export default css({
               className: 'class',
-              \\"_9bfd_4da4 _69bc_9bfd_0c8f\\": true
-            }, \\"__376slgo\\");"
+              "_9bfd_4da4 _69bc_9bfd_0c8f": true
+            }, "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -181,12 +181,12 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"@taddy/core\\";
+            "import { css } from "@taddy/core";
             let className = 'class';
             export default css({
               className,
-              \\"_9bfd_4da4 _69bc_9bfd_0c8f\\": true
-            }, \\"__376slgo\\");"
+              "_9bfd_4da4 _69bc_9bfd_0c8f": true
+            }, "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -214,7 +214,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"@taddy/core\\";
+            "import { css } from "@taddy/core";
             let className = 'class';
             let style = {
               color: 'green'
@@ -222,8 +222,8 @@ describe('taddy.macro.static', () => {
             export default css({
               className,
               style,
-              \\"_9bfd_4da4 _69bc_9bfd_0c8f\\": true
-            }, \\"__376slgo\\");"
+              "_9bfd_4da4 _69bc_9bfd_0c8f": true
+            }, "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -252,7 +252,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"@taddy/core\\";
+            "import { css } from "@taddy/core";
             let className = 'class';
             let style = {
               color: 'green'
@@ -261,11 +261,11 @@ describe('taddy.macro.static', () => {
             export default css({
               className,
               style,
-              \\"_9bfd_5daa _69bc_9bfd_0c8f\\": true,
+              "_9bfd_5daa _69bc_9bfd_0c8f": true,
               __VARS__: {
-                \\"--_9bfd\\": color
+                "--_9bfd": color
               }
-            }, \\"__376slgo\\");"
+            }, "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`

@@ -15,7 +15,7 @@ describe('api', () => {
 
     it('should generate atoms', () => {
         expect(css({color: 'red', background: 'green'})).toMatchInlineSnapshot(`
-            Object {
+            {
               "className": "_9bfd_4da4 _932d_16b8 ___49fe",
               Symbol(ID_KEY): "___49fe",
               Symbol(Symbol.toPrimitive): [Function],
@@ -37,7 +37,7 @@ describe('api', () => {
                 display: 'flex',
             }),
         ).toMatchInlineSnapshot(`
-            Object {
+            {
               "className": "_1fdd_64da _15b0_2efe ___ff7e",
               Symbol(ID_KEY): "___ff7e",
               Symbol(Symbol.toPrimitive): [Function],
@@ -244,7 +244,7 @@ describe('api', () => {
         });
 
         expect(button).toMatchInlineSnapshot(`
-            Object {
+            {
               "className": "_9bfd_4da4 ___cc1b",
               Symbol(ID_KEY): "___cc1b",
               Symbol(Symbol.toPrimitive): [Function],
@@ -252,7 +252,7 @@ describe('api', () => {
         `);
 
         expect(box).toMatchInlineSnapshot(`
-            Object {
+            {
               "className": "_9bfd_0c8f _cb51_c9cd_b2f4 ___56ac",
               Symbol(ID_KEY): "___56ac",
               Symbol(Symbol.toPrimitive): [Function],

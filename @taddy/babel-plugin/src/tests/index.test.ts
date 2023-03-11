@@ -25,7 +25,7 @@ describe('taddy.macro', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"@taddy/core\\";
+            "import { css } from "@taddy/core";
             let className = 'class';
             let style = {
               color: 'green'
@@ -34,11 +34,11 @@ describe('taddy.macro', () => {
             export default css({
               className,
               style,
-              \\"_9bfd_5daa _69bc_9bfd_0c8f\\": true,
+              "_9bfd_5daa _69bc_9bfd_0c8f": true,
               __VARS__: {
-                \\"--_9bfd\\": color
+                "--_9bfd": color
               }
-            }, \\"__376slgo\\");"
+            }, "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -61,8 +61,8 @@ describe('taddy.macro', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from \\"@taddy/core\\";
-            export default css(\\"_1fdd_64da\\", \\"__376slgo\\");"
+            "import { css } from "@taddy/core";
+            export default css("_1fdd_64da", "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
