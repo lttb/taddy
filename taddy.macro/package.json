@@ -1,0 +1,31 @@
+{
+    "name": "taddy.macro",
+    "version": "0.0.29",
+    "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
+    "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lttb/taddy.git"
+    },
+    "scripts": {
+        "start": "tsc --watch",
+        "build": "tsdx build --target node --transpileOnly",
+        "test": "tsdx test",
+        "lint": "tsdx lint",
+        "prepublishOnly": "yarn build"
+    },
+    "dependencies": {
+        "@taddy/babel-plugin": "^0.0.28",
+        "taddy": "^0.0.16"
+    },
+    "peerDependencies": {
+        "babel-plugin-macros": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/babel-plugin-macros": "^3.1.0",
+        "babel-plugin-macros": "^3.0.0"
+    }
+}

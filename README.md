@@ -1,1 +1,1 @@
-./packages/taddy/README.md
+./taddy/README.md

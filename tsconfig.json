@@ -1,19 +1,10 @@
 {
     "extends": "./tsconfig.build.json",
-    "include": ["packages/**/*", "examples/**/*"],
     "compilerOptions": {
         "incremental": true,
 
-        "typeRoots": ["node_modules/@types"],
-
         "baseUrl": ".",
-        "outDir": "dist",
-
-        "paths": {
-            "taddy": ["packages/taddy/src"],
-            "taddy.macro": ["packages/taddy.macro/src"],
-            "@taddy/core": ["packages/core/src"],
-            "@taddy/babel-plugin": ["packages/babel-plugin/src"]
-        }
-    }
+        "outDir": "dist"
+    },
+    "exclude": ["**/node_modules", "**/dist"]
 }
