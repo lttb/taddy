@@ -19,8 +19,8 @@
         "test": "jest",
         "build": "lerna run build --parallel --no-private",
         "prewebsite:build": "yarn build",
-        "website:build": "yarn lerna exec --scope @taddy/website next build",
-        "website:dev": "yarn lerna exec --scope @taddy/website next dev"
+        "website:build": "yarn lerna exec --scope @docs/website next build",
+        "website:dev": "yarn lerna exec --scope @docs/website next dev"
     },
     "husky": {
         "hooks": {

@@ -6,23 +6,24 @@ const withMDX = require('@next/mdx');
 const optimizedImages = require('next-optimized-images');
 const withTM = require('next-transpile-modules')(['@taddy/babel-plugin']);
 
+/** @type {import('next').NextConfig} */
 module.exports = withPlugins(
     [
         withMDX({
             extension: /\.mdx?$/,
         }),
-        [
-            optimizedImages,
-            {
-                inlineImageLimit: 1000,
-                handleImages: ['jpeg', 'png', 'svg', 'webp', 'gif', 'ico'],
-            },
-        ],
+        // [
+        //     optimizedImages,
+        //     {
+        //         inlineImageLimit: 1000,
+        //         handleImages: ['jpeg', 'png', 'svg', 'webp', 'gif', 'ico'],
+        //     },
+        // ],
     ],
     {
-        pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+        transpilePackages: ['@taddy/*', 'taddy'],
 
-        target: 'serverless',
+        pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 
         webpack(config) {
             Object.assign(config.resolve.alias, {
