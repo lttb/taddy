@@ -9,8 +9,7 @@ import {Link} from '../BaseLink';
 
 import styles from './styles.module.css';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const bear = require('@docs/website/public/logo/taddy9.png');
+import bearImage from '@docs/website/public/logo/taddy9.png';
 
 const Burger = () => (
     <div className={styles.burger}>
@@ -63,7 +62,7 @@ export const Sidebar = () => {
                 >
                     <img
                         alt="taddy sidebar logo"
-                        src={bear}
+                        src={bearImage.src}
                         height={100}
                         {...css({
                             filter: 'invert(37%) sepia(40%) saturate(1401%) hue-rotate(188deg) brightness(89%) contrast(82%)',

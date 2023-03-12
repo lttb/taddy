@@ -19,8 +19,7 @@ import sidebarStyles from '@docs/website/components/Sidebar/styles.module.css';
 import {Link} from '@docs/website/components/Link';
 import {AppProps} from 'next/app';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ico = require('@docs/website/public/favicon.ico');
+import ico from '@docs/website/public/favicon.ico';
 
 const store = createStore();
 
@@ -58,7 +57,7 @@ function MyApp({Component, pageProps, router}: AppProps) {
                             name="viewport"
                         />
 
-                        <link rel="shortcut icon" href={ico} />
+                        <link rel="shortcut icon" href={ico.src} />
 
                         <title>{title}</title>
                     </Head>

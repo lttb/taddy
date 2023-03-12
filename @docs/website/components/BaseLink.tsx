@@ -14,8 +14,10 @@ export const Link = ({
     const router = useRouter();
     const currentPage = router.pathname === href;
     return (
-        <NextLink href={href}>
-            <a aria-current={currentPage ? 'page' : false} {...props} />
-        </NextLink>
+        <NextLink
+            href={href}
+            aria-current={currentPage ? 'page' : false}
+            {...props}
+        />
     );
 };

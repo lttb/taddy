@@ -4,10 +4,8 @@ import {Link} from '@docs/website/components/BaseLink';
 import {Row, Column} from '@docs/website/components/layout';
 import {LinkButton} from '@docs/website/components/LinkButton';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Logo1 = require('@docs/website/public/logo/taddy1.png');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Logo11 = require('@docs/website/public/logo/taddy11.png');
+import logo1Image from '@docs/website/public/logo/taddy1.png';
+import logo11Image from '@docs/website/public/logo/taddy11.png';
 
 export default function Home() {
     return (
@@ -108,9 +106,19 @@ const Logos = () => {
                     position: 'relative',
                 })}
             >
-                <img {...first} height="300" alt="taddy logo" src={Logo1} />
+                <img
+                    {...first}
+                    height="300"
+                    alt="taddy logo"
+                    src={logo1Image.src}
+                />
 
-                <img {...second} height="300" alt="taddy logo" src={Logo11} />
+                <img
+                    {...second}
+                    height="300"
+                    alt="taddy logo"
+                    src={logo11Image.src}
+                />
             </div>
 
             <h1
