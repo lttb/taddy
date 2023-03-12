@@ -1,0 +1,22 @@
+{
+    "name": "@taddy/core",
+    "version": "0.0.13",
+    "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
+    "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lttb/taddy.git"
+    },
+    "scripts": {
+        "start": "tsc --watch",
+        "test": "jest",
+        "lint": "eslint .",
+        "prepublishOnly": "yarn build"
+    },
+    "dependencies": {
+        "custom-hash": "0.9.0"
+    }
+}
