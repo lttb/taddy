@@ -1,12 +1,8 @@
 {
     "extends": "../../tsconfig.json",
-    "include": ["src"],
     "compilerOptions": {
-        "composite": true,
         "outDir": "dist",
 
-        "baseUrl": ".",
-        "rootDir": "src"
-    },
-    "references": [{"path": "../taddy"}, {"path": "../core"}]
+        "baseUrl": "."
+    }
 }
