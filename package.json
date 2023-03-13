@@ -1,13 +1,15 @@
 {
     "private": true,
     "name": "root",
-    "workspaces": [
-        "@taddy/*",
-        "@examples/*",
-        "@docs/*",
-        "taddy",
-        "taddy.macro"
-    ],
+    "workspaces": {
+        "packages": [
+            "@taddy/*",
+            "@examples/*",
+            "@docs/*",
+            "taddy",
+            "taddy.macro"
+        ]
+    },
     "license": "MIT",
     "engines": {
         "node": ">=10"
@@ -21,11 +23,6 @@
         "prewebsite:build": "yarn build",
         "website:build": "yarn lerna exec --scope @docs/website next build",
         "website:dev": "yarn lerna exec --scope @docs/website next dev"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm run lint"
-        }
     },
     "devDependencies": {
         "@babel/core": "7.21.0",
