@@ -1,5 +1,3 @@
-/* eslint-disable global-require, import/no-dynamic-require, no-new-func */
-
 import type {PluginPass, NodePath} from '@babel/core';
 
 import {transform, registerPreset} from '@babel/standalone';
@@ -26,7 +24,7 @@ registerPreset('@babel/preset-env', envPreset);
 
 const DEFAULT_PRESETS = [
     ['@babel/preset-typescript', {allExtensions: true, isTSX: true}],
-    // '@babel/preset-react',
+    '@babel/preset-react',
     [
         '@babel/preset-env',
         {
@@ -68,7 +66,7 @@ export function evaluate(currentPath: NodePath<any>): {
     }
 
     let content = '';
-    let code = '';
+    let code: void | null | string = '';
 
     try {
         const callbackName = '__taddy__';

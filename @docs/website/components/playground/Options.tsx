@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {css} from 'taddy';
 import {useAtom, useAction} from '@reatom/react';
 

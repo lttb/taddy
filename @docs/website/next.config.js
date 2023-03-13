@@ -1,10 +1,5 @@
-const path = require('path');
-const webpack = require('webpack');
-
 const withPlugins = require('next-compose-plugins');
 const withMDX = require('@next/mdx');
-const optimizedImages = require('next-optimized-images');
-const withTM = require('next-transpile-modules')(['@taddy/babel-plugin']);
 
 /** @type {import('next').NextConfig} */
 module.exports = withPlugins(
@@ -29,23 +24,29 @@ module.exports = withPlugins(
             Object.assign(config.resolve.alias, {
                 fs: require.resolve('./compiler/stubs/fs'),
                 path: require.resolve('./compiler/stubs/path'),
+                module: require.resolve('./compiler/stubs/fs'),
             });
 
-            config.module.rules.forEach((rule) => {
-                if (!rule.include) return;
-                rule.include.push(path.join(__dirname, '../packages'));
-            });
-
-            config.plugins.push(
-                new webpack.ContextReplacementPlugin(/\/filer\//, (data) => {
-                    delete data.dependencies[0].critical;
-                    return data;
-                }),
-            );
+            // config.plugins.push(
+            //     new webpack.ContextReplacementPlugin(
+            //         /\/filer\/|\/ts-morph\/|babel\/standalone/,
+            //         (data) => {
+            //             delete data.dependencies[0].critical;
+            //             return data;
+            //         },
+            //     ),
+            // );
 
             config.externals.push({
                 typescript: 'window.ts',
             });
+
+            config.module = {
+                ...config.module,
+                // there are some packages like "@babel/standalone", "ts-morph" and "filer" that use require
+                // @see https://github.com/babel/babel/issues/14301
+                exprContextCritical: false,
+            };
 
             return config;
         },
