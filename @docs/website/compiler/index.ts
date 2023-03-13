@@ -1,4 +1,5 @@
 // import {$css, RuleInjector, VirtualStyleSheet} from 'taddy';
+import { $css, media, RuleInjector, VirtualStyleSheet } from 'taddy';
 
 import {registerPlugin, transform} from '@babel/standalone';
 
@@ -7,15 +8,12 @@ import parserTypescript from 'prettier/parser-typescript';
 
 import tsSyntax from '@babel/plugin-syntax-typescript';
 
-import taddyPlugin from '@taddy/babel-plugin';
+import taddyPlugin from '@taddy/babel-plugin/src';
 import {format} from 'path';
 
 registerPlugin('@babel/plugin-syntax-typescript', tsSyntax);
 
 registerPlugin('@taddy/babel-plugin', taddyPlugin);
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const {$css, media, RuleInjector, VirtualStyleSheet} = require('taddy');
 
 function waitForTypescrit() {
     function inner(resolve) {

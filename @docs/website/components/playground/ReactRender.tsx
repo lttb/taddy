@@ -13,12 +13,12 @@ import {EditorLayer} from './EditorLayer';
 
 import {transform, registerPreset, registerPlugin} from '@babel/standalone';
 
-// registerPreset('@babel/react', require('@babel/preset-react'));
-// registerPreset('@babel/typescript', require('@babel/preset-typescript'));
-// registerPlugin(
-//     '@babel/plugin-transform-modules-commonjs',
-//     require('@babel/plugin-transform-modules-commonjs'),
-// );
+registerPreset('@babel/react', require('@babel/preset-react'));
+registerPreset('@babel/typescript', require('@babel/preset-typescript'));
+registerPlugin(
+    '@babel/plugin-transform-modules-commonjs',
+    require('@babel/plugin-transform-modules-commonjs'),
+);
 
 const Title = ({children}: React.PropsWithChildren) => <h2>{children}</h2>;
 

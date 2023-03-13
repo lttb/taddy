@@ -2,8 +2,6 @@ import {declareAction, declareAtom} from '@reatom/core';
 
 import {stripIndent} from 'common-tags';
 
-import {transformCode} from '../../compiler';
-
 type Playground = {
     options: {
         taddy: true;
@@ -31,6 +29,10 @@ export const updatePlayground = declareAction<Partial<Playground>>(
 
             return;
         }
+
+        const transformCode = await import('../../compiler').then(
+            (x) => x.transformCode,
+        );
 
         transformCode(source, options)
             .then((result) => {
