@@ -1,5 +1,5 @@
 import type {NodePath, Binding} from '@babel/traverse';
-import {types as t} from '@babel/core';
+import * as t from '@babel/types';
 
 import {findBindings, addBinding} from './findBindings';
 import type {BindingMap} from './findBindings';
