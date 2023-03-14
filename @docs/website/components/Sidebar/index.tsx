@@ -26,74 +26,76 @@ export const Sidebar = () => {
 
             <Burger />
 
-            <Column
-                gap={10}
-                inline
-                {...css({
-                    className: styles.menu,
-                    // background: 'rgb(38 78 156)',
-                    // background: COLORS.base1,
-                    background: '#f3f0f3',
-                    padding: '20px',
-                    width: '300px',
-                    color: 'black',
-                    fontSize: '20px',
-                    position: 'sticky',
-                    top: 0,
-                    minHeight: '100vh',
-                    height: '100%',
-
-                    fontFamily: 'monospace',
-                    ' a[aria-current="page"]': {
-                        color: 'violet',
-                    },
-                    ' a:hover': {
-                        color: 'violet',
-                    },
-                })}
-            >
-                <Link
+            <div className={styles.menu}>
+                <Column
+                    gap={10}
+                    inline
                     {...css({
-                        display: 'flex',
-                        alignItems: 'center',
-                        flexDirection: 'column',
+                        // background: 'rgb(38 78 156)',
+                        // background: COLORS.base1,
+                        background: '#f3f0f3',
+                        padding: '20px',
+                        width: '300px',
+                        color: 'black',
+                        fontSize: '20px',
+                        position: 'sticky',
+                        top: 0,
+                        minHeight: '100vh',
+                        height: '100%',
+
+                        fontFamily: 'monospace',
+                        ' a[aria-current="page"]': {
+                            color: 'violet',
+                        },
+                        ' a:hover': {
+                            color: 'violet',
+                        },
                     })}
-                    href="/"
                 >
-                    <img
-                        alt="taddy sidebar logo"
-                        src={bearImage.src}
-                        height={100}
+                    <Link
                         {...css({
-                            filter: 'invert(37%) sepia(40%) saturate(1401%) hue-rotate(188deg) brightness(89%) contrast(82%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            flexDirection: 'column',
                         })}
-                    />
-
-                    <p
-                        {...css({
-                            margin: 0,
-                            fontWeight: 'bold',
-                            fontSize: '30px',
-                            color: '#3e68ba',
-                        })}
+                        href="/"
                     >
-                        taddy
-                    </p>
-                </Link>
+                        <img
+                            alt="taddy sidebar logo"
+                            src={bearImage.src}
+                            height={100}
+                            {...css({
+                                filter: 'invert(37%) sepia(40%) saturate(1401%) hue-rotate(188deg) brightness(89%) contrast(82%)',
+                            })}
+                        />
 
-                <Column as="ul" gap={5} inline>
-                    <li>
-                        <Link href="https://github.com/lttb/taddy">github</Link>
-                    </li>
-                    <li>
-                        <Link href="/playground">playground</Link>
-                    </li>
+                        <p
+                            {...css({
+                                margin: 0,
+                                fontWeight: 'bold',
+                                fontSize: '30px',
+                                color: '#3e68ba',
+                            })}
+                        >
+                            taddy
+                        </p>
+                    </Link>
 
-                    <li>
-                        <Link href="/roadmap">roadmap</Link>
-                    </li>
+                    <Column as="ul" gap={5} inline>
+                        <li>
+                            <Link href="https://github.com/lttb/taddy">
+                                github
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/playground">playground</Link>
+                        </li>
 
-                    {/* <li>
+                        <li>
+                            <Link href="/roadmap">roadmap</Link>
+                        </li>
+
+                        {/* <li>
                     <Link href="/intro">introduction</Link>
 
                     <ul>
@@ -111,8 +113,9 @@ export const Sidebar = () => {
                 <li>
                     <Link href="/docs">documentation</Link>
                 </li> */}
+                    </Column>
                 </Column>
-            </Column>
+            </div>
         </div>
     );
 };

@@ -3,8 +3,6 @@ import {buildAtomicRule} from './common';
 import Sheet from './Sheet';
 import type {SheetOptions} from './Sheet';
 
-const MEDIA_RULE_TYPE = 4;
-
 interface VirtualCSSStyleRule extends Partial<CSSStyleRule> {
     $className: string;
     $key: string;
@@ -12,10 +10,10 @@ interface VirtualCSSStyleRule extends Partial<CSSStyleRule> {
     $postfix: string;
 }
 
-type VirtualCSSMediaRule = Partial<CSSMediaRule>;
+type VirtualCSSConditionRule = Partial<CSSConditionRule>;
 
 export class VirtualStyleSheet extends Sheet {
-    cssRules: (VirtualCSSStyleRule | VirtualCSSMediaRule)[];
+    cssRules: (VirtualCSSStyleRule | VirtualCSSConditionRule)[];
 
     sheet: {cssRules: VirtualStyleSheet['cssRules']};
 
@@ -44,21 +42,19 @@ export class VirtualStyleSheet extends Sheet {
         value: string,
         {
             postfix = '',
-            mediaIndex,
-        }: {postfix?: string; mediaIndex?: number} = {},
+            atRuleIndex,
+        }: {postfix?: string; atRuleIndex?: number} = {},
     ): number {
         const selectorText = `.${className}`;
         const cssText = buildAtomicRule(selectorText, key, value);
 
         let insertSheet = this.sheet;
 
-        if (mediaIndex !== undefined) {
+        if (atRuleIndex !== undefined) {
             // cast media rule type
             insertSheet = this.sheet.cssRules[
-                mediaIndex
+                atRuleIndex
             ] as any as typeof insertSheet;
-
-            console.log({insertSheet});
         }
 
         const index = insertSheet.cssRules.length;
@@ -74,18 +70,17 @@ export class VirtualStyleSheet extends Sheet {
         return index;
     }
 
-    insertMedia(conditionText: string): number {
+    insertAtRule(key: {name: string; query: string}): number {
         const index = this.sheet.cssRules.length;
         const cssRules = [] as any;
         this.sheet.cssRules.push({
             get cssText() {
-                return `@media ${conditionText} {${this.cssRules
+                return `${key.name} (${key.query}) {${this.cssRules
                     .map((x) => x.cssText || '')
                     .join('')}}`;
             },
-            conditionText,
             cssRules,
-            type: MEDIA_RULE_TYPE,
+            conditionText: key.query,
         });
         return index;
     }
@@ -93,13 +88,13 @@ export class VirtualStyleSheet extends Sheet {
     appendSelector(
         ruleIndex: number,
         selector: string,
-        {mediaIndex}: {mediaIndex?: number} = {},
+        {atRuleIndex}: {atRuleIndex?: number} = {},
     ): void {
         let sheet = this.sheet;
 
-        if (mediaIndex !== undefined) {
+        if (atRuleIndex !== undefined) {
             // cast media rule type
-            sheet = this.cssRules[mediaIndex] as any as typeof sheet;
+            sheet = this.cssRules[atRuleIndex] as any as typeof sheet;
         }
 
         const rule = sheet.cssRules[ruleIndex] as VirtualCSSStyleRule;

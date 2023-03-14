@@ -12,7 +12,7 @@ hash.configure({
 
 type NameOptions = {
     postfix?: string;
-    media?: string;
+    at?: {query: string; name: string};
 };
 
 function generateHash(value: string) {
@@ -43,13 +43,14 @@ export class NameGenerator {
     getName = (
         prop: string,
         value: string,
-        {postfix = '', media = ''}: NameOptions = {},
-    ): string[] => {
+        {postfix = '', at}: NameOptions = {},
+    ) => {
         return [
-            this.getHash(media),
+            this.getHash(at?.name),
+            this.getHash(at?.query),
             this.getHash(postfix),
             this.getHash(prop),
             this.getHash(value),
-        ];
+        ] as const;
     };
 }
