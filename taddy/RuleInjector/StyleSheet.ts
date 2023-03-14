@@ -115,7 +115,7 @@ export class StyleSheet extends Sheet {
 
     insertAtRule(key: {name: string; query: string}) {
         return this.sheet.insertRule(
-            `@${key.name} ${key.query} {}`,
+            `${key.name} (${key.query}) {}`,
             this.cssRules.length,
         );
     }

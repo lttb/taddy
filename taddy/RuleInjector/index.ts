@@ -16,6 +16,10 @@ function isAtRule(
     return isNested(value) && !!value['@at'];
 }
 
+function isAt(key): boolean {
+    return key[0] === '@';
+}
+
 type Atom = {[key: string]: string | boolean};
 
 type CSSPseudo = string;
@@ -68,13 +72,6 @@ export class RuleInjector {
             return {[key]: true};
         }
 
-        if (isPseudo(key)) {
-            return this.putNested(value, {
-                postfix: postfix + key,
-                at,
-            });
-        }
-
         // check if that's id
         if (key[0] === '_' && key[1] === '_') {
             return {[key]: value};
@@ -94,10 +91,24 @@ export class RuleInjector {
             };
         }
 
+        if (isPseudo(key)) {
+            return this.putNested(value, {
+                postfix: postfix + key,
+                at,
+            });
+        }
+
         if (isAtRule(value)) {
             return this.putNested(value.rule, {
                 postfix,
                 at: value['@at'],
+            });
+        }
+
+        if (isAt(key)) {
+            return this.putNested(value[1], {
+                postfix,
+                at: {name: key, query: value[0]},
             });
         }
 

@@ -75,7 +75,7 @@ export class VirtualStyleSheet extends Sheet {
         const cssRules = [] as any;
         this.sheet.cssRules.push({
             get cssText() {
-                return `@${key.name} ${key.query} {${this.cssRules
+                return `${key.name} (${key.query}) {${this.cssRules
                     .map((x) => x.cssText || '')
                     .join('')}}`;
             },
