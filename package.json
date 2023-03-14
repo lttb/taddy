@@ -15,14 +15,17 @@
         "node": ">=10"
     },
     "scripts": {
-        "lerna": "lerna",
         "start": "lerna run start --stream --parallel --no-private",
         "lint": "eslint --ext .js,.ts,.tsx",
         "test": "jest",
         "build": "lerna run build --parallel --no-private",
         "prewebsite:build": "yarn build",
         "website:build": "yarn lerna exec --scope @docs/website next build",
-        "website:dev": "yarn lerna exec --scope @docs/website next dev"
+        "website:dev": "yarn lerna exec --scope @docs/website next dev",
+        "prepub": "lerna run build --no-private",
+        "pub": "lerna publish from-package --contents lib --exact --no-private",
+        "prepub:version": "lerna version --no-private",
+        "pub:version": "yarn pub"
     },
     "devDependencies": {
         "@babel/core": "7.21.0",
