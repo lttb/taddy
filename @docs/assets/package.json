@@ -1,6 +1,6 @@
 {
+    "private": true,
     "name": "@docs/assets",
     "description": "taddy documentation assets",
-    "version": "0.0.0",
-    "private": true
+    "version": "0.0.0"
 }

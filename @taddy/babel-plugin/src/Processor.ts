@@ -4,7 +4,6 @@ import {SourceMapGenerator} from 'source-map';
 
 import {VARS_KEY, config} from '@taddy/core';
 import {$css} from 'taddy';
-import stringHash from 'string-hash';
 
 import type {Env} from './types';
 
