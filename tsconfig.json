@@ -5,7 +5,5 @@
 
         "baseUrl": ".",
         "outDir": "lib"
-    },
-
-    "exclude": ["**/node_modules/**", "**/lib/**"]
+    }
 }
