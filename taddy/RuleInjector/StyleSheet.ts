@@ -104,7 +104,7 @@ export class StyleSheet extends Sheet {
         let insertSheet = this.sheet;
 
         if (atRuleIndex !== undefined) {
-            // cast media rule type
+            // cast at rule type
             insertSheet = this.cssRules[
                 atRuleIndex
             ] as any as typeof insertSheet;

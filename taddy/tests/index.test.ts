@@ -1,4 +1,4 @@
-import {expect, describe, beforeEach, it} from '@jest/globals';
+import {expect, describe, beforeEach, beforeAll, it} from '@jest/globals';
 
 import {css, $css, mixin, $} from '..';
 
@@ -9,6 +9,16 @@ function assertCSS(value, expectedStyles) {
 }
 
 describe('api', () => {
+    beforeAll(() => {
+        // happy-dom at rules doesn't have "insertRule" method
+        // TODO: raise an issue to https://github.com/capricorn86/happy-dom
+        CSSMediaRule.prototype.insertRule = CSSStyleSheet.prototype.insertRule;
+        CSSContainerRule.prototype.insertRule =
+            CSSStyleSheet.prototype.insertRule;
+        // TODO: add PR with CSSSupportsRule in global
+        // CSSSupportsRule.prototype.insertRule = CSSStyleSheet.prototype.insertRule;
+    });
+
     beforeEach(() => {
         resetStyles();
     });
@@ -23,8 +33,8 @@ describe('api', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 {color: red;}
-            ._932d_16b8 {background: green;}"
+            "._9bfd_4da4 { color: red; }
+            ._932d_16b8 { background: green; }"
         `);
     });
 
@@ -45,8 +55,8 @@ describe('api', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._1fdd_64da {opacity: 0;}
-            ._15b0_2efe {display: flex;}"
+            "._1fdd_64da { opacity: 0; }
+            ._15b0_2efe { display: flex; }"
         `);
     });
 
@@ -85,13 +95,13 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._3e02_3da8 {font-weight: bold;}
-            ._a1f1_a713 {font-size: medium;}
-            ._15b0_2efe {display: flex;}
-            ._37f5_d254 {flex-direction: column;}
-            ._9bfd_4da4 {color: red;}
-            ._932d_16b8 {background: green;}
-            ._3e02_2555 {font-weight: normal;}"
+            "._3e02_3da8 { font-weight: bold; }
+            ._a1f1_a713 { font-size: medium; }
+            ._15b0_2efe { display: flex; }
+            ._37f5_d254 { flex-direction: column; }
+            ._9bfd_4da4 { color: red; }
+            ._932d_16b8 { background: green; }
+            ._3e02_2555 { font-weight: normal; }"
         `);
     });
 
@@ -117,13 +127,13 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._3e02_3da8 {font-weight: bold;}
-            ._a1f1_a713 {font-size: medium;}
-            ._15b0_2efe {display: flex;}
-            ._37f5_d254 {flex-direction: column;}
-            ._9bfd_4da4 {color: red;}
-            ._932d_16b8 {background: green;}
-            ._2421_b2f4 {padding: 10px;}"
+            "._3e02_3da8 { font-weight: bold; }
+            ._a1f1_a713 { font-size: medium; }
+            ._15b0_2efe { display: flex; }
+            ._37f5_d254 { flex-direction: column; }
+            ._9bfd_4da4 { color: red; }
+            ._932d_16b8 { background: green; }
+            ._2421_b2f4 { padding: 10px; }"
         `);
     });
 
@@ -153,12 +163,12 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._3e02_3da8 {font-weight: bold;}
-            ._a1f1_a713 {font-size: medium;}
-            ._69bc_9bfd_4da4:hover,._9bfd_4da4 {color: red;}
-            ._15b0_2efe {display: flex;}
-            ._37f5_d254 {flex-direction: column;}
-            ._69bc_932d_16b8:hover,._932d_16b8 {background: green;}"
+            "._3e02_3da8 { font-weight: bold; }
+            ._a1f1_a713 { font-size: medium; }
+            ._69bc_9bfd_4da4:hover,._9bfd_4da4 { color: red; }
+            ._15b0_2efe { display: flex; }
+            ._37f5_d254 { flex-direction: column; }
+            ._69bc_932d_16b8:hover,._932d_16b8 { background: green; }"
         `);
     });
 
@@ -223,16 +233,16 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._3e02_3da8 {font-weight: bold;}
-            ._a1f1_a713 {font-size: medium;}
-            ._3e02_2555 {font-weight: normal;}
-            ._15b0_2efe {display: flex;}
-            ._37f5_d254 {flex-direction: column;}
-            ._9bfd_4da4 {color: red;}
-            ._932d_16b8 {background: green;}
-            ._2421_64da {padding: 0;}
-            ._2421_b2f4 {padding: 10px;}
-            ._3e02_8cc9 {font-weight: initial;}"
+            "._3e02_3da8 { font-weight: bold; }
+            ._a1f1_a713 { font-size: medium; }
+            ._3e02_2555 { font-weight: normal; }
+            ._15b0_2efe { display: flex; }
+            ._37f5_d254 { flex-direction: column; }
+            ._9bfd_4da4 { color: red; }
+            ._932d_16b8 { background: green; }
+            ._2421_64da { padding: 0px; }
+            ._2421_b2f4 { padding: 10px; }
+            ._3e02_8cc9 { font-weight: initial; }"
         `);
     });
 
@@ -260,9 +270,9 @@ describe('api', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 {color: red;}
-            ._9bfd_0c8f {color: blue;}
-            ._cb51_c9cd_b2f4 + .___cc1b {margin-left: 10px;}"
+            "._9bfd_4da4 { color: red; }
+            ._9bfd_0c8f { color: blue; }
+            ._cb51_c9cd_b2f4 + .___cc1b { margin-left: 10px; }"
         `);
     });
 
@@ -304,5 +314,66 @@ describe('api', () => {
                 '__id1 __id2',
             ).className,
         );
+    });
+
+    it('should work with @media', () => {
+        const button = css({
+            color: 'blue',
+            '@media': ['min-width: 100px', {color: 'red'}],
+        });
+
+        expect(button).toMatchInlineSnapshot(`
+            {
+              "className": "_9bfd_0c8f _e293_6219_9bfd_4da4 ___423f",
+              Symbol(ID_KEY): "___423f",
+              Symbol(Symbol.toPrimitive): [Function],
+            }
+        `);
+
+        expect(getStyles()).toMatchInlineSnapshot(`
+            "._9bfd_0c8f { color: blue; }
+            @media (min-width: 100px) { ._e293_6219_9bfd_4da4 { color: red; } }"
+        `);
+    });
+
+    it('should work with @container', () => {
+        const button = css({
+            color: 'blue',
+            '@container': ['min-width: 100px', {color: 'red'}],
+        });
+
+        expect(button).toMatchInlineSnapshot(`
+            {
+              "className": "_9bfd_0c8f _98fb_6219_9bfd_4da4 ___6a39",
+              Symbol(ID_KEY): "___6a39",
+              Symbol(Symbol.toPrimitive): [Function],
+            }
+        `);
+
+        expect(getStyles()).toMatchInlineSnapshot(`
+            "._9bfd_0c8f { color: blue; }
+            @container (min-width: 100px) { ._98fb_6219_9bfd_4da4 { color: red; } }"
+        `);
+    });
+
+    // skipped for now, CSSSupportsRule should be available in global for prototyping
+    it.skip('should work with @support', () => {
+        const button = css({
+            color: 'blue',
+            '@supports': ['display: flex', {color: 'red'}],
+        });
+
+        expect(button).toMatchInlineSnapshot(`
+            {
+              "className": "_9bfd_0c8f _2ca5_7d97_9bfd_4da4 ___4d89",
+              Symbol(ID_KEY): "___4d89",
+              Symbol(Symbol.toPrimitive): [Function],
+            }
+        `);
+
+        expect(getStyles()).toMatchInlineSnapshot(`
+            "._9bfd_0c8f { color: blue; }
+            @supports (display: flex) { ._2ca5_7d97_9bfd_4da4 { color: red; } }"
+        `);
     });
 });
