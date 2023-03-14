@@ -17,6 +17,8 @@ module.exports = {
         'prettier',
     ],
     settings: {
+        'import/ignore': ['react-native'],
+
         react: {
             version: '18',
         },

@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import type {Properties} from 'csstype';
 
 import {
@@ -49,13 +47,13 @@ const getId = (rule: any[]): string | void => {
 function _css<T extends TaddyRule | {[key: string]: TaddyRule}>(
     rule: (T | TaddyRule | false | void | null | string)[],
 ): CSSResult {
-    let id = getId(rule);
+    const id = getId(rule);
 
     const result = $css(rule.length <= 1 ? rule[0] : {composes: rule});
 
     delete result.className[MIXIN_KEY];
 
-    // @ts-expect-error
+    // @ts-expect-error fix types
     result.className = joinClassName(result.className);
 
     return withId(result, id);
@@ -70,6 +68,10 @@ export function css(
 ): ReturnType<typeof _css>;
 
 export function css(...rule) {
+    if (config.unstable_target === 'react-native') {
+        return {style: rule};
+    }
+
     return config.unstable_mapStyles(_css(rule));
 }
 
@@ -81,7 +83,8 @@ export const h = (x) => config.nameGenerator.getHash(x);
 css.h = h;
 
 css.static = (...args: any[]) => staticCSS(...args);
-// @ts-expect-error
+
+// @ts-expect-error "static" doesn't exist
 css.mixin.static = staticCSS.mixin;
 
 export {mixin, at, $};
