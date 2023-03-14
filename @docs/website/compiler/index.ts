@@ -1,5 +1,5 @@
 // import {$css, RuleInjector, VirtualStyleSheet} from 'taddy';
-import { $css, media, RuleInjector, VirtualStyleSheet } from 'taddy';
+import {$css, media, RuleInjector, VirtualStyleSheet} from 'taddy';
 
 import {registerPlugin, transform} from '@babel/standalone';
 
@@ -10,6 +10,7 @@ import tsSyntax from '@babel/plugin-syntax-typescript';
 
 import taddyPlugin from '@taddy/babel-plugin/src';
 import {format} from 'path';
+import fs from 'fs';
 
 registerPlugin('@babel/plugin-syntax-typescript', tsSyntax);
 
@@ -103,10 +104,11 @@ async function init() {
         code,
         {format = true, plugins, presets, ...options}: any = {},
     ) {
-        const compileInjector = new RuleInjector();
+        const compileInjector = new RuleInjector({virtual: true});
         compileInjector.styleSheet = new VirtualStyleSheet();
 
         $css.ruleInjector = compileInjector;
+
         let result;
         let error;
         try {
@@ -121,11 +123,14 @@ async function init() {
             throw error;
         }
 
-        compileInjector.styleSheet.cache.forEach(({key, value, postfix}) => {
-            $css.ruleInjector.styleSheet.insert(key, value, {
-                postfix,
-            });
-        });
+        compileInjector.styleSheet.cache.forEach(
+            ({key, value, postfix, media}) => {
+                $css.ruleInjector.styleSheet.insert(key, value, {
+                    postfix,
+                    media,
+                });
+            },
+        );
 
         let compiledCode = result.code;
         if (format) {
@@ -135,11 +140,13 @@ async function init() {
             });
         }
 
+        const compiledCSS = [...compileInjector.styleSheet.rules]
+            .map((x) => x.cssText)
+            .join('\n');
+
         return {
             code: compiledCode,
-            css: [...compileInjector.styleSheet.rules]
-                .map((x) => x.cssText)
-                .join('\n'),
+            css: compiledCSS,
         };
     }
     setTimeout(() => {

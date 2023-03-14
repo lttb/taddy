@@ -14,6 +14,7 @@ let LAST_INDEX = 0;
 const STYLES: string[] = [];
 
 function getStylesState() {
+    console.log('plugin', $css.ruleInjector);
     const {rules} = $css.ruleInjector.styleSheet;
     const newRules = rules.slice(LAST_INDEX);
 
@@ -51,7 +52,7 @@ export type OutputOptions = {
 };
 
 function getMtime(filepath: string): number {
-    return Number(fs.statSync(filepath).mtime);
+    return Number(fs.statSync?.(filepath).mtime);
 }
 
 const filesMap = new Map();
@@ -66,7 +67,9 @@ function readFileSync(filepath: string): string {
             return filesMap.get(mtime);
         }
 
-        data = fs.readFileSync(filepath).toString();
+        data = fs.readFileSync?.(filepath).toString();
+
+        if (!data) return '';
 
         filesMap.set(mtime, data);
         contentMap.set(data, mtime);
@@ -127,8 +130,6 @@ export default class Output {
     save /* {sourceMap, filename} = {} */() {
         const stylesData = readFileSync(this.filepath);
         const {added} = getStylesState();
-
-        // console.log({added});
 
         // TODO: improve filter performance
         const diffStyles = added
