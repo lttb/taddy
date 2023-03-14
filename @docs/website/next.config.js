@@ -16,7 +16,7 @@ module.exports = withPlugins(
         // ],
     ],
     {
-        transpilePackages: ['@taddy/*', 'taddy'],
+        transpilePackages: ['@taddy/babel-plugin', '@taddy/core', 'taddy'],
 
         pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 
