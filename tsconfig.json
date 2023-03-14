@@ -4,8 +4,8 @@
         "incremental": true,
 
         "baseUrl": ".",
-        "outDir": "dist"
+        "outDir": "lib"
     },
 
-    "exclude": ["**/node_modules", "**/dist"]
+    "exclude": ["**/node_modules/**", "**/lib/**"]
 }

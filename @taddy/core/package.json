@@ -1,6 +1,6 @@
 {
     "name": "@taddy/core",
-    "version": "0.0.13",
+    "version": "0.1.0-alpha.0",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
     "publishConfig": {
@@ -14,7 +14,8 @@
         "start": "tsc --watch",
         "test": "jest",
         "lint": "eslint .",
-        "prepublishOnly": "yarn build"
+        "prebuild": "rm -rf lib",
+        "build": "rollup -c --bundleConfigAsCjs"
     },
     "dependencies": {
         "custom-hash": "0.9.0"
