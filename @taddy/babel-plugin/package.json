@@ -15,9 +15,7 @@
         "prestart": "npm run clean",
         "start": "tsc --watch",
         "prebuild": "npm run clean",
-        "build": "tsc",
-        "test": "jest",
-        "lint": "eslint .",
+        "build": "rollup -c --bundleConfigAsCjs",
         "prepublishOnly": "yarn build"
     },
     "dependencies": {

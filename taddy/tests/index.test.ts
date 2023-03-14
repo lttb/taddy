@@ -1,8 +1,8 @@
 import {expect, describe, beforeEach, it} from '@jest/globals';
 
-import {css, $css, mixin, $} from '.';
+import {css, $css, mixin, $} from '..';
 
-import {resetStyles, getStyles} from './utils/tests';
+import {resetStyles, getStyles} from './utils';
 
 function assertCSS(value, expectedStyles) {
     expect($css(value)).toEqual($css(expectedStyles));

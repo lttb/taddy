@@ -13,10 +13,8 @@
     "scripts": {
         "clean": "rm -rf lib",
         "start": "tsc --watch",
-        "test": "jest",
-        "lint": "eslint .",
         "prebuild": "npm run clean",
-        "build": "tsc",
+        "build": "rollup -c --bundleConfigAsCjs",
         "prepublishOnly": "yarn build"
     },
     "dependencies": {

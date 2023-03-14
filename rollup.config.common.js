@@ -25,7 +25,12 @@ const config =
             },
         ],
         plugins: [
-            typescript({}),
+            typescript({
+                exclude: ['**/tests/**', '**/*.test.*'],
+                compilerOptions: {
+                    incremental: false,
+                },
+            }),
 
             copy({
                 targets: [
