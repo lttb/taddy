@@ -105,7 +105,6 @@ async function init() {
         {format = true, plugins, presets, ...options}: any = {},
     ) {
         const compileInjector = new RuleInjector({virtual: true});
-        compileInjector.styleSheet = new VirtualStyleSheet();
 
         $css.ruleInjector = compileInjector;
 
@@ -139,6 +138,8 @@ async function init() {
                 plugins: [parserTypescript],
             });
         }
+
+        console.log({compileInjector});
 
         const compiledCSS = [...compileInjector.styleSheet.rules]
             .map((x) => x.cssText)
