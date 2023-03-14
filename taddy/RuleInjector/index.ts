@@ -47,7 +47,7 @@ export class RuleInjector {
         this.options = options;
 
         this.styleSheet =
-            typeof document === 'undefined'
+            typeof document === 'undefined' || this.options?.virtual
                 ? new VirtualStyleSheet(options)
                 : new StyleSheet(options);
     }

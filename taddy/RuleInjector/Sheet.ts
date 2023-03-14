@@ -4,6 +4,7 @@ import {camelToKebab} from './common';
 
 export type SheetOptions = {
     mergeDeclarations?: boolean;
+    virtual?: boolean;
 };
 
 abstract class Sheet {
