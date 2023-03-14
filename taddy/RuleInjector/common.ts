@@ -21,5 +21,5 @@ export function getStyleNodeById(id: string): HTMLStyleElement {
     return node;
 }
 
-// @ts-expect-error __DEV__ will be injected
+// __DEV__ will be injected
 export const IS_DEV = typeof __DEV__ !== 'undefined' && __DEV__;

@@ -3,12 +3,13 @@ import {NameGenerator} from './NameGenerator';
 const nameGenerator = new NameGenerator();
 
 export type TaddyConfig = {
+    nameGenerator: NameGenerator;
+
     /** map "style" and "className" to the needed value */
     unstable_mapStyles: (value: {className: string; style?: object}) => any;
 
-    nameGenerator: NameGenerator;
-
-    properties?: {
+    /** can be used to pregenarate atoms */
+    unstable_properties?: {
         [key: string]:
             | void
             | string
@@ -16,6 +17,8 @@ export type TaddyConfig = {
             | object
             | ((...args: any[]) => object | string | number | null);
     };
+
+    unstable_target?: 'react' | 'react-native' | 'vue' | 'svelte';
 };
 
 type ValidatedShape<T, Shape> = T & {

@@ -6,5 +6,7 @@
         "baseUrl": ".",
         "outDir": "dist"
     },
+
+    "include": ["./@types/global.d.ts"],
     "exclude": ["**/node_modules", "**/dist"]
 }

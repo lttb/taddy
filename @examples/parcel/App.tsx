@@ -1,6 +1,7 @@
-import React from 'react';
 import {css} from 'taddy';
+
 import Test from './Test';
+
 function App() {
     return (
         <h1 {...css({color: 'blue'})}>
@@ -9,4 +10,5 @@ function App() {
         </h1>
     );
 }
+
 export default App;
