@@ -14,6 +14,8 @@
         "start": "tsc --watch",
         "test": "jest",
         "lint": "eslint .",
+        "prebuild": "rm -rf lib",
+        "build": "rollup -c --bundleConfigAsCjs",
         "prepublishOnly": "yarn build"
     },
     "dependencies": {

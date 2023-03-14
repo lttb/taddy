@@ -11,7 +11,7 @@
         "url": "git+https://github.com/lttb/taddy.git"
     },
     "scripts": {
-        "clean": "rm -rf dist",
+        "clean": "rm -rf lib",
         "prestart": "npm run clean",
         "start": "tsc --watch",
         "prebuild": "npm run clean",
@@ -33,7 +33,6 @@
         "common-tags": "1.8.2",
         "find-cache-dir": "4.0.0",
         "lilconfig": "2.1.0",
-        "mkdirp": "2.1.5",
         "postcss": "8.4.21",
         "postcss-js": "4.0.1",
         "resolve": "1.22.1",
@@ -43,7 +42,6 @@
     },
     "devDependencies": {
         "@types/find-cache-dir": "3.2.1",
-        "@types/mkdirp": "2.0.0",
         "@types/node": "18.15.0",
         "@types/string-hash": "1.1.1",
         "@types/babel__standalone": "^7.1.4"

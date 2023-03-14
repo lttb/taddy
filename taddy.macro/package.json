@@ -11,9 +11,12 @@
         "url": "git+https://github.com/lttb/taddy.git"
     },
     "scripts": {
+        "clean": "rm -rf lib",
         "start": "tsc --watch",
         "test": "jest",
         "lint": "eslint .",
+        "prebuild": "npm run clean",
+        "build": "tsc",
         "prepublishOnly": "yarn build"
     },
     "dependencies": {
