@@ -1,31 +1,30 @@
 {
-  "name": "taddy.macro",
-  "version": "0.1.0-alpha.0",
-  "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lttb/taddy.git"
-  },
-  "scripts": {
-    "clean": "rm -rf lib",
-    "start": "tsc --watch",
-    "prebuild": "npm run clean",
-    "build": "rollup -c --bundleConfigAsCjs",
-    "prepublishOnly": "yarn build"
-  },
-  "dependencies": {
-    "@taddy/babel-plugin": "^0.1.0-alpha.0",
-    "taddy": "^0.1.0-alpha.0"
-  },
-  "peerDependencies": {
-    "babel-plugin-macros": "^3.0.0"
-  },
-  "devDependencies": {
-    "@types/babel-plugin-macros": "^3.1.0",
-    "babel-plugin-macros": "^3.0.0"
-  }
+    "name": "taddy.macro",
+    "version": "0.1.0-alpha.0",
+    "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
+    "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lttb/taddy.git"
+    },
+    "scripts": {
+        "clean": "rm -rf lib",
+        "start": "tsc --watch",
+        "prebuild": "npm run clean",
+        "build": "rollup -c --bundleConfigAsCjs"
+    },
+    "dependencies": {
+        "@taddy/babel-plugin": "^0.1.0-alpha.0",
+        "taddy": "^0.1.0-alpha.0"
+    },
+    "peerDependencies": {
+        "babel-plugin-macros": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/babel-plugin-macros": "^3.1.0",
+        "babel-plugin-macros": "^3.0.0"
+    }
 }
