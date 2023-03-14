@@ -12,19 +12,19 @@ abstract class Sheet {
     cache: Map<string, any>;
     rulesCache: Map<string, any>;
 
-    abstract insertMedia(media: string): number;
+    abstract insertAtRule(key: {name: string; query: string}): number;
 
     abstract insertAtomicRule(
         className: string,
         key: string,
         value: string,
-        options: {postfix?: string; mediaIndex?: number},
+        options: {postfix?: string; atRuleIndex?: number},
     ): number;
 
     abstract appendSelector(
         ruleIndex: number,
         selector: string,
-        options?: {mediaIndex?: number},
+        options?: {atRuleIndex?: number},
     ): void;
 
     constructor(options: SheetOptions = {}) {
@@ -39,9 +39,13 @@ abstract class Sheet {
         value: any,
         {
             postfix = '',
-            media = '',
+            at,
             hash = '',
-        }: {postfix?: string; media?: string; hash?: string},
+        }: {
+            postfix?: string;
+            at?: {name: string; query: string};
+            hash?: string;
+        },
     ) {
         hash = hash ? '-' + hash : '';
         const {nameGenerator} = config;
@@ -50,7 +54,7 @@ abstract class Sheet {
 
         const name = nameGenerator.getName(cssKey, value, {
             postfix,
-            media,
+            at,
         });
 
         const result = Object.create(null);
@@ -63,14 +67,15 @@ abstract class Sheet {
             return result;
         }
 
-        let mediaIndex = this.rulesCache.get(media);
+        const atHash = at ? at.name + at.query : '';
+        let atRuleIndex = this.rulesCache.get(atHash);
 
-        if (media && mediaIndex === undefined) {
-            mediaIndex = this.insertMedia(media);
-            this.rulesCache.set(media, mediaIndex);
+        if (at && atRuleIndex === undefined) {
+            atRuleIndex = this.insertAtRule(at);
+            this.rulesCache.set(atHash, atRuleIndex);
         }
 
-        const originalName = nameGenerator.getName(cssKey, value, {media});
+        const originalName = nameGenerator.getName(cssKey, value, {at});
         const originalHash = originalName.join('');
 
         let ruleIndex;
@@ -80,17 +85,17 @@ abstract class Sheet {
         if (this.rulesCache.has(originalHash)) {
             ruleIndex = this.rulesCache.get(originalHash);
 
-            this.appendSelector(ruleIndex, `.${className}`, {mediaIndex});
+            this.appendSelector(ruleIndex, `.${className}`, {atRuleIndex});
         }
 
         if (ruleIndex === undefined) {
             ruleIndex = this.insertAtomicRule(className, cssKey, value, {
                 postfix,
-                mediaIndex,
+                atRuleIndex,
             });
         }
 
-        this.cache.set(nameHash, {name, key, value, postfix, media, ruleIndex});
+        this.cache.set(nameHash, {name, key, value, postfix, at, ruleIndex});
 
         if (
             this.options.mergeDeclarations &&

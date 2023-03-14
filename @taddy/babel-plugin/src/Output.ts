@@ -14,7 +14,6 @@ let LAST_INDEX = 0;
 const STYLES: string[] = [];
 
 function getStylesState() {
-    console.log('plugin', $css.ruleInjector);
     const {rules} = $css.ruleInjector.styleSheet;
     const newRules = rules.slice(LAST_INDEX);
 
@@ -121,7 +120,7 @@ export default class Output {
         const filename = resolveFilepath(this.config.cssFilename);
         this.filepath = resolveFilepath(this.config.cssFilepath, filename);
 
-        console.log('filepath', this.filepath);
+        // console.log('filepath', this.filepath);
 
         /* clean cache */
         // fs.writeFileSync(this.filepath, '');

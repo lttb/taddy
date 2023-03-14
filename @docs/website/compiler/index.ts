@@ -1,5 +1,5 @@
 // import {$css, RuleInjector, VirtualStyleSheet} from 'taddy';
-import {$css, media, RuleInjector, VirtualStyleSheet} from 'taddy';
+import {$css, RuleInjector, VirtualStyleSheet} from 'taddy';
 
 import {registerPlugin, transform} from '@babel/standalone';
 
@@ -124,10 +124,10 @@ async function init() {
         }
 
         compileInjector.styleSheet.cache.forEach(
-            ({key, value, postfix, media}) => {
+            ({key, value, postfix, at}) => {
                 $css.ruleInjector.styleSheet.insert(key, value, {
                     postfix,
-                    media,
+                    at,
                 });
             },
         );

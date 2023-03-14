@@ -105,7 +105,7 @@ export const ReactRender = ({code: sourceCode}: {code?: string}) => {
                     ],
                 });
 
-                const fn = new Function('require', 'exports', code);
+                const fn = new Function('require', 'exports', code || '');
                 const moduleExports: {default?: React.ReactElement} = {};
 
                 fn((name) => deps[name], moduleExports);

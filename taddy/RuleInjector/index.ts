@@ -10,10 +10,10 @@ function isNested(value: object | unknown): value is Atom {
     return !!value && typeof value === 'object';
 }
 
-function isMedia(
+function isAtRule(
     value: object | unknown,
-): value is {'@media': string; rule: Atom} {
-    return isNested(value) && !!value['@media'];
+): value is {'@at': {name: string; query: string}; rule: Atom} {
+    return isNested(value) && !!value['@at'];
 }
 
 type Atom = {[key: string]: string | boolean};
@@ -31,7 +31,7 @@ type CSSProp = string;
 
 type Options = {
     postfix?: string;
-    media?: string;
+    at?: {name: string; query: string};
     hash?: string;
 };
 
@@ -60,11 +60,7 @@ export class RuleInjector {
 
     put(key: CSSProp, value: string | boolean, options?: Options): Atom | null;
 
-    put(
-        key,
-        value,
-        {postfix = '', media = '', hash = ''}: Options = {},
-    ): Atom | null {
+    put(key, value, {postfix = '', at, hash = ''}: Options = {}): Atom | null {
         if (isInvalidValue(value)) return null;
 
         // {'a b c': !0}
@@ -75,7 +71,7 @@ export class RuleInjector {
         if (isPseudo(key)) {
             return this.putNested(value, {
                 postfix: postfix + key,
-                media,
+                at,
             });
         }
 
@@ -98,30 +94,30 @@ export class RuleInjector {
             };
         }
 
-        if (isMedia(value)) {
+        if (isAtRule(value)) {
             return this.putNested(value.rule, {
                 postfix,
-                media: value['@media'],
+                at: value['@at'],
             });
         }
 
         if (isNested(value)) {
             return this.putNested(value, {
                 postfix: postfix + key,
-                media,
+                at,
             });
         }
 
         return this.styleSheet.insert(key, value, {
             postfix,
-            media,
+            at,
             hash,
         });
     }
 
     private putNested(
         rule: Atom,
-        {postfix, media}: {postfix: string; media?: string},
+        {postfix, at}: {postfix: string; at?: {name: string; query: string}},
     ): Atom | null {
         if (!rule) return null;
 
@@ -129,7 +125,7 @@ export class RuleInjector {
 
         for (const key in rule) {
             const className = this.put(key, rule[key], {
-                media,
+                at,
                 postfix,
             });
 

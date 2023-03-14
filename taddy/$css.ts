@@ -94,7 +94,7 @@ export const $css = (
         const v = JSON.stringify(
             rule,
             (key, value) => {
-                if (value && value['@media']) {
+                if (value && value['@at']) {
                     return value.rule;
                 }
                 return value;

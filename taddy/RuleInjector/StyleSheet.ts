@@ -92,7 +92,7 @@ export class StyleSheet extends Sheet {
         className: string,
         key: string,
         value: string,
-        {mediaIndex}: {mediaIndex?: number} = {},
+        {atRuleIndex}: {atRuleIndex?: number} = {},
     ): number {
         if (this.isRuleExists(className, key)) {
             return -1;
@@ -103,19 +103,19 @@ export class StyleSheet extends Sheet {
 
         let insertSheet = this.sheet;
 
-        if (mediaIndex !== undefined) {
+        if (atRuleIndex !== undefined) {
             // cast media rule type
             insertSheet = this.cssRules[
-                mediaIndex
+                atRuleIndex
             ] as any as typeof insertSheet;
         }
 
         return insertSheet.insertRule(cssText, insertSheet.cssRules.length);
     }
 
-    insertMedia(media: string) {
+    insertAtRule(key: {name: string; query: string}) {
         return this.sheet.insertRule(
-            `@media ${media} {}`,
+            `@${key.name} ${key.query} {}`,
             this.cssRules.length,
         );
     }
@@ -123,13 +123,13 @@ export class StyleSheet extends Sheet {
     appendSelector(
         ruleIndex: number,
         selector: string,
-        {mediaIndex}: {mediaIndex?: number} = {},
+        {atRuleIndex}: {atRuleIndex?: number} = {},
     ): void {
         let sheet = this.sheet;
 
-        if (mediaIndex !== undefined) {
+        if (atRuleIndex !== undefined) {
             // cast media rule type
-            sheet = this.cssRules[mediaIndex] as any as typeof sheet;
+            sheet = this.cssRules[atRuleIndex] as any as typeof sheet;
         }
 
         const rule = sheet.cssRules[ruleIndex] as CSSStyleRule;
