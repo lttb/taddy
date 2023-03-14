@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.0](https://github.com/lttb/taddy/compare/taddy.macro@0.0.29...taddy.macro@0.1.0-alpha.0) (2023-03-14)
+
+### Bug Fixes
+
+- prettify ([530ee39](https://github.com/lttb/taddy/commit/530ee398c19ac28d881d94c4fe85a3005e37e3d3))
+
+### Features
+
+- drop tsdx commands ([a833a29](https://github.com/lttb/taddy/commit/a833a290a41ddb92eaea996cc0778f6211b50d26))
+- restructure ([589ff34](https://github.com/lttb/taddy/commit/589ff34cb83b536072d2936ac24b5802472260e2))
+
 ## [0.0.29](https://github.com/lttb/taddy/compare/taddy.macro@0.0.28...taddy.macro@0.0.29) (2020-08-26)
 
 **Note:** Version bump only for package taddy.macro
@@ -39,7 +50,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   support styles merge ([ddd07cc](https://github.com/lttb/taddy/commit/ddd07cc7180b666729bafb00f3fd30ff0c418b44))
+- support styles merge ([ddd07cc](https://github.com/lttb/taddy/commit/ddd07cc7180b666729bafb00f3fd30ff0c418b44))
 
 ## [0.0.20](https://github.com/lttb/taddy/compare/taddy.macro@0.0.19...taddy.macro@0.0.20) (2020-08-20)
 
@@ -57,8 +68,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **babel-plugin:** change caching strategy ([54730f3](https://github.com/lttb/taddy/commit/54730f3144e8cf90194667bbcefc414d3776dc78))
--   **website:** create ([42f0255](https://github.com/lttb/taddy/commit/42f0255929860ae7527142cecbdb918da6935c0c))
+- **babel-plugin:** change caching strategy ([54730f3](https://github.com/lttb/taddy/commit/54730f3144e8cf90194667bbcefc414d3776dc78))
+- **website:** create ([42f0255](https://github.com/lttb/taddy/commit/42f0255929860ae7527142cecbdb918da6935c0c))
 
 ## [0.0.16](https://github.com/lttb/taddy/compare/taddy.macro@0.0.15...taddy.macro@0.0.16) (2020-08-18)
 
@@ -120,7 +131,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **tadd.macro:** switch to cjs to work with babel-plugin-macro ([6ec0ea2](https://github.com/lttb/taddy/commit/6ec0ea2910c50c6fbb52cd6baa860a4443b615e3))
+- **tadd.macro:** switch to cjs to work with babel-plugin-macro ([6ec0ea2](https://github.com/lttb/taddy/commit/6ec0ea2910c50c6fbb52cd6baa860a4443b615e3))
 
 ## 0.0.1 (2020-08-17)
 

@@ -1,47 +1,47 @@
 {
-    "name": "@taddy/babel-plugin",
-    "version": "0.0.28",
-    "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
-    "license": "MIT",
-    "publishConfig": {
-        "access": "public"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/lttb/taddy.git"
-    },
-    "scripts": {
-        "clean": "rm -rf lib",
-        "prestart": "npm run clean",
-        "start": "tsc --watch",
-        "prebuild": "npm run clean",
-        "build": "rollup -c --bundleConfigAsCjs",
-        "prepublishOnly": "yarn build"
-    },
-    "dependencies": {
-        "@babel/helper-module-imports": "^7.10.1",
-        "@babel/preset-env": "^7.10.4",
-        "@babel/preset-react": "^7.18.6",
-        "@babel/preset-typescript": "^7.10.4",
-        "@babel/register": "^7.21.0",
-        "@babel/standalone": "^7.21.2",
-        "@babel/types": "^7.11.0",
-        "@taddy/core": "^0.0.13",
-        "babel-helper-evaluate-path": "0.5.0",
-        "common-tags": "1.8.2",
-        "find-cache-dir": "4.0.0",
-        "lilconfig": "2.1.0",
-        "postcss": "8.4.21",
-        "postcss-js": "4.0.1",
-        "resolve": "1.22.1",
-        "string-hash": "1.1.3",
-        "taddy": "^0.0.16",
-        "ts-morph": "17.0.1"
-    },
-    "devDependencies": {
-        "@types/find-cache-dir": "3.2.1",
-        "@types/node": "18.15.0",
-        "@types/string-hash": "1.1.1",
-        "@types/babel__standalone": "^7.1.4"
-    }
+  "name": "@taddy/babel-plugin",
+  "version": "0.1.0-alpha.0",
+  "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lttb/taddy.git"
+  },
+  "scripts": {
+    "clean": "rm -rf lib",
+    "prestart": "npm run clean",
+    "start": "tsc --watch",
+    "prebuild": "npm run clean",
+    "build": "rollup -c --bundleConfigAsCjs",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "@babel/helper-module-imports": "^7.10.1",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.10.4",
+    "@babel/register": "^7.21.0",
+    "@babel/standalone": "^7.21.2",
+    "@babel/types": "^7.11.0",
+    "@taddy/core": "^0.1.0-alpha.0",
+    "babel-helper-evaluate-path": "0.5.0",
+    "common-tags": "1.8.2",
+    "find-cache-dir": "4.0.0",
+    "lilconfig": "2.1.0",
+    "postcss": "8.4.21",
+    "postcss-js": "4.0.1",
+    "resolve": "1.22.1",
+    "string-hash": "1.1.3",
+    "taddy": "^0.1.0-alpha.0",
+    "ts-morph": "17.0.1"
+  },
+  "devDependencies": {
+    "@types/babel__standalone": "^7.1.4",
+    "@types/find-cache-dir": "3.2.1",
+    "@types/node": "18.15.0",
+    "@types/string-hash": "1.1.1"
+  }
 }
