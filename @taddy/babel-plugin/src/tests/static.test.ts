@@ -30,8 +30,8 @@ describe('taddy.macro.static', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 {color: red;}
-            ._9bfd_ac89 {color: black;}"
+            "._9bfd_4da4 { color: red; }
+            ._9bfd_ac89 {  }"
         `);
     });
 
@@ -60,8 +60,8 @@ describe('taddy.macro.static', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 {color: red;}
-            ._9bfd_ac89 {color: black;}"
+            "._9bfd_4da4 { color: red; }
+            ._9bfd_ac89 {  }"
         `);
     });
 
@@ -78,7 +78,7 @@ describe('taddy.macro.static', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
-            `"._9bfd_4da4 {color: red;}"`,
+            `"._9bfd_4da4 { color: red; }"`,
         );
     });
 
@@ -100,8 +100,8 @@ describe('taddy.macro.static', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 {color: red;}
-            ._69bc_9bfd_0c8f:hover {color: blue;}"
+            "._9bfd_4da4 { color: red; }
+            ._69bc_9bfd_0c8f:hover { color: blue; }"
         `);
     });
 
@@ -131,8 +131,8 @@ describe('taddy.macro.static', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_5daa {color: var(--_9bfd);}
-            ._69bc_9bfd_0c8f:hover {color: blue;}"
+            "._9bfd_5daa { color: var(--_9bfd); }
+            ._69bc_9bfd_0c8f:hover { color: blue; }"
         `);
     });
 
@@ -159,8 +159,8 @@ describe('taddy.macro.static', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 {color: red;}
-            ._69bc_9bfd_0c8f:hover {color: blue;}"
+            "._9bfd_4da4 { color: red; }
+            ._69bc_9bfd_0c8f:hover { color: blue; }"
         `);
     });
 
@@ -190,8 +190,8 @@ describe('taddy.macro.static', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 {color: red;}
-            ._69bc_9bfd_0c8f:hover {color: blue;}"
+            "._9bfd_4da4 { color: red; }
+            ._69bc_9bfd_0c8f:hover { color: blue; }"
         `);
     });
 
@@ -227,8 +227,8 @@ describe('taddy.macro.static', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 {color: red;}
-            ._69bc_9bfd_0c8f:hover {color: blue;}"
+            "._9bfd_4da4 { color: red; }
+            ._69bc_9bfd_0c8f:hover { color: blue; }"
         `);
     });
 
@@ -269,8 +269,8 @@ describe('taddy.macro.static', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_5daa {color: var(--_9bfd);}
-            ._69bc_9bfd_0c8f:hover {color: blue;}"
+            "._9bfd_5daa { color: var(--_9bfd); }
+            ._69bc_9bfd_0c8f:hover { color: blue; }"
         `);
     });
 });

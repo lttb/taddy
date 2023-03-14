@@ -42,8 +42,8 @@ describe('taddy.macro', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_5daa {color: var(--_9bfd);}
-            ._69bc_9bfd_0c8f:hover {color: blue;}"
+            "._9bfd_5daa { color: var(--_9bfd); }
+            ._69bc_9bfd_0c8f:hover { color: blue; }"
         `);
     });
 
@@ -66,7 +66,7 @@ describe('taddy.macro', () => {
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
-            `"._1fdd_64da {opacity: 0;}"`,
+            `"._1fdd_64da { opacity: 0; }"`,
         );
     });
 });
