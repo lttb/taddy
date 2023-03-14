@@ -1,10 +1,9 @@
 import type {PluginPass} from '@babel/core';
 
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
 import {$css, config} from 'taddy';
-import stringHash from 'string-hash';
 
 import {getCacheDir, getRootDir} from './config';
 

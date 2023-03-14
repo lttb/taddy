@@ -2,7 +2,7 @@ import * as t from '@babel/types';
 
 import type {NodePath} from '@babel/core';
 
-import nodePath from 'path';
+import * as nodePath from 'path';
 import stringHash from 'string-hash';
 
 import {$css} from 'taddy';

@@ -6,7 +6,7 @@ import type {
     ProjectOptions,
 } from 'ts-morph';
 
-import path from 'path';
+import * as path from 'path';
 
 export function getType(symbol?: TSSymbol): TSType {
     return symbol?.getTypeAtLocation(symbol.getDeclarations()[0]) as TSType;
