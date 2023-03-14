@@ -43,6 +43,7 @@ Please fill free to share any your idea and [add your proposal](https://github.c
 -   [ ] Serialize `class` values as readable names instead of the hashes for the `DEV` mode
 -   [ ] Provide optional warnings, errors and tips if compiler can't statically extract the css code
 -   [ ] Provide `css source maps` for the declared css-in-js styles
+-   [ ] Improve and document the Developer Experience with popular frameworks like Next.js
 
 ## Documentation
 
