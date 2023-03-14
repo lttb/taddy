@@ -44,13 +44,13 @@ export class NameGenerator {
         prop: string,
         value: string,
         {postfix = '', at}: NameOptions = {},
-    ): string[] => {
+    ) => {
         return [
             this.getHash(at?.name),
-            this.getHash(at?.name),
+            this.getHash(at?.query),
             this.getHash(postfix),
             this.getHash(prop),
             this.getHash(value),
-        ];
+        ] as const;
     };
 }

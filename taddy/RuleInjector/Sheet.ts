@@ -59,7 +59,7 @@ abstract class Sheet {
 
         const result = Object.create(null);
         // result[propHash + postfixHash] = value + hash
-        result[name[0] + name[1] + name[2]] = name[3] + hash;
+        result[name[0] + name[1] + name[2] + name[3]] = name[4] + hash;
 
         const nameHash = name.join('');
 
@@ -68,7 +68,7 @@ abstract class Sheet {
         }
 
         const atHash = at ? at.name + at.query : '';
-        let atRuleIndex = this.rulesCache.get(atHash);
+        let atRuleIndex = atHash ? this.rulesCache.get(atHash) : undefined;
 
         if (at && atRuleIndex === undefined) {
             atRuleIndex = this.insertAtRule(at);
@@ -95,7 +95,15 @@ abstract class Sheet {
             });
         }
 
-        this.cache.set(nameHash, {name, key, value, postfix, at, ruleIndex});
+        this.cache.set(nameHash, {
+            name,
+            hash,
+            key,
+            value,
+            postfix,
+            at,
+            ruleIndex,
+        });
 
         if (
             this.options.mergeDeclarations &&
