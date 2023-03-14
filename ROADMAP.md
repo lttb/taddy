@@ -16,6 +16,7 @@ Please fill free to share any your idea and [add your proposal](https://github.c
 -   [ ] support runtime vendor prefixes
 -   [ ] optimize `class` atomic merge (?)
 -   [ ] improve the detection of styles that were already declared
+-   [ ] improve styles object caching (eg `css({ color: 'red' })` === `css({ color: 'red' }`)
 
 ## Compiler
 
