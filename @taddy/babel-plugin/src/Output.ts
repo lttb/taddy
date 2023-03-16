@@ -10,7 +10,7 @@ import {getCacheDir, getRootDir} from './config';
 
 import type {Env} from './types';
 
-let LAST_INDEX = 0;
+const LAST_INDEX = 0;
 const STYLES: string[] = [];
 
 function getStylesState() {
@@ -19,7 +19,7 @@ function getStylesState() {
 
     // there is also "appending" rules, that don't change the index, but change the rule
     // TODO: think how to handle that
-    LAST_INDEX = rules.length;
+    // LAST_INDEX = rules.length;
 
     const added = [...newRules].map((rule) => rule.cssText || '');
 
@@ -139,13 +139,14 @@ export default class Output {
 
         const localStylesFilename = path.join(
             getCacheDir(),
-            stringHash(`${filename}:${added}`) + '.css',
+            // stringHash(`${filename}:${added}`) + '.css',
+            stringHash(`${filename}`) + '.css',
         );
 
-        // fs.writeFileSync(
-        //     localStylesFilename,
-        //     added.join('').replace(/}$/, sourceMap + '}'),
-        // );
+        fs.writeFileSync(
+            localStylesFilename,
+            added.join('').replace(/}$/, sourceMap + '}'),
+        );
 
         appendFile(this.filepath, diffStyles);
 

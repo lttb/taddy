@@ -1,7 +1,12 @@
 import {css} from 'taddy';
 
-console.log('check me');
+import {SuperComponent} from './SuperComponent';
 
 export default function Home() {
-    return <div {...css({color: 'purple'})}>hello boy!!!</div>;
+    return (
+        <div {...css({color: 'red', textDecoration: 'underline'})}>
+            hello, hoh!!!
+            <SuperComponent />
+        </div>
+    );
 }

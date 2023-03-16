@@ -1,4 +1,4 @@
-import '@taddy/babel-plugin/lib/cache/taddy.css';
+// import '@taddy/babel-plugin/lib/cache/taddy.css';
 
 export const metadata = {
     title: 'Create Next App',
