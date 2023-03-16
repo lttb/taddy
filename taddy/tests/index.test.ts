@@ -319,7 +319,7 @@ describe('api', () => {
     it('should work with @media', () => {
         const button = css({
             color: 'blue',
-            '@media': ['min-width: 100px', {color: 'red'}],
+            '@media': {'min-width: 100px': {color: 'red'}},
         });
 
         expect(button).toMatchInlineSnapshot(`
@@ -339,7 +339,7 @@ describe('api', () => {
     it('should work with @container', () => {
         const button = css({
             color: 'blue',
-            '@container': ['min-width: 100px', {color: 'red'}],
+            '@container': {'min-width: 100px': {color: 'red'}},
         });
 
         expect(button).toMatchInlineSnapshot(`
@@ -360,7 +360,7 @@ describe('api', () => {
     it.skip('should work with @support', () => {
         const button = css({
             color: 'blue',
-            '@supports': ['display: flex', {color: 'red'}],
+            '@supports': {'display: flex': {color: 'red'}},
         });
 
         expect(button).toMatchInlineSnapshot(`

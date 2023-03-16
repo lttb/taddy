@@ -26,6 +26,7 @@ describe('taddy.macro', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             let className = 'class';
             let style = {
               color: 'green'
@@ -62,6 +63,7 @@ describe('taddy.macro', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             export default css("_1fdd_64da", "__3gmgnit");"
         `);
 

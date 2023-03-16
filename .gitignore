@@ -11,6 +11,7 @@ lib
 
 !packages/taddy/.cache
 # taddy.css
+cache/*.css
 
 .vercel
 

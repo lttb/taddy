@@ -139,7 +139,7 @@ async function init() {
             });
         }
 
-        console.log({compileInjector});
+        // console.log({compileInjector});
 
         const compiledCSS = [...compileInjector.styleSheet.rules]
             .map((x) => x.cssText)

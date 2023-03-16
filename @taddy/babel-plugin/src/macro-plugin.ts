@@ -2,6 +2,8 @@ import * as t from '@babel/types';
 import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import assert from 'assert';
+import resolve from 'resolve';
+import path from 'path';
 
 import {$css, config} from 'taddy';
 
@@ -223,10 +225,7 @@ export function macro({
 
     if (importPath!) {
         importPath.insertAfter(
-            t.importDeclaration(
-                [],
-                t.stringLiteral(result.localStylesFilename),
-            ),
+            t.importDeclaration([], t.stringLiteral(result.relativePath)),
         );
     }
 

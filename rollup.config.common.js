@@ -43,17 +43,19 @@ const config =
                             const packageJson = JSON.parse(contents.toString());
 
                             return JSON.stringify({
+                                ...packageJson,
+
                                 main: 'index.cjs',
                                 module: 'index.js',
                                 exports: {
+                                    ...packageJson.exports,
+
                                     '.': {
                                         import: './index.js',
                                         require: './index.cjs',
                                     },
                                     './package.json': './package.json',
                                 },
-
-                                ...packageJson,
                             });
                         },
                     },

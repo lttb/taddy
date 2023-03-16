@@ -41,6 +41,7 @@ describe('taddy.macro.typescript', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             export default css("_15b0_2efe _37f5_b50d _bb63_616f _69bc_9bfd_4da4 _0c75_ce9a_9fbe", "__3gmgnit");"
         `);
 
@@ -83,6 +84,7 @@ describe('taddy.macro.typescript', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             export default css("_a1f1_dd91 _3e02_3da8 _8ef9_849b _69bc_9bfd_4da4 _9bfd_4da4 _15b0_2efe", "__3gmgnit");"
         `);
 

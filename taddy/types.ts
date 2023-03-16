@@ -8,7 +8,7 @@ export type TaddyRule = Properties & {
     className?: string;
     style?: object;
 } & Partial<{
-        [key in SupportedAtRules]: [string, TaddyRule];
+        [key in SupportedAtRules]: Record<string, TaddyRule>;
     }> & /* that could be {[key in SimplePseudos]: TaddyRule}, but there would be problems with autocomplete */ {
         ':-khtml-any-link'?: TaddyRule;
         ':-moz-any-link'?: TaddyRule;

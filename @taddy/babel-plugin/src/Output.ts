@@ -2,6 +2,7 @@ import type {PluginPass} from '@babel/core';
 
 import * as fs from 'fs';
 import * as path from 'path';
+import resolve from 'resolve';
 import stringHash from 'string-hash';
 
 import {$css, config} from 'taddy';
@@ -130,7 +131,7 @@ export default class Output {
         const stylesData = readFileSync(this.filepath);
         const {added} = getStylesState();
 
-        console.log({added});
+        // console.log({added});
 
         // TODO: improve filter performance
         const diffStyles = added
@@ -143,6 +144,8 @@ export default class Output {
             stringHash(`${filename}`) + '.css',
         );
 
+        const relativePath = path.relative(filename, localStylesFilename);
+
         fs.writeFileSync(
             localStylesFilename,
             added.join('').replace(/}$/, sourceMap + '}'),
@@ -150,7 +153,7 @@ export default class Output {
 
         appendFile(this.filepath, diffStyles);
 
-        return {localStylesFilename};
+        return {localStylesFilename, relativePath};
 
         // appendFile(this.filepath, sourceMap);
     }

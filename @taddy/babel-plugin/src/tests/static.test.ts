@@ -20,6 +20,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "taddy";
+            import "../../../cache/2511445583.css";
             let variant = 'normal';
             export default css({
               _9bfd: "_4da4",
@@ -50,6 +51,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "taddy";
+            import "../../../cache/2511445583.css";
             let variant = 'normal';
             export default css.mixin({
               color: 'red',
@@ -74,6 +76,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             export default css("_9bfd_4da4", "__3gmgnit");"
         `);
 
@@ -96,6 +99,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             export default css("_9bfd_4da4 _69bc_9bfd_0c8f", "__3gmgnit");"
         `);
 
@@ -121,6 +125,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             let color = 'red';
             export default css({
               "_9bfd_5daa _69bc_9bfd_0c8f": true,
@@ -152,6 +157,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             export default css({
               className: 'class',
               "_9bfd_4da4 _69bc_9bfd_0c8f": true
@@ -182,6 +188,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             let className = 'class';
             export default css({
               className,
@@ -215,6 +222,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             let className = 'class';
             let style = {
               color: 'green'
@@ -253,6 +261,7 @@ describe('taddy.macro.static', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
+            import "../../../cache/2511445583.css";
             let className = 'class';
             let style = {
               color: 'green'

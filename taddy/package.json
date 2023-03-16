@@ -13,7 +13,7 @@
     },
     "scripts": {
         "start": "tsc --watch",
-        "test": "vitest test",
+        "test": "jest test",
         "prebuild": "rm -rf lib",
         "build": "rollup -c --bundleConfigAsCjs"
     },
