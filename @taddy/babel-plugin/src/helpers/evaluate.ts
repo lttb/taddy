@@ -1,4 +1,4 @@
-import type {PluginPass, NodePath} from '@babel/core';
+import type {NodePath} from '@babel/core';
 
 import {transform, registerPreset} from '@babel/standalone';
 
@@ -10,6 +10,7 @@ import path from 'path';
 import * as taddy from 'taddy';
 
 import {MACRO_NAME, PACKAGE_NAME} from '../config';
+import {EVAL_FILENAME_POSTFIX} from './utils';
 
 import {findBindings} from './findBindings';
 import {buildCodeByPath} from './buildCodeByPath';
@@ -39,8 +40,6 @@ const EXTENSIONS = ['.es6', '.es', '.tsx', '.ts', '.jsx', '.js', '.mjs'];
 
 const macroRe = new RegExp(MACRO_NAME.replace('.', '\\.'), 'g');
 
-const EVAL_FILENAME_POSTFIX = '@__TADDY_EVALUATE__';
-
 // webpack "require" critical dependency issue workaround
 const nodeRequire = new Function(
     'require',
@@ -48,10 +47,6 @@ const nodeRequire = new Function(
         ? require
         : (typeof globalThis !== 'undefined' ? globalThis : global).require; `,
 )(module.require);
-
-export function isTaddyEvaluation(state: PluginPass): boolean {
-    return !!state.filename?.includes(EVAL_FILENAME_POSTFIX);
-}
 
 export function evaluate(currentPath: NodePath<any>): {
     value?: any;

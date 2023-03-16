@@ -7,10 +7,14 @@ import stringHash from 'string-hash';
 
 import {$css} from 'taddy';
 
-import {Processor} from './Processor';
-import type {ProcessorConfig, ProcessOptions} from './Processor';
-import {BindingOptimizer} from './helpers';
 import {getRootDir} from './config';
+
+import {
+    Processor,
+    type ProcessorConfig,
+    type ProcessOptions,
+} from './Processor';
+import {BindingOptimizer} from './helpers/BindingOptimizer';
 
 function isPathRemoved(path: NodePath<any> | null | undefined) {
     do {

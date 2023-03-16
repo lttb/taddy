@@ -1,4 +1,5 @@
 import * as t from '@babel/types';
+import type {PluginPass} from '@babel/core';
 import type {NodePath} from '@babel/traverse';
 import {SourceMapGenerator} from 'source-map';
 
@@ -7,23 +8,21 @@ import {$css} from 'taddy';
 
 import type {Env} from './types';
 
+import {evaluate} from './helpers/evaluate';
+import {getObjectPropertyKey} from './helpers/getObjectPropertyKey';
+import {optimizeStaticStyles} from './helpers/optimizeStaticStyles';
 import {
-    evaluate,
-    getObjectPropertyKey,
-    optimizeStaticStyles,
     mergeObjectProperties,
     mergeObjects,
-} from './helpers';
+} from './helpers/mergeObjectProperties';
 
 import TSProcessor, {
     parseValue,
     isStaticValue,
     DynamicType,
     STATIC_KEY,
+    type TSProcessorOptions,
 } from './TSProcessor';
-
-import type {TSProcessorOptions} from './TSProcessor';
-import {PluginPass} from '@babel/core';
 
 type ObjectProperties = t.ObjectExpression['properties'];
 

@@ -3,17 +3,14 @@ import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import assert from 'assert';
 
-import {$css, config} from 'taddy';
+// import {$css, config} from 'taddy';
 
-import {isTaddyEvaluation} from './helpers';
-import {taggedTemplateToObject} from './helpers/taggedTemplateToObject';
 import {MACRO_NAME, PACKAGE_NAME, getEnv} from './config';
-
+import {isTaddyEvaluation} from './helpers/utils';
+import {taggedTemplateToObject} from './helpers/taggedTemplateToObject';
 import {createHandlers} from './handlers';
 
-import type {OutputOptions} from './Output';
-import Output from './Output';
-
+import Output, {type OutputOptions} from './Output';
 import type {ProcessorConfig} from './Processor';
 
 import {makeSourceMapGenerator, convertGeneratorToComment} from './source-maps';
@@ -122,13 +119,15 @@ export function macro({
         throw new Error('No filename provided');
     }
 
-    let importPath: NodePath<t.ImportDeclaration> | null = null;
+    console.log('process', filename);
+
+    let importPath: NodePath<t.ImportDeclaration>;
 
     const sourceMapGenerator = makeSourceMapGenerator(state.file);
 
     // sourceMapGenerator.setSourceContent(filename, code);
 
-    $css.ruleInjector.reset();
+    // $css.ruleInjector.reset();
 
     program.traverse({
         ImportDeclaration(p) {
@@ -144,7 +143,7 @@ export function macro({
 
             importPath = p;
 
-            importPath.node.source = t.stringLiteral('taddy');
+            // importPath.node.source = t.stringLiteral('taddy');
 
             p.stop();
         },
@@ -173,7 +172,7 @@ export function macro({
 
                 assert(importPath, 'There is no taddy imports');
 
-                importPath.node.specifiers.push(specifier);
+                // importPath.node.specifiers.push(specifier);
             }
 
             return importCache.get(name)!.local;
@@ -214,16 +213,24 @@ export function macro({
 
     const {isStatic} = finish();
 
-    if (isStatic && importPath !== null) {
-        (importPath as NodePath<t.ImportDeclaration>).node.source =
-            t.stringLiteral('@taddy/core');
+    if (isStatic && importPath!) {
+        // importPath.node.source = t.stringLiteral('@taddy/core');
     }
 
     output = output || new Output({env, config: config.outputOptions});
 
     const sourceMap = convertGeneratorToComment(sourceMapGenerator);
 
-    output.save(/*{sourceMap, filename}*/);
+    const result = output.save({sourceMap, filename});
+
+    // if (importPath!) {
+    //     importPath.insertAfter(
+    //         t.importDeclaration(
+    //             [],
+    //             t.stringLiteral(result.localStylesFilename),
+    //         ),
+    //     );
+    // }
 
     return {
         keepImports: true,

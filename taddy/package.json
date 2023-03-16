@@ -3,6 +3,7 @@
     "version": "0.1.0-alpha.0",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
+    "main": "lib/index.cjs",
     "publishConfig": {
         "access": "public"
     },
