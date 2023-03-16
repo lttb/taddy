@@ -1,8 +1,7 @@
 import type {NodePath} from '@babel/core';
 
-import {transform, registerPreset} from '@babel/standalone';
+// import {transformSync} from '@babel/core';
 
-import register, {revert} from '@babel/register';
 import evaluatePath from 'babel-helper-evaluate-path';
 import resolve from 'resolve';
 import path from 'path';
@@ -15,26 +14,26 @@ import {EVAL_FILENAME_POSTFIX} from './utils';
 import {findBindings} from './findBindings';
 import {buildCodeByPath} from './buildCodeByPath';
 
-import tsPreset from '@babel/preset-typescript';
-import reactPreset from '@babel/preset-react';
-import envPreset from '@babel/preset-env';
+// import tsPreset from '@babel/preset-typescript';
+// import reactPreset from '@babel/preset-react';
+// import envPreset from '@babel/preset-env';
 
-registerPreset('@babel/preset-typescript', tsPreset);
-registerPreset('@babel/preset-react', reactPreset);
-registerPreset('@babel/preset-env', envPreset);
+// const DEFAULT_PRESETS = [
+//     [tsPreset, {allExtensions: true, isTSX: true}],
+//     // '@babel/preset-react',
+//     [
+//         envPreset,
+//         {
+//             targets: {node: '12'},
+//             useBuiltIns: false,
+//             ignoreBrowserslistConfig: true,
+//         },
+//     ],
+// ];
 
-const DEFAULT_PRESETS = [
-    ['@babel/preset-typescript', {allExtensions: true, isTSX: true}],
-    '@babel/preset-react',
-    [
-        '@babel/preset-env',
-        {
-            targets: {node: '12'},
-            useBuiltIns: false,
-            ignoreBrowserslistConfig: true,
-        },
-    ],
-];
+const rpc = require('sync-rpc');
+
+const client = rpc(__dirname + '/transformWorker.js', 'Evaluate');
 
 const EXTENSIONS = ['.es6', '.es', '.tsx', '.ts', '.jsx', '.js', '.mjs'];
 
@@ -82,26 +81,21 @@ export function evaluate(currentPath: NodePath<any>): {
             basename + EVAL_FILENAME_POSTFIX + ext,
         );
 
-        const options = {
-            babelrc: false,
-            configFile: false,
-            filename,
-            plugins: [
-                /*...opts.plugins*/
-            ],
-            presets: [/*...opts.presets*/ ...DEFAULT_PRESETS],
-        };
+        // const options = {
+        //     babelrc: false,
+        //     configFile: false,
+        //     filename,
+        //     plugins: [
+        //         /*...opts.plugins*/
+        //     ],
+        //     presets: [/*...opts.presets*/ ...DEFAULT_PRESETS],
+        // };
 
-        ({code} = transform(content, options) || {});
+        ({code} = client({content, filename}) || {});
 
         if (!code) return {};
 
         const exec = new Function('require', callbackName, code);
-
-        register({
-            ...options,
-            extensions: EXTENSIONS,
-        });
 
         let value;
 
@@ -120,8 +114,6 @@ export function evaluate(currentPath: NodePath<any>): {
                 value = result;
             },
         );
-
-        revert();
 
         return {value};
     } catch (error: any) {

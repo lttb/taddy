@@ -35,13 +35,16 @@
         "postcss-js": "4.0.1",
         "resolve": "1.22.1",
         "string-hash": "1.1.3",
+        "sync-rpc": "^1.3.6",
         "taddy": "^0.1.0-alpha.0",
-        "ts-morph": "17.0.1"
+        "ts-morph": "17.0.1",
+        "workerpool": "^6.4.0"
     },
     "devDependencies": {
         "@types/babel__standalone": "^7.1.4",
         "@types/find-cache-dir": "3.2.1",
         "@types/node": "18.15.0",
-        "@types/string-hash": "1.1.1"
+        "@types/string-hash": "1.1.1",
+        "@types/workerpool": "^6.4.0"
     }
 }
