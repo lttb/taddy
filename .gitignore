@@ -15,3 +15,5 @@ lib
 .vercel
 
 *.tsbuildinfo
+.parcel-cache
+.rollup.cache
