@@ -4,6 +4,7 @@
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
     "main": "lib/index.cjs",
+    "module": "lib/index.js",
     "publishConfig": {
         "access": "public"
     },

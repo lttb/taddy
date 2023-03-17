@@ -1,0 +1,19 @@
+{
+    "private": true,
+    "name": "@examples/nuxt",
+    "version": "0.0.0",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare"
+    },
+    "dependencies": {
+        "taddy": "^0.1.0-alpha.0"
+    },
+    "devDependencies": {
+        "nuxt": "^3.3.1",
+        "@taddy/babel-plugin": "^0.1.0-alpha.0"
+    }
+}
