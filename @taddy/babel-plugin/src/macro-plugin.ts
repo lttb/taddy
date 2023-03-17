@@ -227,7 +227,7 @@ export function macro({
         importPath.insertAfter(
             t.importDeclaration(
                 [],
-                t.stringLiteral(result.localStylesFilename),
+                t.stringLiteral(result.localStylesModuleFilename),
             ),
         );
     }

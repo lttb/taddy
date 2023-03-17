@@ -59,6 +59,8 @@ const filesMap = new Map();
 const contentMap = new Map();
 
 function readFileSync(filepath: string): string {
+    if (!fs.existsSync(filepath)) return '';
+
     let data = '';
 
     try {
@@ -153,6 +155,8 @@ export default class Output {
         const filename = resolveFilepath(this.config.cssFilename);
         this.filepath = resolveFilepath(this.config.cssFilepath, filename);
 
+        mkdir(this.filepath);
+
         // console.log('filepath', this.filepath);
 
         /* clean cache */
@@ -170,10 +174,17 @@ export default class Output {
             .filter((x) => !stylesData.includes(x))
             .join('');
 
+        const hashedFilename = stringHash(`${filename}`) + '.taddy';
+
         const localStylesFilename = path.join(
             getCacheDir(),
             // stringHash(`${filename}:${added}`) + '.taddy.css',
-            stringHash(`${filename}`) + '.taddy.css',
+            hashedFilename + '.css',
+        );
+        const localStylesModuleFilename = path.join(
+            getCacheDir(),
+            // stringHash(`${filename}:${added}`) + '.taddy.css',
+            hashedFilename + '.js',
         );
 
         const relativePath = path.relative(filename, localStylesFilename);
@@ -182,9 +193,13 @@ export default class Output {
             localStylesFilename,
             added.join('').replace(/}$/, sourceMap + '}'),
         );
+        writeFile(
+            localStylesModuleFilename,
+            `require('./${hashedFilename}.css');`,
+        );
         appendFile(this.filepath, diffStyles);
 
-        return {localStylesFilename, relativePath};
+        return {localStylesFilename, localStylesModuleFilename, relativePath};
 
         // appendFile(this.filepath, sourceMap);
     }
