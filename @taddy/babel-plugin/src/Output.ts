@@ -80,6 +80,16 @@ function readFileSync(filepath: string): string {
     return data;
 }
 
+function mkdir(filepath) {
+    if ('mkdirSync' in fs) {
+        fs.mkdirSync(path.dirname(filepath), {recursive: true});
+    } else {
+        // workaround for some special FS cases like "filer"
+        // @ts-expect-error doesn't exit for some reason
+        fs.mkdir(path.dirname(filepath), () => void 0, {recursive: true});
+    }
+}
+
 function appendFile(filepath: string, append: string) {
     // const code = content + append;
     // if (contentMap.has(code)) {
@@ -88,6 +98,8 @@ function appendFile(filepath: string, append: string) {
 
     // fs.appendFile(filepath, append, () => {});
 
+    mkdir(filepath);
+
     // // TODO: think about asynchronous appending
     if ('appendFileSync' in fs) {
         fs.appendFileSync(filepath, append);
@@ -95,6 +107,26 @@ function appendFile(filepath: string, append: string) {
         // workaround for some special FS cases like "filer"
         // @ts-expect-error doesn't exit for some reason
         fs.appendFile(filepath, append, () => void 0);
+    }
+}
+
+function writeFile(filepath: string, code: string) {
+    // const code = content + append;
+    // if (contentMap.has(code)) {
+    //     return;
+    // }
+
+    // fs.appendFile(filepath, append, () => {});
+
+    mkdir(filepath);
+
+    // // TODO: think about asynchronous appending
+    if ('writeFileSync' in fs) {
+        fs.writeFileSync(filepath, code);
+    } else {
+        // workaround for some special FS cases like "filer"
+        // @ts-expect-error doesn't exit for some reason
+        fs.writeFile(filepath, code, () => void 0);
     }
 }
 
@@ -140,17 +172,16 @@ export default class Output {
 
         const localStylesFilename = path.join(
             getCacheDir(),
-            // stringHash(`${filename}:${added}`) + '.css',
-            stringHash(`${filename}`) + '.css',
+            // stringHash(`${filename}:${added}`) + '.taddy.css',
+            stringHash(`${filename}`) + '.taddy.css',
         );
 
         const relativePath = path.relative(filename, localStylesFilename);
 
-        fs.writeFileSync(
+        writeFile(
             localStylesFilename,
             added.join('').replace(/}$/, sourceMap + '}'),
         );
-
         appendFile(this.filepath, diffStyles);
 
         return {localStylesFilename, relativePath};

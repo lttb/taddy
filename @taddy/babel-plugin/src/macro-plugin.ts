@@ -225,7 +225,10 @@ export function macro({
 
     if (importPath!) {
         importPath.insertAfter(
-            t.importDeclaration([], t.stringLiteral(result.relativePath)),
+            t.importDeclaration(
+                [],
+                t.stringLiteral(result.localStylesFilename),
+            ),
         );
     }
 
