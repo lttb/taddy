@@ -10,7 +10,8 @@
             "taddy.macro"
         ],
         "nohoist": [
-            "tslib"
+            "tslib",
+            "**/@remix-run/**"
         ]
     },
     "license": "MIT",
