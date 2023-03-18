@@ -5,8 +5,10 @@ const options = {
 };
 
 describe('taddy.macro.typescript', () => {
-    beforeEach(() => {
+    beforeEach((done) => {
         resetStyles();
+
+        done();
     });
 
     test('typed mixins', async () => {
@@ -41,8 +43,8 @@ describe('taddy.macro.typescript', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import "@taddy/babel-plugin/cache/2511445583.taddy.css";
-            export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__3gmgnit");"
+            import "@taddy/babel-plugin/cache/2781031252.taddy.css";
+            export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -83,17 +85,34 @@ describe('taddy.macro.typescript', () => {
                 options,
             ),
         ).toMatchInlineSnapshot(`
-            "import { css } from "@taddy/core";
-            import "@taddy/babel-plugin/cache/2511445583.taddy.css";
-            export default css("_-q8b8sh_-yoym18 _9wido6_1sxol _-k3s8v4_1d _t3u24i_1kgt43_2f0x _1kgt43_2f0x _rnbphe_1vf95", "__3gmgnit");"
+            "import { css } from "taddy";
+            import "@taddy/babel-plugin/cache/2781031252.taddy.css";
+            import { box, typo } from './data/mixins';
+            function mixin<T extends 'smaller' | 'larger'>(size: T) {
+              return css.mixin({
+                ...box,
+                ...typo,
+                display: 'flex',
+                fontSize: size
+              });
+            }
+            const display = 'flex';
+            export default css({
+              ...mixin('smaller'),
+              ...box,
+              ...typo,
+              _1kgt43: "_2f0x",
+              _rnbphe: "_2se5ms",
+              __VARS__: {
+                "--_rnbphe": display
+              }
+            }, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._rnbphe_1vf95 { display: flex; }
-            ._-q8b8sh_-yoym18 { font-size: smaller; }
-            ._-k3s8v4_1d { line-height: 1; }
-            ._t3u24i_1kgt43_2f0x:hover,._1kgt43_2f0x { color: red; }
-            ._9wido6_1sxol { font-weight: bold; }"
+            "._1kgt43_2f0x { color: red; }
+            ._rnbphe_2se5ms { display: var(--_rnbphe); }
+            ._rnbphe_1vf95 { display: flex; }"
         `);
     });
 });

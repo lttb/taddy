@@ -21,7 +21,7 @@
     "scripts": {
         "start": "lerna run start --stream --parallel --no-private",
         "lint": "eslint --ext .js,.ts,.tsx",
-        "test": "jest",
+        "test": "jest --runInBand",
         "check:ts": "lerna run check:ts --parallel --no-private",
         "build": "lerna run build --parallel --no-private",
         "prewebsite:build": "yarn build",

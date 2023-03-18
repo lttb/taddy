@@ -9,7 +9,7 @@ function assertCSS(value, expectedStyles) {
 }
 
 describe('api', () => {
-    beforeAll(() => {
+    beforeAll((done) => {
         // happy-dom at rules doesn't have "insertRule" method
         // TODO: raise an issue to https://github.com/capricorn86/happy-dom
         CSSMediaRule.prototype.insertRule = CSSStyleSheet.prototype.insertRule;
@@ -17,10 +17,14 @@ describe('api', () => {
             CSSStyleSheet.prototype.insertRule;
         // TODO: add PR with CSSSupportsRule in global
         // CSSSupportsRule.prototype.insertRule = CSSStyleSheet.prototype.insertRule;
+
+        done();
     });
 
-    beforeEach(() => {
+    beforeEach((done) => {
         resetStyles();
+
+        done();
     });
 
     it('should generate atoms', () => {
