@@ -28,8 +28,8 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import "@taddy/babel-plugin/cache/2781031252.taddy.css";
-            export default css("_1kgt43_2f0x _-hvs7yq_1c", "__17gkjp6");"
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
+            export default css("_1kgt43_2f0x _-hvs7yq_1c", "__3l1pbs6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -70,8 +70,8 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import "@taddy/babel-plugin/cache/2781031252.taddy.css";
-            export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__17gkjp6");"
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
+            export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__3l1pbs6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -113,7 +113,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "taddy";
-            import "@taddy/babel-plugin/cache/2781031252.taddy.css";
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
             import { box, typo } from './data/mixins';
             function mixin<T extends 'smaller' | 'larger'>(size: T) {
               return css.mixin({
@@ -129,7 +129,7 @@ describe('taddy.macro.evaluate', () => {
               ...typo,
               _1kgt43: "_2f0x",
               _rnbphe: "_1vf95"
-            }, "__17gkjp6");"
+            }, "__3l1pbs6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -160,8 +160,8 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import "@taddy/babel-plugin/cache/2781031252.taddy.css";
-            export default css("_1kgt43_2f0x _-q8b8sh_wfor _-mvl0b8_2c7gol", "__17gkjp6");"
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
+            export default css("_1kgt43_2f0x _-q8b8sh_wfor _-mvl0b8_2c7gol", "__3l1pbs6");"
         `);
     });
 });

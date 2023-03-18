@@ -28,7 +28,7 @@ describe('taddy.macro', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import "@taddy/babel-plugin/cache/2781031252.taddy.css";
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
             let className = 'class';
             let style = {
               color: 'green'
@@ -41,7 +41,7 @@ describe('taddy.macro', () => {
               __VARS__: {
                 "--_1kgt43": color
               }
-            }, "__17gkjp6");"
+            }, "__3l1pbs6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -65,8 +65,8 @@ describe('taddy.macro', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import "@taddy/babel-plugin/cache/2781031252.taddy.css";
-            export default css("_-kygmid_1c", "__17gkjp6");"
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
+            export default css("_-kygmid_1c", "__3l1pbs6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
