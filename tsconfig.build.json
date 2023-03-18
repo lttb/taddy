@@ -24,5 +24,6 @@
         "target": "ESNext",
         "downlevelIteration": true,
         "skipLibCheck": true
-    }
+    },
+    "exclude": ["**/node_modules/**"]
 }

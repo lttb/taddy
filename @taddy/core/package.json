@@ -14,8 +14,10 @@
     },
     "scripts": {
         "clean": "rm -rf lib",
-        "start": "yarn compile --watch",
+        "check:ts": "tsc --noEmit",
         "compile": "rollup -c --bundleConfigAsCjs",
+        "prestart": "yarn clean",
+        "start": "yarn compile --watch",
         "prebuild": "yarn clean",
         "build": "yarn compile"
     }

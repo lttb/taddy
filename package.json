@@ -22,6 +22,7 @@
         "start": "lerna run start --stream --parallel --no-private",
         "lint": "eslint --ext .js,.ts,.tsx",
         "test": "jest",
+        "check:ts": "lerna run check:ts --parallel --no-private",
         "build": "lerna run build --parallel --no-private",
         "prewebsite:build": "yarn build",
         "website:build": "yarn lerna exec --scope @docs/website next build",
