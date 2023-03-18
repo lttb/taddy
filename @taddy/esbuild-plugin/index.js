@@ -3,7 +3,7 @@ const styled = require('@taddy/babel-plugin');
 const fs = require('node:fs');
 const path = require('path');
 
-function styledComponentsPlugin() {
+function taddyPlugin() {
     return {
         name: '@taddy/esbuild-plugin',
         setup({onLoad}) {
@@ -59,4 +59,4 @@ function styledComponentsPlugin() {
     };
 }
 
-module.exports = styledComponentsPlugin;
+module.exports = taddyPlugin;

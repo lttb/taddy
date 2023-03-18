@@ -5,6 +5,7 @@
     "license": "MIT",
     "main": "lib/index.cjs",
     "module": "lib/index.js",
+    "types": "lib/index.d.ts",
     "publishConfig": {
         "access": "public"
     },

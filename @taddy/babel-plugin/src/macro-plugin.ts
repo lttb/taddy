@@ -63,6 +63,8 @@ type CompileOptions = {
      * @default true for development;
      */
     unstable_sourcemaps: boolean;
+
+    unstable_target: 'default' | 'vue';
 };
 
 export type MacroConfig = Partial<{
@@ -84,6 +86,7 @@ function mapCompileOptions({
     unstable_CSSVariableFallback = true,
     unstable_optimizeBindings = true,
     unstable_useTaggedTemplateLiterals = false,
+    unstable_target = 'default',
 }: Partial<CompileOptions> & {filename: string}): ProcessorConfig & {
     useTaggedTemplateLiterals: boolean;
 } {
@@ -94,6 +97,7 @@ function mapCompileOptions({
         optimizeBindings: unstable_optimizeBindings,
 
         useTaggedTemplateLiterals: unstable_useTaggedTemplateLiterals,
+        target: unstable_target,
     };
 }
 
@@ -155,6 +159,10 @@ export function macro({
         filename,
         ...config.compileOptions,
     });
+
+    if (compileOptions.target === 'vue') {
+        require('taddy/vue');
+    }
 
     const {handlers, finish} = createHandlers(compileOptions, {
         state,

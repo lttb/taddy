@@ -184,7 +184,7 @@ export default class Output {
         const localStylesModuleFilename = path.join(
             getCacheDir(),
             // stringHash(`${filename}:${added}`) + '.taddy.css',
-            hashedFilename + '.js',
+            hashedFilename,
         );
 
         const relativePath = path.relative(filename, localStylesFilename);
@@ -194,8 +194,12 @@ export default class Output {
             added.join('').replace(/}$/, sourceMap + '}'),
         );
         writeFile(
-            localStylesModuleFilename,
+            localStylesModuleFilename + '.cjs',
             `require('./${hashedFilename}.css');`,
+        );
+        writeFile(
+            localStylesModuleFilename + '.js',
+            `import './${hashedFilename}.css'`,
         );
         appendFile(this.filepath, diffStyles);
 

@@ -33,6 +33,7 @@ export type ProcessorConfig = {
     evaluate?: boolean;
     CSSVariableFallback?: boolean;
     optimizeBindings?: boolean;
+    target?: 'default' | 'vue';
 };
 
 export type ProcessOptions = {
