@@ -6,7 +6,7 @@ import {SourceMapGenerator} from 'source-map';
 import {VARS_KEY, config} from '@taddy/core';
 import {$css} from 'taddy';
 
-import type {Env} from './types';
+import type {Env, Target} from './types';
 
 import {evaluate} from './helpers/evaluate';
 import {getObjectPropertyKey} from './helpers/getObjectPropertyKey';
@@ -33,7 +33,7 @@ export type ProcessorConfig = {
     evaluate?: boolean;
     CSSVariableFallback?: boolean;
     optimizeBindings?: boolean;
-    target?: 'default' | 'vue';
+    target: Target;
 };
 
 export type ProcessOptions = {
@@ -73,7 +73,7 @@ function getHashedName(key: string, {postfix}: CommonOptions): string {
     return config.nameGenerator.getName(key, '', {postfix}).join('');
 }
 
-const isCSSProperty = (key) => {
+const isCSSProperty = (key: string) => {
     return key.slice(0, 2) === '--' || /[\w-]/.test(key);
 };
 

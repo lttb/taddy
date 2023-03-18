@@ -15,7 +15,12 @@ import {createHandlers} from './handlers';
 import Output, {type OutputOptions} from './Output';
 import type {ProcessorConfig} from './Processor';
 
-import {makeSourceMapGenerator, convertGeneratorToComment} from './source-maps';
+import {
+    makeSourceMapGenerator,
+    convertGeneratorToComment,
+    type SourceMapGenerator,
+} from './source-maps';
+import type {Target} from './types';
 
 type CompileOptions = {
     /**
@@ -64,7 +69,11 @@ type CompileOptions = {
      */
     unstable_sourcemaps: boolean;
 
-    unstable_target: 'default' | 'vue';
+    /**
+     * Set target
+     * @default 'auto'
+     */
+    unstable_target: Target;
 };
 
 export type MacroConfig = Partial<{
@@ -81,15 +90,26 @@ export type MacroOptions = {
 };
 
 function mapCompileOptions({
+    filename,
     evaluate = true,
     unstable_typescript = false,
     unstable_CSSVariableFallback = true,
     unstable_optimizeBindings = true,
     unstable_useTaggedTemplateLiterals = false,
-    unstable_target = 'default',
+    unstable_target = 'auto',
 }: Partial<CompileOptions> & {filename: string}): ProcessorConfig & {
     useTaggedTemplateLiterals: boolean;
 } {
+    const getTarget = () => {
+        if (unstable_target !== 'auto') return unstable_target;
+
+        const extname = path.extname(filename);
+
+        if (extname === '.vue') return 'vue';
+
+        return 'auto';
+    };
+
     return {
         evaluate,
         typescript: unstable_typescript,
@@ -97,41 +117,14 @@ function mapCompileOptions({
         optimizeBindings: unstable_optimizeBindings,
 
         useTaggedTemplateLiterals: unstable_useTaggedTemplateLiterals,
-        target: unstable_target,
+        target: getTarget(),
     };
 }
 
-let output: Output;
-let sourceMapGenerator;
-
-export function macro({
-    references,
-    babel,
-    state,
-    config: _config = {},
-}: MacroOptions) {
-    const {env = getEnv(babel), ...config} = _config;
-
-    if (isTaddyEvaluation(state)) {
-        return;
-    }
-
-    const program = state.file.path as NodePath<t.Program>;
-    const code = state.file.code;
-    const {filename} = state;
-
-    if (!filename) {
-        // TODO: consider a fallback
-        throw new Error('No filename provided');
-    }
-
-    let importPath: NodePath<t.ImportDeclaration>;
-
-    sourceMapGenerator = makeSourceMapGenerator(state.file);
-
-    sourceMapGenerator.setSourceContent(filename, code);
-
-    $css.ruleInjector.reset();
+const findImportPath = (
+    program: NodePath<t.Program>,
+): undefined | NodePath<t.ImportDeclaration> => {
+    let importPath: undefined | NodePath<t.ImportDeclaration> = undefined;
 
     program.traverse({
         ImportDeclaration(p) {
@@ -153,6 +146,41 @@ export function macro({
         },
     });
 
+    return importPath;
+};
+
+let output: Output;
+let sourceMapGenerator: SourceMapGenerator;
+
+export function macro({
+    references,
+    babel,
+    state,
+    config: _config = {},
+}: MacroOptions) {
+    const {env = getEnv(babel), ...config} = _config;
+
+    if (isTaddyEvaluation(state)) {
+        return;
+    }
+
+    const program = state.file.path as NodePath<t.Program>;
+    const code = state.file.code;
+    const {filename} = state;
+
+    assert(filename, 'Filename is required');
+
+    const importPath = findImportPath(program);
+
+    if (!importPath) return;
+
+    sourceMapGenerator = makeSourceMapGenerator(state.file);
+
+    sourceMapGenerator.setSourceContent(filename, code);
+
+    // TODO: implement "createCSS" and pass it
+    $css.ruleInjector.reset();
+
     const importCache = new Map<string, t.ImportSpecifier>();
 
     const {useTaggedTemplateLiterals, ...compileOptions} = mapCompileOptions({
@@ -160,8 +188,14 @@ export function macro({
         ...config.compileOptions,
     });
 
-    if (compileOptions.target === 'vue') {
-        require('taddy/vue');
+    switch (compileOptions.target) {
+        case 'vue': {
+            require('taddy/vue');
+            break;
+        }
+        case 'auto': {
+            break;
+        }
     }
 
     const {handlers, finish} = createHandlers(compileOptions, {
@@ -177,8 +211,6 @@ export function macro({
                     t.identifier(name),
                 );
                 importCache.set(name, specifier);
-
-                assert(importPath, 'There is no taddy imports');
 
                 importPath.node.specifiers.push(specifier);
             }
@@ -221,7 +253,7 @@ export function macro({
 
     const {isStatic} = finish();
 
-    if (isStatic && importPath!) {
+    if (isStatic) {
         importPath.node.source = t.stringLiteral('@taddy/core');
     }
 
@@ -229,16 +261,15 @@ export function macro({
 
     const sourceMap = convertGeneratorToComment(sourceMapGenerator);
 
-    const result = output.save({sourceMap, filename});
+    const result = output.save({
+        sourceMap,
+        filename,
+        target: compileOptions.target,
+    });
 
-    if (importPath!) {
-        importPath.insertAfter(
-            t.importDeclaration(
-                [],
-                t.stringLiteral(result.localStylesFilename),
-            ),
-        );
-    }
+    importPath.insertAfter(
+        t.importDeclaration([], t.stringLiteral(result.importName)),
+    );
 
     return {
         keepImports: true,

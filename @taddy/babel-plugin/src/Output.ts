@@ -9,7 +9,7 @@ import {$css, config} from 'taddy';
 
 import {getCacheDir, getRootDir} from './config';
 
-import type {Env} from './types';
+import type {Env, Target} from './types';
 
 const LAST_INDEX = 0;
 const STYLES: string[] = [];
@@ -139,15 +139,19 @@ export default class Output {
     env: Env;
     config: OutputOptions;
     filepath: string;
+    cacheDir: string;
 
     constructor({env, config}: {env: Env; config?: Partial<OutputOptions>}) {
         this.env = env;
+
+        this.cacheDir = getCacheDir();
+
         this.config = Object.assign(
             {
                 // getCSSFilename = (content) => `atoms-${stringHash(content)}.css`,
                 cssFilename: () => `taddy.css`,
                 cssFilepath: (filename: string) =>
-                    path.join(getCacheDir(), filename),
+                    path.join(this.cacheDir, filename),
             },
             config,
         ) as OutputOptions;
@@ -163,7 +167,15 @@ export default class Output {
         // fs.writeFileSync(this.filepath, '');
     }
 
-    save({sourceMap, filename}: {sourceMap: any; filename: string}) {
+    save({
+        sourceMap,
+        filename,
+        target,
+    }: {
+        sourceMap: string;
+        filename: string;
+        target: Target;
+    }) {
         const stylesData = readFileSync(this.filepath);
         const {added} = getStylesState();
 
@@ -174,37 +186,32 @@ export default class Output {
             .filter((x) => !stylesData.includes(x))
             .join('');
 
-        const hashedFilename = stringHash(`${filename}`) + '.taddy';
+        appendFile(this.filepath, diffStyles);
+        // appendFile(this.filepath, sourceMap);
 
-        const localStylesFilename = path.join(
-            getCacheDir(),
-            // stringHash(`${filename}:${added}`) + '.taddy.css',
-            hashedFilename + '.css',
-        );
-        const localStylesModuleFilename = path.join(
-            getCacheDir(),
-            // stringHash(`${filename}:${added}`) + '.taddy.css',
-            hashedFilename,
-        );
+        const localFilename = stringHash(`${filename}`) + '.taddy';
 
-        const relativePath = path.relative(filename, localStylesFilename);
+        const localFilepath = path.join(
+            this.cacheDir,
+            // stringHash(`${filename}:${added}`) + '.taddy.css',
+            localFilename,
+        );
 
         writeFile(
-            localStylesFilename,
+            localFilepath + '.css',
             added.join('').replace(/}$/, sourceMap + '}'),
         );
-        writeFile(
-            localStylesModuleFilename + '.cjs',
-            `require('./${hashedFilename}.css');`,
-        );
-        writeFile(
-            localStylesModuleFilename + '.js',
-            `import './${hashedFilename}.css'`,
-        );
-        appendFile(this.filepath, diffStyles);
 
-        return {localStylesFilename, localStylesModuleFilename, relativePath};
+        if (target === 'remix') {
+            writeFile(
+                localFilepath + '.cjs',
+                `require('./${localFilename}.css');`,
+            );
+            writeFile(localFilepath + '.js', `import './${localFilename}.css'`);
 
-        // appendFile(this.filepath, sourceMap);
+            return {importName: `@taddy/babel-plugin/cache/${localFilename}`};
+        }
+
+        return {importName: `@taddy/babel-plugin/cache/${localFilename}.css`};
     }
 }

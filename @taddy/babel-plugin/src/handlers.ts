@@ -75,10 +75,10 @@ export const createHandlers = (
             }
         },
 
-        mixin: (path) => {
+        mixin: (path: NodePath<any>) => {
             mixinsQueue.push(path);
         },
-    };
+    } as const;
 
     function processCSS({
         path,

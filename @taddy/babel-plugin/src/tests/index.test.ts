@@ -26,7 +26,7 @@ describe('taddy.macro', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import "../../../cache/2511445583.css";
+            import "@taddy/babel-plugin/cache/2511445583.taddy.css";
             let className = 'class';
             let style = {
               color: 'green'
@@ -35,16 +35,16 @@ describe('taddy.macro', () => {
             export default css({
               className,
               style,
-              "_9bfd_5daa _69bc_9bfd_0c8f": true,
+              "_1kgt43_-t7a17f _t3u24i_1kgt43_1svoa": true,
               __VARS__: {
-                "--_9bfd": color
+                "--_1kgt43": color
               }
             }, "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_5daa { color: var(--_9bfd); }
-            ._69bc_9bfd_0c8f:hover { color: blue; }"
+            "._1kgt43_-t7a17f { color: var(--_1kgt43); }
+            ._t3u24i_1kgt43_1svoa:hover { color: blue; }"
         `);
     });
 
@@ -63,12 +63,12 @@ describe('taddy.macro', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import "../../../cache/2511445583.css";
-            export default css("_1fdd_64da", "__3gmgnit");"
+            import "@taddy/babel-plugin/cache/2511445583.taddy.css";
+            export default css("_-kygmid_1c", "__3gmgnit");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
-            `"._1fdd_64da { opacity: 0; }"`,
+            `"._-kygmid_1c { opacity: 0; }"`,
         );
     });
 });

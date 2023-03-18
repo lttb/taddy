@@ -1,12 +1,9 @@
 {
     "compilerOptions": {
-        "allowJs": false,
         "allowSyntheticDefaultImports": true,
         "alwaysStrict": true,
         "declaration": true,
-        "emitDecoratorMetadata": false,
         "esModuleInterop": true,
-        "experimentalDecorators": false,
         "importHelpers": true,
         "jsx": "react-jsx",
         "lib": ["dom", "dom.iterable", "esnext"],
