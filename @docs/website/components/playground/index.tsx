@@ -34,7 +34,7 @@ export default function Playground({
                 <Head>
                     <script
                         async
-                        src="https://unpkg.com/typescript@latest/lib/typescriptServices.js"
+                        src="https://unpkg.com/typescript@latest/lib/typescript.js"
                     ></script>
                 </Head>
 

@@ -24,7 +24,8 @@ module.exports = withPlugins(
             Object.assign(config.resolve.alias, {
                 fs: require.resolve('./compiler/stubs/fs'),
                 path: require.resolve('./compiler/stubs/path'),
-                module: require.resolve('./compiler/stubs/fs'),
+                module: require.resolve('./compiler/stubs/module'),
+                'sync-rpc': require.resolve('./compiler/stubs/sync-rpc'),
             });
 
             // config.plugins.push(
