@@ -232,12 +232,12 @@ export function macro({
     const result = output.save({sourceMap, filename});
 
     if (importPath!) {
-        importPath.insertAfter(
-            t.importDeclaration(
-                [],
-                t.stringLiteral(result.localStylesModuleFilename),
-            ),
-        );
+        // importPath.insertAfter(
+        //     t.importDeclaration(
+        //         [],
+        //         t.stringLiteral(result.localStylesModuleFilename),
+        //     ),
+        // );
     }
 
     return {

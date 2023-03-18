@@ -68,7 +68,7 @@ export default function plugin(
             // TODO: support require expression
 
             ImportDeclaration(path, state) {
-                // console.log('run', state.file.opts.filename);
+                // console.log('run', state.file.code, state.filename);
 
                 if (isTaddyEvaluation(state)) {
                     return;

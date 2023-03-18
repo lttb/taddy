@@ -9,6 +9,8 @@ function taddyPlugin() {
         async transform(src, id) {
             const extname = path.extname(id);
 
+            console.log({src, id});
+
             if (!/\.[tj]sx$/.test(extname)) {
                 return;
             }
