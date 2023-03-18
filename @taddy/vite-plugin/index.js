@@ -2,6 +2,8 @@ const babel = require('@babel/core');
 const taddyBabelPlugin = require('@taddy/babel-plugin');
 const path = require('node:path');
 
+const SUPPORTED_EXTENSIONS = new Set(['.tsx', '.ts', '.jsx', '.js', '.astro']);
+
 function taddyPlugin() {
     return {
         name: '@taddy/vite-plugin',
@@ -9,9 +11,7 @@ function taddyPlugin() {
         async transform(src, id) {
             const extname = path.extname(id);
 
-            console.log({src, id});
-
-            if (!/\.[tj]sx$/.test(extname)) {
+            if (!SUPPORTED_EXTENSIONS.has(extname)) {
                 return;
             }
 
