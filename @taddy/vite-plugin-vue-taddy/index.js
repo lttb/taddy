@@ -1,6 +1,6 @@
 const babel = require('@babel/core');
 const taddyBabelPlugin = require('@taddy/babel-plugin');
-const path = require('node:path');
+const path = require('path');
 
 function taddyPlugin() {
     return {
