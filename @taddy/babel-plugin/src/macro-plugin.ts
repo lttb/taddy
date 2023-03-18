@@ -3,7 +3,7 @@ import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import assert from 'assert';
 import resolve from 'resolve';
-import path from 'node:path';
+import path from 'path';
 
 import {$css, config} from 'taddy';
 

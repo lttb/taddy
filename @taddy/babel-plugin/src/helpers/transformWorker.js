@@ -1,8 +1,8 @@
+/* a worker used by "sync-rpc" */
+
 const {transformAsync} = require('@babel/core');
 const tsPreset = require('@babel/preset-typescript');
 const envPreset = require('@babel/preset-env');
-
-const workerpool = require('workerpool');
 
 const DEFAULT_PRESETS = [
     [tsPreset, {allExtensions: true, isTSX: true}],
@@ -17,23 +17,20 @@ const DEFAULT_PRESETS = [
     ],
 ];
 
-function transform({content, filename}) {
-    return transformAsync(content, {
-        babelrc: false,
-        configFile: false,
-        filename,
-        plugins: [
-            /*...opts.plugins*/
-        ],
-        presets: [/*...opts.presets*/ ...DEFAULT_PRESETS],
-    });
-}
+const init =
+    () =>
+    ({content, filename}) => {
+        const transformOptions = {
+            babelrc: false,
+            configFile: false,
+            filename,
+            plugins: [
+                /*...opts.plugins*/
+            ],
+            presets: [/*...opts.presets*/ ...DEFAULT_PRESETS],
+        };
 
-function init(connection) {
-    // you can setup any connections you need here
-    return function ({content, filename}) {
-        // Note how even though we return a promise, the resulting rpc client will be synchronous
-        return transform({content, filename});
+        return transformAsync(content, transformOptions);
     };
-}
+
 module.exports = init;

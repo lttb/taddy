@@ -69,7 +69,7 @@ function readFileSync(filepath: string): string {
             return filesMap.get(mtime);
         }
 
-        data = fs.readFileSync?.(filepath).toString();
+        data = fs.readFileSync(filepath).toString();
 
         if (!data) return '';
 
@@ -83,13 +83,7 @@ function readFileSync(filepath: string): string {
 }
 
 function mkdir(filepath) {
-    if ('mkdirSync' in fs) {
-        fs.mkdirSync(path.dirname(filepath), {recursive: true});
-    } else {
-        // workaround for some special FS cases like "filer"
-        // @ts-expect-error doesn't exit for some reason
-        fs.mkdir(path.dirname(filepath), () => void 0, {recursive: true});
-    }
+    fs.mkdirSync(path.dirname(filepath), {recursive: true});
 }
 
 function appendFile(filepath: string, append: string) {
@@ -102,14 +96,7 @@ function appendFile(filepath: string, append: string) {
 
     mkdir(filepath);
 
-    // // TODO: think about asynchronous appending
-    if ('appendFileSync' in fs) {
-        fs.appendFileSync(filepath, append);
-    } else {
-        // workaround for some special FS cases like "filer"
-        // @ts-expect-error doesn't exit for some reason
-        fs.appendFile(filepath, append, () => void 0);
-    }
+    fs.appendFileSync(filepath, append);
 }
 
 function writeFile(filepath: string, code: string) {
@@ -122,14 +109,7 @@ function writeFile(filepath: string, code: string) {
 
     mkdir(filepath);
 
-    // // TODO: think about asynchronous appending
-    if ('writeFileSync' in fs) {
-        fs.writeFileSync(filepath, code);
-    } else {
-        // workaround for some special FS cases like "filer"
-        // @ts-expect-error doesn't exit for some reason
-        fs.writeFile(filepath, code, () => void 0);
-    }
+    fs.writeFileSync(filepath, code);
 }
 
 /** don't merge declarations in plugin, currently considering only dev mode */
