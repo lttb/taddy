@@ -27,12 +27,17 @@ jobs:
                   CI: true
 
             - name: Build
-              run: yarn build
+              run: yarn build --ci
               env:
                   CI: true
 
             - name: Lint
               run: yarn lint
+              env:
+                  CI: true
+
+            - name: Typescript
+              run: yarn check:ts --ci
               env:
                   CI: true
 
