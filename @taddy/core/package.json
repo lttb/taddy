@@ -19,8 +19,5 @@
         "lint": "eslint .",
         "prebuild": "rm -rf lib",
         "build": "rollup -c --bundleConfigAsCjs"
-    },
-    "dependencies": {
-        "custom-hash": "0.9.0"
     }
 }

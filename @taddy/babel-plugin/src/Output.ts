@@ -135,7 +135,7 @@ function writeFile(filepath: string, code: string) {
 /** don't merge declarations in plugin, currently considering only dev mode */
 $css.ruleInjector.styleSheet.options.mergeDeclarations = false;
 
-export default class Output {
+export class Output {
     env: Env;
     config: OutputOptions;
     filepath: string;

@@ -9,14 +9,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/lttb/taddy.git"
+        "url": "git+https://github.com/lttb/taddy.git",
+        "directory": "@taddy/babel-plugin"
     },
     "scripts": {
         "clean": "rm -rf lib",
-        "prestart": "npm run clean",
-        "start": "tsc --watch",
-        "prebuild": "npm run clean",
-        "build": "rollup -c --bundleConfigAsCjs"
+        "start": "yarn compile --watch",
+        "compile": "rollup -c --bundleConfigAsCjs",
+        "prebuild": "yarn clean",
+        "build": "yarn compile"
     },
     "dependencies": {
         "@babel/helper-module-imports": "^7.10.1",
@@ -36,6 +37,7 @@
         "resolve": "1.22.1",
         "string-hash": "1.1.3",
         "sync-rpc": "^1.3.6",
+        "source-map": "0.7.4",
         "taddy": "^0.1.0-alpha.0",
         "ts-morph": "17.0.1",
         "workerpool": "^6.4.0"

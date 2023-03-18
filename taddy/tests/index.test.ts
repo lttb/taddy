@@ -26,15 +26,15 @@ describe('api', () => {
     it('should generate atoms', () => {
         expect(css({color: 'red', background: 'green'})).toMatchInlineSnapshot(`
             {
-              "className": "_9bfd_4da4 _932d_16b8 ___49fe",
-              Symbol(ID_KEY): "___49fe",
+              "className": "_1kgt43_2f0x _-m15jgy_1mpr0j ___jtqwen",
+              Symbol(ID_KEY): "___jtqwen",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 { color: red; }
-            ._932d_16b8 { background: green; }"
+            "._1kgt43_2f0x { color: red; }
+            ._-m15jgy_1mpr0j { background: green; }"
         `);
     });
 
@@ -48,15 +48,15 @@ describe('api', () => {
             }),
         ).toMatchInlineSnapshot(`
             {
-              "className": "_1fdd_64da _15b0_2efe ___ff7e",
-              Symbol(ID_KEY): "___ff7e",
+              "className": "_-kygmid_1c _rnbphe_1vf95 ___86u29p",
+              Symbol(ID_KEY): "___86u29p",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._1fdd_64da { opacity: 0; }
-            ._15b0_2efe { display: flex; }"
+            "._-kygmid_1c { opacity: 0; }
+            ._rnbphe_1vf95 { display: flex; }"
         `);
     });
 
@@ -95,13 +95,13 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._3e02_3da8 { font-weight: bold; }
-            ._a1f1_a713 { font-size: medium; }
-            ._15b0_2efe { display: flex; }
-            ._37f5_d254 { flex-direction: column; }
-            ._9bfd_4da4 { color: red; }
-            ._932d_16b8 { background: green; }
-            ._3e02_2555 { font-weight: normal; }"
+            "._9wido6_1sxol { font-weight: bold; }
+            ._-q8b8sh_-httxmz { font-size: medium; }
+            ._rnbphe_1vf95 { display: flex; }
+            ._bi7y5n_-memv1m { flex-direction: column; }
+            ._1kgt43_2f0x { color: red; }
+            ._-m15jgy_1mpr0j { background: green; }
+            ._9wido6_-h71d09 { font-weight: normal; }"
         `);
     });
 
@@ -127,13 +127,13 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._3e02_3da8 { font-weight: bold; }
-            ._a1f1_a713 { font-size: medium; }
-            ._15b0_2efe { display: flex; }
-            ._37f5_d254 { flex-direction: column; }
-            ._9bfd_4da4 { color: red; }
-            ._932d_16b8 { background: green; }
-            ._2421_b2f4 { padding: 10px; }"
+            "._9wido6_1sxol { font-weight: bold; }
+            ._-q8b8sh_-httxmz { font-size: medium; }
+            ._rnbphe_1vf95 { display: flex; }
+            ._bi7y5n_-memv1m { flex-direction: column; }
+            ._1kgt43_2f0x { color: red; }
+            ._-m15jgy_1mpr0j { background: green; }
+            ._-dc2nlb_wcpz { padding: 10px; }"
         `);
     });
 
@@ -163,12 +163,12 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._3e02_3da8 { font-weight: bold; }
-            ._a1f1_a713 { font-size: medium; }
-            ._69bc_9bfd_4da4:hover,._9bfd_4da4 { color: red; }
-            ._15b0_2efe { display: flex; }
-            ._37f5_d254 { flex-direction: column; }
-            ._69bc_932d_16b8:hover,._932d_16b8 { background: green; }"
+            "._9wido6_1sxol { font-weight: bold; }
+            ._-q8b8sh_-httxmz { font-size: medium; }
+            ._t3u24i_1kgt43_2f0x:hover,._1kgt43_2f0x { color: red; }
+            ._rnbphe_1vf95 { display: flex; }
+            ._bi7y5n_-memv1m { flex-direction: column; }
+            ._t3u24i_-m15jgy_1mpr0j:hover,._-m15jgy_1mpr0j { background: green; }"
         `);
     });
 
@@ -233,16 +233,16 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._3e02_3da8 { font-weight: bold; }
-            ._a1f1_a713 { font-size: medium; }
-            ._3e02_2555 { font-weight: normal; }
-            ._15b0_2efe { display: flex; }
-            ._37f5_d254 { flex-direction: column; }
-            ._9bfd_4da4 { color: red; }
-            ._932d_16b8 { background: green; }
-            ._2421_64da { padding: 0px; }
-            ._2421_b2f4 { padding: 10px; }
-            ._3e02_8cc9 { font-weight: initial; }"
+            "._9wido6_1sxol { font-weight: bold; }
+            ._-q8b8sh_-httxmz { font-size: medium; }
+            ._9wido6_-h71d09 { font-weight: normal; }
+            ._rnbphe_1vf95 { display: flex; }
+            ._bi7y5n_-memv1m { flex-direction: column; }
+            ._1kgt43_2f0x { color: red; }
+            ._-m15jgy_1mpr0j { background: green; }
+            ._-dc2nlb_1c { padding: 0px; }
+            ._-dc2nlb_wcpz { padding: 10px; }
+            ._9wido6_w7zqdg { font-weight: initial; }"
         `);
     });
 
@@ -255,24 +255,24 @@ describe('api', () => {
 
         expect(button).toMatchInlineSnapshot(`
             {
-              "className": "_9bfd_4da4 ___cc1b",
-              Symbol(ID_KEY): "___cc1b",
+              "className": "_1kgt43_2f0x ___6zzohd",
+              Symbol(ID_KEY): "___6zzohd",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
 
         expect(box).toMatchInlineSnapshot(`
             {
-              "className": "_9bfd_0c8f _cb51_c9cd_b2f4 ___56ac",
-              Symbol(ID_KEY): "___56ac",
+              "className": "_1kgt43_1svoa _ea88or_fk903q_wcpz ___r2si3",
+              Symbol(ID_KEY): "___r2si3",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 { color: red; }
-            ._9bfd_0c8f { color: blue; }
-            ._cb51_c9cd_b2f4 + .___cc1b { margin-left: 10px; }"
+            "._1kgt43_2f0x { color: red; }
+            ._1kgt43_1svoa { color: blue; }
+            ._ea88or_fk903q_wcpz + .___6zzohd { margin-left: 10px; }"
         `);
     });
 
@@ -324,15 +324,15 @@ describe('api', () => {
 
         expect(button).toMatchInlineSnapshot(`
             {
-              "className": "_9bfd_0c8f _e293_6219_9bfd_4da4 ___423f",
-              Symbol(ID_KEY): "___423f",
+              "className": "_1kgt43_1svoa _w0o0bo_-wl9t3s_1kgt43_2f0x ___-xdchlh",
+              Symbol(ID_KEY): "___-xdchlh",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_0c8f { color: blue; }
-            @media (min-width: 100px) { ._e293_6219_9bfd_4da4 { color: red; } }"
+            "._1kgt43_1svoa { color: blue; }
+            @media (min-width: 100px) { ._w0o0bo_-wl9t3s_1kgt43_2f0x { color: red; } }"
         `);
     });
 
@@ -344,15 +344,15 @@ describe('api', () => {
 
         expect(button).toMatchInlineSnapshot(`
             {
-              "className": "_9bfd_0c8f _98fb_6219_9bfd_4da4 ___6a39",
-              Symbol(ID_KEY): "___6a39",
+              "className": "_1kgt43_1svoa _-1p9wvz_-wl9t3s_1kgt43_2f0x ___xs95gy",
+              Symbol(ID_KEY): "___xs95gy",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_0c8f { color: blue; }
-            @container (min-width: 100px) { ._98fb_6219_9bfd_4da4 { color: red; } }"
+            "._1kgt43_1svoa { color: blue; }
+            @container (min-width: 100px) { ._-1p9wvz_-wl9t3s_1kgt43_2f0x { color: red; } }"
         `);
     });
 

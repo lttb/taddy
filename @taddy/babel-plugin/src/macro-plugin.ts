@@ -3,7 +3,7 @@ import type {NodePath, PluginPass, ConfigAPI} from '@babel/core';
 
 import assert from 'assert';
 import resolve from 'resolve';
-import path from 'path';
+import path from 'node:path';
 
 import {$css, config} from 'taddy';
 
@@ -12,7 +12,7 @@ import {isTaddyEvaluation} from './helpers/utils';
 import {taggedTemplateToObject} from './helpers/taggedTemplateToObject';
 import {createHandlers} from './handlers';
 
-import Output, {type OutputOptions} from './Output';
+import {Output, type OutputOptions} from './Output';
 import type {ProcessorConfig} from './Processor';
 
 import {

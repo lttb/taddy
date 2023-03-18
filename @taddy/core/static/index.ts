@@ -2,16 +2,19 @@ import {VARS_KEY, MIXIN_KEY, ID_KEY} from '../common';
 
 import {config} from '../config';
 
-const VALUE_HASH_LENGTH = 5;
-
 export const staticCache = {};
 export const mapStaticClassName = (className?: string): object => {
     if (!className) return {};
     const v = staticCache[className];
     if (v) return v;
     return (staticCache[className] = className.split(' ').reduce((acc, v) => {
-        if (v.length < VALUE_HASH_LENGTH) acc[v] = true;
-        else acc[v.slice(0, -VALUE_HASH_LENGTH)] = v.slice(-VALUE_HASH_LENGTH);
+        const hashes = v.split('_');
+        if (hashes.length === 1) {
+            acc[v] = true;
+        } else {
+            const lastHash = hashes.pop();
+            acc[hashes.join('_')] = '_' + lastHash;
+        }
         return acc;
     }, {}));
 };

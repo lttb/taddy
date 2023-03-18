@@ -16,7 +16,8 @@ import {
     mergeObjects,
 } from './helpers/mergeObjectProperties';
 
-import TSProcessor, {
+import {
+    TSProcessor,
     parseValue,
     isStaticValue,
     DynamicType,
@@ -61,8 +62,7 @@ function isUndefined(path: NodePath<any>) {
 
 function getLiteralValue(path: NodePath<any>): any {
     try {
-        // eslint-disable-next-line no-eval
-        return eval(path.toString());
+        return new Function(`return ${path.toString()}`)();
     } catch (error) {
         return getLiteralValue.FAIL;
     }
