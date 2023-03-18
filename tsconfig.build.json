@@ -21,7 +21,7 @@
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
         "stripInternal": true,
-        "target": "ES2022",
+        "target": "ESNext",
         "downlevelIteration": true,
         "skipLibCheck": true
     }
