@@ -7,7 +7,7 @@
         "importHelpers": true,
         "jsx": "react-jsx",
         "lib": ["dom", "dom.iterable", "esnext"],
-        "moduleResolution": "node",
+        "moduleResolution": "nodenext",
         "noFallthroughCasesInSwitch": false,
         "noImplicitAny": false,
         "noImplicitReturns": true,

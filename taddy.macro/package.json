@@ -13,9 +13,10 @@
     },
     "scripts": {
         "clean": "rm -rf lib",
-        "start": "tsc --watch",
-        "prebuild": "npm run clean",
-        "build": "rollup -c --bundleConfigAsCjs"
+        "start": "yarn compile --watch",
+        "compile": "rollup -c --bundleConfigAsCjs",
+        "prebuild": "yarn clean",
+        "build": "yarn compile"
     },
     "dependencies": {
         "@taddy/babel-plugin": "^0.1.0-alpha.0",

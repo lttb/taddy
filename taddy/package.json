@@ -13,10 +13,11 @@
         "url": "git+https://github.com/lttb/taddy.git"
     },
     "scripts": {
-        "start": "tsc --watch",
-        "test": "jest test",
-        "prebuild": "rm -rf lib",
-        "build": "rollup -c --bundleConfigAsCjs"
+        "clean": "rm -rf lib",
+        "start": "yarn compile --watch",
+        "compile": "rollup -c --bundleConfigAsCjs",
+        "prebuild": "yarn clean",
+        "build": "yarn compile"
     },
     "dependencies": {
         "@taddy/core": "^0.1.0-alpha.0",

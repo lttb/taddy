@@ -35,35 +35,35 @@ const config =
                 },
             }),
 
-            // copy({
-            //     targets: [
-            //         {src: 'README.md', dest: 'lib'},
-            //         {src: 'CHANGELOG.md', dest: 'lib'},
-            //         {
-            //             src: 'package.json',
-            //             dest: 'lib',
-            //             transform: (contents, filename) => {
-            //                 const packageJson = JSON.parse(contents.toString());
+            copy({
+                targets: [
+                    {src: 'README.md', dest: 'lib'},
+                    {src: 'CHANGELOG.md', dest: 'lib'},
+                    {
+                        src: 'package.json',
+                        dest: 'lib',
+                        transform: (contents, filename) => {
+                            const packageJson = JSON.parse(contents.toString());
 
-            //                 return JSON.stringify({
-            //                     ...packageJson,
+                            return JSON.stringify({
+                                ...packageJson,
 
-            //                     main: 'index.cjs',
-            //                     module: 'index.js',
-            //                     exports: {
-            //                         ...packageJson.exports,
+                                main: 'index.cjs',
+                                module: 'index.js',
+                                exports: {
+                                    ...packageJson.exports,
 
-            //                         '.': {
-            //                             import: './index.js',
-            //                             require: './index.cjs',
-            //                         },
-            //                         './package.json': './package.json',
-            //                     },
-            //                 });
-            //             },
-            //         },
-            //     ],
-            // }),
+                                    '.': {
+                                        import: './index.js',
+                                        require: './index.cjs',
+                                    },
+                                    './package.json': './package.json',
+                                },
+                            });
+                        },
+                    },
+                ],
+            }),
         ],
     };
 
