@@ -246,10 +246,10 @@ export class Processor {
         const tryObjectExpressionValue = (): boolean => {
             if (!valuePath.isObjectExpression()) return false;
 
+            // we shouldn't share "properties", as it should construct a new style object
             this.process(valuePath, {
                 postfix: postfix + key,
                 at,
-                properties,
             });
 
             // TODO: add comments
@@ -550,7 +550,8 @@ export class Processor {
             return;
         }
 
-        this.process(path.get('argument'), {postfix, at, properties});
+        // we shouldn't share "properties", as it should construct a new style object
+        this.process(path.get('argument'), {postfix, at});
 
         properties.push(path.node);
     }
