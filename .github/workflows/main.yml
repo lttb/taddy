@@ -5,24 +5,16 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Begin CI...
-              uses: actions/checkout@v3
-
-            - name: Use Node 16
-              uses: actions/setup-node@v3
+            - uses: actions/checkout@v3
               with:
-                  node-version: 16.x
+                  fetch-depth: 0
 
-            - name: Use cached node_modules
-              uses: actions/cache@v3
+            - uses: actions/setup-node@v3
               with:
-                  path: node_modules
-                  key: nodeModules-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      nodeModules-
+                  node-version: 18
+                  cache: 'yarn'
 
-            - name: Install dependencies
-              run: yarn install && yarn lerna bootstrap
+            - run: yarn install --frozen-lockfile
               env:
                   CI: true
 
