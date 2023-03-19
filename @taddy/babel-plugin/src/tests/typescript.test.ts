@@ -124,8 +124,8 @@ describe('taddy.macro.typescript', () => {
               ...mixin('smaller'),
               ...box,
               ...typo,
-              _1kgt43: "_2f0x",
-              _rnbphe: "_2se5ms",
+              "_1kgt43": "_2f0x",
+              "_rnbphe": "_2se5ms",
               __VARS__: {
                 "--_rnbphe": display
               }

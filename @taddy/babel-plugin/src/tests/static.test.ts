@@ -25,9 +25,9 @@ describe('taddy.macro.static', () => {
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
             let variant = 'normal';
             export default css({
-              _1kgt43: "_2f0x",
+              "_1kgt43": "_2f0x",
               ...(variant === 'normal' && {
-                _1kgt43: "_1svoa"
+                "_1kgt43": "_1svoa"
               })
             }, "__o58cu9");"
         `);
@@ -126,11 +126,12 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from "@taddy/core";
+            "import { css } from "taddy";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
             let color = 'red';
             export default css({
-              "_1kgt43_-t7a17f _t3u24i_1kgt43_1svoa": true,
+              "_1kgt43": "_-t7a17f",
+              "_t3u24i_1kgt43": "_1svoa",
               __VARS__: {
                 "--_1kgt43": color
               }
@@ -158,11 +159,12 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from "@taddy/core";
+            "import { css } from "taddy";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
             export default css({
               className: 'class',
-              "_1kgt43_2f0x _t3u24i_1kgt43_1svoa": true
+              "_1kgt43": "_2f0x",
+              "_t3u24i_1kgt43": "_1svoa"
             }, "__o58cu9");"
         `);
 
@@ -189,12 +191,13 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from "@taddy/core";
+            "import { css } from "taddy";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
             let className = 'class';
             export default css({
               className,
-              "_1kgt43_2f0x _t3u24i_1kgt43_1svoa": true
+              "_1kgt43": "_2f0x",
+              "_t3u24i_1kgt43": "_1svoa"
             }, "__o58cu9");"
         `);
 
@@ -223,7 +226,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from "@taddy/core";
+            "import { css } from "taddy";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
             let className = 'class';
             let style = {
@@ -232,7 +235,8 @@ describe('taddy.macro.static', () => {
             export default css({
               className,
               style,
-              "_1kgt43_2f0x _t3u24i_1kgt43_1svoa": true
+              "_1kgt43": "_2f0x",
+              "_t3u24i_1kgt43": "_1svoa"
             }, "__o58cu9");"
         `);
 
@@ -262,7 +266,7 @@ describe('taddy.macro.static', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from "@taddy/core";
+            "import { css } from "taddy";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
             let className = 'class';
             let style = {
@@ -272,7 +276,8 @@ describe('taddy.macro.static', () => {
             export default css({
               className,
               style,
-              "_1kgt43_-t7a17f _t3u24i_1kgt43_1svoa": true,
+              "_1kgt43": "_-t7a17f",
+              "_t3u24i_1kgt43": "_1svoa",
               __VARS__: {
                 "--_1kgt43": color
               }

@@ -5,6 +5,9 @@
     "license": "MIT",
     "main": "lib/index.cjs",
     "module": "lib/index.js",
+    "exports": {
+        "./cache/": "./lib/cache/"
+    },
     "publishConfig": {
         "access": "public"
     },

@@ -134,7 +134,7 @@ export class Processor {
         for (const key in classNames) {
             const classValue = classNames[key];
 
-            const propName = t.identifier(key);
+            const propName = t.stringLiteral(key);
 
             let propValue;
             if (typeof classNames[key] === 'object') {
@@ -600,13 +600,13 @@ export class Processor {
 
             const isStatic = path.node.properties.every((x) => {
                 if (!t.isObjectProperty(x)) return false;
-                if (!('name' in x.key)) return false;
+                if (!('value' in x.key)) return false;
                 if (
                     !(
-                        x.key.name[0] === '_' ||
-                        x.key.name === 'className' ||
-                        x.key.name === 'style' ||
-                        x.key.name === VARS_KEY ||
+                        x.key.value[0] === '_' ||
+                        x.key.value === 'className' ||
+                        x.key.value === 'style' ||
+                        x.key.value === VARS_KEY ||
                         t.isBooleanLiteral(x.value)
                     )
                 ) {

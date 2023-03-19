@@ -127,8 +127,8 @@ describe('taddy.macro.evaluate', () => {
               ...mixin('smaller'),
               ...box,
               ...typo,
-              _1kgt43: "_2f0x",
-              _rnbphe: "_1vf95"
+              "_1kgt43": "_2f0x",
+              "_rnbphe": "_1vf95"
             }, "__o58cu9");"
         `);
 
