@@ -3,7 +3,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "packages": ["@taddy/*", "taddy", "taddy.macro", "@docs/*", "@examples/*"],
+    "packages": ["@taddy/*", "taddy", "taddy.macro", "@docs/*"],
     "version": "independent",
     "npmClient": "yarn",
     "useWorkspaces": true,

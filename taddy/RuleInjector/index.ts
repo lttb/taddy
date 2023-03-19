@@ -106,10 +106,19 @@ export class RuleInjector {
         }
 
         if (isAt(key)) {
-            return this.putNested(value[1], {
-                postfix,
-                at: {name: key, query: value[0]},
-            });
+            const classNames = Object.create(null);
+
+            for (const query in value) {
+                Object.assign(
+                    classNames,
+                    this.putNested(value[query], {
+                        postfix,
+                        at: {name: key, query},
+                    }),
+                );
+            }
+
+            return classNames;
         }
 
         if (isNested(value)) {

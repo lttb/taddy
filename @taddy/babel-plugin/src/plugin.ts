@@ -8,9 +8,8 @@ import type {
 import type {NodePaths} from '@babel/traverse';
 
 import {PACKAGE_NAME, getEnv} from './config';
-import {macro} from './macro-plugin';
-import type {MacroConfig} from './macro-plugin';
-import {isTaddyEvaluation} from './helpers';
+import {isTaddyEvaluation} from './helpers/utils';
+import {macro, type MacroConfig} from './macro-plugin';
 
 type ImportSpecifiers = NodePaths<t.ImportDeclaration['specifiers']>;
 
@@ -59,7 +58,7 @@ export default function plugin(
     const env = getEnv(babel);
 
     return {
-        name: 'taddy',
+        name: '@taddy/babel-plugin',
 
         pre() {
             this.references = {};
@@ -69,6 +68,8 @@ export default function plugin(
             // TODO: support require expression
 
             ImportDeclaration(path, state) {
+                // console.log('run', state.file.code, state.filename);
+
                 if (isTaddyEvaluation(state)) {
                     return;
                 }

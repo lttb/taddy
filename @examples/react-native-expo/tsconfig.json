@@ -1,4 +1,6 @@
 {
-    "extends": "expo/tsconfig.base",
-    "compilerOptions": {}
+    "extends": ["../../tsconfig.json", "expo/tsconfig.base"],
+    "compilerOptions": {
+        "baseUrl": "."
+    }
 }

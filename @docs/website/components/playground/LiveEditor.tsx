@@ -30,7 +30,7 @@ export const LiveEditor = ({
     }, []);
 
     return (
-        <div>
+        <div {...css({width: '100%'})}>
             <h2>Code</h2>
 
             <Editor

@@ -1,6 +1,8 @@
 // @flow
 import {SourceMapGenerator} from 'source-map';
-import convert from 'convert-source-map';
+import * as convert from 'convert-source-map';
+
+export {SourceMapGenerator};
 
 export function getGeneratorOpts(file) {
     return file.opts.generatorOpts ? file.opts.generatorOpts : file.opts;

@@ -185,7 +185,7 @@ export function parseObject(type?: TSType): {
 
 export type TSProcessorOptions = ProjectOptions;
 
-export default class TSProcessor {
+export class TSProcessor {
     project: TSProject;
 
     constructor(config: TSProcessorOptions | TSProject) {

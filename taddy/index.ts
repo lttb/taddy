@@ -20,7 +20,7 @@ export type ExactProp<T extends keyof Properties> = Exclude<
     object
 >;
 
-export type TaddyStyle = {style?: object; className: string};
+export type TaddyStyle = {style?: any; className: string};
 
 export * from './RuleInjector';
 

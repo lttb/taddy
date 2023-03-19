@@ -1,16 +1,13 @@
 {
     "compilerOptions": {
-        "allowJs": false,
         "allowSyntheticDefaultImports": true,
         "alwaysStrict": true,
         "declaration": true,
-        "emitDecoratorMetadata": false,
         "esModuleInterop": true,
-        "experimentalDecorators": false,
         "importHelpers": true,
         "jsx": "react-jsx",
         "lib": ["dom", "dom.iterable", "esnext"],
-        "moduleResolution": "node",
+        "moduleResolution": "nodenext",
         "noFallthroughCasesInSwitch": false,
         "noImplicitAny": false,
         "noImplicitReturns": true,
@@ -24,8 +21,9 @@
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
         "stripInternal": true,
-        "target": "ES2022",
+        "target": "ESNext",
         "downlevelIteration": true,
         "skipLibCheck": true
-    }
+    },
+    "exclude": ["**/node_modules/**"]
 }

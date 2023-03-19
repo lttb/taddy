@@ -5,8 +5,10 @@ const options = {
 };
 
 describe('taddy.macro.evaluate', () => {
-    beforeEach(() => {
+    beforeEach((done) => {
         resetStyles();
+
+        done();
     });
 
     test('variables', async () => {
@@ -26,12 +28,13 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            export default css("_9bfd_4da4 _f67b_64da", "__3gmgnit");"
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
+            export default css("_1kgt43_2f0x _-hvs7yq_1c", "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_4da4 { color: red; }
-            ._f67b_64da { margin: 0px; }"
+            "._1kgt43_2f0x { color: red; }
+            ._-hvs7yq_1c { margin: 0px; }"
         `);
     });
 
@@ -67,15 +70,16 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            export default css("_15b0_2efe _37f5_b50d _bb63_616f _69bc_9bfd_4da4 _0c75_ce9a_9fbe", "__3gmgnit");"
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
+            export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._69bc_9bfd_4da4:hover { color: red; }
-            ._0c75_ce9a_9fbe:focus { border: 1px solid red; }
-            ._15b0_2efe { display: flex; }
-            ._37f5_b50d { flex-direction: row; }
-            ._bb63_616f { caption-side: block-end; }"
+            "._t3u24i_1kgt43_2f0x:hover { color: red; }
+            ._t2q38e_-mvl0b8_2c7gol:focus { border: 1px solid red; }
+            ._rnbphe_1vf95 { display: flex; }
+            ._bi7y5n_2fa2 { flex-direction: row; }
+            ._-ikiluq_eeql5n { caption-side: block-end; }"
         `);
     });
 
@@ -108,16 +112,29 @@ describe('taddy.macro.evaluate', () => {
                 options,
             ),
         ).toMatchInlineSnapshot(`
-            "import { css } from "@taddy/core";
-            export default css("_3e02_3da8 _8ef9_849b _69bc_9bfd_4da4 _15b0_2efe _a1f1_dd91 _9bfd_4da4", "__3gmgnit");"
+            "import { css } from "taddy";
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
+            import { box, typo } from './data/mixins';
+            function mixin<T extends 'smaller' | 'larger'>(size: T) {
+              return css.mixin({
+                ...box,
+                ...typo,
+                display: 'flex',
+                fontSize: size
+              });
+            }
+            export default css({
+              ...mixin('smaller'),
+              ...box,
+              ...typo,
+              "_1kgt43": "_2f0x",
+              "_rnbphe": "_1vf95"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._3e02_3da8 { font-weight: bold; }
-            ._8ef9_849b { line-height: 1; }
-            ._69bc_9bfd_4da4:hover,._9bfd_4da4 { color: red; }
-            ._15b0_2efe { display: flex; }
-            ._a1f1_dd91 { font-size: smaller; }"
+            "._1kgt43_2f0x { color: red; }
+            ._rnbphe_1vf95 { display: flex; }"
         `);
     });
 
@@ -143,7 +160,8 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            export default css("_9bfd_4da4 _a1f1_1340 _ce9a_9fbe", "__3gmgnit");"
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
+            export default css("_1kgt43_2f0x _-q8b8sh_wfor _-mvl0b8_2c7gol", "__o58cu9");"
         `);
     });
 });

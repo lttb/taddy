@@ -1,4 +1,4 @@
-import {buildAtomicRule, getStyleNodeById, IS_DEV} from './common';
+import {buildAtomicRule, getStyleNodeById} from './common';
 
 import Sheet from './Sheet';
 import type {SheetOptions} from './Sheet';
@@ -51,7 +51,8 @@ export class StyleSheet extends Sheet {
 
         this.headStyle = window.getComputedStyle(document.head);
 
-        if (IS_DEV) {
+        // TODO: split production and development builds
+        if (process.env.NODE_ENV !== 'production') {
             this.devNode = getStyleNodeById(`${StyleSheet.TADDY_ID}-dev`);
         }
     }

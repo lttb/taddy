@@ -1,8 +1,10 @@
 import {PACKAGE_NAME, transform, getStyles, resetStyles} from './common';
 
 describe('taddy.macro', () => {
-    beforeEach(() => {
+    beforeEach((done) => {
         resetStyles();
+
+        done();
     });
 
     test('should transform with style, dynamic variables and className', async () => {
@@ -25,7 +27,8 @@ describe('taddy.macro', () => {
                 })
             `),
         ).toMatchInlineSnapshot(`
-            "import { css } from "@taddy/core";
+            "import { css } from "taddy";
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
             let className = 'class';
             let style = {
               color: 'green'
@@ -34,16 +37,17 @@ describe('taddy.macro', () => {
             export default css({
               className,
               style,
-              "_9bfd_5daa _69bc_9bfd_0c8f": true,
+              "_1kgt43": "_-t7a17f",
+              "_t3u24i_1kgt43": "_1svoa",
               __VARS__: {
-                "--_9bfd": color
+                "--_1kgt43": color
               }
-            }, "__3gmgnit");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9bfd_5daa { color: var(--_9bfd); }
-            ._69bc_9bfd_0c8f:hover { color: blue; }"
+            "._1kgt43_-t7a17f { color: var(--_1kgt43); }
+            ._t3u24i_1kgt43_1svoa:hover { color: blue; }"
         `);
     });
 
@@ -62,11 +66,12 @@ describe('taddy.macro', () => {
             `),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            export default css("_1fdd_64da", "__3gmgnit");"
+            import "@taddy/babel-plugin/cache/3861607554.taddy.css";
+            export default css("_-kygmid_1c", "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
-            `"._1fdd_64da { opacity: 0; }"`,
+            `"._-kygmid_1c { opacity: 0; }"`,
         );
     });
 });

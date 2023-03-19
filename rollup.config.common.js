@@ -1,4 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
+import externals from 'rollup-plugin-node-externals';
 import copy from 'rollup-plugin-copy';
 
 /** @type {import('rollup').RollupOptions} */
@@ -25,6 +26,8 @@ const config =
             },
         ],
         plugins: [
+            externals(),
+
             typescript({
                 exclude: ['**/tests/**', '**/*.test.*'],
                 compilerOptions: {
@@ -39,21 +42,33 @@ const config =
                     {
                         src: 'package.json',
                         dest: 'lib',
-                        transform: (contents, filename) => {
+                        transform: (contents) => {
                             const packageJson = JSON.parse(contents.toString());
 
                             return JSON.stringify({
+                                ...packageJson,
+
                                 main: 'index.cjs',
                                 module: 'index.js',
                                 exports: {
+                                    ...packageJson.exports,
+
+                                    ...(packageJson.name ===
+                                        '@taddy/babel-plugin' && {
+                                        './lib/': './',
+                                        './cache/': './cache/',
+                                        './macro': {
+                                            import: './macro.js',
+                                            require: './macro.cjs',
+                                        },
+                                    }),
+
                                     '.': {
                                         import: './index.js',
                                         require: './index.cjs',
                                     },
                                     './package.json': './package.json',
                                 },
-
-                                ...packageJson,
                             });
                         },
                     },

@@ -2,14 +2,16 @@ import type {PluginPass} from '@babel/core';
 
 import * as fs from 'fs';
 import * as path from 'path';
+import resolve from 'resolve';
+import stringHash from 'string-hash';
 
 import {$css, config} from 'taddy';
 
-import {getCacheDir, getRootDir} from './config';
+import {getCacheDir} from './config';
 
-import type {Env} from './types';
+import type {Env, Target} from './types';
 
-let LAST_INDEX = 0;
+const LAST_INDEX = 0;
 const STYLES: string[] = [];
 
 function getStylesState() {
@@ -18,7 +20,7 @@ function getStylesState() {
 
     // there is also "appending" rules, that don't change the index, but change the rule
     // TODO: think how to handle that
-    LAST_INDEX = rules.length;
+    // LAST_INDEX = rules.length;
 
     const added = [...newRules].map((rule) => rule.cssText || '');
 
@@ -31,18 +33,6 @@ function getStylesState() {
 
 type FilenameGetter = string | ((code?: string) => string);
 type FilepathGetter = string | ((filename: string) => string);
-
-function resolveFilepath<T extends FilenameGetter | FilepathGetter>(
-    getter: T,
-    ...params: T extends (...args: any) => any ? Parameters<T> : []
-): string {
-    if (typeof getter !== 'string') {
-        // @ts-expect-error TODO: fix getter params
-        return getter(...params);
-    }
-
-    return path.join(getRootDir(), getter);
-}
 
 export type OutputOptions = {
     cssFilename: FilenameGetter;
@@ -57,6 +47,8 @@ const filesMap = new Map();
 const contentMap = new Map();
 
 function readFileSync(filepath: string): string {
+    if (!fs.existsSync(filepath)) return '';
+
     let data = '';
 
     try {
@@ -65,7 +57,7 @@ function readFileSync(filepath: string): string {
             return filesMap.get(mtime);
         }
 
-        data = fs.readFileSync?.(filepath).toString();
+        data = fs.readFileSync(filepath).toString();
 
         if (!data) return '';
 
@@ -78,6 +70,10 @@ function readFileSync(filepath: string): string {
     return data;
 }
 
+function mkdir(filepath) {
+    fs.mkdirSync(path.dirname(filepath), {recursive: true});
+}
+
 function appendFile(filepath: string, append: string) {
     // const code = content + append;
     // if (contentMap.has(code)) {
@@ -86,38 +82,52 @@ function appendFile(filepath: string, append: string) {
 
     // fs.appendFile(filepath, append, () => {});
 
-    // // TODO: think about asynchronous appending
-    if ('appendFileSync' in fs) {
-        fs.appendFileSync(filepath, append);
-    } else {
-        // workaround for some special FS cases like "filer"
-        // @ts-expect-error doesn't exit for some reason
-        fs.appendFile(filepath, append, () => void 0);
-    }
+    mkdir(filepath);
+
+    fs.appendFileSync(filepath, append);
+}
+
+function writeFile(filepath: string, code: string) {
+    // const code = content + append;
+    // if (contentMap.has(code)) {
+    //     return;
+    // }
+
+    // fs.appendFile(filepath, append, () => {});
+
+    mkdir(filepath);
+
+    fs.writeFileSync(filepath, code);
 }
 
 /** don't merge declarations in plugin, currently considering only dev mode */
 $css.ruleInjector.styleSheet.options.mergeDeclarations = false;
 
-export default class Output {
+export class Output {
     env: Env;
     config: OutputOptions;
     filepath: string;
+    cacheDir: string;
 
     constructor({env, config}: {env: Env; config?: Partial<OutputOptions>}) {
         this.env = env;
+
+        this.cacheDir = getCacheDir();
+
         this.config = Object.assign(
             {
                 // getCSSFilename = (content) => `atoms-${stringHash(content)}.css`,
                 cssFilename: () => `taddy.css`,
                 cssFilepath: (filename: string) =>
-                    path.join(getCacheDir(), filename),
+                    path.join(this.cacheDir, filename),
             },
             config,
         ) as OutputOptions;
 
-        const filename = resolveFilepath(this.config.cssFilename);
-        this.filepath = resolveFilepath(this.config.cssFilepath, filename);
+        const filename = this.resolveFilepath(this.config.cssFilename);
+        this.filepath = this.resolveFilepath(this.config.cssFilepath, filename);
+
+        mkdir(this.filepath);
 
         // console.log('filepath', this.filepath);
 
@@ -125,19 +135,63 @@ export default class Output {
         // fs.writeFileSync(this.filepath, '');
     }
 
-    save /* {sourceMap, filename} = {} */() {
+    private resolveFilepath<T extends FilenameGetter | FilepathGetter>(
+        getter: T,
+        ...params: T extends (...args: any) => any ? Parameters<T> : []
+    ): string {
+        if (typeof getter !== 'string') {
+            // @ts-expect-error TODO: fix getter params
+            return getter(...params);
+        }
+
+        return getter;
+    }
+
+    save({
+        sourceMap,
+        filename,
+        target,
+    }: {
+        sourceMap: string;
+        filename: string;
+        target: Target;
+    }) {
         const stylesData = readFileSync(this.filepath);
         const {added} = getStylesState();
+
+        // console.log({added});
 
         // TODO: improve filter performance
         const diffStyles = added
             .filter((x) => !stylesData.includes(x))
             .join('');
 
-        // fs.writeFileSync(path.join(getCacheDir(), stringHash(filename) + '.css'), added.join('').replace(/}$/, sourceMap + '}'))
-
         appendFile(this.filepath, diffStyles);
-
         // appendFile(this.filepath, sourceMap);
+
+        const localFilename = stringHash(`${filename}`) + '.taddy';
+
+        const localFilepath = path.join(
+            this.cacheDir,
+            // stringHash(`${filename}:${added}`) + '.taddy.css',
+            localFilename,
+        );
+
+        writeFile(
+            localFilepath + '.css',
+            added.join('').replace(/}$/, sourceMap + '}'),
+        );
+
+        if (target === 'remix') {
+            writeFile(
+                localFilepath + '.cjs',
+                `require('./${localFilename}.css');`,
+            );
+            writeFile(localFilepath + '.js', `import './${localFilename}.css'`);
+
+            return {importName: `@taddy/babel-plugin/cache/${localFilename}`};
+        }
+
+        return {importName: `@taddy/babel-plugin/cache/${localFilename}.css`};
     }
 }

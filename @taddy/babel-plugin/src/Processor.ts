@@ -1,29 +1,29 @@
 import * as t from '@babel/types';
+import type {PluginPass} from '@babel/core';
 import type {NodePath} from '@babel/traverse';
 import {SourceMapGenerator} from 'source-map';
 
 import {VARS_KEY, config} from '@taddy/core';
 import {$css} from 'taddy';
 
-import type {Env} from './types';
+import type {Env, Target} from './types';
 
+import {evaluate} from './helpers/evaluate';
+import {getObjectPropertyKey} from './helpers/getObjectPropertyKey';
+import {optimizeStaticStyles} from './helpers/optimizeStaticStyles';
 import {
-    evaluate,
-    getObjectPropertyKey,
-    optimizeStaticStyles,
     mergeObjectProperties,
     mergeObjects,
-} from './helpers';
+} from './helpers/mergeObjectProperties';
 
-import TSProcessor, {
+import {
+    TSProcessor,
     parseValue,
     isStaticValue,
     DynamicType,
     STATIC_KEY,
+    type TSProcessorOptions,
 } from './TSProcessor';
-
-import type {TSProcessorOptions} from './TSProcessor';
-import {PluginPass} from '@babel/core';
 
 type ObjectProperties = t.ObjectExpression['properties'];
 
@@ -34,12 +34,14 @@ export type ProcessorConfig = {
     evaluate?: boolean;
     CSSVariableFallback?: boolean;
     optimizeBindings?: boolean;
+    target: Target;
 };
 
 export type ProcessOptions = {
     env: Env;
     mixin: boolean;
     filename: string;
+    filenameRelative: string;
     code: string;
     addImport(name: string): t.ImportSpecifier['local'];
     sourceMap?: string;
@@ -61,8 +63,7 @@ function isUndefined(path: NodePath<any>) {
 
 function getLiteralValue(path: NodePath<any>): any {
     try {
-        // eslint-disable-next-line no-eval
-        return eval(path.toString());
+        return new Function(`return ${path.toString()}`)();
     } catch (error) {
         return getLiteralValue.FAIL;
     }
@@ -73,7 +74,7 @@ function getHashedName(key: string, {postfix}: CommonOptions): string {
     return config.nameGenerator.getName(key, '', {postfix}).join('');
 }
 
-const isCSSProperty = (key) => {
+const isCSSProperty = (key: string) => {
     return key.slice(0, 2) === '--' || /[\w-]/.test(key);
 };
 
@@ -133,7 +134,7 @@ export class Processor {
         for (const key in classNames) {
             const classValue = classNames[key];
 
-            const propName = t.identifier(key);
+            const propName = t.stringLiteral(key);
 
             let propValue;
             if (typeof classNames[key] === 'object') {
@@ -599,13 +600,13 @@ export class Processor {
 
             const isStatic = path.node.properties.every((x) => {
                 if (!t.isObjectProperty(x)) return false;
-                if (!('name' in x.key)) return false;
+                if (!('value' in x.key)) return false;
                 if (
                     !(
-                        x.key.name[0] === '_' ||
-                        x.key.name === 'className' ||
-                        x.key.name === 'style' ||
-                        x.key.name === VARS_KEY ||
+                        x.key.value[0] === '_' ||
+                        x.key.value === 'className' ||
+                        x.key.value === 'style' ||
+                        x.key.value === VARS_KEY ||
                         t.isBooleanLiteral(x.value)
                     )
                 ) {

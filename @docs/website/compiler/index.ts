@@ -8,7 +8,7 @@ import parserTypescript from 'prettier/parser-typescript';
 
 import tsSyntax from '@babel/plugin-syntax-typescript';
 
-import taddyPlugin from '@taddy/babel-plugin/src';
+import taddyPlugin from '@taddy/babel-plugin';
 import {format} from 'path';
 import fs from 'fs';
 
@@ -139,7 +139,7 @@ async function init() {
             });
         }
 
-        console.log({compileInjector});
+        // console.log({compileInjector});
 
         const compiledCSS = [...compileInjector.styleSheet.rules]
             .map((x) => x.cssText)

@@ -3,6 +3,7 @@
     "version": "0.1.0-alpha.0",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
+    "main": "lib/index.cjs",
     "publishConfig": {
         "access": "public"
     },
@@ -12,9 +13,12 @@
     },
     "scripts": {
         "clean": "rm -rf lib",
-        "start": "tsc --watch",
-        "prebuild": "npm run clean",
-        "build": "rollup -c --bundleConfigAsCjs"
+        "check:ts": "tsc --noEmit",
+        "compile": "rollup -c --bundleConfigAsCjs",
+        "prestart": "yarn clean",
+        "start": "yarn compile --watch",
+        "prebuild": "yarn clean",
+        "build": "yarn compile"
     },
     "dependencies": {
         "@taddy/babel-plugin": "^0.1.0-alpha.0",

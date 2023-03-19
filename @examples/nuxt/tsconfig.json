@@ -1,0 +1,7 @@
+{
+    // https://nuxt.com/docs/guide/concepts/typescript
+    "extends": ["../../tsconfig.json", "./.nuxt/tsconfig.json"],
+    "compilerOptions": {
+        "baseUrl": "."
+    }
+}

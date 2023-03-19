@@ -1,0 +1,20 @@
+{
+    "private": true,
+    "name": "@examples/astro",
+    "version": "0.0.1",
+    "type": "module",
+    "scripts": {
+        "dev": "astro dev",
+        "start": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro"
+    },
+    "dependencies": {
+        "astro": "^2.0.18",
+        "taddy": "^0.1.0-alpha.0"
+    },
+    "devDependencies": {
+        "@taddy/vite-plugin": "^0.1.0-alpha.0"
+    }
+}

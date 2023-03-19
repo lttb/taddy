@@ -3,6 +3,8 @@
     "version": "0.1.0-alpha.0",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
+    "main": "lib/index.cjs",
+    "module": "lib/index.js",
     "publishConfig": {
         "access": "public"
     },
@@ -11,10 +13,13 @@
         "url": "git+https://github.com/lttb/taddy.git"
     },
     "scripts": {
-        "start": "tsc --watch",
-        "test": "vitest test",
-        "prebuild": "rm -rf lib",
-        "build": "rollup -c --bundleConfigAsCjs"
+        "clean": "rm -rf lib",
+        "check:ts": "tsc --noEmit",
+        "compile": "rollup -c --bundleConfigAsCjs",
+        "prestart": "yarn clean",
+        "start": "yarn compile --watch",
+        "prebuild": "yarn clean",
+        "build": "yarn compile"
     },
     "dependencies": {
         "@taddy/core": "^0.1.0-alpha.0",

@@ -1,8 +1,7 @@
-import type {PluginPass, NodePath} from '@babel/core';
+import type {NodePath} from '@babel/core';
 
-import {transform, registerPreset} from '@babel/standalone';
+// import {transformSync} from '@babel/core';
 
-import register, {revert} from '@babel/register';
 import evaluatePath from 'babel-helper-evaluate-path';
 import resolve from 'resolve';
 import path from 'path';
@@ -10,36 +9,35 @@ import path from 'path';
 import * as taddy from 'taddy';
 
 import {MACRO_NAME, PACKAGE_NAME} from '../config';
+import {EVAL_FILENAME_POSTFIX} from './utils';
 
 import {findBindings} from './findBindings';
 import {buildCodeByPath} from './buildCodeByPath';
 
-import tsPreset from '@babel/preset-typescript';
-import reactPreset from '@babel/preset-react';
-import envPreset from '@babel/preset-env';
+// import tsPreset from '@babel/preset-typescript';
+// import reactPreset from '@babel/preset-react';
+// import envPreset from '@babel/preset-env';
 
-registerPreset('@babel/preset-typescript', tsPreset);
-registerPreset('@babel/preset-react', reactPreset);
-registerPreset('@babel/preset-env', envPreset);
+// const DEFAULT_PRESETS = [
+//     [tsPreset, {allExtensions: true, isTSX: true}],
+//     // '@babel/preset-react',
+//     [
+//         envPreset,
+//         {
+//             targets: {node: '12'},
+//             useBuiltIns: false,
+//             ignoreBrowserslistConfig: true,
+//         },
+//     ],
+// ];
 
-const DEFAULT_PRESETS = [
-    ['@babel/preset-typescript', {allExtensions: true, isTSX: true}],
-    '@babel/preset-react',
-    [
-        '@babel/preset-env',
-        {
-            targets: {node: '12'},
-            useBuiltIns: false,
-            ignoreBrowserslistConfig: true,
-        },
-    ],
-];
+const rpc = require('sync-rpc');
+
+const client = rpc(__dirname + '/transformWorker.js', 'Evaluate');
 
 const EXTENSIONS = ['.es6', '.es', '.tsx', '.ts', '.jsx', '.js', '.mjs'];
 
 const macroRe = new RegExp(MACRO_NAME.replace('.', '\\.'), 'g');
-
-const EVAL_FILENAME_POSTFIX = '@__TADDY_EVALUATE__';
 
 // webpack "require" critical dependency issue workaround
 const nodeRequire = new Function(
@@ -48,10 +46,6 @@ const nodeRequire = new Function(
         ? require
         : (typeof globalThis !== 'undefined' ? globalThis : global).require; `,
 )(module.require);
-
-export function isTaddyEvaluation(state: PluginPass): boolean {
-    return !!state.filename?.includes(EVAL_FILENAME_POSTFIX);
-}
 
 export function evaluate(currentPath: NodePath<any>): {
     value?: any;
@@ -87,26 +81,21 @@ export function evaluate(currentPath: NodePath<any>): {
             basename + EVAL_FILENAME_POSTFIX + ext,
         );
 
-        const options = {
-            babelrc: false,
-            configFile: false,
-            filename,
-            plugins: [
-                /*...opts.plugins*/
-            ],
-            presets: [/*...opts.presets*/ ...DEFAULT_PRESETS],
-        };
+        // const options = {
+        //     babelrc: false,
+        //     configFile: false,
+        //     filename,
+        //     plugins: [
+        //         /*...opts.plugins*/
+        //     ],
+        //     presets: [/*...opts.presets*/ ...DEFAULT_PRESETS],
+        // };
 
-        ({code} = transform(content, options) || {});
+        ({code} = client({content, filename}) || {});
 
         if (!code) return {};
 
         const exec = new Function('require', callbackName, code);
-
-        register({
-            ...options,
-            extensions: EXTENSIONS,
-        });
 
         let value;
 
@@ -125,8 +114,6 @@ export function evaluate(currentPath: NodePath<any>): {
                 value = result;
             },
         );
-
-        revert();
 
         return {value};
     } catch (error: any) {
