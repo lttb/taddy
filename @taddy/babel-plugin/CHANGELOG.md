@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.1](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.0...@taddy/babel-plugin@0.1.0-alpha.1) (2023-03-19)
+
+### Bug Fixes
+
+- **babel-plugin, taddy:** fix at rules compilation ([1d904da](https://github.com/lttb/taddy/commit/1d904da4c069824696afd14fb2399dded3990c6e))
+- **babel-plugin:** fix objects merge for spreads and recursive traverse ([9b40698](https://github.com/lttb/taddy/commit/9b40698cdaab2952fa1a908257673dcbc7ec89b5))
+
+### Features
+
+- **babel-plugin, taddy:** support at rules compilation ([cedb830](https://github.com/lttb/taddy/commit/cedb83010b19ae95ce30dd800e5bbc0e5476c7ca))
+- **babel-plugin:** add js imports with re-import for css for remix compat ([557110d](https://github.com/lttb/taddy/commit/557110dfa3f0ae6e86cec58249b747a5198f80fc))
+- **babel-plugin:** drop filer fallback ([f7c0ad8](https://github.com/lttb/taddy/commit/f7c0ad820a9b15286649f8016928e90f40502abe))
+- **babel-plugin:** fix imported css filename ([9fead46](https://github.com/lttb/taddy/commit/9fead4685c617aec553644b3b811316038b9b3cd))
+- **babel-plugin:** improve static eval, update tests ([4e71f98](https://github.com/lttb/taddy/commit/4e71f98304f598ff53b56d68c10fbac0f2c56bd9))
+- **babel-plugin:** improvements ([88566d5](https://github.com/lttb/taddy/commit/88566d5ce84ef54ff3ec5a2000e2e684f1f6d0e9))
+- **babel-plugin:** local import filename, target ([2d195d5](https://github.com/lttb/taddy/commit/2d195d531dc02ae68598fba0ec94e0492ecaf80f))
+- **babel-plugin:** rpc worker pool and next app ([6a48957](https://github.com/lttb/taddy/commit/6a489570fe1b23107ff7ff2ea4dd891f9348d31a))
+- **babel-plugin:** update snapshots and tests ([bef1f5e](https://github.com/lttb/taddy/commit/bef1f5e62712b4d3dc37000d0aedb80ec620b48d))
+- **babel-plugin:** use filenameRelative from opts ([c11dfa8](https://github.com/lttb/taddy/commit/c11dfa8b9ec5cc3ab4e9009d2c83c6ebee0b0140))
+- **babel-plugin:** use string literals for obj keys ([59913c7](https://github.com/lttb/taddy/commit/59913c73d435f2897fcfa5439ec4b6173c90f57e))
+- **docs/website:** use taddy styles extraction ([8937332](https://github.com/lttb/taddy/commit/8937332e2f7151691e02524b7244d81861094b95))
+- **examples/astro:** add astro example ([043f1eb](https://github.com/lttb/taddy/commit/043f1eb6f3b1191060ecd62e9f5053b4fe9f09b8))
+- make it work with vue jsx ([334939e](https://github.com/lttb/taddy/commit/334939e203f5e5a5a6afd34ec093eee429e490cc))
+- nextjs app integration ([0083099](https://github.com/lttb/taddy/commit/00830996076a15ac39671a4f2eef025e49a1b9a5))
+- support svelte ([d787808](https://github.com/lttb/taddy/commit/d787808d174fc1a5c0e1e9a12314bdb1e57a5821))
+- update tests ([f6af45b](https://github.com/lttb/taddy/commit/f6af45b2eab2d10b99a353d56b88695d35fb7a8c))
+
 # [0.1.0-alpha.0](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.0.28...@taddy/babel-plugin@0.1.0-alpha.0) (2023-03-14)
 
 ### Bug Fixes

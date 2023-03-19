@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.1](https://github.com/lttb/taddy/compare/taddy.macro@0.1.0-alpha.0...taddy.macro@0.1.0-alpha.1) (2023-03-19)
+
+### Features
+
+- nextjs app integration ([0083099](https://github.com/lttb/taddy/commit/00830996076a15ac39671a4f2eef025e49a1b9a5))
+
 # [0.1.0-alpha.0](https://github.com/lttb/taddy/compare/taddy.macro@0.0.29...taddy.macro@0.1.0-alpha.0) (2023-03-14)
 
 ### Bug Fixes

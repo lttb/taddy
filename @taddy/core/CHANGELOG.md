@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.1](https://github.com/lttb/taddy/compare/@taddy/core@0.1.0-alpha.0...@taddy/core@0.1.0-alpha.1) (2023-03-19)
+
+### Features
+
+- **babel-plugin:** improvements ([88566d5](https://github.com/lttb/taddy/commit/88566d5ce84ef54ff3ec5a2000e2e684f1f6d0e9))
+- **core:** fix static classname merge ([4b7e434](https://github.com/lttb/taddy/commit/4b7e43496abb1a9e9ac7196bc6ff13b4884ac1bc))
+- **core:** replace hash function [wip] ([d7a4dbc](https://github.com/lttb/taddy/commit/d7a4dbc6697cd0a084aac2f14dde742964925912))
+- **examples/nuxt:** initial example ([f7b5286](https://github.com/lttb/taddy/commit/f7b52860800c0dc868bc24b17a94b03e0407174d))
+- make it work with vue jsx ([334939e](https://github.com/lttb/taddy/commit/334939e203f5e5a5a6afd34ec093eee429e490cc))
+- nextjs app integration ([0083099](https://github.com/lttb/taddy/commit/00830996076a15ac39671a4f2eef025e49a1b9a5))
+- update tests ([f6af45b](https://github.com/lttb/taddy/commit/f6af45b2eab2d10b99a353d56b88695d35fb7a8c))
+
 # [0.1.0-alpha.0](https://github.com/lttb/taddy/compare/@taddy/core@0.0.13...@taddy/core@0.1.0-alpha.0) (2023-03-14)
 
 ### Bug Fixes
