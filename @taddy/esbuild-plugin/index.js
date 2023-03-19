@@ -1,5 +1,5 @@
 const babel = require('@babel/core');
-const styled = require('@taddy/babel-plugin');
+const taddyBabelPlugin = require('@taddy/babel-plugin');
 const fs = require('node:fs');
 const path = require('path');
 
@@ -39,7 +39,7 @@ function taddyPlugin() {
                     generatorOpts: {
                         decoratorsBeforeExport: true,
                     },
-                    plugins: [styled],
+                    plugins: [taddyBabelPlugin],
                     sourceMaps: true,
                     inputSourceMap: false,
                 });

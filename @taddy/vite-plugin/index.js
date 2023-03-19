@@ -4,7 +4,7 @@ const path = require('path');
 
 const SUPPORTED_EXTENSIONS = new Set(['.tsx', '.ts', '.jsx', '.js', '.astro']);
 
-function taddyPlugin() {
+function taddyPlugin({unstable_target = 'vue'} = {}) {
     return {
         name: '@taddy/vite-plugin',
 
@@ -45,7 +45,7 @@ function taddyPlugin() {
                 generatorOpts: {
                     decoratorsBeforeExport: true,
                 },
-                plugins: [[taddyBabelPlugin, {unstable_target: 'vue'}]],
+                plugins: [[taddyBabelPlugin, {unstable_target}]],
                 sourceMaps: true,
                 inputSourceMap: false,
             });

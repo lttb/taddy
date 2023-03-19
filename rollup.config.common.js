@@ -63,6 +63,13 @@ const config =
                                         },
                                     }),
 
+                                    ...(packageJson.name === 'taddy' && {
+                                        './vue': {
+                                            import: './vue/index.js',
+                                            require: './vue/index.cjs',
+                                        },
+                                    }),
+
                                     '.': {
                                         import: './index.js',
                                         require: './index.cjs',
