@@ -123,7 +123,7 @@ export function evaluate(
 
         return {value};
     } catch (error: any) {
-        console.log('evaluate error', {content, code, error});
+        // console.log('evaluate error', {content, code, error});
 
         return {error};
     }

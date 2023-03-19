@@ -158,4 +158,94 @@ describe('taddy.macro.evaluate', () => {
             ._1kgt43_2f0x { color: red; }"
         `);
     });
+
+    test('mixins without inferrable value', async () => {
+        expect(
+            await transform(
+                `
+                import { css } from "${PACKAGE_NAME}";
+
+                const size = (v: number) => v * 4 + 'px';
+                const margin = (gapY: number, gapX: number) =>
+                    size(gapY / 2) + ' ' + size(gapX / 2);
+
+                function flex({inline}) {
+                    return css({
+                        display: inline ? 'inline-flex' : 'flex',
+
+                        ...(!inline && {
+                            flex: 1,
+                        }),
+                    });
+                }
+
+                export function column({
+                    gap = 0,
+                    inline = false,
+                }: {gap?: Size; gapY?: Size; gapX?: Size; inline?: boolean} = {}) {
+                    return css({
+                        ...flex({inline}),
+
+                        '> *:not(:empty) + *:not(:empty)': {
+                            marginTop: size(gap),
+                        },
+                    });
+                }
+
+                export default css(column({gap, inline}), {style, className});
+        `,
+                options,
+            ),
+        ).toMatchInlineSnapshot(`
+            "import { css } from "taddy";
+            import "@taddy/babel-plugin/cache/1158222605.taddy.css";
+            const size = (v: number) => v * 4 + 'px';
+            const margin = (gapY: number, gapX: number) => size(gapY / 2) + ' ' + size(gapX / 2);
+            function flex({
+              inline
+            }) {
+              return css({
+                "_rnbphe": "_2se5ms",
+                ...(!inline && {
+                  "_1vf95": "_1d"
+                }),
+                __VARS__: {
+                  "--_rnbphe": inline ? 'inline-flex' : 'flex'
+                }
+              }, "__17gkjp6");
+            }
+            export function column({
+              gap = 0,
+              inline = false
+            }: {
+              gap?: Size;
+              gapY?: Size;
+              gapX?: Size;
+              inline?: boolean;
+            } = {}) {
+              return css({
+                ...flex({
+                  inline
+                }),
+                "_dgc417_wkwhiu": "_-lw5rk0",
+                __VARS__: {
+                  "--_dgc417_-ha1ird": size(gap)
+                }
+              }, "__3kqvnq5");
+            }
+            export default css(column({
+              gap,
+              inline
+            }), {
+              style,
+              className
+            }, "__5qvnr4");"
+        `);
+
+        expect(getStyles()).toMatchInlineSnapshot(`
+            "._rnbphe_2se5ms { display: var(--_rnbphe); }
+            ._1vf95_1d { flex-grow: 1; flex-shrink: 1; flex-basis: 0%; }
+            ._dgc417_wkwhiu_-lw5rk0> *:not(:empty) + *:not(:empty) { margin-top: var(--_dgc417_-ha1ird); }"
+        `);
+    });
 });

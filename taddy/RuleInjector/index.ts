@@ -33,9 +33,11 @@ function isStatic(key): boolean {
 
 type CSSProp = string;
 
+type AtOptions = {name: string; query: string};
+
 type Options = {
     postfix?: string;
-    at?: {name: string; query: string};
+    at?: AtOptions;
     hash?: string;
 };
 
@@ -135,9 +137,9 @@ export class RuleInjector {
         });
     }
 
-    private putNested(
+    putNested(
         rule: Atom,
-        {postfix, at}: {postfix: string; at?: {name: string; query: string}},
+        {postfix, at, hash}: {postfix: string; at?: AtOptions; hash?: string},
     ): Atom | null {
         if (!rule) return null;
 
@@ -147,6 +149,7 @@ export class RuleInjector {
             const className = this.put(key, rule[key], {
                 at,
                 postfix,
+                hash,
             });
 
             Object.assign(classNames, className);
