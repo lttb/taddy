@@ -68,7 +68,7 @@ describe('taddy.macro.typescript', () => {
               ...box({
                 direction: 'row'
               })
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -129,7 +129,7 @@ describe('taddy.macro.typescript', () => {
               __VARS__: {
                 "--_rnbphe": display
               }
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`

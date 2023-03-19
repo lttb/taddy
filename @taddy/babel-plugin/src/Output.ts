@@ -7,7 +7,7 @@ import stringHash from 'string-hash';
 
 import {$css, config} from 'taddy';
 
-import {getCacheDir, getRootDir} from './config';
+import {getCacheDir} from './config';
 
 import type {Env, Target} from './types';
 
@@ -33,18 +33,6 @@ function getStylesState() {
 
 type FilenameGetter = string | ((code?: string) => string);
 type FilepathGetter = string | ((filename: string) => string);
-
-function resolveFilepath<T extends FilenameGetter | FilepathGetter>(
-    getter: T,
-    ...params: T extends (...args: any) => any ? Parameters<T> : []
-): string {
-    if (typeof getter !== 'string') {
-        // @ts-expect-error TODO: fix getter params
-        return getter(...params);
-    }
-
-    return path.join(getRootDir(), getter);
-}
 
 export type OutputOptions = {
     cssFilename: FilenameGetter;
@@ -136,8 +124,8 @@ export class Output {
             config,
         ) as OutputOptions;
 
-        const filename = resolveFilepath(this.config.cssFilename);
-        this.filepath = resolveFilepath(this.config.cssFilepath, filename);
+        const filename = this.resolveFilepath(this.config.cssFilename);
+        this.filepath = this.resolveFilepath(this.config.cssFilepath, filename);
 
         mkdir(this.filepath);
 
@@ -145,6 +133,18 @@ export class Output {
 
         /* clean cache */
         // fs.writeFileSync(this.filepath, '');
+    }
+
+    private resolveFilepath<T extends FilenameGetter | FilepathGetter>(
+        getter: T,
+        ...params: T extends (...args: any) => any ? Parameters<T> : []
+    ): string {
+        if (typeof getter !== 'string') {
+            // @ts-expect-error TODO: fix getter params
+            return getter(...params);
+        }
+
+        return getter;
     }
 
     save({

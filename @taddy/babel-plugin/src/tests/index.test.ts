@@ -41,7 +41,7 @@ describe('taddy.macro', () => {
               __VARS__: {
                 "--_1kgt43": color
               }
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -66,7 +66,7 @@ describe('taddy.macro', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
-            export default css("_-kygmid_1c", "__3l1pbs6");"
+            export default css("_-kygmid_1c", "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(

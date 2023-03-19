@@ -7,8 +7,6 @@ import stringHash from 'string-hash';
 
 import {$css} from 'taddy';
 
-import {getRootDir} from './config';
-
 import {
     Processor,
     type ProcessorConfig,
@@ -46,9 +44,7 @@ export const createHandlers = (
             t.stringLiteral(
                 '__' +
                     stringHash(
-                        nodePath.relative(getRootDir(), options.filename) +
-                            ':' +
-                            ++counter,
+                        options.filenameRelative + ':' + String(++counter),
                     ).toString(32),
             ),
         );

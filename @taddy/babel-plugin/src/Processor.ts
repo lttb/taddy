@@ -41,6 +41,7 @@ export type ProcessOptions = {
     env: Env;
     mixin: boolean;
     filename: string;
+    filenameRelative: string;
     code: string;
     addImport(name: string): t.ImportSpecifier['local'];
     sourceMap?: string;

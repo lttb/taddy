@@ -28,6 +28,7 @@ export const getBabelOptions = (
     options: MacroConfig = {},
 ): TransformOptions => ({
     filename: `/test.virtual.tsx`,
+    filenameRelative: `/test.virtual.tsx`,
     babelrc: false,
     configFile: false,
     plugins: [

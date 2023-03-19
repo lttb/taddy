@@ -29,7 +29,7 @@ describe('taddy.macro.evaluate', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
-            export default css("_1kgt43_2f0x _-hvs7yq_1c", "__3l1pbs6");"
+            export default css("_1kgt43_2f0x _-hvs7yq_1c", "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -71,7 +71,7 @@ describe('taddy.macro.evaluate', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
-            export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__3l1pbs6");"
+            export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -129,7 +129,7 @@ describe('taddy.macro.evaluate', () => {
               ...typo,
               _1kgt43: "_2f0x",
               _rnbphe: "_1vf95"
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -161,7 +161,7 @@ describe('taddy.macro.evaluate', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
-            export default css("_1kgt43_2f0x _-q8b8sh_wfor _-mvl0b8_2c7gol", "__3l1pbs6");"
+            export default css("_1kgt43_2f0x _-q8b8sh_wfor _-mvl0b8_2c7gol", "__o58cu9");"
         `);
     });
 });

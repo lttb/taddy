@@ -166,9 +166,11 @@ export function macro({
 
     const program = state.file.path as NodePath<t.Program>;
     const code = state.file.code;
-    const {filename} = state;
+
+    const {filename, filenameRelative, sourceRoot} = state.file.opts;
 
     assert(filename, 'Filename is required');
+    assert(filenameRelative, 'FilenameRelative is required');
 
     const importPath = findImportPath(program);
 
@@ -203,6 +205,7 @@ export function macro({
         sourceMapGenerator,
         env,
         filename,
+        filenameRelative,
         code,
         addImport(name: string): t.ImportSpecifier['local'] {
             if (!importCache.has(name)) {

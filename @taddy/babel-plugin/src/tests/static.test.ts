@@ -29,7 +29,7 @@ describe('taddy.macro.static', () => {
               ...(variant === 'normal' && {
                 _1kgt43: "_1svoa"
               })
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -79,7 +79,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
-            export default css("_1kgt43_2f0x", "__3l1pbs6");"
+            export default css("_1kgt43_2f0x", "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
@@ -102,7 +102,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import "@taddy/babel-plugin/cache/3861607554.taddy.css";
-            export default css("_1kgt43_2f0x _t3u24i_1kgt43_1svoa", "__3l1pbs6");"
+            export default css("_1kgt43_2f0x _t3u24i_1kgt43_1svoa", "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -134,7 +134,7 @@ describe('taddy.macro.static', () => {
               __VARS__: {
                 "--_1kgt43": color
               }
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -163,7 +163,7 @@ describe('taddy.macro.static', () => {
             export default css({
               className: 'class',
               "_1kgt43_2f0x _t3u24i_1kgt43_1svoa": true
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -195,7 +195,7 @@ describe('taddy.macro.static', () => {
             export default css({
               className,
               "_1kgt43_2f0x _t3u24i_1kgt43_1svoa": true
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -233,7 +233,7 @@ describe('taddy.macro.static', () => {
               className,
               style,
               "_1kgt43_2f0x _t3u24i_1kgt43_1svoa": true
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -276,7 +276,7 @@ describe('taddy.macro.static', () => {
               __VARS__: {
                 "--_1kgt43": color
               }
-            }, "__3l1pbs6");"
+            }, "__o58cu9");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
