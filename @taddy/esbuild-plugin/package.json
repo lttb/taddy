@@ -1,17 +1,18 @@
 {
-  "name": "@taddy/esbuild-plugin",
-  "version": "0.1.0-alpha.1",
-  "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
-  "license": "MIT",
-  "main": "index.js",
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lttb/taddy.git"
-  },
-  "dependencies": {
-    "@taddy/babel-plugin": "^0.1.0-alpha.1"
-  }
+    "private": true,
+    "name": "@taddy/esbuild-plugin",
+    "version": "0.1.0-alpha.1",
+    "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
+    "license": "MIT",
+    "main": "index.js",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lttb/taddy.git"
+    },
+    "dependencies": {
+        "@taddy/babel-plugin": "^0.1.0-alpha.1"
+    }
 }
