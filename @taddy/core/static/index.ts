@@ -8,8 +8,12 @@ export const mapStaticClassName = (className?: string): object => {
     const v = staticCache[className];
     if (v) return v;
     return (staticCache[className] = className.split(' ').reduce((acc, v) => {
+        if (v[0] !== '_' || v[1] === '_') {
+            acc[v] = true;
+            return acc;
+        }
         const hashes = v.split('_');
-        if (hashes.length === 1) {
+        if (hashes.length === 2) {
             acc[v] = true;
         } else {
             const lastHash = hashes.pop();
