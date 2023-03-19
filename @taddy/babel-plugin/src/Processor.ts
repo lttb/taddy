@@ -51,6 +51,7 @@ export type ProcessOptions = {
 
 type CommonOptions = {
     postfix?: string;
+    at?: {name: string; query: string};
 };
 
 type ObjectOptions = CommonOptions & {
@@ -124,6 +125,10 @@ export class Processor {
         });
     }
 
+    evaluate(currentPath: NodePath<any>) {
+        return evaluate(currentPath, {exec: this.config.evaluate});
+    }
+
     isClassNameNode(node) {
         return this.classNameNodes.has(node);
     }
@@ -165,7 +170,7 @@ export class Processor {
     processPropertyValue(
         key: string,
         path: NodePath<t.ObjectProperty>,
-        {postfix, properties}: ObjectOptions,
+        {postfix, at, properties}: ObjectOptions,
     ) {
         const keyPath = path.get('key');
         const valuePath = path.get('value') as NodePath<any>;
@@ -190,6 +195,7 @@ export class Processor {
 
             this.process(valuePath, {
                 postfix: postfix + key,
+                at,
             });
 
             let currentStyles: ObjectProperties = [];
@@ -243,13 +249,11 @@ export class Processor {
         };
 
         const tryEvaluateValue = (): boolean => {
-            if (!this.config.evaluate) return false;
+            const result = this.evaluate(valuePath);
 
-            const {value, error} = evaluate(valuePath);
+            if ('error' in result) return false;
 
-            if (error) return false;
-
-            properties.push(...this.stylesToNode(key, value, {postfix}));
+            properties.push(...this.stylesToNode(key, result.value, {postfix}));
 
             this.optimizationPaths.add(path);
 
@@ -328,7 +332,7 @@ export class Processor {
 
             if (!isCompilable) return false;
 
-            const propKey = getHashedName(key, {postfix});
+            const propKey = getHashedName(key, {postfix, at});
 
             const hashFunctionNode = this.options.addImport('h');
 
@@ -357,7 +361,7 @@ export class Processor {
                 return false;
             }
 
-            const value = getHashedName(key, {postfix});
+            const value = getHashedName(key, {postfix, at});
 
             const dynamicValue = `--${value}`;
 
@@ -388,22 +392,21 @@ export class Processor {
 
     processObjectProperty(
         path: NodePath<t.ObjectProperty>,
-        {postfix = '', properties}: ObjectOptions,
+        {postfix = '', at, properties}: ObjectOptions,
     ) {
         const keyPath = path.get('key');
         const key = getObjectPropertyKey(keyPath);
 
         const tryEvaluateKey = (): boolean => {
-            if (!this.config.evaluate) return false;
+            const result = this.evaluate(keyPath);
 
-            const {value, error} = evaluate(keyPath);
+            if ('error' in result) return false;
 
-            if (error) return false;
+            keyPath.replaceWith(t.stringLiteral(result.value));
 
-            keyPath.replaceWith(t.stringLiteral(value));
-
-            this.processPropertyValue(value, path, {
+            this.processPropertyValue(result.value, path, {
                 postfix,
+                at,
                 properties,
             });
 
@@ -419,7 +422,7 @@ export class Processor {
             return;
         }
 
-        this.processPropertyValue(key, path, {postfix, properties});
+        this.processPropertyValue(key, path, {postfix, at, properties});
     }
 
     processSpreadElement(
@@ -427,12 +430,10 @@ export class Processor {
         {postfix = '', properties}: ObjectOptions,
     ) {
         const tryEvaluateSpreadElement = (): boolean => {
-            if (!this.config.evaluate) return false;
+            const result = this.evaluate(path.get('argument'));
+            if ('error' in result) return false;
 
-            const {value} = evaluate(path.get('argument'));
-            if (!value) return false;
-
-            const {className} = this.$css(value, {postfix});
+            const {className} = this.$css(result.value, {postfix});
 
             properties.push(...this.classNamesToNode(className));
 
@@ -485,19 +486,19 @@ export class Processor {
 
     processObjectExpression(
         path: NodePath<t.ObjectExpression>,
-        {postfix = ''}: CommonOptions,
+        {postfix = '', at}: CommonOptions,
     ) {
         const properties: ObjectProperties = [];
 
         for (const propPath of path.get('properties')) {
             if (propPath.isObjectProperty()) {
-                this.processObjectProperty(propPath, {postfix, properties});
+                this.processObjectProperty(propPath, {postfix, at, properties});
 
                 continue;
             }
 
             if (propPath.isSpreadElement()) {
-                this.processSpreadElement(propPath, {postfix, properties});
+                this.processSpreadElement(propPath, {postfix, at, properties});
 
                 continue;
             }
@@ -535,12 +536,10 @@ export class Processor {
         this.prepare(options);
 
         const tryEvaluate = (path): boolean => {
-            if (!this.config.evaluate) return false;
+            const result = this.evaluate(path);
+            if ('error' in result) return false;
 
-            const {value, error} = evaluate(path);
-            if (error) return false;
-
-            const {className} = this.$css(value);
+            const {className} = this.$css(result.value);
 
             /**
              * TODO: think about static optimizations for mixins

@@ -274,7 +274,7 @@ export function macro({
 
     const result = output.save({
         sourceMap,
-        filename,
+        filenameRelative,
         target: compileOptions.target,
     });
 
