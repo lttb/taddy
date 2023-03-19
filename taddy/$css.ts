@@ -15,7 +15,17 @@ const isDev = false;
 
 export const $css = (
     rule,
-    {postfix = '', sourceMap = '', hash = ''} = {},
+    {
+        postfix = '',
+        sourceMap = '',
+        hash = '',
+        at,
+    }: {
+        postfix?: string;
+        sourceMap?: string;
+        hash?: string;
+        at?: {name: string; query?: string};
+    } = {},
 ): InternalTaddyStyle => {
     if (!rule) {
         return {className: {}};
@@ -78,9 +88,37 @@ export const $css = (
                 continue;
             }
 
-            const name = $css.ruleInjector.put(key, rule[key], {
+            if (!at) {
+                const name = $css.ruleInjector.put(key, rule[key], {
+                    hash,
+                    postfix,
+                });
+
+                Object.assign(className, name);
+
+                continue;
+            }
+
+            const atName = at.name;
+            const atQuery = at.query;
+
+            // we can get a partial of the media rule, like $css({'min-width: 300px': {color: 'black'}})
+            if (!atQuery) {
+                const name = $css.ruleInjector.putNested(rule[key], {
+                    hash,
+                    postfix,
+                    at: {name: atName, query: key},
+                });
+
+                Object.assign(className, name);
+
+                continue;
+            }
+
+            const name = $css.ruleInjector.putNested(rule[key], {
                 hash,
                 postfix,
+                at: {name: atName, query: atQuery},
             });
 
             Object.assign(className, name);

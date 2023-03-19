@@ -49,9 +49,13 @@ export type ProcessOptions = {
     sourceMapGenerator?: SourceMapGenerator;
 };
 
-type CommonOptions = {
+type $CSSOptions = {
     postfix?: string;
-    at?: {name: string; query: string};
+    at?: {name: string; query?: string};
+};
+
+type CommonOptions = $CSSOptions & {
+    properties?: ObjectProperties;
 };
 
 type ObjectOptions = CommonOptions & {
@@ -117,7 +121,7 @@ export class Processor {
         );
     }
 
-    $css(rule, options?: any) {
+    $css(rule, options?: $CSSOptions) {
         // console.log('sm', this.options.sourceMap)
         return $css(rule, {
             ...options,
@@ -162,9 +166,52 @@ export class Processor {
         return properties;
     }
 
-    stylesToNode(key: string, value: unknown, {postfix = ''} = {}) {
-        const {className} = this.$css({[key]: value}, {postfix});
+    stylesToNode(
+        key: string,
+        value: unknown,
+        {postfix = '', at}: $CSSOptions = {},
+    ) {
+        const {className} = this.$css({[key]: value}, {postfix, at});
         return this.classNamesToNode(className);
+    }
+
+    processAtRule(
+        key: string,
+        path: NodePath<t.ObjectProperty>,
+        {postfix, properties}: Omit<ObjectOptions, 'at'>,
+    ) {
+        const atRuleName = key;
+
+        const valuePath = path.get('value');
+
+        // if it's not an object expression, we can treat it as a regular object value
+        if (!valuePath.isObjectExpression()) {
+            return this.processPropertyValue(key, path, {postfix, properties});
+        }
+
+        for (const propPath of valuePath.get('properties')) {
+            if (propPath.isObjectProperty()) {
+                this.processObjectProperty(propPath, {
+                    postfix,
+                    at: {name: atRuleName},
+                    properties,
+                });
+
+                continue;
+            }
+
+            if (propPath.isSpreadElement()) {
+                this.processSpreadElement(propPath, {
+                    postfix,
+                    at: {name: atRuleName},
+                    properties,
+                });
+
+                continue;
+            }
+
+            properties.push(propPath.node);
+        }
     }
 
     processPropertyValue(
@@ -173,7 +220,7 @@ export class Processor {
         {postfix, at, properties}: ObjectOptions,
     ) {
         const keyPath = path.get('key');
-        const valuePath = path.get('value') as NodePath<any>;
+        const valuePath = path.get('value');
 
         const tryLiteralValue = (): boolean => {
             if (!(valuePath.isLiteral() || isUndefined(valuePath)))
@@ -185,7 +232,7 @@ export class Processor {
                 return false;
             }
 
-            properties.push(...this.stylesToNode(key, value, {postfix}));
+            properties.push(...this.stylesToNode(key, value, {postfix, at}));
 
             return true;
         };
@@ -196,8 +243,10 @@ export class Processor {
             this.process(valuePath, {
                 postfix: postfix + key,
                 at,
+                properties,
             });
 
+            // TODO: add comments
             let currentStyles: ObjectProperties = [];
 
             for (const nestedProp of valuePath.node.properties) {
@@ -253,7 +302,9 @@ export class Processor {
 
             if ('error' in result) return false;
 
-            properties.push(...this.stylesToNode(key, result.value, {postfix}));
+            properties.push(
+                ...this.stylesToNode(key, result.value, {postfix, at}),
+            );
 
             this.optimizationPaths.add(path);
 
@@ -306,7 +357,9 @@ export class Processor {
             if (tsValue === STOP) return false;
 
             if (isStaticValue(tsValue)) {
-                properties.push(...this.stylesToNode(key, tsValue, {postfix}));
+                properties.push(
+                    ...this.stylesToNode(key, tsValue, {postfix, at}),
+                );
 
                 this.optimizationPaths.add(path);
 
@@ -327,7 +380,7 @@ export class Processor {
                     return;
                 }
 
-                this.$css({[key]: v}, {postfix});
+                this.$css({[key]: v}, {postfix, at});
             });
 
             if (!isCompilable) return false;
@@ -370,7 +423,10 @@ export class Processor {
             );
 
             properties.push(
-                ...this.stylesToNode(key, `var(${dynamicValue})`, {postfix}),
+                ...this.stylesToNode(key, `var(${dynamicValue})`, {
+                    postfix,
+                    at,
+                }),
             );
 
             return true;
@@ -395,6 +451,7 @@ export class Processor {
         {postfix = '', at, properties}: ObjectOptions,
     ) {
         const keyPath = path.get('key');
+        const valuePath = path.get('value');
         const key = getObjectPropertyKey(keyPath);
 
         const tryEvaluateKey = (): boolean => {
@@ -422,18 +479,32 @@ export class Processor {
             return;
         }
 
+        if (key[0] === '@') {
+            this.processAtRule(key, path, {postfix, properties});
+
+            return;
+        }
+
+        if (at?.name && !at?.query) {
+            this.process(valuePath, {
+                postfix,
+                properties,
+                at: {name: at.name, query: key},
+            });
+        }
+
         this.processPropertyValue(key, path, {postfix, at, properties});
     }
 
     processSpreadElement(
         path: NodePath<t.SpreadElement>,
-        {postfix = '', properties}: ObjectOptions,
+        {postfix = '', at, properties}: ObjectOptions,
     ) {
         const tryEvaluateSpreadElement = (): boolean => {
             const result = this.evaluate(path.get('argument'));
             if ('error' in result) return false;
 
-            const {className} = this.$css(result.value, {postfix});
+            const {className} = this.$css(result.value, {postfix, at});
 
             properties.push(...this.classNamesToNode(className));
 
@@ -459,7 +530,7 @@ export class Processor {
 
             if (!isStaticValue(styles)) return false;
 
-            const {className} = this.$css(styles, {postfix});
+            const {className} = this.$css(styles, {postfix, at});
             properties.push(...this.classNamesToNode(className));
 
             this.optimizationPaths.add(path);
