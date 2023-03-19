@@ -16,7 +16,7 @@ describe('taddy.macro.static', () => {
                 export default css({
                     color: 'red',
                     ...variant === 'normal' && {
-                        color: 'black',
+                        color: 'blue',
                     }
                 })
             `),
@@ -27,14 +27,14 @@ describe('taddy.macro.static', () => {
             export default css({
               _1kgt43: "_2f0x",
               ...(variant === 'normal' && {
-                _1kgt43: "_1juv3z"
+                _1kgt43: "_1svoa"
               })
             }, "__3l1pbs6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
             "._1kgt43_2f0x { color: red; }
-            ._1kgt43_1juv3z {  }"
+            ._1kgt43_1svoa { color: blue; }"
         `);
     });
 
@@ -47,7 +47,7 @@ describe('taddy.macro.static', () => {
                 export default css.mixin({
                     color: 'red',
                     ...variant === 'normal' && {
-                        color: 'black',
+                        color: 'blue',
                     }
                 })
             `),
@@ -58,14 +58,14 @@ describe('taddy.macro.static', () => {
             export default css.mixin({
               color: 'red',
               ...(variant === 'normal' && {
-                color: 'black'
+                color: 'blue'
               })
             });"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
             "._1kgt43_2f0x { color: red; }
-            ._1kgt43_1juv3z {  }"
+            ._1kgt43_1svoa { color: blue; }"
         `);
     });
 
