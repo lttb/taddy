@@ -47,10 +47,14 @@ const nodeRequire = new Function(
         : (typeof globalThis !== 'undefined' ? globalThis : global).require; `,
 )(module.require);
 
-export function evaluate(currentPath: NodePath<any>): {
-    value?: any;
-    error?: Error;
-} {
+export function evaluate(
+    currentPath: NodePath<any>,
+    {exec = true}: {exec?: boolean},
+):
+    | {
+          value: any;
+      }
+    | {error: Error} {
     const result = evaluatePath(currentPath);
 
     if (result.confident) {
@@ -58,6 +62,8 @@ export function evaluate(currentPath: NodePath<any>): {
 
         return {value: result.value};
     }
+
+    if (!exec) return {error: new Error('EXEC_REQUIRED')};
 
     let content = '';
     let code: void | null | string = '';
@@ -93,7 +99,7 @@ export function evaluate(currentPath: NodePath<any>): {
 
         ({code} = client({content, filename}) || {});
 
-        if (!code) return {};
+        if (!code) return {error: new Error('TRANSPILATION_ERROR')};
 
         const exec = new Function('require', callbackName, code);
 
@@ -117,7 +123,7 @@ export function evaluate(currentPath: NodePath<any>): {
 
         return {value};
     } catch (error: any) {
-        // console.log('evaluate error', {content, code, error});
+        console.log('evaluate error', {content, code, error});
 
         return {error};
     }

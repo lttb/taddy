@@ -149,11 +149,11 @@ export class Output {
 
     save({
         sourceMap,
-        filename,
+        filenameRelative,
         target,
     }: {
         sourceMap: string;
-        filename: string;
+        filenameRelative: string;
         target: Target;
     }) {
         const stylesData = readFileSync(this.filepath);
@@ -169,7 +169,7 @@ export class Output {
         appendFile(this.filepath, diffStyles);
         // appendFile(this.filepath, sourceMap);
 
-        const localFilename = stringHash(`${filename}`) + '.taddy';
+        const localFilename = stringHash(`${filenameRelative}`) + '.taddy';
 
         const localFilepath = path.join(
             this.cacheDir,
