@@ -42,7 +42,7 @@ const config =
                     {
                         src: 'package.json',
                         dest: 'lib',
-                        transform: (contents, filename) => {
+                        transform: (contents) => {
                             const packageJson = JSON.parse(contents.toString());
 
                             return JSON.stringify({
@@ -52,6 +52,16 @@ const config =
                                 module: 'index.js',
                                 exports: {
                                     ...packageJson.exports,
+
+                                    ...(packageJson.name ===
+                                        '@taddy/babel-plugin' && {
+                                        './lib/': './',
+                                        './cache/': './cache/',
+                                        './macro': {
+                                            import: './macro.js',
+                                            require: './macro.cjs',
+                                        },
+                                    }),
 
                                     '.': {
                                         import: './index.js',

@@ -10,9 +10,9 @@
             "import": "./lib/index.js",
             "require": "./lib/index.cjs"
         },
-        "./package.json": "./package.json",
         "./cache/": "./lib/cache/",
-        "./src/helpers/transformWorker": "./lib/src/helpers/transformWorker.js"
+        "./src/": "./src/",
+        "./macro": "./macro.ts"
     },
     "publishConfig": {
         "access": "public"
