@@ -167,7 +167,15 @@ export function macro({
     const program = state.file.path as NodePath<t.Program>;
     const code = state.file.code;
 
-    const {filename, filenameRelative, sourceRoot} = state.file.opts;
+    const {
+        filename,
+        sourceRoot,
+        root,
+        filenameRelative = path.relative(
+            sourceRoot || root || process.cwd(),
+            filename!,
+        ),
+    } = state.file.opts;
 
     assert(filename, 'Filename is required');
     assert(filenameRelative, 'FilenameRelative is required');

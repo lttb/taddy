@@ -6,7 +6,13 @@
     "main": "lib/index.cjs",
     "module": "lib/index.js",
     "exports": {
-        "./cache/": "./lib/cache/"
+        ".": {
+            "import": "./lib/index.js",
+            "require": "./lib/index.cjs"
+        },
+        "./package.json": "./package.json",
+        "./cache/": "./lib/cache/",
+        "./src/helpers/transformWorker": "./lib/src/helpers/transformWorker.js"
     },
     "publishConfig": {
         "access": "public"

@@ -8,7 +8,7 @@ import parserTypescript from 'prettier/parser-typescript';
 
 import tsSyntax from '@babel/plugin-syntax-typescript';
 
-import taddyPlugin from '@taddy/babel-plugin/src';
+import taddyPlugin from '@taddy/babel-plugin';
 import {format} from 'path';
 import fs from 'fs';
 

@@ -4,7 +4,6 @@
     "workspaces": {
         "packages": [
             "@taddy/*",
-            "@examples/*",
             "@docs/*",
             "taddy",
             "taddy.macro"
@@ -24,9 +23,9 @@
         "test": "jest --runInBand",
         "check:ts": "lerna run check:ts --parallel --no-private",
         "build": "lerna run build --parallel --no-private",
+        "website": "yarn lerna run --scope @docs/website",
         "prewebsite:build": "yarn build",
-        "website:build": "yarn lerna exec --scope @docs/website next build",
-        "website:dev": "yarn lerna exec --scope @docs/website next dev",
+        "website:build": "yarn website build",
         "prepub": "lerna run build --no-private",
         "pub": "lerna publish from-package --contents lib --exact --no-private",
         "prepub:version": "lerna version --no-private",
