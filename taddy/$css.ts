@@ -115,7 +115,7 @@ export const $css = (
                 continue;
             }
 
-            const name = $css.ruleInjector.putNested(rule[key], {
+            const name = $css.ruleInjector.putNested(rule, {
                 hash,
                 postfix,
                 at: {name: atName, query: atQuery},

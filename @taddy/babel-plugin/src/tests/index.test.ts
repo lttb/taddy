@@ -109,4 +109,39 @@ describe('taddy.macro', () => {
             @media (min-width: 600px) { ._w0o0bo_-wiiu4z_1kgt43_1mpr0j { color: green; }._w0o0bo_-wiiu4z_t3u24i_1kgt43_-g5na6c:hover { color: purple; } }"
         `);
     });
+
+    test('should process at rules in combination with dynamic rules', async () => {
+        expect(
+            await transform(`
+                import {css} from '${PACKAGE_NAME}'
+
+                const colors = ['violet', 'pink']
+
+                export default css({
+                    color: colors[0],
+                    '@media': {
+                        'min-width: 300px': {
+                            color: 'red',
+                        }
+                    }
+                })
+            `),
+        ).toMatchInlineSnapshot(`
+            "import { css } from "taddy";
+            import "@taddy/babel-plugin/cache/1158222605.taddy.css";
+            const colors = ['violet', 'pink'];
+            export default css({
+              "_1kgt43": "_-t7a17f",
+              "_w0o0bo_-wk67x2_1kgt43": "_2f0x",
+              __VARS__: {
+                "--_1kgt43": colors[0]
+              }
+            }, "__17gkjp6");"
+        `);
+
+        expect(getStyles()).toMatchInlineSnapshot(`
+            "._1kgt43_-t7a17f { color: var(--_1kgt43); }
+            @media (min-width: 300px) { ._w0o0bo_-wk67x2_1kgt43_2f0x { color: red; } }"
+        `);
+    });
 });

@@ -123,10 +123,14 @@ export class Processor {
 
     $css(rule, options?: $CSSOptions) {
         // console.log('sm', this.options.sourceMap)
-        return $css(rule, {
+        const result = $css(rule, {
             ...options,
             // hash: stringHash(this.options.filename),
         });
+
+        // console.trace({rule, options, result});
+
+        return result;
     }
 
     evaluate(currentPath: NodePath<any>) {
@@ -172,7 +176,9 @@ export class Processor {
         {postfix = '', at}: $CSSOptions = {},
     ) {
         const {className} = this.$css({[key]: value}, {postfix, at});
-        return this.classNamesToNode(className);
+        const properties = this.classNamesToNode(className);
+
+        return properties;
     }
 
     processAtRule(
@@ -291,7 +297,7 @@ export class Processor {
             }
 
             for (const elemPath of valuePath.get('elements')) {
-                this.process(elemPath);
+                this.process(elemPath, {at, postfix, properties});
             }
 
             return false;
@@ -491,6 +497,8 @@ export class Processor {
                 properties,
                 at: {name: at.name, query: key},
             });
+
+            return;
         }
 
         this.processPropertyValue(key, path, {postfix, at, properties});
@@ -542,7 +550,7 @@ export class Processor {
             return;
         }
 
-        this.process(path.get('argument'));
+        this.process(path.get('argument'), {postfix, at, properties});
 
         properties.push(path.node);
     }
@@ -557,10 +565,8 @@ export class Processor {
 
     processObjectExpression(
         path: NodePath<t.ObjectExpression>,
-        {postfix = '', at}: CommonOptions,
+        {postfix = '', at, properties = []}: CommonOptions,
     ) {
-        const properties: ObjectProperties = [];
-
         for (const propPath of path.get('properties')) {
             if (propPath.isObjectProperty()) {
                 this.processObjectProperty(propPath, {postfix, at, properties});
