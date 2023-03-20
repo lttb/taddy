@@ -159,6 +159,31 @@ describe('taddy.macro.evaluate', () => {
         `);
     });
 
+    test('evaluate function composition', async () => {
+        expect(
+            await transform(
+                `
+                import { css } from "${PACKAGE_NAME}";
+
+                const a = () => css({color: 'red'})
+                const b = () => css({fontSize: '20px'})
+
+                export default css(a(), b());
+        `,
+                options,
+            ),
+        ).toMatchInlineSnapshot(`
+            "import { css } from "@taddy/core";
+            import "@taddy/babel-plugin/cache/1158222605.taddy.css";
+            export default css("_1kgt43_2f0x __17gkjp6 _-q8b8sh_wzpi __3kqvnq5", "__5qvnr4");"
+        `);
+
+        expect(getStyles()).toMatchInlineSnapshot(`
+            "._1kgt43_2f0x { color: red; }
+            ._-q8b8sh_wzpi { font-size: 20px; }"
+        `);
+    });
+
     test('mixins without inferrable value', async () => {
         expect(
             await transform(

@@ -1,6 +1,6 @@
 /* a worker used by "sync-rpc" */
 
-const {transformAsync} = require('@babel/core');
+const {transformSync} = require('@babel/core');
 const tsPreset = require('@babel/preset-typescript');
 const envPreset = require('@babel/preset-env');
 
@@ -30,7 +30,8 @@ const init =
             presets: [/*...opts.presets*/ ...DEFAULT_PRESETS],
         };
 
-        return transformAsync(content, transformOptions);
+        // TODO: switch to async transform (need to support sync browser version)
+        return transformSync(content, transformOptions);
     };
 
 module.exports = init;
