@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import '@docs/website/styles/globals.css';
-import '@docs/website/styles/taddy.css';
+import '@docs/website/styles/reset.css';
 
 // import '@taddy/babel-plugin/.cache';
 // import '@taddy/babel-plugin/.cache/index.css';

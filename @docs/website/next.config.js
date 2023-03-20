@@ -28,6 +28,7 @@ const config = {
             path: require.resolve('./compiler/stubs/path'),
             module: require.resolve('./compiler/stubs/module'),
             'sync-rpc': require.resolve('./compiler/stubs/sync-rpc'),
+            // '@babel/core': require.resolve('./compiler/stubs/babel-core'),
         });
 
         // config.plugins.push(
