@@ -20,7 +20,7 @@
         "taddy": "^0.1.0-alpha.0"
     },
     "devDependencies": {
-        "@taddy/babel-plugin": "^0.1.0-alpha.0",
+        "@taddy/next-plugin": "^0.1.0-alpha.0",
         "tslib": "2.5.0"
     }
 }

@@ -7,7 +7,7 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "prepare": "nuxt prepare"
     },
     "dependencies": {
         "taddy": "^0.1.0-alpha.0"
@@ -15,6 +15,6 @@
     "devDependencies": {
         "nuxt": "^3.3.1",
         "@taddy/babel-plugin": "^0.1.0-alpha.0",
-        "@taddy/vite-plugin-vue-taddy": "^0.1.0-alpha.0"
+        "@taddy/vite-plugin": "^0.1.0-alpha.0"
     }
 }

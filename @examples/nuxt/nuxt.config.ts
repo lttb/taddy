@@ -1,4 +1,4 @@
-import taddyPlugin from '@taddy/vite-plugin-vue-taddy';
+import taddyPlugin from '@taddy/vite-plugin';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
