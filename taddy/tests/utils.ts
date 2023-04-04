@@ -11,5 +11,7 @@ export function getStyles(): string {
 
 export function resetStyles() {
     getStyleNodeById('taddy').remove();
+
+    // @ts-expect-error - fix compiled/source types resolution
     $css.ruleInjector = new RuleInjector();
 }

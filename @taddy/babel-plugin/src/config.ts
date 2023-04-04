@@ -62,9 +62,3 @@ export const config = lilconfigSync(PACKAGE_NAME, {
     },
 }).search()?.config;
 */
-
-const DEFAULT_CACHE_DIR = path.join(__dirname, '../cache');
-
-export function getCacheDir() {
-    return DEFAULT_CACHE_DIR;
-}

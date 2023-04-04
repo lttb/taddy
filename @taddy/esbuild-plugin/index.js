@@ -1,40 +1,42 @@
 const babel = require('@babel/core');
 const taddyBabelPlugin = require('@taddy/babel-plugin');
-const fs = require('node:fs');
+const fs = require('fs');
 const path = require('path');
 
 function taddyPlugin() {
-    return {
+    /** @type {import('esbuild').Plugin} */
+    const plugin = {
         name: '@taddy/esbuild-plugin',
         setup({onLoad}) {
             const root = process.cwd();
-            onLoad({filter: /\.[tj]sx$/}, async (args) => {
-                if (args.path.endsWith('.taddy.js')) return;
 
-                let code = await fs.promises.readFile(args.path, 'utf8');
-                let plugins = [
-                    'importMeta',
-                    'topLevelAwait',
-                    'classProperties',
-                    'classPrivateProperties',
-                    'classPrivateMethods',
-                    'jsx',
-                ];
-                let loader = 'jsx';
-                if (args.path.endsWith('.tsx')) {
-                    plugins.push('typescript');
-                    loader = 'tsx';
-                }
+            onLoad({filter: /\.[tj]sx$/}, async (args) => {
+                const id = args.path;
+
+                if (id.includes('.taddy.js')) return;
+
+                const code = await fs.promises.readFile(id, 'utf8');
+
+                const extname = path.extname(id);
+
+                const isTypescript = extname === '.tsx' || extname === '.ts';
+
                 const result = await babel.transformAsync(code, {
                     babelrc: false,
                     configFile: false,
                     ast: false,
                     root,
-                    filename: args.path,
+                    filename: id,
                     parserOpts: {
-                        sourceType: 'module',
                         allowAwaitOutsideFunction: true,
-                        plugins,
+                        plugins: [
+                            'importMeta',
+                            'topLevelAwait',
+                            'classProperties',
+                            'classPrivateProperties',
+                            'classPrivateMethods',
+                            'jsx',
+                        ].concat(isTypescript ? ['typescript'] : []),
                     },
                     generatorOpts: {
                         decoratorsBeforeExport: true,
@@ -51,12 +53,14 @@ function taddyPlugin() {
                         Buffer.from(JSON.stringify(result.map)).toString(
                             'base64',
                         ),
-                    loader,
-                    resolveDir: path.dirname(args.path),
+                    loader: isTypescript ? 'tsx' : 'jsx',
+                    resolveDir: path.dirname(id),
                 };
             });
         },
     };
+
+    return plugin;
 }
 
 module.exports = taddyPlugin;

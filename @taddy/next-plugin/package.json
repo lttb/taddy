@@ -1,7 +1,7 @@
 {
     "private": true,
-    "name": "@taddy/esbuild-plugin",
-    "version": "0.1.0-alpha.1",
+    "name": "@taddy/next-plugin",
+    "version": "0.1.0-alpha.0",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
     "license": "MIT",
     "main": "index.js",
@@ -10,12 +10,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/lttb/taddy.git"
+        "url": "git+https://github.com/lttb/taddy.git",
+        "directory": "@taddy/next-plugin"
     },
     "dependencies": {
-        "@taddy/babel-plugin": "^0.1.0-alpha.1"
+        "@taddy/babel-plugin": "^0.1.0-alpha.0"
     },
     "devDependencies": {
-        "esbuild": "^0.17.12"
+        "next": "13.2.4",
+        "webpack": "^5.77.0"
     }
 }

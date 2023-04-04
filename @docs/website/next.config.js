@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const withMDX = require('@next/mdx');
+const withTaddy = require('@taddy/next-plugin');
 
 /** @type {import('next').NextConfig} */
 const config = {
@@ -7,22 +8,7 @@ const config = {
 
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 
-    webpack(config, {dev}) {
-        // TODO: create @taddy/next-plugin
-        if (!dev) {
-            // @see https://github.com/webpack-contrib/mini-css-extract-plugin#extracting-all-css-in-a-single-file
-            config.optimization.splitChunks.cacheGroups = {
-                ...config.optimization.splitChunks.cacheGroups,
-                styles: {
-                    name: 'styles',
-                    type: 'css/mini-extract',
-                    test: /\.taddy\.css$/,
-                    chunks: 'all',
-                    enforce: true,
-                },
-            };
-        }
-
+    webpack(config) {
         Object.assign(config.resolve.alias, {
             fs: require.resolve('./compiler/stubs/fs'),
             path: require.resolve('./compiler/stubs/path'),
@@ -71,6 +57,8 @@ const config = {
     },
 };
 
-module.exports = withMDX({
-    extension: /\.mdx?$/,
-})(config);
+module.exports = withTaddy()(
+    withMDX({
+        extension: /\.mdx?$/,
+    })(config),
+);
