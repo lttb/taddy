@@ -1,5 +1,4 @@
 {
-    "private": true,
     "name": "@taddy/next-plugin",
     "version": "0.1.0-alpha.0",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
