@@ -6,6 +6,7 @@ const path = require('path');
 const loader = function (code) {
     const callback = this.async();
     const id = this.resourcePath;
+    const options = this.getOptions();
 
     if (id.includes('.taddy.js')) {
         callback(null, code);
@@ -40,7 +41,7 @@ const loader = function (code) {
             generatorOpts: {
                 decoratorsBeforeExport: true,
             },
-            plugins: [taddyBabelPlugin],
+            plugins: [[taddyBabelPlugin, options]],
             sourceMaps: true,
             inputSourceMap: false,
         })
