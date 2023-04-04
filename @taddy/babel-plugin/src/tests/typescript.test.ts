@@ -43,7 +43,7 @@ describe('taddy.macro.typescript', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import "@taddy/babel-plugin/cache/1158222605.taddy.css";
+            import "@taddy/babel-plugin/cache/j5kqa5/t1fdcz.taddy.css";
             export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__17gkjp6");"
         `);
 
@@ -86,7 +86,7 @@ describe('taddy.macro.typescript', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "taddy";
-            import "@taddy/babel-plugin/cache/1158222605.taddy.css";
+            import "@taddy/babel-plugin/cache/j5kqa5/775vh6.taddy.css";
             import { box, typo } from './data/mixins';
             function mixin<T extends 'smaller' | 'larger'>(size: T) {
               return css.mixin({

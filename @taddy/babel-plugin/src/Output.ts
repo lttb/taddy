@@ -103,6 +103,10 @@ function writeFile(filepath: string, code: string) {
     fs.writeFileSync(filepath, code);
 }
 
+function cleanFileCache(filepath: string) {
+    fs.rmdirSync(filepath, {recursive: true});
+}
+
 /** don't merge declarations in plugin, currently considering only dev mode */
 $css.ruleInjector.styleSheet.options.mergeDeclarations = false;
 
@@ -171,7 +175,9 @@ export class Output {
         appendFile(this.filepath, diffStyles);
         // appendFile(this.filepath, sourceMap);
 
-        const localFilename = stringHash(`${filenameRelative}`) + '.taddy';
+        const filenameHash = stringHash(`${filenameRelative}`).toString(36);
+        const contentHash = stringHash(added.join('')).toString(36);
+        const localFilename = path.join(filenameHash, contentHash + '.taddy');
 
         const localFilepath = path.join(
             this.config.cacheDir,
