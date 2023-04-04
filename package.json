@@ -3,6 +3,7 @@
     "name": "root",
     "workspaces": {
         "packages": [
+            "@examples/*",
             "@taddy/*",
             "@docs/*",
             "taddy",
