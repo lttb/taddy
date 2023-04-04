@@ -24,7 +24,8 @@
         "stripInternal": true,
         "target": "ESNext",
         "downlevelIteration": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "outDir": "lib"
     },
-    "exclude": ["**/node_modules/**"]
+    "exclude": ["**/node_modules/**", "**/lib/**"]
 }
