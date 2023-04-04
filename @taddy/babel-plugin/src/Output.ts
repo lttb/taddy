@@ -7,9 +7,13 @@ import stringHash from 'string-hash';
 
 import {$css, config} from 'taddy';
 
-import {getCacheDir} from './config';
-
 import type {Env, Target} from './types';
+
+const DEFAULT_CACHE_DIR = path.join(__dirname, '../cache');
+
+function getCacheDir() {
+    return DEFAULT_CACHE_DIR;
+}
 
 const LAST_INDEX = 0;
 const STYLES: string[] = [];
@@ -35,8 +39,7 @@ type FilenameGetter = string | ((code?: string) => string);
 type FilepathGetter = string | ((filename: string) => string);
 
 export type OutputOptions = {
-    cssFilename: FilenameGetter;
-    cssFilepath: FilepathGetter;
+    cacheDir: string;
 };
 
 function getMtime(filepath: string): number {
@@ -107,25 +110,24 @@ export class Output {
     env: Env;
     config: OutputOptions;
     filepath: string;
-    cacheDir: string;
+
+    defaultCacheDir = getCacheDir();
 
     constructor({env, config}: {env: Env; config?: Partial<OutputOptions>}) {
         this.env = env;
 
-        this.cacheDir = getCacheDir();
-
         this.config = Object.assign(
             {
                 // getCSSFilename = (content) => `atoms-${stringHash(content)}.css`,
-                cssFilename: () => `taddy.css`,
-                cssFilepath: (filename: string) =>
-                    path.join(this.cacheDir, filename),
+                cacheDir: this.defaultCacheDir,
             },
             config,
-        ) as OutputOptions;
+        );
 
-        const filename = this.resolveFilepath(this.config.cssFilename);
-        this.filepath = this.resolveFilepath(this.config.cssFilepath, filename);
+        // const filename = this.resolveFilepath(this.config.cssFilename);
+        // this.filepath = this.resolveFilepath(this.config.cssFilepath, filename);
+
+        this.filepath = path.join(this.config.cacheDir, 'taddy.css');
 
         mkdir(this.filepath);
 
@@ -172,7 +174,7 @@ export class Output {
         const localFilename = stringHash(`${filenameRelative}`) + '.taddy';
 
         const localFilepath = path.join(
-            this.cacheDir,
+            this.config.cacheDir,
             // stringHash(`${filename}:${added}`) + '.taddy.css',
             localFilename,
         );
@@ -182,6 +184,14 @@ export class Output {
             added.join('').replace(/}$/, sourceMap + '}'),
         );
 
+        const importBase =
+            this.config.cacheDir === this.defaultCacheDir
+                ? '@taddy/babel-plugin/cache'
+                : path.relative(
+                      path.dirname(filenameRelative),
+                      this.config.cacheDir,
+                  );
+
         if (target === 'remix') {
             writeFile(
                 localFilepath + '.cjs',
@@ -189,9 +199,9 @@ export class Output {
             );
             writeFile(localFilepath + '.js', `import './${localFilename}.css'`);
 
-            return {importName: `@taddy/babel-plugin/cache/${localFilename}`};
+            return {importName: path.join(importBase, localFilename)};
         }
 
-        return {importName: `@taddy/babel-plugin/cache/${localFilename}.css`};
+        return {importName: path.join(importBase, `${localFilename}.css`)};
     }
 }
