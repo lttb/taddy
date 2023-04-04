@@ -4,11 +4,18 @@ const path = require('path');
 
 const SUPPORTED_EXTENSIONS = new Set(['.tsx', '.ts', '.jsx', '.js', '.astro']);
 
-function taddyPlugin({unstable_target = 'vue'} = {}) {
-    return {
+/**
+ * @param {object} options
+ * @param {string} [options.unstable_target]
+ **/
+function taddyPlugin({unstable_target} = {}) {
+    /** @type {import('vite').Plugin} */
+    const plugin = {
         name: '@taddy/vite-plugin',
 
-        async transform(src, id) {
+        async transform(code, id) {
+            if (id.includes('.taddy.js')) return;
+
             const extname = path.extname(id);
 
             if (!SUPPORTED_EXTENSIONS.has(extname)) {
@@ -17,30 +24,24 @@ function taddyPlugin({unstable_target = 'vue'} = {}) {
 
             const root = process.cwd();
 
-            if (id.includes('.taddy.js')) return;
+            const isTypescript = extname === '.tsx' || extname === '.ts';
 
-            let plugins = [
-                'importMeta',
-                'topLevelAwait',
-                'classProperties',
-                'classPrivateProperties',
-                'classPrivateMethods',
-                'jsx',
-            ];
-            if (extname === '.tsx' || extname === '.ts') {
-                plugins.push('typescript');
-            }
-
-            const result = await babel.transformAsync(src, {
+            const result = await babel.transformAsync(code, {
                 babelrc: false,
                 configFile: false,
                 ast: false,
                 root,
                 filename: id,
                 parserOpts: {
-                    sourceType: 'module',
                     allowAwaitOutsideFunction: true,
-                    plugins,
+                    plugins: [
+                        'importMeta',
+                        'topLevelAwait',
+                        'classProperties',
+                        'classPrivateProperties',
+                        'classPrivateMethods',
+                        'jsx',
+                    ].concat(isTypescript ? ['typescript'] : []),
                 },
                 generatorOpts: {
                     decoratorsBeforeExport: true,
@@ -56,6 +57,8 @@ function taddyPlugin({unstable_target = 'vue'} = {}) {
             };
         },
     };
+
+    return plugin;
 }
 
 module.exports = taddyPlugin;

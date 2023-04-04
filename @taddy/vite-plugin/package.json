@@ -14,5 +14,8 @@
     },
     "dependencies": {
         "@taddy/babel-plugin": "^0.1.0-alpha.0"
+    },
+    "devDependencies": {
+        "vite": "^4.2.1"
     }
 }

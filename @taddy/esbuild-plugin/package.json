@@ -14,5 +14,8 @@
     },
     "dependencies": {
         "@taddy/babel-plugin": "^0.1.0-alpha.1"
+    },
+    "devDependencies": {
+        "esbuild": "^0.17.12"
     }
 }
