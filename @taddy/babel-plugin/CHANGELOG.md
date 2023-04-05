@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.2](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.1...@taddy/babel-plugin@0.1.0-alpha.2) (2023-04-05)
+
+### Features
+
+- **babel-plugin:** change output file cache directory ([9867716](https://github.com/lttb/taddy/commit/9867716570c8ce8524bbb530cf8ab4d6d9ce028e))
+- **babel-plugin:** switch transfrom to sync version ([225dd1c](https://github.com/lttb/taddy/commit/225dd1c5593685af9b77f66ec0c939f62d8429dc))
+- **babel-plugin:** update output implementation ([9eeeea4](https://github.com/lttb/taddy/commit/9eeeea4e861207b25ecdab4c4d34075d0b0c895f))
+- **babel-plugin:** use find-cache-dir ([b37c6bf](https://github.com/lttb/taddy/commit/b37c6bf46b68c4432173618469bcd0a5c93ab60c))
+
 # [0.1.0-alpha.1](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.0...@taddy/babel-plugin@0.1.0-alpha.1) (2023-03-19)
 
 ### Bug Fixes

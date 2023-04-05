@@ -1,6 +1,6 @@
 {
   "name": "taddy",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
   "license": "MIT",
   "main": "lib/index.cjs",

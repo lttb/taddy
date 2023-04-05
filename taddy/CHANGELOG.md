@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.2](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.1...taddy@0.1.0-alpha.2) (2023-04-05)
+
+### Bug Fixes
+
+- **taddy:** temp mute type error in tests ([aa25e54](https://github.com/lttb/taddy/commit/aa25e541677beaca8a0744f565ad7bb967f9cff0))
+
 # [0.1.0-alpha.1](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.0...taddy@0.1.0-alpha.1) (2023-03-19)
 
 ### Bug Fixes
