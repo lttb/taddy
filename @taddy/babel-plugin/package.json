@@ -28,6 +28,7 @@
         "compile": "rollup -c --bundleConfigAsCjs",
         "prestart": "yarn clean",
         "start": "yarn compile --watch",
+        "prebuild": "yarn clean",
         "build": "yarn compile"
     },
     "dependencies": {
