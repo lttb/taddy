@@ -11,7 +11,7 @@ const config = {
     webpack(config) {
         Object.assign(config.resolve.alias, {
             fs: require.resolve('./compiler/stubs/fs'),
-            path: require.resolve('./compiler/stubs/path'),
+            path: 'path-browserify',
             module: require.resolve('./compiler/stubs/module'),
             'sync-rpc': require.resolve('./compiler/stubs/sync-rpc'),
             // '@babel/core': require.resolve('./compiler/stubs/babel-core'),
