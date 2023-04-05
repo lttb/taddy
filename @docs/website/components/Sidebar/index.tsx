@@ -84,7 +84,7 @@ export const Sidebar = () => {
                     <Column as="ul" gap={5} inline>
                         <li>
                             <Link href="https://github.com/lttb/taddy">
-                                github
+                                github ↗
                             </Link>
                         </li>
                         <li>
