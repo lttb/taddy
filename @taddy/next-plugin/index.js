@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @param {{}} [pluginOptions] */
 module.exports = function (pluginOptions = {}) {
     /** @param {import('next').NextConfig} nextConfig */
@@ -5,7 +7,18 @@ module.exports = function (pluginOptions = {}) {
         /** @type {import('next').NextConfig} */
         const config = {
             webpack(config, options) {
-                if (!options.dev) {
+                const {dev, dir} = options;
+
+                const taddyOptions = {
+                    ...pluginOptions,
+                    outputOptions: {
+                        cacheDir: path.join(dir, '.next/cache'),
+
+                        ...pluginOptions.outputOptions,
+                    },
+                };
+
+                if (!dev) {
                     // @see https://github.com/webpack-contrib/mini-css-extract-plugin#extracting-all-css-in-a-single-file
                     config.optimization.splitChunks.cacheGroups = {
                         ...config.optimization.splitChunks.cacheGroups,
@@ -24,11 +37,32 @@ module.exports = function (pluginOptions = {}) {
                     exclude: /node_modules/,
                     use: {
                         loader: require.resolve('./loader.cjs'),
-                        options: {
-                            ...pluginOptions,
-                        },
+                        options: taddyOptions,
                     },
                 });
+
+                const cssRules = config.module.rules.find(
+                    (rule) =>
+                        Array.isArray(rule.oneOf) &&
+                        rule.oneOf.some(({test}) => test.test?.('global.css')),
+                ).oneOf;
+
+                let globalCSSLoader;
+                for (const rule of cssRules) {
+                    if (rule.test.test?.('global.css') && rule.sideEffects) {
+                        globalCSSLoader = rule;
+
+                        break;
+                    }
+                }
+
+                if (globalCSSLoader) {
+                    cssRules.unshift({
+                        test: /\.taddy\.css$/i,
+                        sideEffects: true,
+                        use: globalCSSLoader.use,
+                    });
+                }
 
                 if (typeof nextConfig.webpack === 'function') {
                     return nextConfig.webpack(config, options);
