@@ -22,6 +22,7 @@
         "build": "yarn compile"
     },
     "dependencies": {
+        "@babel/core": "^7.0.0",
         "@taddy/babel-plugin": "^0.1.0-alpha.2"
     },
     "devDependencies": {
