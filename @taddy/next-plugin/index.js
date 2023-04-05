@@ -12,7 +12,7 @@ module.exports = function (pluginOptions = {}) {
                 const taddyOptions = {
                     ...pluginOptions,
                     outputOptions: {
-                        cacheDir: path.join(dir, '.next/cache'),
+                        cacheDir: path.join(dir, '.next/cache/taddy'),
 
                         ...pluginOptions.outputOptions,
                     },
