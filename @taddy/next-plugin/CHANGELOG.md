@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.2](https://github.com/lttb/taddy/compare/@taddy/next-plugin@0.1.0-alpha.1...@taddy/next-plugin@0.1.0-alpha.2) (2023-04-05)
+
+### Bug Fixes
+
+- **taddy/next-plugin:** add @babel/core as a dependency ([de352e2](https://github.com/lttb/taddy/commit/de352e29aa00c8af0a4460756a9d2ef3665c6031))
+
+### Features
+
+- **taddy/next-plugin:** add lib ([a0f89d2](https://github.com/lttb/taddy/commit/a0f89d29ebd1fde3c8120660f842f2323d008e1d))
+
 # 0.1.0-alpha.1 (2023-04-05)
 
 ### Bug Fixes

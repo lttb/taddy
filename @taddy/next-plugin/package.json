@@ -1,32 +1,32 @@
 {
-    "name": "@taddy/next-plugin",
-    "version": "0.1.0-alpha.1",
-    "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
-    "license": "MIT",
-    "main": "index.js",
-    "publishConfig": {
-        "access": "public"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/lttb/taddy.git",
-        "directory": "@taddy/next-plugin"
-    },
-    "scripts": {
-        "clean": "rm -rf lib",
-        "check:ts": "tsc --noEmit",
-        "compile": "rollup -c --bundleConfigAsCjs",
-        "prestart": "yarn clean",
-        "start": "yarn compile --watch",
-        "prebuild": "yarn clean",
-        "build": "yarn compile"
-    },
-    "dependencies": {
-        "@babel/core": "^7.0.0",
-        "@taddy/babel-plugin": "^0.1.0-alpha.2"
-    },
-    "devDependencies": {
-        "next": "13.2.4",
-        "webpack": "^5.77.0"
-    }
+  "name": "@taddy/next-plugin",
+  "version": "0.1.0-alpha.2",
+  "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lttb/taddy.git",
+    "directory": "@taddy/next-plugin"
+  },
+  "scripts": {
+    "clean": "rm -rf lib",
+    "check:ts": "tsc --noEmit",
+    "compile": "rollup -c --bundleConfigAsCjs",
+    "prestart": "yarn clean",
+    "start": "yarn compile --watch",
+    "prebuild": "yarn clean",
+    "build": "yarn compile"
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@taddy/babel-plugin": "^0.1.0-alpha.2"
+  },
+  "devDependencies": {
+    "next": "13.2.4",
+    "webpack": "^5.77.0"
+  }
 }
