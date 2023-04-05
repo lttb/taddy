@@ -3,8 +3,6 @@ import {css} from 'taddy';
 
 import {Link as BaseLink} from './BaseLink';
 
-console.log('test');
-
 export const Link = ({
     href,
     className,
