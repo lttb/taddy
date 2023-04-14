@@ -33,7 +33,7 @@ module.exports = function (pluginOptions = {}) {
                 }
 
                 config.module.rules.push({
-                    test: /\.(tsx|ts|js|mjs|jsx)$/,
+                    test: /\.(tsx|ts|js|mjs|jsx|mdx|md)$/,
                     exclude: /node_modules/,
                     use: {
                         loader: require.resolve('./loader.cjs'),
