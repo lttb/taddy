@@ -59,6 +59,6 @@
         "rollup": "^3.19.1",
         "rollup-plugin-copy": "^3.4.0",
         "rollup-plugin-node-externals": "^5.1.2",
-        "typescript": "5.0.2"
+        "typescript": "5.0.3"
     }
 }
