@@ -179,9 +179,24 @@ export class Output {
         // appendFile(this.filepath, sourceMap);
 
         const filenameHash = stringHash(`${filenameRelative}`).toString(36);
-        const contentHash = stringHash(added.join('')).toString(36);
-        const localFilename = path.join(filenameHash, contentHash + '.taddy');
 
+        const localFileCachePath = path.join(
+            this.config.cacheDir,
+            filenameHash + '.taddy.css',
+        );
+        const localFileCacheData = readFileSync(localFileCachePath);
+        const localFileCacheDiff = added
+            .filter((x) => !localFileCacheData.includes(x))
+            .join('');
+
+        appendFile(localFileCachePath, localFileCacheDiff);
+
+        const localFileContent = localFileCacheData + localFileCacheDiff;
+        const localFileContentHash = stringHash(localFileContent).toString(36);
+        const localFilename = path.join(
+            filenameHash,
+            localFileContentHash + '.taddy',
+        );
         const localFilepath = path.join(
             this.config.cacheDir,
             // stringHash(`${filename}:${added}`) + '.taddy.css',
@@ -190,7 +205,7 @@ export class Output {
 
         writeFile(
             localFilepath + '.css',
-            added.join('').replace(/}$/, sourceMap + '}'),
+            localFileContent.replace(/}$/, sourceMap + '}'),
         );
 
         const importBase =
