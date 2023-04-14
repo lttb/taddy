@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.3](https://github.com/lttb/taddy/compare/@taddy/next-plugin@0.1.0-alpha.2...@taddy/next-plugin@0.1.0-alpha.3) (2023-04-14)
+
+### Features
+
+- **next-plugin:** support mdx ([47d4a41](https://github.com/lttb/taddy/commit/47d4a41a502d491e11fa78d95fa902be09cab895))
+
 # [0.1.0-alpha.2](https://github.com/lttb/taddy/compare/@taddy/next-plugin@0.1.0-alpha.1...@taddy/next-plugin@0.1.0-alpha.2) (2023-04-05)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.3](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.2...@taddy/babel-plugin@0.1.0-alpha.3) (2023-04-14)
+
+### Features
+
+- **babel-plugin:** restore cached content per file in output ([c668bf5](https://github.com/lttb/taddy/commit/c668bf5c52b6ca9d94b4fa6b11053851930ea8ed))
+
 # [0.1.0-alpha.2](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.1...@taddy/babel-plugin@0.1.0-alpha.2) (2023-04-05)
 
 ### Features
