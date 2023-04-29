@@ -52,7 +52,7 @@ export function evaluate(
 
         if (error) return {error};
 
-        return {value};
+        return {value: JSON.parse(value)};
     } catch (error: any) {
         // console.log('evaluate error', {content, error});
 

@@ -78,7 +78,9 @@ const evaluate = async ({content, filename, callbackName}) => {
         return {error};
     }
 
-    return {value};
+    // for some reason, there is an additional ":" prefix on deserialisation/serialisation
+    // for example, {':hover': {color: 'red'}} becomes {'::hover': {color: 'red'}}
+    return {value: JSON.stringify(value)};
 };
 
 module.exports = () => evaluate;
