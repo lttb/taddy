@@ -28,7 +28,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/z2fqq.taddy.css";
+            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
             export default css("_1kgt43_2f0x _-hvs7yq_1c", "__17gkjp6");"
         `);
 
@@ -70,16 +70,16 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/397u6s.taddy.css";
+            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
             export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._t3u24i_1kgt43_2f0x:hover { color: red; }
-            ._t2q38e_-mvl0b8_2c7gol:focus { border: 1px solid red; }
-            ._rnbphe_1vf95 { display: flex; }
+            "._rnbphe_1vf95 { display: flex; }
             ._bi7y5n_2fa2 { flex-direction: row; }
-            ._-ikiluq_eeql5n { caption-side: block-end; }"
+            ._-ikiluq_eeql5n { caption-side: block-end; }
+            ._t3u24i_1kgt43_2f0x:hover { color: red; }
+            ._t2q38e_-mvl0b8_2c7gol:focus { border: 1px solid red; }"
         `);
     });
 
@@ -113,7 +113,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/szfgh6.taddy.css";
+            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
             export default css("_9wido6_1sxol _-k3s8v4_1d _t3u24i_1kgt43_2f0x _rnbphe_1vf95 _-q8b8sh_-yoym18 _1kgt43_2f0x", "__17gkjp6");"
         `);
 
@@ -148,14 +148,14 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/1alyb30.taddy.css";
+            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
             export default css("_1kgt43_2f0x _-q8b8sh_wfor _-mvl0b8_2c7gol", "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._-q8b8sh_wfor { font-size: 14px; }
-            ._-mvl0b8_2c7gol { border: 1px solid red; }
-            ._1kgt43_2f0x { color: red; }"
+            "._1kgt43_2f0x { color: red; }
+            ._-q8b8sh_wfor { font-size: 14px; }
+            ._-mvl0b8_2c7gol { border: 1px solid red; }"
         `);
     });
 
@@ -174,7 +174,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/6lqiet.taddy.css";
+            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
             export default css("_1kgt43_2f0x __17gkjp6 _-q8b8sh_wzpi __3kqvnq5", "__5qvnr4");"
         `);
 
@@ -223,7 +223,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "taddy";
-            import ".cache/taddy/j5kqa5/j1ho9a.taddy.css";
+            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
             const size = (v: number) => v * 4 + 'px';
             const margin = (gapY: number, gapX: number) => size(gapY / 2) + ' ' + size(gapX / 2);
             function flex({
