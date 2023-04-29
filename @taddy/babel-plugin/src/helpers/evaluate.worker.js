@@ -27,8 +27,6 @@ require('@babel/register')({
 
 const {config} = require('taddy');
 
-config({unstable_target: 'compiler'});
-
 const {EVAL_FILENAME_POSTFIX} = require('./utils');
 
 // webpack "require" critical dependency issue workaround
@@ -69,6 +67,9 @@ const evaluate = async ({content, filename, callbackName}) => {
 
     let value;
     try {
+        const currentTarget = config.unstable_target;
+
+        config({unstable_target: 'compiler'});
         exec(
             (filepath) => {
                 const requirePath = resolve.sync(filepath, {
@@ -82,6 +83,7 @@ const evaluate = async ({content, filename, callbackName}) => {
                 value = result;
             },
         );
+        config({unstable_target: currentTarget});
 
         // console.log('eval success', value);
     } catch (error) {
