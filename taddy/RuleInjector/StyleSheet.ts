@@ -99,12 +99,15 @@ export class StyleSheet extends Sheet {
             return -1;
         }
 
-        const selectorText = `.${className}`;
+        const isAtRule = atRuleIndex !== undefined;
+
+        const selectorPrefix = isAtRule ? '._' : '';
+        const selectorText = selectorPrefix + `.${className}`;
         const cssText = buildAtomicRule(selectorText, key, value);
 
         let insertSheet = this.sheet;
 
-        if (atRuleIndex !== undefined) {
+        if (isAtRule) {
             // cast at rule type
             insertSheet = this.cssRules[
                 atRuleIndex

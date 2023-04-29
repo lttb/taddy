@@ -8,10 +8,14 @@ export const mapStaticClassName = (className?: string): object => {
     const v = staticCache[className];
     if (v) return v;
     return (staticCache[className] = className.split(' ').reduce((acc, v) => {
+        if (v === '_') return acc;
+
+        // ignore classes which don't have '_' prefix or have '__' prefix
         if (v[0] !== '_' || v[1] === '_') {
             acc[v] = true;
             return acc;
         }
+
         const hashes = v.split('_');
         if (hashes.length === 2) {
             acc[v] = true;
@@ -19,6 +23,7 @@ export const mapStaticClassName = (className?: string): object => {
             const lastHash = hashes.pop();
             acc[hashes.join('_')] = '_' + lastHash;
         }
+
         return acc;
     }, {}));
 };
@@ -93,7 +98,8 @@ const _css = (
         }
     }
 
-    result.className = joinClassName(className);
+    // append "_" to the final className to maintain specificity
+    result.className = '_ ' + joinClassName(className);
 
     if (style) {
         result.style = style;

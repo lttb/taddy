@@ -54,7 +54,8 @@ function _css<T extends TaddyRule | {[key: string]: TaddyRule}>(
     delete result.className[MIXIN_KEY];
 
     // @ts-expect-error fix types
-    result.className = joinClassName(result.className);
+    // append "_" to the final className to maintain specificity
+    result.className = '_ ' + joinClassName(result.className);
 
     return withId(result, id);
 }

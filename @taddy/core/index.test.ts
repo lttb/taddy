@@ -24,7 +24,7 @@ describe('@taddy/core', () => {
                 '__id2',
             ).className,
         ).toEqual(
-            `${getClassName('color', 'blue')} ${getClassName(
+            `_ ${getClassName('color', 'blue')} ${getClassName(
                 'background',
                 'blue',
             )} __id1 __id2`,
@@ -39,7 +39,7 @@ describe('@taddy/core', () => {
                 '__id2',
             ).className,
         ).toEqual(
-            `${getClassName('color', 'red')} ${getClassName(
+            `_ ${getClassName('color', 'red')} ${getClassName(
                 'background',
                 'blue',
             )} __id1 __id2`,
