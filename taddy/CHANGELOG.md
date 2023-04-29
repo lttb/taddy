@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.3](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.2...taddy@0.1.0-alpha.3) (2023-04-29)
+
+### Bug Fixes
+
+- **babel-plugin:** fix colon prefix duplication ([2114bd2](https://github.com/lttb/taddy/commit/2114bd23bf8654c6eff6278a13cda490b58b8fb8))
+- **babel-plugin:** handle static classNames on evaluation ([32d29ad](https://github.com/lttb/taddy/commit/32d29adcfca5e629381f705e06ec8f756943333c))
+
+### Features
+
+- **babel-plugin:** transpile modules on eval ([8ce93ed](https://github.com/lttb/taddy/commit/8ce93ed5ea6c6a269d583325cdf3ebaa9891737f))
+- **taddy:** add "\_" class to maintain specificity ([a5ffa60](https://github.com/lttb/taddy/commit/a5ffa60bd9d8fef4dbb707211afc25df34737d86))
+
 # [0.1.0-alpha.2](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.1...taddy@0.1.0-alpha.2) (2023-04-05)
 
 ### Bug Fixes

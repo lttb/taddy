@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.2](https://github.com/lttb/taddy/compare/@taddy/core@0.1.0-alpha.1...@taddy/core@0.1.0-alpha.2) (2023-04-29)
+
+### Features
+
+- **babel-plugin:** transpile modules on eval ([8ce93ed](https://github.com/lttb/taddy/commit/8ce93ed5ea6c6a269d583325cdf3ebaa9891737f))
+- **taddy:** add "\_" class to maintain specificity ([a5ffa60](https://github.com/lttb/taddy/commit/a5ffa60bd9d8fef4dbb707211afc25df34737d86))
+
 # [0.1.0-alpha.1](https://github.com/lttb/taddy/compare/@taddy/core@0.1.0-alpha.0...@taddy/core@0.1.0-alpha.1) (2023-03-19)
 
 ### Features
