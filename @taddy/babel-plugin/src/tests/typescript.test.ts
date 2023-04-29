@@ -1,8 +1,12 @@
+import fs from 'fs';
+
 import {PACKAGE_NAME, transform, getStyles, resetStyles} from './common';
 
 const options = {
     compileOptions: {unstable_typescript: true},
 };
+
+jest.spyOn(fs, 'appendFileSync').mockImplementation(() => void 0);
 
 describe('taddy.macro.typescript', () => {
     beforeEach((done) => {
@@ -61,7 +65,7 @@ describe('taddy.macro.typescript', () => {
             await transform(
                 `
                 import {css} from '${PACKAGE_NAME}'
-                import {box, typo} from './data/mixins'
+                import {box, typo} from '@taddy/babel-plugin/src/tests/data/mixins'
 
                 function mixin<T extends 'smaller' | 'larger'>(size: T) {
                     return css.mixin({
@@ -87,7 +91,7 @@ describe('taddy.macro.typescript', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "taddy";
             import ".cache/taddy/j5kqa5/b475yc.taddy.css";
-            import { box, typo } from './data/mixins';
+            import { box, typo } from '@taddy/babel-plugin/src/tests/data/mixins';
             function mixin<T extends 'smaller' | 'larger'>(size: T) {
               return css.mixin({
                 ...box,

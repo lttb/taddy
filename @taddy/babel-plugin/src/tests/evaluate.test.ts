@@ -1,5 +1,7 @@
 import {PACKAGE_NAME, transform, getStyles, resetStyles} from './common';
 
+jest.mock('fs');
+
 const options = {
     compileOptions: {evaluate: true},
 };
@@ -28,7 +30,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
+            import ".cache/taddy/j5kqa5/z2fqq.taddy.css";
             export default css("_1kgt43_2f0x _-hvs7yq_1c", "__17gkjp6");"
         `);
 
@@ -70,7 +72,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
+            import ".cache/taddy/j5kqa5/t1fdcz.taddy.css";
             export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__17gkjp6");"
         `);
 
@@ -113,7 +115,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
+            import ".cache/taddy/j5kqa5/en4rjl.taddy.css";
             export default css("_9wido6_1sxol _-k3s8v4_1d _t3u24i_1kgt43_2f0x _rnbphe_1vf95 _-q8b8sh_-yoym18 _1kgt43_2f0x", "__17gkjp6");"
         `);
 
@@ -148,7 +150,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
+            import ".cache/taddy/j5kqa5/1j06cg6.taddy.css";
             export default css("_1kgt43_2f0x _-q8b8sh_wfor _-mvl0b8_2c7gol", "__17gkjp6");"
         `);
 
@@ -174,7 +176,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
+            import ".cache/taddy/j5kqa5/15l14jd.taddy.css";
             export default css("_1kgt43_2f0x __17gkjp6 _-q8b8sh_wzpi __3kqvnq5", "__5qvnr4");"
         `);
 
@@ -223,7 +225,7 @@ describe('taddy.macro.evaluate', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "taddy";
-            import ".cache/taddy/j5kqa5/b475yc.taddy.css";
+            import ".cache/taddy/j5kqa5/s391um.taddy.css";
             const size = (v: number) => v * 4 + 'px';
             const margin = (gapY: number, gapX: number) => size(gapY / 2) + ' ' + size(gapX / 2);
             function flex({
