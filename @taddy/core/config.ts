@@ -20,7 +20,7 @@ export type TaddyConfig = {
             | ((...args: any[]) => object | string | number | null);
     };
 
-    unstable_target?: 'react' | 'react-native' | 'vue' | 'svelte';
+    unstable_target?: 'react' | 'react-native' | 'vue' | 'svelte' | 'compiler';
 };
 
 type ValidatedShape<T, Shape> = T & {

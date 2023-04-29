@@ -55,6 +55,11 @@ export const $css = (
             return;
         }
 
+        if (config.unstable_target === 'compiler') {
+            assignStyle(rule);
+            return;
+        }
+
         for (const key in rule) {
             if (isInvalidValue(rule[key])) continue;
 
