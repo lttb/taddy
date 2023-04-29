@@ -53,6 +53,8 @@ const evaluate = async ({content, filename, callbackName}) => {
 
     if (!code) return {error: new Error('TRANSPILATION_ERROR')};
 
+    // console.log({code});
+
     const exec = new Function('require', callbackName, code);
 
     let value;
@@ -77,6 +79,8 @@ const evaluate = async ({content, filename, callbackName}) => {
 
         return {error};
     }
+
+    // console.log('VALUE', {value});
 
     // for some reason, there is an additional ":" prefix on deserialisation/serialisation
     // for example, {':hover': {color: 'red'}} becomes {'::hover': {color: 'red'}}

@@ -28,6 +28,8 @@ export const $css = (
     } = {},
 ): InternalTaddyStyle => {
     if (config.unstable_target === 'compiler') {
+        if (typeof rule === 'string') return {className: {[rule]: true}};
+
         return rule;
     }
 
