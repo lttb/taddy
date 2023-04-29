@@ -1,5 +1,6 @@
 const {transform} = require('@babel/core');
 const path = require('path');
+const fs = require('fs');
 const resolve = require('resolve');
 
 const EXTENSIONS = ['.es6', '.es', '.js', '.mjs', '.jsx', '.tsx', '.ts'];
@@ -9,7 +10,16 @@ const DEFAULT_PRESETS = [
 ];
 
 require('@babel/register')({
-    ignore: [],
+    ignore: [
+        (filename) => {
+            // consider symlinks
+            const realpath = fs.realpathSync(filename);
+
+            if (realpath.includes('node_modules')) return true;
+
+            return false;
+        },
+    ],
     presets: DEFAULT_PRESETS,
     cache: process.env.NODE_ENV !== 'test',
     extensions: EXTENSIONS,
