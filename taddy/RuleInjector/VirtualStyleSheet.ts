@@ -45,12 +45,15 @@ export class VirtualStyleSheet extends Sheet {
             atRuleIndex,
         }: {postfix?: string; atRuleIndex?: number} = {},
     ): number {
-        const selectorText = `.${className}`;
+        const isAtRule = atRuleIndex !== undefined;
+
+        const selectorPrefix = isAtRule ? '._' : '';
+        const selectorText = selectorPrefix + `.${className}`;
         const cssText = buildAtomicRule(selectorText, key, value);
 
         let insertSheet = this.sheet;
 
-        if (atRuleIndex !== undefined) {
+        if (isAtRule) {
             // cast media rule type
             insertSheet = this.sheet.cssRules[
                 atRuleIndex
