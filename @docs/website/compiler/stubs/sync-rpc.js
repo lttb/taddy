@@ -1,3 +1,3 @@
-const transformWorker = require('@taddy/babel-plugin/src/helpers/transformWorker');
+const transformWorker = require('@taddy/babel-plugin/src/helpers/evaluate.worker');
 
 module.exports = () => transformWorker();

@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 import {PACKAGE_NAME, transform, getStyles, resetStyles} from './common';
 
 const options = {
@@ -40,11 +42,12 @@ describe('taddy.macro.typescript', () => {
             })
         `,
                 options,
+                {filename: 'test.infer-mixins.tsx'},
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/j5kqa5/at9wv3.taddy.css";
-            export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__17gkjp6");"
+            import ".cache/taddy/kukjmn/t1fdcz.taddy.css";
+            export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__1p9m90k");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -61,7 +64,7 @@ describe('taddy.macro.typescript', () => {
             await transform(
                 `
                 import {css} from '${PACKAGE_NAME}'
-                import {box, typo} from './data/mixins'
+                import {box, typo} from '@taddy/babel-plugin/src/tests/data/mixins'
 
                 function mixin<T extends 'smaller' | 'larger'>(size: T) {
                     return css.mixin({
@@ -83,11 +86,12 @@ describe('taddy.macro.typescript', () => {
                 })
             `,
                 options,
+                {filename: 'test.infer-types.tsx'},
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "taddy";
-            import ".cache/taddy/j5kqa5/at9wv3.taddy.css";
-            import { box, typo } from './data/mixins';
+            import ".cache/taddy/o2loos/775vh6.taddy.css";
+            import { box, typo } from '@taddy/babel-plugin/src/tests/data/mixins';
             function mixin<T extends 'smaller' | 'larger'>(size: T) {
               return css.mixin({
                 ...box,
@@ -102,7 +106,7 @@ describe('taddy.macro.typescript', () => {
               ...typo,
               "_1kgt43": "_2f0x",
               "_rnbphe": "_1vf95"
-            }, "__17gkjp6");"
+            }, "__2hq8osn");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`

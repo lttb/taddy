@@ -52,8 +52,13 @@ type Optional<T> = T | null | void;
 
 export async function transform(
     code: string,
-    options?: object,
+    babelOptions?: MacroConfig,
+    transformOptions?: TransformOptions,
 ): Promise<Optional<string>> {
-    return (await transformAsync(stripIndent(code), getBabelOptions(options)))
-        ?.code;
+    return (
+        await transformAsync(stripIndent(code), {
+            ...getBabelOptions(babelOptions),
+            ...transformOptions,
+        })
+    )?.code;
 }

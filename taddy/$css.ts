@@ -27,6 +27,12 @@ export const $css = (
         at?: {name: string; query?: string};
     } = {},
 ): InternalTaddyStyle => {
+    if (config.unstable_target === 'compiler') {
+        if (typeof rule === 'string') return {className: {[rule]: true}};
+
+        return rule;
+    }
+
     if (!rule) {
         return {className: {}};
     }

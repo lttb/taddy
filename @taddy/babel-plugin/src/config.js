@@ -1,15 +1,15 @@
 import * as path from 'path';
 
-import type {ConfigAPI} from '@babel/core';
-
-import type {Env} from './types';
-
 export const MACRO_NAME = 'taddy.macro';
 export const PACKAGE_NAME = 'taddy';
 
-export function getEnv(babel: ConfigAPI): Env {
+/**
+ * @param {import('@babel/core').ConfigAPI} babel
+ * @returns {import('./types').Env}
+ */
+export function getEnv(babel) {
     try {
-        return babel.env() as Env;
+        return babel.env();
     } catch (e) {
         // console.log('error', e);
     }
@@ -20,9 +20,7 @@ export function getEnv(babel: ConfigAPI): Env {
         return DEFAULT_ENV;
     }
 
-    return (process.env.BABEL_ENV ||
-        process.env.NODE_ENV ||
-        DEFAULT_ENV) as Env;
+    return process.env.BABEL_ENV || process.env.NODE_ENV || DEFAULT_ENV;
 }
 
 // TODO: add config resolution
