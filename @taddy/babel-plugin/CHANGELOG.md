@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.5](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.4...@taddy/babel-plugin@0.1.0-alpha.5) (2023-04-30)
+
+### Bug Fixes
+
+- **babel-plugin:** worker utils cjs resolution ([7c31f94](https://github.com/lttb/taddy/commit/7c31f9460dd5e017b4bf0ce77a09add6b8fd8a19))
+
+### Features
+
+- **babel-plugin:** switch from rollup to tsc ([5cbd87d](https://github.com/lttb/taddy/commit/5cbd87d0e4705cf25c37537e3a9a84c8f9e915ef))
+- **babel-plugin:** update typescript snapshots ([94174a8](https://github.com/lttb/taddy/commit/94174a8f151775281102249cf9a4165e8b3a420d))
+
 # [0.1.0-alpha.4](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.3...@taddy/babel-plugin@0.1.0-alpha.4) (2023-04-29)
 
 ### Bug Fixes
