@@ -89,29 +89,17 @@ describe('taddy.macro.typescript', () => {
                 {filename: 'test.infer-types.tsx'},
             ),
         ).toMatchInlineSnapshot(`
-            "import { css } from "taddy";
-            import ".cache/taddy/o2loos/775vh6.taddy.css";
-            import { box, typo } from '@taddy/babel-plugin/src/tests/data/mixins';
-            function mixin<T extends 'smaller' | 'larger'>(size: T) {
-              return css.mixin({
-                ...box,
-                ...typo,
-                display: 'flex',
-                fontSize: size
-              });
-            }
-            export default css({
-              ...mixin('smaller'),
-              ...box,
-              ...typo,
-              "_1kgt43": "_2f0x",
-              "_rnbphe": "_1vf95"
-            }, "__2hq8osn");"
+            "import { css } from "@taddy/core";
+            import ".cache/taddy/o2loos/hqitgk.taddy.css";
+            export default css("_-q8b8sh_-yoym18 _9wido6_1sxol _-k3s8v4_1d _t3u24i_1kgt43_2f0x _1kgt43_2f0x _rnbphe_1vf95", "__2hq8osn");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._1kgt43_2f0x { color: red; }
-            ._rnbphe_1vf95 { display: flex; }"
+            "._rnbphe_1vf95 { display: flex; }
+            ._-q8b8sh_-yoym18 { font-size: smaller; }
+            ._-k3s8v4_1d { line-height: 1; }
+            ._t3u24i_1kgt43_2f0x:hover,._1kgt43_2f0x { color: red; }
+            ._9wido6_1sxol { font-weight: bold; }"
         `);
     });
 });
