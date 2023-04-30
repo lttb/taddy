@@ -8,7 +8,7 @@ import type {
 import type {NodePaths} from '@babel/traverse';
 
 import {PACKAGE_NAME, getEnv} from './config';
-import {isTaddyEvaluation} from './helpers/utils';
+import * as utils from './helpers/utils.cjs';
 import {macro, type MacroConfig} from './macro-plugin';
 
 type ImportSpecifiers = NodePaths<t.ImportDeclaration['specifiers']>;
@@ -70,7 +70,7 @@ export default function plugin(
             ImportDeclaration(path, state) {
                 // console.log('run', state.file.code, state.filename);
 
-                if (isTaddyEvaluation(state)) {
+                if (utils.isTaddyEvaluation(state)) {
                     return;
                 }
 

@@ -27,7 +27,7 @@ require('@babel/register')({
 
 const {config} = require('taddy');
 
-const {EVAL_FILENAME_POSTFIX} = require('./utils');
+const {EVAL_FILENAME_POSTFIX} = require('./utils.cjs');
 
 // webpack "require" critical dependency issue workaround
 const nodeRequire = new Function(
