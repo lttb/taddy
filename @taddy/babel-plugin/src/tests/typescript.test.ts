@@ -42,7 +42,7 @@ describe('taddy.macro.typescript', () => {
             })
         `,
                 options,
-                {filename: 'test.infer-mixins.tsx'},
+                {filename: './test.infer-mixins.tsx'},
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
@@ -86,7 +86,7 @@ describe('taddy.macro.typescript', () => {
                 })
             `,
                 options,
-                {filename: 'test.infer-types.tsx'},
+                {filename: './test.infer-types.tsx'},
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
