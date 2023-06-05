@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.7](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.6...@taddy/babel-plugin@0.1.0-alpha.7) (2023-06-05)
+
+### Features
+
+- **babel-plugin:** disable cache for evaluate worker ([16aab89](https://github.com/lttb/taddy/commit/16aab8920adbe42fdb37e848e2e95af8a004b5b5))
+
 # [0.1.0-alpha.6](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.5...@taddy/babel-plugin@0.1.0-alpha.6) (2023-06-05)
 
 ### Features

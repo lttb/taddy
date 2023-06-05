@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.7](https://github.com/lttb/taddy/compare/taddy.macro@0.1.0-alpha.6...taddy.macro@0.1.0-alpha.7) (2023-06-05)
+
+**Note:** Version bump only for package taddy.macro
+
 # [0.1.0-alpha.6](https://github.com/lttb/taddy/compare/taddy.macro@0.1.0-alpha.5...taddy.macro@0.1.0-alpha.6) (2023-06-05)
 
 **Note:** Version bump only for package taddy.macro
