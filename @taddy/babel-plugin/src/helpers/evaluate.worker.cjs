@@ -21,7 +21,7 @@ require('@babel/register')({
         },
     ],
     presets: DEFAULT_PRESETS,
-    cache: process.env.NODE_ENV !== 'test',
+    cache: false,
     extensions: EXTENSIONS,
 });
 
