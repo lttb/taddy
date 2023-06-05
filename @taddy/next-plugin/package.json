@@ -1,6 +1,6 @@
 {
   "name": "@taddy/next-plugin",
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-alpha.6",
   "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
   "license": "MIT",
   "main": "index.js",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
-    "@taddy/babel-plugin": "^0.1.0-alpha.5"
+    "@taddy/babel-plugin": "^0.1.0-alpha.6"
   },
   "devDependencies": {
     "next": "13.2.4",

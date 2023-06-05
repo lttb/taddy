@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.6](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.5...@taddy/babel-plugin@0.1.0-alpha.6) (2023-06-05)
+
+### Features
+
+- **babel-plugin:** update typescript test ([2f90c87](https://github.com/lttb/taddy/commit/2f90c871fc3dd138fec4f260ab30a2fc2049abf4))
+
 # [0.1.0-alpha.5](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.4...@taddy/babel-plugin@0.1.0-alpha.5) (2023-04-30)
 
 ### Bug Fixes
