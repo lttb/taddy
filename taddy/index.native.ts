@@ -1,3 +1,5 @@
+import {processRules} from './react-native/processStyles';
+
 export function css(...rule) {
-    return {style: rule};
+    return processRules(rule);
 }
