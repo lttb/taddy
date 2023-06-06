@@ -14,6 +14,7 @@ import type {TaddyRule} from './types';
 
 import {mixin} from './mixin';
 import {at} from './at';
+import {processRules} from './react-native/processStyles';
 
 export type ExactProp<T extends keyof Properties> = Exclude<
     Properties[T],
@@ -70,7 +71,7 @@ export function css(
 
 export function css(...rule) {
     if (config.unstable_target === 'react-native') {
-        return {style: rule};
+        return processRules(rule);
     }
 
     return config.unstable_mapStyles(_css(rule));

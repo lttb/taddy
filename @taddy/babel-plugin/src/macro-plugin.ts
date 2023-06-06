@@ -8,7 +8,7 @@ import path from 'path';
 import {$css, config} from 'taddy';
 
 import {MACRO_NAME, PACKAGE_NAME, getEnv} from './config';
-import {isTaddyEvaluation} from './helpers/utils';
+import * as utils from './helpers/utils.cjs';
 import {taggedTemplateToObject} from './helpers/taggedTemplateToObject';
 import {createHandlers} from './handlers';
 
@@ -160,7 +160,7 @@ export function macro({
 }: MacroOptions) {
     const {env = getEnv(babel), ...config} = _config;
 
-    if (isTaddyEvaluation(state)) {
+    if (utils.isTaddyEvaluation(state)) {
         return;
     }
 

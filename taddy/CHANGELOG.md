@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.4](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.3...taddy@0.1.0-alpha.4) (2023-06-05)
+
+### Features
+
+- **taddy:** process rules for react-native ([cc809b1](https://github.com/lttb/taddy/commit/cc809b14e48999a2345cd9cbcf85a785c62e68eb))
+
 # [0.1.0-alpha.3](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.2...taddy@0.1.0-alpha.3) (2023-04-29)
 
 ### Bug Fixes

@@ -9,7 +9,7 @@ import {MACRO_NAME, PACKAGE_NAME} from '../config';
 import {findBindings} from './findBindings';
 import {buildCodeByPath} from './buildCodeByPath';
 
-const evaluateChunk = rpc(__dirname + '/evaluate.worker.js', 'Evaluate');
+const evaluateChunk = rpc(__dirname + '/evaluate.worker.cjs', 'Evaluate');
 
 const macroRe = new RegExp(MACRO_NAME.replace('.', '\\.'), 'g');
 
