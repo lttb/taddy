@@ -52,11 +52,13 @@ function _css<T extends TaddyRule | {[key: string]: TaddyRule}>(
 
     const result = $css(rule.length <= 1 ? rule[0] : {composes: rule});
 
-    delete result.className[MIXIN_KEY];
+    if (result.className) {
+        delete result.className[MIXIN_KEY];
 
-    // @ts-expect-error fix types
-    // append "_" to the final className to maintain specificity
-    result.className = '_ ' + joinClassName(result.className);
+        // @ts-expect-error fix types
+        // append "_" to the final className to maintain specificity
+        result.className = '_ ' + joinClassName(result.className);
+    }
 
     return withId(result, id);
 }

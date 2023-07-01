@@ -42,6 +42,8 @@ export const joinClassName = (className: object): string => {
 };
 
 export const withId = (result, id?: string | void) => {
+    if (!result) return result;
+
     /**
      * For the reference between different styles
      */
