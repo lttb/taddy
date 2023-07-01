@@ -10,7 +10,7 @@ function hash(s: string) {
 
 type NameOptions = {
     postfix?: string;
-    at?: {query: string; name: string};
+    at?: {query?: string; name: string};
 };
 
 function generateHash(value: string) {

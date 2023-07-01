@@ -6,46 +6,13 @@ import {VARS_KEY} from '@taddy/core';
 
 import {getObjectPropertyKey} from './getObjectPropertyKey';
 
-function apply(
-    quasis: (string | t.BinaryExpression)[],
-): t.BinaryExpression | t.StringLiteral {
-    let expr;
-    let curr = '';
-    for (const v of quasis) {
-        if (typeof v === 'string') {
-            curr += (curr ? ' ' : '') + v;
-            continue;
-        }
-        if (expr && curr) {
-            expr = t.binaryExpression(
-                '+',
-                expr,
-                t.stringLiteral(' ' + curr + ' '),
-            );
-            expr = t.binaryExpression('+', expr, v);
-        } else if (curr) {
-            expr = t.binaryExpression('+', t.stringLiteral(curr + ' '), v);
-        } else if (expr) {
-            expr = t.binaryExpression('+', expr, t.stringLiteral(' '));
-            expr = t.binaryExpression('+', expr, v);
-        } else {
-            expr = v;
-        }
-
-        curr = '';
-    }
-    if (expr && curr) {
-        expr = t.binaryExpression('+', expr, t.stringLiteral(' ' + curr));
-    }
-    return expr || t.stringLiteral(curr);
-}
-
 export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
-    // const quasis: string[] = [];
-    // const expressions: any[] = [];
     const props: t.ObjectProperty[] = [];
 
-    let quasis: (string | t.BinaryExpression)[] = [];
+    let quasis: t.TemplateElement[] = [];
+    let expressions: t.Expression[] = [];
+
+    let currQuasi = '';
 
     for (const propPath of path.get('properties')) {
         if (!propPath.isObjectProperty()) {
@@ -60,14 +27,20 @@ export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
         const valuePath = (propPath as NodePath<t.ObjectProperty>).get('value');
 
         if (key === 'className' || key === 'style' || key === VARS_KEY) {
-            if (quasis.length) {
+            if (currQuasi) {
+                quasis.push(t.templateElement({raw: currQuasi}));
                 props.push(
-                    t.objectProperty(apply(quasis), t.booleanLiteral(true)),
+                    t.objectProperty(
+                        t.templateLiteral(quasis, expressions),
+                        t.booleanLiteral(true),
+                    ),
                 );
             }
 
             props.push(propPath.node);
             quasis = [];
+            expressions = [];
+            currQuasi = '';
             continue;
         }
 
@@ -77,40 +50,44 @@ export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
         // }
 
         if (valuePath.isStringLiteral()) {
-            quasis.push(key + valuePath.node.value);
+            currQuasi += ' ' + key + valuePath.node.value;
             continue;
         }
 
         if (valuePath.isBooleanLiteral()) {
-            quasis.push(key);
+            currQuasi += ' ' + key;
             continue;
         }
 
-        quasis.push(
-            t.binaryExpression(
-                '+',
-                t.stringLiteral(key),
-                valuePath.node as t.Expression,
-            ),
-        );
+        currQuasi += ' ' + key;
 
-        // expressions.push(
-        //     t.binaryExpression(
-        //         '+',
-        //         t.stringLiteral(key),
-        //         valuePath.node as t.Expression,
-        //     ),
-        // );
+        quasis.push(t.templateElement({raw: currQuasi}));
+        expressions.push(valuePath.node as t.Expression);
+
+        currQuasi = '';
+    }
+
+    if (currQuasi) {
+        quasis.push(t.templateElement({raw: currQuasi}));
+    }
+
+    if (expressions.length) {
+        quasis.push(t.templateElement({raw: ''}));
     }
 
     if (props.length === 0) {
-        path.replaceWith(apply(quasis));
+        path.replaceWith(t.templateLiteral(quasis, expressions));
 
         return;
     }
 
     if (quasis.length) {
-        props.push(t.objectProperty(apply(quasis), t.booleanLiteral(true)));
+        props.push(
+            t.objectProperty(
+                t.templateLiteral(quasis, expressions),
+                t.booleanLiteral(true),
+            ),
+        );
     }
 
     path.node.properties = props;

@@ -75,8 +75,8 @@ function getLiteralValue(path: NodePath<any>): any {
 }
 getLiteralValue.FAIL = Symbol('FAILED_VALUE');
 
-function getHashedName(key: string, {postfix}: CommonOptions): string {
-    return config.nameGenerator.getName(key, '', {postfix}).join('');
+function getHashedName(key: string, {postfix, at}: CommonOptions): string {
+    return config.nameGenerator.getName(key, '', {postfix, at}).join('');
 }
 
 const isCSSProperty = (key: string) => {
