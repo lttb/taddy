@@ -1,12 +1,15 @@
-const {transform} = require('@babel/core');
+const {transform, registerPreset} = require('@babel/standalone');
 const path = require('path');
 const fs = require('fs');
 const resolve = require('resolve');
 
+registerPreset('@babel/env', require('@babel/preset-env'));
+registerPreset('@babel/typescript', require('@babel/preset-typescript'));
+
 const EXTENSIONS = ['.es6', '.es', '.js', '.mjs', '.jsx', '.tsx', '.ts'];
 const DEFAULT_PRESETS = [
-    ['@babel/preset-typescript', {allExtensions: true, isTSX: true}],
-    ['@babel/preset-env', {targets: {node: '12'}, modules: 'cjs'}],
+    ['@babel/typescript', {allExtensions: true, isTSX: true}],
+    ['@babel/env', {targets: {node: '12'}, modules: 'cjs'}],
 ];
 
 require('@babel/register')({
