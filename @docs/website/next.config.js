@@ -14,7 +14,6 @@ const config = {
             path: 'path-browserify',
             module: require.resolve('./compiler/stubs/module'),
             'sync-rpc': require.resolve('./compiler/stubs/sync-rpc'),
-            // '@babel/core': require.resolve('./compiler/stubs/babel-core'),
         });
 
         // config.plugins.push(
