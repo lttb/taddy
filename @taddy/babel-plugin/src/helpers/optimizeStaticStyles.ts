@@ -70,7 +70,7 @@ export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
         quasis.push(t.templateElement({raw: currQuasi}));
     }
 
-    if (expressions.length) {
+    if (expressions.length === quasis.length) {
         quasis.push(t.templateElement({raw: ''}));
     }
 
