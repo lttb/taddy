@@ -31,7 +31,7 @@ describe('taddy.macro', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/1sso9tc.taddy.css";
-            export default css("class _1kgt43_2f0x _t3u24i_1kgt43_1svoa", "__17gkjp6");"
+            export default css(\`class _1kgt43_2f0x _t3u24i_1kgt43_1svoa\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -56,7 +56,7 @@ describe('taddy.macro', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/1pwnj73.taddy.css";
-            export default css("_-kygmid_1c", "__17gkjp6");"
+            export default css(\`_-kygmid_1c\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
@@ -100,7 +100,7 @@ describe('taddy.macro', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/nw43nd.taddy.css";
-            export default css("_1kgt43_ndbh _-1p9wvz_-wkmtks_1kgt43_2f0x _-1p9wvz_-wkmtks_t3u24i_1kgt43_1w6ov _-1p9wvz_-wjj8e2_1kgt43_bckm45 _-1p9wvz_-wjj8e2_t3u24i_1kgt43_bchb3k _w0o0bo_-wk67x2_1kgt43_-c55ax8 _w0o0bo_-wk67x2_t3u24i_1kgt43_1svoa _w0o0bo_-wiiu4z_1kgt43_1mpr0j _w0o0bo_-wiiu4z_t3u24i_1kgt43_-g5na6c", "__17gkjp6");"
+            export default css(\`_1kgt43_ndbh _-1p9wvz_-wkmtks_1kgt43_2f0x _-1p9wvz_-wkmtks_t3u24i_1kgt43_1w6ov _-1p9wvz_-wjj8e2_1kgt43_bckm45 _-1p9wvz_-wjj8e2_t3u24i_1kgt43_bchb3k _w0o0bo_-wk67x2_1kgt43_-c55ax8 _w0o0bo_-wk67x2_t3u24i_1kgt43_1svoa _w0o0bo_-wiiu4z_1kgt43_1mpr0j _w0o0bo_-wiiu4z_t3u24i_1kgt43_-g5na6c\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`

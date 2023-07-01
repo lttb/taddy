@@ -99,13 +99,13 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9wido6_1sxol { font-weight: bold; }
-            ._-q8b8sh_-httxmz { font-size: medium; }
+            "._-c59cgp_1sxol { font-weight: bold; }
+            ._61o3jk_-httxmz { font-size: medium; }
             ._rnbphe_1vf95 { display: flex; }
-            ._bi7y5n_-memv1m { flex-direction: column; }
+            ._-g4lbay_-memv1m { flex-direction: column; }
             ._1kgt43_2f0x { color: red; }
             ._-m15jgy_1mpr0j { background: green; }
-            ._9wido6_-h71d09 { font-weight: normal; }"
+            ._-c59cgp_-h71d09 { font-weight: normal; }"
         `);
     });
 
@@ -131,10 +131,10 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9wido6_1sxol { font-weight: bold; }
-            ._-q8b8sh_-httxmz { font-size: medium; }
+            "._-c59cgp_1sxol { font-weight: bold; }
+            ._61o3jk_-httxmz { font-size: medium; }
             ._rnbphe_1vf95 { display: flex; }
-            ._bi7y5n_-memv1m { flex-direction: column; }
+            ._-g4lbay_-memv1m { flex-direction: column; }
             ._1kgt43_2f0x { color: red; }
             ._-m15jgy_1mpr0j { background: green; }
             ._-dc2nlb_wcpz { padding: 10px; }"
@@ -167,11 +167,11 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9wido6_1sxol { font-weight: bold; }
-            ._-q8b8sh_-httxmz { font-size: medium; }
+            "._-c59cgp_1sxol { font-weight: bold; }
+            ._61o3jk_-httxmz { font-size: medium; }
             ._t3u24i_1kgt43_2f0x:hover,._1kgt43_2f0x { color: red; }
             ._rnbphe_1vf95 { display: flex; }
-            ._bi7y5n_-memv1m { flex-direction: column; }
+            ._-g4lbay_-memv1m { flex-direction: column; }
             ._t3u24i_-m15jgy_1mpr0j:hover,._-m15jgy_1mpr0j { background: green; }"
         `);
     });
@@ -237,16 +237,16 @@ describe('api', () => {
         );
 
         expect(getStyles()).toMatchInlineSnapshot(`
-            "._9wido6_1sxol { font-weight: bold; }
-            ._-q8b8sh_-httxmz { font-size: medium; }
-            ._9wido6_-h71d09 { font-weight: normal; }
+            "._-c59cgp_1sxol { font-weight: bold; }
+            ._61o3jk_-httxmz { font-size: medium; }
+            ._-c59cgp_-h71d09 { font-weight: normal; }
             ._rnbphe_1vf95 { display: flex; }
-            ._bi7y5n_-memv1m { flex-direction: column; }
+            ._-g4lbay_-memv1m { flex-direction: column; }
             ._1kgt43_2f0x { color: red; }
             ._-m15jgy_1mpr0j { background: green; }
             ._-dc2nlb_1c { padding: 0px; }
             ._-dc2nlb_wcpz { padding: 10px; }
-            ._9wido6_w7zqdg { font-weight: initial; }"
+            ._-c59cgp_w7zqdg { font-weight: initial; }"
         `);
     });
 
@@ -267,8 +267,8 @@ describe('api', () => {
 
         expect(box).toMatchInlineSnapshot(`
             {
-              "className": "_ _1kgt43_1svoa _ozbvb8_fk903q_wcpz ___39by3k",
-              Symbol(ID_KEY): "___39by3k",
+              "className": "_ _1kgt43_1svoa _ozbvb8_wlfys5_wcpz ___s7670w",
+              Symbol(ID_KEY): "___s7670w",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
@@ -276,7 +276,7 @@ describe('api', () => {
         expect(getStyles()).toMatchInlineSnapshot(`
             "._1kgt43_2f0x { color: red; }
             ._1kgt43_1svoa { color: blue; }
-            ._ozbvb8_fk903q_wcpz + .___-wnp3vy { margin-left: 10px; }"
+            ._ozbvb8_wlfys5_wcpz + .___-wnp3vy { margin-left: 10px; }"
         `);
     });
 

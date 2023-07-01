@@ -25,7 +25,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/1dsv92m.taddy.css";
-            export default css("_1kgt43_1svoa", "__17gkjp6");"
+            export default css(\`_1kgt43_1svoa\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -75,7 +75,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/6axrhs.taddy.css";
-            export default css("_1kgt43_2f0x", "__17gkjp6");"
+            export default css(\`_1kgt43_2f0x\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(
@@ -98,7 +98,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/1sso9tc.taddy.css";
-            export default css("_1kgt43_2f0x _t3u24i_1kgt43_1svoa", "__17gkjp6");"
+            export default css(\`_1kgt43_2f0x _t3u24i_1kgt43_1svoa\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -124,7 +124,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/1sso9tc.taddy.css";
-            export default css("_1kgt43_2f0x _t3u24i_1kgt43_1svoa", "__17gkjp6");"
+            export default css(\`_1kgt43_2f0x _t3u24i_1kgt43_1svoa\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -150,7 +150,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/1sso9tc.taddy.css";
-            export default css("class _1kgt43_2f0x _t3u24i_1kgt43_1svoa", "__17gkjp6");"
+            export default css(\`class _1kgt43_2f0x _t3u24i_1kgt43_1svoa\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -178,7 +178,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/1sso9tc.taddy.css";
-            export default css("class _1kgt43_2f0x _t3u24i_1kgt43_1svoa", "__17gkjp6");"
+            export default css(\`class _1kgt43_2f0x _t3u24i_1kgt43_1svoa\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -208,7 +208,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/1sso9tc.taddy.css";
-            export default css("class _1kgt43_2f0x _t3u24i_1kgt43_1svoa", "__17gkjp6");"
+            export default css(\`class _1kgt43_2f0x _t3u24i_1kgt43_1svoa\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
@@ -239,7 +239,7 @@ describe('taddy.macro.static', () => {
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
             import ".cache/taddy/j5kqa5/1sso9tc.taddy.css";
-            export default css("class _1kgt43_2f0x _t3u24i_1kgt43_1svoa", "__17gkjp6");"
+            export default css(\`class _1kgt43_2f0x _t3u24i_1kgt43_1svoa\`, "__17gkjp6");"
         `);
 
         expect(getStyles()).toMatchInlineSnapshot(`
