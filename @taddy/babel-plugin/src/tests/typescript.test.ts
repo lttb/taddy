@@ -46,7 +46,7 @@ describe('taddy.macro.typescript', () => {
             ),
         ).toMatchInlineSnapshot(`
             "import { css } from "@taddy/core";
-            import ".cache/taddy/kukjmn/t1fdcz.taddy.css";
+            import ".cache/taddy/kukjmn/qn4i1t.taddy.css";
             export default css("_rnbphe_1vf95 _bi7y5n_2fa2 _-ikiluq_eeql5n _t3u24i_1kgt43_2f0x _t2q38e_-mvl0b8_2c7gol", "__1p9m90k");"
         `);
 

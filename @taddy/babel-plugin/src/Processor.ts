@@ -397,7 +397,7 @@ export class Processor {
 
             properties.push(
                 t.objectProperty(
-                    t.identifier(propKey),
+                    t.stringLiteral(propKey),
                     t.callExpression(hashFunctionNode, [
                         valuePath.node as t.Expression,
                     ]),

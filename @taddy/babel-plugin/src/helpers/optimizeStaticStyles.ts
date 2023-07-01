@@ -25,6 +25,9 @@ function apply(
             expr = t.binaryExpression('+', expr, v);
         } else if (curr) {
             expr = t.binaryExpression('+', t.stringLiteral(curr + ' '), v);
+        } else if (expr) {
+            expr = t.binaryExpression('+', expr, t.stringLiteral(' '));
+            expr = t.binaryExpression('+', expr, v);
         } else {
             expr = v;
         }
@@ -52,7 +55,7 @@ export function optimizeStaticStyles(path: NodePath<t.ObjectExpression>) {
         const keyPath = (propPath as NodePath<t.ObjectProperty>).get('key');
         const key = getObjectPropertyKey(keyPath);
 
-        if (!key) return;
+        if (!key) continue;
 
         const valuePath = (propPath as NodePath<t.ObjectProperty>).get('value');
 
