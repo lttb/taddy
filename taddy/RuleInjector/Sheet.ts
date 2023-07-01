@@ -50,12 +50,12 @@ abstract class Sheet {
         hash = hash ? '-' + hash : '';
         const {nameGenerator} = config;
 
-        const cssKey = camelToKebab(key);
-
-        const name = nameGenerator.getName(cssKey, value, {
+        const name = nameGenerator.getName(key, value, {
             postfix,
             at,
         });
+
+        const cssKey = camelToKebab(key);
 
         const result = Object.create(null);
         // result[propHash + postfixHash] = value + hash
