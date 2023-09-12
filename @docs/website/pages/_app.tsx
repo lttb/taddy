@@ -5,19 +5,18 @@ import '@docs/website/styles/reset.css';
 
 // import '@taddy/babel-plugin/.cache';
 // import '@taddy/babel-plugin/.cache/index.css';
+import { css } from 'taddy';
 
-import {css} from 'taddy';
+import { MDXProvider } from '@mdx-js/react';
 
-import {MDXProvider} from '@mdx-js/react';
+import { createStore } from '@reatom/core';
+import { context } from '@reatom/react';
 
-import {createStore} from '@reatom/core';
-import {context} from '@reatom/react';
-
-import {Sidebar} from '@docs/website/components/Sidebar/index';
+import { Sidebar } from '@docs/website/components/Sidebar/index';
 import sidebarStyles from '@docs/website/components/Sidebar/styles.module.css';
 
-import {Link} from '@docs/website/components/Link';
-import {AppProps} from 'next/app';
+import { Link } from '@docs/website/components/Link';
+import { AppProps } from 'next/app';
 
 import ico from '@docs/website/public/favicon.ico';
 
@@ -26,8 +25,8 @@ const store = createStore();
 const components = {
     a: (props) => <Link {...props} />,
     pre: (props) => <pre {...props} />,
-    code: ({...props}) => <code {...props} />,
-    inlineCode: ({className, ...props}) => (
+    code: ({ ...props }) => <code {...props} />,
+    inlineCode: ({ className, ...props }) => (
         <code
             {...props}
             {...css({
@@ -43,7 +42,7 @@ const components = {
     ),
 };
 
-function MyApp({Component, pageProps, router}: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
     const name = router.pathname.slice(1);
     const title = 'taddy' + (name ? ' | ' + name : '');
 
@@ -69,7 +68,7 @@ function MyApp({Component, pageProps, router}: AppProps) {
                             flexDirection: 'row',
                         })}
                     >
-                        <Sidebar />
+                        {name !== 'test' && <Sidebar />}
 
                         <div
                             {...css({
