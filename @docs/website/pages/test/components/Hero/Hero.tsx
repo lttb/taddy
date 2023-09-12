@@ -65,11 +65,12 @@ export const Hero = () => {
 const styles = {
   wrapper: css({
     position: 'relative',
-    '@media': {
-      'min-width: 768px': {
-        padding: '0 42px',
-      }
-    },
+    padding: '0 42px'
+    // '@media': {
+    //   'min-width: 768px': {
+    //     padding: '0 42px',
+    //   }
+    // },
   }),
   h1: css({
     ...typography.caption,
@@ -93,11 +94,12 @@ const styles = {
   }),
   buttons: css({
     alignSelf: 'flex-end',
-    '@media': {
-      'min-width: 768px': {
-        flex: '0 0 33%',
-      }
-    },
+    flex: '0 0 33%'
+    // '@media': {
+    //   'min-width: 768px': {
+    //     flex: '0 0 33%',
+    //   }
+    // },
   }),
   button: css({
     display: 'inline-block',

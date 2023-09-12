@@ -44,15 +44,17 @@ const styles = {
   header: css({
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    padding: '20px 0',
+    // justifyContent: 'center',
+    // padding: '20px 0',
+    padding: '20px 42px',
+    justifyContent: 'space-between',
     background: '#eef7fd',
-    '@media': {
-      'min-width: 768px': {
-        padding: '20px 42px',
-        justifyContent: 'space-between',
-      }
-    },
+    // '@media': {
+    //   'min-width: 768px': {
+    //     padding: '20px 42px',
+    //     justifyContent: 'space-between',
+    //   }
+    // },
   }),
   left: css({
     display: 'flex'

@@ -44,13 +44,14 @@ const styles = {
   header: css({
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    '@media': {
-      'min-width: 768px': {
-        padding: '0 42px',
-        justifyContent: 'space-between',
-      }
-    },
+    padding: '0 42px',
+    justifyContent: 'space-between',
+    // '@media': {
+    //   'min-width: 768px': {
+    //     padding: '0 42px',
+    //     justifyContent: 'space-between',
+    //   }
+    // },
   }),
   left: css({
     display: 'flex'
