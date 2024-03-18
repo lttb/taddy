@@ -54,6 +54,9 @@ export const withId = (result, id?: string | void) => {
     result[Symbol?.toPrimitive || 'toString'] = () => '.' + value;
     result.className += (result.className ? ' ' : '') + value;
 
+    // append "_" to the final className to maintain specificity
+    result.className += ' _';
+
     return result;
 };
 
@@ -100,8 +103,7 @@ const _css = (
         }
     }
 
-    // append "_" to the final className to maintain specificity
-    result.className = '_ ' + joinClassName(className);
+    result.className = joinClassName(className);
 
     if (style) {
         result.style = style;
