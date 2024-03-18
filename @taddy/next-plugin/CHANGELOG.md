@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.8](https://github.com/lttb/taddy/compare/@taddy/next-plugin@0.1.0-alpha.7...@taddy/next-plugin@0.1.0-alpha.8) (2024-03-18)
+
+**Note:** Version bump only for package @taddy/next-plugin
+
 # [0.1.0-alpha.7](https://github.com/lttb/taddy/compare/@taddy/next-plugin@0.1.0-alpha.6...@taddy/next-plugin@0.1.0-alpha.7) (2023-06-05)
 
 **Note:** Version bump only for package @taddy/next-plugin

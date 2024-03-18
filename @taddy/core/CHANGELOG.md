@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.3](https://github.com/lttb/taddy/compare/@taddy/core@0.1.0-alpha.2...@taddy/core@0.1.0-alpha.3) (2024-03-18)
+
+### Bug Fixes
+
+- fix specificity class appending ([c474da8](https://github.com/lttb/taddy/commit/c474da8c3c718b558b257ea52d64a8a202c5529d))
+
+### Features
+
+- **babel-plugin:** use template strings for static classes representation in optimisation' ([6533ea6](https://github.com/lttb/taddy/commit/6533ea600a4891dc99913eed2b4289d970f552c6))
+- **taddy:** minor fixes ([fc2d693](https://github.com/lttb/taddy/commit/fc2d693cf23c3ea241eb2a72f15c8098866df189))
+- update tests ([d2edfea](https://github.com/lttb/taddy/commit/d2edfea70944bdb48b1c867fdfc319485a44c4a1))
+
 # [0.1.0-alpha.2](https://github.com/lttb/taddy/compare/@taddy/core@0.1.0-alpha.1...@taddy/core@0.1.0-alpha.2) (2023-04-29)
 
 ### Features

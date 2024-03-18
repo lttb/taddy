@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.8](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.7...@taddy/babel-plugin@0.1.0-alpha.8) (2024-03-18)
+
+### Bug Fixes
+
+- **babel-plugin:** fix keys with hashed values processing ([9323d4d](https://github.com/lttb/taddy/commit/9323d4dcd58c8a1838de957c6e4d3eaa8dde20da))
+- **babel-plugin:** fix optimizeStaticStyles ([69e96c8](https://github.com/lttb/taddy/commit/69e96c8266209e5a383833cf4bdf10bf9eedaa9b))
+
+### Features
+
+- **babel-plugin:** improve static styles concatenation ([9f36dc5](https://github.com/lttb/taddy/commit/9f36dc520a3f56363cb29f6833ad37f41d2d341d))
+- **babel-plugin:** use babel/standalone in the worker ([cce467e](https://github.com/lttb/taddy/commit/cce467e5ba6749049db9388c64eeeb09d2ca30d7))
+- **babel-plugin:** use template strings for static classes representation in optimisation' ([6533ea6](https://github.com/lttb/taddy/commit/6533ea600a4891dc99913eed2b4289d970f552c6))
+
 # [0.1.0-alpha.7](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.6...@taddy/babel-plugin@0.1.0-alpha.7) (2023-06-05)
 
 ### Features

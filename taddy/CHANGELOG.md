@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.5](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.4...taddy@0.1.0-alpha.5) (2024-03-18)
+
+### Bug Fixes
+
+- fix specificity class appending ([c474da8](https://github.com/lttb/taddy/commit/c474da8c3c718b558b257ea52d64a8a202c5529d))
+
+### Features
+
+- **taddy:** generate prop hash based on original key ([c777a95](https://github.com/lttb/taddy/commit/c777a95548049240696239130d30366f9e319aaa))
+- **taddy:** minor fixes ([fc2d693](https://github.com/lttb/taddy/commit/fc2d693cf23c3ea241eb2a72f15c8098866df189))
+- update tests ([d2edfea](https://github.com/lttb/taddy/commit/d2edfea70944bdb48b1c867fdfc319485a44c4a1))
+
 # [0.1.0-alpha.4](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.3...taddy@0.1.0-alpha.4) (2023-06-05)
 
 ### Features
