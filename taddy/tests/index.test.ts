@@ -30,8 +30,8 @@ describe('api', () => {
     it('should generate atoms', () => {
         expect(css({color: 'red', background: 'green'})).toMatchInlineSnapshot(`
             {
-              "className": "_ _1kgt43_2f0x _-m15jgy_1mpr0j ___lp7ldc",
-              Symbol(ID_KEY): "___lp7ldc",
+              "className": "_1kgt43_2f0x _-m15jgy_1mpr0j ___jtqwen _",
+              Symbol(ID_KEY): "___jtqwen",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
@@ -52,8 +52,8 @@ describe('api', () => {
             }),
         ).toMatchInlineSnapshot(`
             {
-              "className": "_ _-kygmid_1c _rnbphe_1vf95 ___sba9to",
-              Symbol(ID_KEY): "___sba9to",
+              "className": "_-kygmid_1c _rnbphe_1vf95 ___86u29p _",
+              Symbol(ID_KEY): "___86u29p",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
@@ -259,16 +259,16 @@ describe('api', () => {
 
         expect(button).toMatchInlineSnapshot(`
             {
-              "className": "_ _1kgt43_2f0x ___-wnp3vy",
-              Symbol(ID_KEY): "___-wnp3vy",
+              "className": "_1kgt43_2f0x ___6zzohd _",
+              Symbol(ID_KEY): "___6zzohd",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
 
         expect(box).toMatchInlineSnapshot(`
             {
-              "className": "_ _1kgt43_1svoa _ozbvb8_wlfys5_wcpz ___s7670w",
-              Symbol(ID_KEY): "___s7670w",
+              "className": "_1kgt43_1svoa _ea88or_wlfys5_wcpz ___pox1ff _",
+              Symbol(ID_KEY): "___pox1ff",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
@@ -276,7 +276,7 @@ describe('api', () => {
         expect(getStyles()).toMatchInlineSnapshot(`
             "._1kgt43_2f0x { color: red; }
             ._1kgt43_1svoa { color: blue; }
-            ._ozbvb8_wlfys5_wcpz + .___-wnp3vy { margin-left: 10px; }"
+            ._ea88or_wlfys5_wcpz + .___6zzohd { margin-left: 10px; }"
         `);
     });
 
@@ -328,8 +328,8 @@ describe('api', () => {
 
         expect(button).toMatchInlineSnapshot(`
             {
-              "className": "_ _1kgt43_1svoa _w0o0bo_-wl9t3s_1kgt43_2f0x ___cd9162",
-              Symbol(ID_KEY): "___cd9162",
+              "className": "_1kgt43_1svoa _w0o0bo_-wl9t3s_1kgt43_2f0x ___-xdchlh _",
+              Symbol(ID_KEY): "___-xdchlh",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);
@@ -348,8 +348,8 @@ describe('api', () => {
 
         expect(button).toMatchInlineSnapshot(`
             {
-              "className": "_ _1kgt43_1svoa _-1p9wvz_-wl9t3s_1kgt43_2f0x ___v2j7o3",
-              Symbol(ID_KEY): "___v2j7o3",
+              "className": "_1kgt43_1svoa _-1p9wvz_-wl9t3s_1kgt43_2f0x ___xs95gy _",
+              Symbol(ID_KEY): "___xs95gy",
               Symbol(Symbol.toPrimitive): [Function],
             }
         `);

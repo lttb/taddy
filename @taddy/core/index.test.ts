@@ -12,7 +12,7 @@ describe('@taddy/core', () => {
                 'background',
                 'blue',
             )}`,
-            '__id1',
+            '__id1 _',
         );
 
         expect(
@@ -24,10 +24,10 @@ describe('@taddy/core', () => {
                 '__id2',
             ).className,
         ).toEqual(
-            `_ ${getClassName('color', 'blue')} ${getClassName(
+            `${getClassName('color', 'blue')} ${getClassName(
                 'background',
                 'blue',
-            )} __id1 __id2`,
+            )} __id1 __id2 _`,
         );
 
         expect(
@@ -39,10 +39,10 @@ describe('@taddy/core', () => {
                 '__id2',
             ).className,
         ).toEqual(
-            `_ ${getClassName('color', 'red')} ${getClassName(
+            `${getClassName('color', 'red')} ${getClassName(
                 'background',
                 'blue',
-            )} __id1 __id2`,
+            )} __id1 __id2 _`,
         );
     });
 });
