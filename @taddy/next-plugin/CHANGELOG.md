@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.12](https://github.com/lttb/taddy/compare/@taddy/next-plugin@0.1.0-alpha.11...@taddy/next-plugin@0.1.0-alpha.12) (2024-04-10)
+
+### Bug Fixes
+
+- **next-plugin:** fix bun check ([7e44b92](https://github.com/lttb/taddy/commit/7e44b9268345e8a63079536be56e162603724989))
+
 # [0.1.0-alpha.11](https://github.com/lttb/taddy/compare/@taddy/next-plugin@0.1.0-alpha.10...@taddy/next-plugin@0.1.0-alpha.11) (2024-04-10)
 
 ### Features
