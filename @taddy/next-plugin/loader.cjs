@@ -1,5 +1,5 @@
 const babel = require('@babel/core');
-const taddyBabelPlugin = process.version.bun
+const taddyBabelPlugin = process.versions.bun
     ? // import typescript module for bun
       require('@taddy/babel-plugin/index')
     : require('@taddy/babel-plugin');
