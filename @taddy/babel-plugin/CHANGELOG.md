@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.10](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.9...@taddy/babel-plugin@0.1.0-alpha.10) (2024-04-10)
+
+### Bug Fixes
+
+- fix bun support ([2d7c0c9](https://github.com/lttb/taddy/commit/2d7c0c9ecd285bd114369f50fcb06426406f0d4c))
+
 # [0.1.0-alpha.9](https://github.com/lttb/taddy/compare/@taddy/babel-plugin@0.1.0-alpha.8...@taddy/babel-plugin@0.1.0-alpha.9) (2024-04-10)
 
 **Note:** Version bump only for package @taddy/babel-plugin
