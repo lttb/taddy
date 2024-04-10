@@ -1,5 +1,8 @@
 const babel = require('@babel/core');
-const taddyBabelPlugin = require('@taddy/babel-plugin');
+const taddyBabelPlugin = process.version.bun
+    ? // import typescript module for bun
+      require('@taddy/babel-plugin/index')
+    : require('@taddy/babel-plugin');
 const path = require('path');
 
 /** @type {import('webpack').LoaderDefinition} */
