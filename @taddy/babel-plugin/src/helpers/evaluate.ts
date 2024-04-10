@@ -2,14 +2,16 @@ import type {NodePath} from '@babel/core';
 
 import evaluatePath from 'babel-helper-evaluate-path';
 
-import rpc from 'sync-rpc';
-
 import {MACRO_NAME, PACKAGE_NAME} from '../config';
 
 import {findBindings} from './findBindings';
 import {buildCodeByPath} from './buildCodeByPath';
 
-const evaluateChunk = rpc(__dirname + '/evaluate.worker.cjs', 'Evaluate');
+// NOTE: bun doesn't support sync-rps
+// TODO: support bun environment and avoid transpiling
+const evaluateChunk = process.versions.bun
+    ? require('./evaluate.worker.cjs')()
+    : require('sync-rpc')(__dirname + '/evaluate.worker.cjs', 'Evaluate');
 
 const macroRe = new RegExp(MACRO_NAME.replace('.', '\\.'), 'g');
 
