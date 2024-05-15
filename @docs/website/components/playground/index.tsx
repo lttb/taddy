@@ -1,15 +1,15 @@
 import Head from 'next/head';
 
-import {css} from 'taddy';
+import { css } from 'taddy';
 
-import {Column, Row} from '../layout';
+import { Column, Row } from '../layout';
 
-import {LiveEditor} from './LiveEditor';
-import {Options} from './Options';
-import {CompiledCode} from './CompiledCode';
+import { LiveEditor } from './LiveEditor';
+import { Options } from './Options';
+import { CompiledCode } from './CompiledCode';
 
-import {createStore} from '@reatom/core';
-import {context} from '@reatom/react';
+import { createStore } from '@reatom/core';
+import { context } from '@reatom/react';
 
 export default function Playground({
     initialCode,
@@ -18,6 +18,7 @@ export default function Playground({
     showCompiledCSS,
     showRender,
     persistent,
+    useTest
 }: {
     initialCode?: string;
     showOptions?: boolean;
@@ -25,6 +26,7 @@ export default function Playground({
     showCompiledCSS?: boolean;
     showRender?: boolean;
     persistent?: boolean;
+    useTest?: boolean
 }) {
     const store = createStore();
 
@@ -38,7 +40,7 @@ export default function Playground({
                     ></script>
                 </Head>
 
-                <Column gap={4} {...css({background: 'white'})}>
+                <Column gap={4} {...css({ background: 'white' })}>
                     {showOptions && <Options />}
 
                     <Row gap={4}>
@@ -48,7 +50,7 @@ export default function Playground({
                         />
 
                         <CompiledCode
-                            {...{showCompiledCode, showCompiledCSS, showRender}}
+                            {...{ showCompiledCode, showCompiledCSS, showRender, useTest }}
                         />
                     </Row>
                 </Column>

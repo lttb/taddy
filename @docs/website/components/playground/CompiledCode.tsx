@@ -1,26 +1,26 @@
-import {css} from 'taddy';
+import { css } from 'taddy';
 
-import {useAtom} from '@reatom/react';
-import type {PropsWithChildren} from 'react';
+import { useAtom } from '@reatom/react';
+import type { PropsWithChildren } from 'react';
 
-import {Column, Row} from '../layout';
-import {transformAtom} from './atoms';
-import {Editor} from './Editor';
-import {EditorLayer} from './EditorLayer';
-import {ReactRender} from './ReactRender';
+import { Column, Row } from '../layout';
+import { transformAtom } from './atoms';
+import { Editor } from './Editor';
+import { EditorLayer } from './EditorLayer';
+import { ReactRender } from './ReactRender';
 
-const Title = ({children}: PropsWithChildren) => <h2>{children}</h2>;
+const Title = ({ children }: PropsWithChildren) => <h2>{children}</h2>;
 
-const Wrapper = ({children}: PropsWithChildren) => (
+const Wrapper = ({ children }: PropsWithChildren) => (
     <div
         {...css({
             overflowX: 'auto',
             position: 'relative',
             padding: '0 20px 20px',
-            boxShadow: '0 0 13px -10px',
-            borderRadius: '20px',
+            borderRadius: '16px',
             minWidth: '300px',
             width: '100%',
+            boxShadow: '0px 3px 10px 0px rgba(16, 60, 78, 0.15)'
         })}
     >
         {children}
@@ -31,19 +31,21 @@ export const CompiledCode = ({
     showCompiledCode,
     showCompiledCSS,
     showRender,
+    useTest
 }: {
     showCompiledCode?: boolean;
     showCompiledCSS?: boolean;
     showRender?: boolean;
+    useTest?: boolean
 }) => {
     const data = useAtom(transformAtom);
 
     let layerProps: React.ComponentProps<typeof EditorLayer> = {};
 
     if (data.status === 'error') {
-        layerProps = {variant: 'error', children: data.error.toString()};
+        layerProps = { variant: 'error', children: data.error.toString() };
     } else if (data.status === 'pending') {
-        layerProps = {variant: 'compiling', children: 'Compiling...'};
+        layerProps = { variant: 'compiling', children: 'Compiling...' };
     }
 
     const content = (
@@ -105,7 +107,7 @@ export const CompiledCode = ({
         >
             {content}
 
-            <EditorLayer {...css({borderRadius: '20px'})} {...layerProps} />
+            <EditorLayer {...css({ borderRadius: useTest ? '8px' : '20px' })} {...layerProps} />
         </div>
     );
 };
