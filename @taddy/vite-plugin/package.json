@@ -1,5 +1,4 @@
 {
-    "private": true,
     "name": "@taddy/vite-plugin",
     "version": "0.1.0-alpha.0",
     "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
@@ -13,7 +12,7 @@
         "url": "git+https://github.com/lttb/taddy.git"
     },
     "dependencies": {
-        "@taddy/babel-plugin": "^0.1.0-alpha.0"
+        "@taddy/babel-plugin": "*"
     },
     "devDependencies": {
         "vite": "^4.2.1"

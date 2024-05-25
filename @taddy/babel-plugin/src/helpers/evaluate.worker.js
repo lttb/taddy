@@ -11,7 +11,7 @@ const DEFAULT_PRESETS = [
 
 const {config} = require('taddy');
 
-const {EVAL_FILENAME_POSTFIX} = require('./utils.cjs');
+const {EVAL_FILENAME_POSTFIX} = require('./utils.js');
 
 // webpack "require" critical dependency issue workaround
 const nodeRequire = new Function(

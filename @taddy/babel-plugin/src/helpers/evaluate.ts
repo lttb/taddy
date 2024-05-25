@@ -7,13 +7,13 @@ import {MACRO_NAME, PACKAGE_NAME} from '../config';
 import {findBindings} from './findBindings';
 import {buildCodeByPath} from './buildCodeByPath';
 
-import ev from './evaluate.worker.cjs';
+import * as ev from './evaluate.worker.js';
 
 // NOTE: bun doesn't support sync-rps
 // TODO: support bun environment and avoid transpiling
 const evaluateChunk = process.versions.bun
-    ? ev()
-    : require('sync-rpc')(__dirname + '/evaluate.worker.cjs', 'Evaluate');
+    ? ev.default()
+    : require('sync-rpc')(__dirname + '/evaluate.worker.js', 'Evaluate');
 
 const macroRe = new RegExp(MACRO_NAME.replace('.', '\\.'), 'g');
 

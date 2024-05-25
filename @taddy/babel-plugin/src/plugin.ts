@@ -8,7 +8,7 @@ import type {
 import type {NodePaths} from '@babel/traverse';
 
 import {PACKAGE_NAME, getEnv} from './config';
-import * as utils from './helpers/utils.cjs';
+import * as utils from './helpers/utils.js';
 import {macro, type MacroConfig} from './macro-plugin';
 
 type ImportSpecifiers = NodePaths<t.ImportDeclaration['specifiers']>;

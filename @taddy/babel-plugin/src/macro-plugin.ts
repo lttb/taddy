@@ -8,7 +8,7 @@ import path from 'path';
 import {$css, config} from 'taddy';
 
 import {MACRO_NAME, PACKAGE_NAME, getEnv} from './config';
-import * as utils from './helpers/utils.cjs';
+import * as utils from './helpers/utils.js';
 import {taggedTemplateToObject} from './helpers/taggedTemplateToObject';
 import {createHandlers} from './handlers';
 

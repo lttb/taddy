@@ -12,15 +12,8 @@ const config =
         output: [
             {
                 dir: 'lib',
-                format: 'esm',
-                entryFileNames: '[name].js',
-                sourcemap: true,
-                preserveModules: true, // or `false` to bundle as a single file
-            },
-            {
-                dir: 'lib',
                 format: 'cjs',
-                entryFileNames: '[name].cjs',
+                entryFileNames: '[name].js',
                 sourcemap: true,
                 preserveModules: true, // or `false` to bundle as a single file
             },
@@ -48,34 +41,7 @@ const config =
                             return JSON.stringify({
                                 ...packageJson,
 
-                                main: 'index.cjs',
-                                module: 'index.js',
-                                exports: {
-                                    ...packageJson.exports,
-
-                                    ...(packageJson.name ===
-                                        '@taddy/babel-plugin' && {
-                                        './lib/': './',
-                                        './cache/': './cache/',
-                                        './macro': {
-                                            import: './macro.js',
-                                            require: './macro.cjs',
-                                        },
-                                    }),
-
-                                    ...(packageJson.name === 'taddy' && {
-                                        './vue': {
-                                            import: './vue/index.js',
-                                            require: './vue/index.cjs',
-                                        },
-                                    }),
-
-                                    '.': {
-                                        import: './index.js',
-                                        require: './index.cjs',
-                                    },
-                                    './package.json': './package.json',
-                                },
+                                main: 'index.js',
                             });
                         },
                     },
