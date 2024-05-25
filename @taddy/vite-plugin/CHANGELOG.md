@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.3](https://github.com/lttb/taddy/compare/@taddy/vite-plugin@0.1.0-alpha.2...@taddy/vite-plugin@0.1.0-alpha.3) (2024-05-25)
+
+### Features
+
+- **vite:** update build ([eb6e262](https://github.com/lttb/taddy/commit/eb6e2620ab21cd868b9bce1f41bd4a8e52f2e6f2))
+
 # [0.1.0-alpha.2](https://github.com/lttb/taddy/compare/@taddy/vite-plugin@0.1.0-alpha.1...@taddy/vite-plugin@0.1.0-alpha.2) (2024-05-25)
 
 ### Features
