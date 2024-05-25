@@ -1,29 +1,29 @@
 {
-    "name": "@taddy/vite-plugin",
-    "version": "0.1.0-alpha.1",
-    "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
-    "license": "MIT",
-    "main": "index.js",
-    "publishConfig": {
-        "access": "public"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/lttb/taddy.git"
-    },
-    "scripts": {
-        "clean": "rm -rf lib",
-        "check:ts": "tsc --noEmit",
-        "compile": "rollup -c --bundleConfigAsCjs",
-        "prestart": "yarn clean",
-        "start": "yarn compile --watch",
-        "prebuild": "yarn clean",
-        "build": "yarn compile"
-    },
-    "dependencies": {
-        "@taddy/babel-plugin": "*"
-    },
-    "devDependencies": {
-        "vite": "^4.2.1"
-    }
+  "name": "@taddy/vite-plugin",
+  "version": "0.1.0-alpha.2",
+  "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lttb/taddy.git"
+  },
+  "scripts": {
+    "clean": "rm -rf lib",
+    "check:ts": "tsc --noEmit",
+    "compile": "rollup -c --bundleConfigAsCjs",
+    "prestart": "yarn clean",
+    "start": "yarn compile --watch",
+    "prebuild": "yarn clean",
+    "build": "yarn compile"
+  },
+  "dependencies": {
+    "@taddy/babel-plugin": "*"
+  },
+  "devDependencies": {
+    "vite": "^4.2.1"
+  }
 }
