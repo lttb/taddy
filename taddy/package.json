@@ -1,27 +1,27 @@
 {
-    "name": "taddy",
-    "version": "0.1.0-alpha.5",
-    "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
-    "license": "MIT",
-    "main": "lib/index.js",
-    "publishConfig": {
-        "access": "public"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/lttb/taddy.git"
-    },
-    "scripts": {
-        "clean": "rm -rf lib",
-        "check:ts": "tsc --noEmit",
-        "compile": "rollup -c --bundleConfigAsCjs",
-        "prestart": "yarn clean",
-        "start": "yarn compile --watch",
-        "prebuild": "yarn clean",
-        "build": "yarn compile"
-    },
-    "dependencies": {
-        "@taddy/core": "^0.1.0-alpha.3",
-        "csstype": "3.1.1"
-    }
+  "name": "taddy",
+  "version": "0.1.0-alpha.6",
+  "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lttb/taddy.git"
+  },
+  "scripts": {
+    "clean": "rm -rf lib",
+    "check:ts": "tsc --noEmit",
+    "compile": "rollup -c --bundleConfigAsCjs",
+    "prestart": "yarn clean",
+    "start": "yarn compile --watch",
+    "prebuild": "yarn clean",
+    "build": "yarn compile"
+  },
+  "dependencies": {
+    "@taddy/core": "^0.1.0-alpha.4",
+    "csstype": "3.1.1"
+  }
 }

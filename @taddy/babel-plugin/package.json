@@ -1,6 +1,6 @@
 {
   "name": "@taddy/babel-plugin",
-  "version": "0.1.0-alpha.11",
+  "version": "0.1.0-alpha.12",
   "author": "Kenzhaev Artur <kenzhaev.artur@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",
@@ -30,7 +30,7 @@
     "@babel/register": "^7.21.0",
     "@babel/standalone": "^7.21.2",
     "@babel/types": "^7.11.0",
-    "@taddy/core": "^0.1.0-alpha.3",
+    "@taddy/core": "^0.1.0-alpha.4",
     "babel-helper-evaluate-path": "^0.5.0",
     "common-tags": "^1.8.2",
     "convert-source-map": "^2.0.0",
@@ -42,7 +42,7 @@
     "source-map": "^0.7.4",
     "string-hash": "^1.1.3",
     "sync-rpc": "^1.3.6",
-    "taddy": "^0.1.0-alpha.5",
+    "taddy": "^0.1.0-alpha.6",
     "ts-morph": "^17.0.1"
   },
   "devDependencies": {

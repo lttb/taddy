@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.6](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.5...taddy@0.1.0-alpha.6) (2024-05-25)
+
+### Features
+
+- update package.json ([2dfa487](https://github.com/lttb/taddy/commit/2dfa487e3838a258a98675b1abcd61bb6c92a252))
+
 # [0.1.0-alpha.5](https://github.com/lttb/taddy/compare/taddy@0.1.0-alpha.4...taddy@0.1.0-alpha.5) (2024-03-18)
 
 ### Bug Fixes
